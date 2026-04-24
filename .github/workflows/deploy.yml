@@ -2,7 +2,7 @@ name: Despliegue a Ferozo
 on:
   push:
     branches:
-      - main  # Se activa cada vez que subís cambios a la rama main
+      - master  # Se activa cada vez que subís cambios a la rama main
 
 jobs:
   web-deploy:
