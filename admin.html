@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Administración — Distrijam</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- ══════════════════════════════════════
+       LOGIN SCREEN
+  ══════════════════════════════════════ -->
+  <div class="admin-login" id="admin-login">
+    <div class="login-card">
+      <div class="login-icon">🔐</div>
+      <div class="login-title">Panel Admin</div>
+      <div class="login-sub">Acceso exclusivo para administradores de <strong>Distrijam</strong></div>
+      <div class="login-error" id="login-error">Contraseña incorrecta. Volvé a intentar.</div>
+      <form id="login-form">
+        <div class="form-group" style="text-align:left;">
+          <label class="form-label" for="login-password">Contraseña</label>
+          <input class="form-input" id="login-password" type="password" placeholder="Ingresá tu contraseña" autocomplete="current-password" required autofocus />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px; justify-content:center;">
+          Ingresar →
+        </button>
+      </form>
+      <div style="margin-top:24px; padding-top:20px; border-top:1px solid var(--border);">
+        <a href="index.html" style="color:var(--text-dim); font-size:0.8rem;">← Volver al sitio</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       DASHBOARD
+  ══════════════════════════════════════ -->
+  <div class="admin-dashboard" id="admin-dashboard">
+
+    <!-- Nav -->
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-icon">🔩</div>
+          <div class="nav-logo-text">DISTRI<span>JAM</span></div>
+        </a>
+        <div class="nav-links">
+          <span style="color:var(--text-dim); font-size:0.8rem; padding:8px 16px;">Panel de Administración</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="btn btn-secondary" id="view-catalog-btn" style="padding:8px 16px; font-size:0.8rem;">
+            🔗 Ver Catálogo
+          </button>
+          <button class="admin-logout-btn" id="logout-btn">Cerrar sesión</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header bar -->
+    <div class="admin-header-bar">
+      <h1>Gestión de Productos <span>— Distrijam</span></h1>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- LEFT: Add Product Form -->
+      <div>
+        <!-- Stats -->
+        <div class="admin-stats">
+          <div class="admin-stat-card highlight">
+            <div class="admin-stat-value" id="stat-total">32</div>
+            <div class="admin-stat-label">Total de productos</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-value" id="stat-default">32</div>
+            <div class="admin-stat-label">Productos base</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-value" id="stat-custom">0</div>
+            <div class="admin-stat-label">Personalizados</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-value" style="font-size:1rem;" id="stat-categories">—</div>
+            <div class="admin-stat-label">Más agregados en</div>
+          </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="admin-form-card">
+          <div class="admin-card-title">Agregar Producto al Catálogo</div>
+          <form id="add-product-form" novalidate>
+
+            <!-- Image Upload -->
+            <div class="form-group">
+              <label class="form-label">Foto del Producto *</label>
+              <div class="image-upload-area" id="upload-area">
+                <input type="file" id="product-image-input" accept="image/*" />
+                <div class="upload-placeholder">
+                  <div class="upload-icon">📷</div>
+                  <div class="upload-text">Hacé clic para subir una imagen</div>
+                  <div class="upload-hint">JPG, PNG o WEBP · Máx. 2MB</div>
+                </div>
+                <img class="upload-preview" id="upload-preview" src="" alt="Vista previa" />
+                <div class="upload-change-overlay">📷 Cambiar imagen</div>
+              </div>
+            </div>
+
+            <!-- Name -->
+            <div class="form-group">
+              <label class="form-label" for="product-name">Nombre del Producto *</label>
+              <input class="form-input" id="product-name" type="text"
+                     placeholder="Ej: Tuerca Hexagonal M8 Inoxidable" required />
+            </div>
+
+            <!-- Category -->
+            <div class="form-group">
+              <label class="form-label" for="product-category">Categoría *</label>
+              <div style="position:relative;">
+                <select class="form-select" id="product-category" required style="padding-right:32px;">
+                  <option value="">Seleccioná una categoría</option>
+                  <option value="autoperforantes">🔧 Autoperforantes</option>
+                  <option value="bulones">⚙️ Bulones y Tirafondos</option>
+                  <option value="tuercas">🔩 Tuercas y Arandelas</option>
+                  <option value="tarugos">🏗️ Tarugos</option>
+                </select>
+                <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--text-dim);">▾</span>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+              <label class="form-label" for="product-desc">Descripción</label>
+              <textarea class="form-textarea" id="product-desc"
+                        placeholder="Material, medidas, normas, usos típicos, etc. (opcional)"
+                        style="min-height:80px;"></textarea>
+            </div>
+
+            <!-- Actions -->
+            <div style="display:flex; gap:10px; margin-top:4px;">
+              <button type="submit" class="btn-add-product" style="flex:1;">
+                + Agregar al Catálogo
+              </button>
+              <button type="button" id="btn-reset-form"
+                      style="padding:14px 18px; background:var(--bg-card-2); border:1px solid var(--border); border-radius:var(--radius); color:var(--text-dim); font-size:0.85rem; cursor:pointer; transition:all 0.2s;"
+                      title="Limpiar formulario">↺</button>
+            </div>
+          </form>
+
+          <!-- Tips -->
+          <div style="margin-top:20px; padding:16px; background:rgba(200,151,58,0.08); border:1px solid rgba(200,151,58,0.2); border-radius:var(--radius);">
+            <div style="font-size:0.72rem; font-weight:700; color:var(--gold); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:8px;">💡 Consejos</div>
+            <ul style="font-size:0.78rem; color:var(--text-dim); line-height:1.7; list-style:disc; padding-left:16px;">
+              <li>Usá fotos sobre fondo blanco para mejor resultado</li>
+              <li>Incluí medidas y material en el nombre</li>
+              <li>Los productos agregados aparecen de inmediato en el catálogo</li>
+              <li>Las imágenes se guardan localmente en este navegador</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Product List -->
+      <div>
+        <div class="admin-list-card">
+          <div class="admin-list-header">
+            <h2>Productos en el Catálogo</h2>
+            <div class="admin-tabs">
+              <button class="admin-tab active" data-filter="all">Personalizados</button>
+              <button class="admin-tab" data-filter="custom">Solo míos</button>
+            </div>
+          </div>
+          <div id="admin-product-list">
+            <div class="admin-empty-list">
+              <div class="icon">📦</div>
+              <p>No hay productos personalizados aún.<br>Usá el formulario para agregar el primero.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Note about default products -->
+        <div style="margin-top:16px; padding:16px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); font-size:0.8rem; color:var(--text-dim);">
+          <strong style="color:var(--steel);">ℹ️ Productos base:</strong>
+          El catálogo incluye 32 productos predeterminados (tuercas, bulones, autoperforantes y tarugos) que ya vienen cargados y no se pueden eliminar desde acá. 
+          Los productos que agregués acá <em>se suman</em> a esos 32.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
