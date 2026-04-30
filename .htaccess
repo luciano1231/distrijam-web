@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# Evitar forzar HTTPS en el entorno de desarrollo local
+RewriteCond %{HTTP_HOST} !=localhost
+RewriteCond %{HTTP_HOST} !=127.0.0.1
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
