@@ -893,3 +893,66 @@ ul {
     /* Achicamos un poco la caja en móviles para que la tarjeta no quede tan estirada hacia abajo */
   }
 }
+
+
+/* ======================================================
+   AJUSTES HERO - VISTA MÓVIL (Inicio)
+   ====================================================== */
+@media (max-width: 768px) {
+
+  /* 1. Mejorar lectura del párrafo (Contraste + Halo de luz) */
+  /* Asegurate de que la clase sea .hero-desc o cambiala por la tuya (ej: .hero p) */
+  .hero-desc {
+    color: #111111 !important;
+    /* Lo oscurecemos al máximo */
+    font-weight: 500 !important;
+    /* Le damos más cuerpo a la letra */
+    /* Creamos un "halo" blanco alrededor de las letras para separarlas de las tuercas */
+    text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 5px rgba(255, 255, 255, 0.8) !important;
+    font-size: 0.95rem !important;
+  }
+
+  /* 2. Arreglar botones gigantes y texto roto */
+  .hero-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    /* Espacio más ajustado entre botones */
+  }
+
+  /* Aplica a los botones dentro de hero-actions */
+  .hero-actions .btn,
+  .hero-actions a {
+    padding: 12px 16px !important;
+    /* Botones menos altos */
+    font-size: 0.9rem !important;
+    /* Letra un pelo más chica */
+    white-space: nowrap !important;
+    /* ESTA es la magia que prohíbe que el texto se parta en dos líneas */
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  /* 3. Estadísticas en grilla 2x2 perfecta */
+  .hero-stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    /* Dos columnas del mismo ancho */
+    gap: 24px 12px !important;
+    /* Separación vertical y horizontal */
+    border-top: 2px solid rgba(0, 0, 0, 0.2) !important;
+    padding-top: 24px !important;
+  }
+
+  /* Ajustamos cada ítem de la estadística individual para que no flote raro */
+  .hero-stat {
+    margin: 0 !important;
+    /* Limpiamos cualquier margen viejo */
+    text-align: left !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+}

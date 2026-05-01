@@ -51,60 +51,59 @@
   </div>
 
   <!-- MAIN LAYOUT -->
-  <div style="max-width:1280px; margin:0 auto; padding:0 40px;">
-    <div style="display:grid; grid-template-columns: 1fr 360px; gap:0; align-items:start;" id="catalog-layout">
+  <div class="catalog-main" id="catalog-layout">
 
-      <!-- PRODUCT GRID WRAPPER -->
-      <div class="catalog-grid-wrapper">
-        <div class="catalog-toolbar">
-          <span class="catalog-count" id="catalog-count">Cargando...</span>
-          <div class="catalog-search">
-            <span class="catalog-search-icon">🔍</span>
-            <input type="text" id="catalog-search" placeholder="Buscar producto..." autocomplete="off" />
-          </div>
+    <!-- PRODUCT GRID WRAPPER -->
+    <div class="catalog-grid-wrapper">
+      <div class="catalog-toolbar">
+        <span class="catalog-count" id="catalog-count">Cargando...</span>
+        <div class="catalog-search">
+          <span class="catalog-search-icon">🔍</span>
+          <input type="text" id="catalog-search" placeholder="Buscar producto..." autocomplete="off" />
         </div>
-        <div class="product-grid" id="product-grid"></div>
+      </div>
+      <div class="product-grid" id="product-grid"></div>
+    </div>
+
+    <!-- CART SIDEBAR -->
+    <aside class="cart-sidebar">
+      <div class="cart-header">
+        <div class="cart-title">
+          🛒 Mi Pedido
+          <span class="cart-badge" id="cart-badge" style="display:none;">0</span>
+        </div>
+        <button class="cart-clear-btn" id="cart-clear-btn">Vaciar</button>
       </div>
 
-      <!-- CART SIDEBAR -->
-      <aside class="cart-sidebar">
-        <div class="cart-header">
-          <div class="cart-title">
-            🛒 Mi Pedido
-            <span class="cart-badge" id="cart-badge" style="display:none;">0</span>
+      <!-- Empty State -->
+      <div class="cart-empty" id="cart-empty" style="display:flex;">
+        <div class="cart-empty-icon">🛒</div>
+        <p>Tu pedido está vacío.<br>Agregá productos del catálogo.</p>
+      </div>
+
+      <!-- Items -->
+      <div class="cart-items" id="cart-items"></div>
+
+      <!-- Footer -->
+      <div class="cart-footer" id="cart-footer" style="display:none;">
+        <div class="cart-summary">
+          <div class="cart-summary-row">
+            <span>Productos distintos</span>
+            <strong id="cart-total-lines">0</strong>
           </div>
-          <button class="cart-clear-btn" id="cart-clear-btn">Vaciar</button>
-        </div>
-
-        <!-- Empty State -->
-        <div class="cart-empty" id="cart-empty" style="display:flex;">
-          <div class="cart-empty-icon">🛒</div>
-          <p>Tu pedido está vacío.<br>Agregá productos del catálogo.</p>
-        </div>
-
-        <!-- Items -->
-        <div class="cart-items" id="cart-items"></div>
-
-        <!-- Footer -->
-        <div class="cart-footer" id="cart-footer" style="display:none;">
-          <div class="cart-summary">
-            <div class="cart-summary-row">
-              <span>Productos distintos</span>
-              <strong id="cart-total-lines">0</strong>
-            </div>
-            <div class="cart-summary-row" style="margin-top:6px;">
-              <span>Total unidades</span>
-              <strong id="cart-total-items">0</strong>
-            </div>
+          <div class="cart-summary-row" style="margin-top:6px;">
+            <span>Total unidades</span>
+            <strong id="cart-total-items">0</strong>
           </div>
-          <button class="btn-quote" id="btn-quote">
-            💬 Solicitar Cotización
-          </button>
-          <p class="cart-whatsapp-note">Se abrirá WhatsApp con tu pedido</p>
         </div>
-      </aside>
+        <button class="btn-quote" id="btn-quote">
+          💬 Solicitar Cotización
+        </button>
+        <p class="cart-whatsapp-note">Se abrirá WhatsApp con tu pedido</p>
+      </div>
+    </aside>
 
-    </div>
+  </div>
   </div>
 
   <!-- Mobile FAB -->

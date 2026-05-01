@@ -278,6 +278,7 @@
   flex: 1;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -789,5 +790,100 @@
   .filter-tab {
     font-size: 0.78rem;
     padding: 8px 12px;
+  }
+}
+
+/* ======================================================
+   AJUSTES PARA VISTA MÓVIL (Celulares como el S20 Ultra)
+   ====================================================== */
+@media (max-width: 900px) {
+
+  /* 1. FORZAR 2 COLUMNAS (¡Le sacamos la "s" a la clase!) */
+  .product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 10px;
+  }
+
+  /* 2. Título centrado y ajustado */
+  .product-title {
+    text-align: center !important;
+    font-size: 0.8rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 4px !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* 3. Descripción visible pero limitada a 2 renglones */
+  .product-desc {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    font-size: 0.7rem !important;
+    text-align: center !important;
+    margin-bottom: 8px !important;
+    line-height: 1.2 !important;
+    color: #666666 !important;
+  }
+
+  /* 4. ARREGLO DE IMAGEN (Anulamos el cuadrado gigante y centramos) */
+  .product-img-wrap {
+    aspect-ratio: auto !important;
+    /* Quitamos la forma cuadrada forzada */
+    height: 120px !important;
+    /* Le damos altura fija al contenedor completo */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px !important;
+  }
+
+  .product-img-wrap img {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: contain !important;
+    /* Evita que la foto se deforme o corte */
+  }
+
+  /* 5. Etiquetas negras más compactas */
+  .product-cat-badge {
+    font-size: 0.55rem !important;
+    padding: 2px 6px !important;
+    top: 5px !important;
+    left: 5px !important;
+  }
+
+  /* 6. Botones proporcionados (Rojo expandido, lupa fija) */
+  .product-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    gap: 4px !important;
+  }
+
+  /* Aseguramos abarcar tanto por etiqueta de botón como por clase común */
+  .product-actions button:first-child,
+  .product-actions .btn-primary {
+    flex: 1 !important;
+    font-size: 0.75rem !important;
+    padding: 6px 4px !important;
+    line-height: 1.1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .product-actions button:last-child,
+  .product-actions .btn-icon {
+    width: 32px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 }
