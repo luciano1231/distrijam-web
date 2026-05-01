@@ -8,10 +8,13 @@
 }
 
 /* ── Catalog Header ── */
+/* Acordate de cambiar .catalog-header por el nombre de tu clase real si es distinto */
 .catalog-header {
-  background: linear-gradient(135deg, var(--bg-2) 0%, #1a0a0a 100%);
-  border-bottom: 1px solid var(--border);
-  padding: 48px 40px 0;
+  background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.95)), url('imagenes/foto4.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  /* IMPORTANTE: dejá las propiedades de padding o margin que ya tenías en esta clase */
 }
 
 .catalog-header-inner {
@@ -48,26 +51,32 @@
   border-radius: var(--radius) var(--radius) 0 0;
   font-size: 0.85rem;
   font-weight: 600;
-  background: transparent;
-  color: var(--text-dim);
-  border: 1px solid transparent;
+  /* Fondo blanco semitransparente para que destaquen sobre la foto */
+  background: rgba(255, 255, 255, 0.6);
+  color: #111111;
+  /* Texto oscuro para que se lea perfecto */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  /* Borde súper sutil */
   border-bottom: none;
   transition: var(--transition);
   letter-spacing: 0.02em;
   position: relative;
   top: 1px;
+  cursor: pointer;
 }
 
 .filter-tab:hover {
-  color: var(--white);
-  background: var(--bg-card);
+  color: #111111;
+  background: rgba(255, 255, 255, 0.9);
+  /* Se vuelve casi blanco al pasar el mouse */
 }
 
 .filter-tab.active {
-  color: var(--white);
-  background: var(--bg);
-  border-color: var(--border);
-  border-bottom-color: var(--bg);
+  color: #111111;
+  background: #ffffff;
+  /* Blanco puro y sólido para la pestaña seleccionada */
+  border-top: 2px solid var(--red);
+  /* Un toque de tu color rojo arriba para marcar que está activa */
 }
 
 .filter-tab .tab-count {
