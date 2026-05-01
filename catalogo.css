@@ -189,7 +189,10 @@
   position: relative;
   aspect-ratio: 1;
   overflow: hidden;
-  background: #1a1a1a;
+  /* Cambiamos el fondo oscuro por un gris súper clarito y elegante */
+  background: #f8f9fa;
+  /* Le agregamos una línea muy sutil abajo para separar la foto del texto */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .product-img-wrap img {
@@ -216,7 +219,8 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: #ffffff;
+  /* Blanco puro para máximo contraste */
   backdrop-filter: blur(4px);
 }
 

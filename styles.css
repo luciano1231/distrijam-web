@@ -4,26 +4,45 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Design Tokens */
+/* Design Tokens - MODO CLARO */
 :root {
-  --bg: #0e0e0e;
-  --bg-2: #141414;
-  --bg-card: #1c1c1c;
-  --bg-card-2: #242424;
+  --bg: #f4f6f8;
+  /* Gris muy claro para el fondo general */
+  --bg-2: #ffffff;
+  /* Blanco puro para barra de navegación y footer */
+  --bg-card: #ffffff;
+  /* Blanco puro para modales y tarjetas */
+  --bg-card-2: #f0f2f5;
+  /* Gris sutil para inputs y hover de tarjetas */
+
   --red: #c0392b;
   --red-dark: #922b21;
   --red-light: #e74c3c;
   --gold: #c8973a;
   --gold-light: #e0b050;
   --steel: #7a8c9a;
-  --text: #e8e8e8;
-  --text-dim: #8a8a8a;
-  --text-muted: #555;
-  --border: #2a2a2a;
-  --border-light: #333;
-  --white: #ffffff;
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.8);
+
+  --text: #333333;
+  /* Texto principal (gris oscuro) */
+  --text-dim: #555555;
+  /* Texto secundario */
+  --text-muted: #777777;
+  /* Texto atenuado */
+
+  --border: #e0e0e0;
+  /* Bordes más suaves */
+  --border-light: #eeeeee;
+
+  /* ATENCIÓN: Esta variable la usabas para títulos. Ahora es oscura. */
+  --white: #111111;
+
+  /* NUEVA VARIABLE: Para textos que siempre deben ser blancos (botones) */
+  --white-real: #ffffff;
+
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  /* Sombras mucho más sutiles */
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+
   --font: 'Inter', sans-serif;
   --radius: 8px;
   --radius-lg: 16px;
@@ -104,7 +123,8 @@ ul {
   right: 0;
   z-index: 1000;
   height: 70px;
-  background: rgba(14, 14, 14, 0.95);
+  /* Se cambia el fondo oscuro por blanco semitransparente */
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -113,9 +133,20 @@ ul {
   transition: var(--transition);
 }
 
+.nav-logo-img {
+  height: 40px;
+  /* Ajusta este valor para que el logo se vea bien en el header */
+  width: auto;
+  /* Mantiene la proporción */
+  display: block;
+  /* Evita espaciados extraños abajo */
+}
+
 .nav.scrolled {
-  background: rgba(14, 14, 14, 0.99);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  /* Fondo blanco casi sólido al hacer scroll */
+  background: rgba(255, 255, 255, 0.98);
+  /* Sombra más suave adaptada al modo claro */
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
 }
 
 .nav-inner {
@@ -133,15 +164,6 @@ ul {
   gap: 10px;
 }
 
-.nav-logo-icon {
-  width: 36px;
-  height: 36px;
-  background: var(--red);
-  border-radius: 6px;
-  display: grid;
-  place-items: center;
-  font-size: 18px;
-}
 
 .nav-logo-text {
   font-size: 1.4rem;
@@ -182,7 +204,8 @@ ul {
 .nav-cta {
   padding: 9px 22px;
   background: var(--red);
-  color: var(--white);
+  color: var(--white-real);
+  /* Cambiado aquí */
   font-size: 0.875rem;
   font-weight: 600;
   border-radius: var(--radius);
@@ -332,6 +355,18 @@ ul {
   color: var(--red);
 }
 
+
+/* Borramos cualquier línea inferior en los botones para evitar líneas dobles */
+.hero-actions {
+  border-bottom: none !important;
+}
+
+/* Le damos 2 píxeles de grosor y un poco más de oscuridad a la línea de estadísticas */
+.hero-stats {
+  border-top: 2px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+
 /* ======================================================
    BUTTONS
    ====================================================== */
@@ -362,14 +397,17 @@ ul {
 
 .btn-secondary {
   background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border-light);
+  color: #333333;
+  /* Texto oscuro para que se lea */
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  /* Borde gris oscuro semitransparente */
 }
 
+/* Opcional: Que el borde se ponga rojo cuando le pasás el mouse */
 .btn-secondary:hover {
   border-color: var(--red);
+  /* O el código de tu color rojo, ej: #c0392b */
   color: var(--red);
-  transform: translateY(-1px);
 }
 
 .btn-gold {
@@ -705,5 +743,153 @@ ul {
   .footer-bottom {
     flex-direction: column;
     text-align: center;
+  }
+}
+
+.map-container {
+  width: 100%;
+  height: 450px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--bg-card-2);
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 300px;
+  }
+}
+
+
+/* ======================================================
+   CARRUSEL DE FONDO HERO
+   ====================================================== */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  /* Aclara las fotos para leer el texto */
+  z-index: -2;
+}
+
+.hero {
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Aseguramos el orden correcto de las capas */
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Cambiamos el 0.85 por 0.6 para que sea más transparente */
+  background: rgba(255, 255, 255, 0.6);
+  z-index: -2;
+}
+
+
+.hero-slider {
+  z-index: -2;
+}
+
+
+
+.hero-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -3;
+  overflow: hidden;
+  background: #f4f6f8;
+}
+
+.hero-slider .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  /* Animación total de 15s: 5s por cada una de las 3 imágenes */
+  animation: fadeAnim 15s infinite;
+}
+
+/* Acá tenés que poner los nombres reales de tus 3 fotos */
+.hero-slider .slide-1 {
+  background-image: url('imagenes/foto1.jpg');
+  animation-delay: 0s;
+}
+
+.hero-slider .slide-2 {
+  background-image: url('imagenes/foto2.jpg');
+  animation-delay: 5s;
+}
+
+.hero-slider .slide-3 {
+  background-image: url('imagenes/foto3.jpg');
+  animation-delay: 10s;
+}
+
+/* La animación que controla la opacidad y el zoom */
+@keyframes fadeAnim {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  33% {
+    opacity: 1;
+  }
+
+  43% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.category-img {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  /* <-- Cambiamos 'cover' por 'contain' */
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  background-color: transparent;
+  /* Transparente para que se funda perfecto con el fondo blanco de tu tarjeta */
+  display: block;
+}
+
+/* Opcional: Ajuste fino para celulares */
+@media (max-width: 768px) {
+  .category-img {
+    height: 140px;
+    /* Achicamos un poco la caja en móviles para que la tarjeta no quede tan estirada hacia abajo */
   }
 }
