@@ -676,6 +676,27 @@
   margin-left: 8px;
 }
 
+/* ── CUIL Input Error ── */
+.form-input.input-error {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25);
+  animation: shakeInput 0.4s ease;
+}
+
+@keyframes shakeInput {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
 .btn-whatsapp {
   width: 100%;
   padding: 16px;

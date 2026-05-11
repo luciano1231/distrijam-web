@@ -160,6 +160,12 @@
         <input class="form-input" id="quote-phone" type="tel" placeholder="+54 9 379 ..." />
       </div>
       <div class="form-group">
+        <label class="form-label" for="quote-cuil">Número de CUIL *</label>
+        <input class="form-input" id="quote-cuil" type="text" placeholder="XX-XXXXXXXX-X" required
+          maxlength="13" inputmode="numeric" />
+        <span class="form-hint" id="cuil-hint" style="font-size:0.75rem; color:var(--text-dim); margin-top:4px; display:block;">Formato: XX-XXXXXXXX-X</span>
+      </div>
+      <div class="form-group">
         <label class="form-label" for="quote-message">Comentario adicional</label>
         <textarea class="form-textarea" id="quote-message"
           placeholder="Cantidad exacta, medidas específicas, plazo de entrega, etc."

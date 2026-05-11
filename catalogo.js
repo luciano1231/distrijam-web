@@ -278,14 +278,28 @@ function openQuoteModal() {
   document.getElementById('quote-modal').classList.add('open');
 }
 
+function formatCUIL(value) {
+  const digits = value.replace(/\D/g, '').slice(0, 11);
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 10) return digits.slice(0, 2) + '-' + digits.slice(2);
+  return digits.slice(0, 2) + '-' + digits.slice(2, 10) + '-' + digits.slice(10);
+}
+
+function isValidCUIL(value) {
+  const digits = value.replace(/\D/g, '');
+  return digits.length === 11;
+}
+
 function buildWhatsAppMessage() {
   const name = document.getElementById('quote-name').value.trim() || 'Sin nombre';
   const phone = document.getElementById('quote-phone').value.trim();
+  const cuil = document.getElementById('quote-cuil').value.trim();
   const message = document.getElementById('quote-message').value.trim();
 
   let text = `🔩 *PEDIDO DE COTIZACIÓN — DISTRIJAM*\n`;
   text += `━━━━━━━━━━━━━━━━━━━\n`;
   text += `👤 *Cliente:* ${name}\n`;
+  text += `🆔 *CUIL:* ${cuil}\n`;
   if (phone) text += `📱 *Teléfono:* ${phone}\n`;
   text += `\n📋 *Productos solicitados:*\n`;
   cart.forEach(item => {
@@ -299,11 +313,22 @@ function buildWhatsAppMessage() {
 
 function sendWhatsApp() {
   const name = document.getElementById('quote-name').value.trim();
+  const cuilInput = document.getElementById('quote-cuil');
+  const cuil = cuilInput.value.trim();
+
   if (!name) {
     showToast('Por favor ingresá tu nombre', 'error');
     document.getElementById('quote-name').focus();
     return;
   }
+  if (!cuil || !isValidCUIL(cuil)) {
+    showToast('Por favor ingresá un CUIL válido (11 dígitos)', 'error');
+    cuilInput.focus();
+    cuilInput.classList.add('input-error');
+    setTimeout(() => cuilInput.classList.remove('input-error'), 3000);
+    return;
+  }
+
   const url = `https://wa.me/${WA_NUMBER}?text=${buildWhatsAppMessage()}`;
   window.open(url, '_blank');
   document.getElementById('quote-modal').classList.remove('open');
@@ -344,6 +369,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // WhatsApp send
   document.getElementById('btn-send-whatsapp').addEventListener('click', sendWhatsApp);
+
+  // CUIL auto-format
+  const cuilInput = document.getElementById('quote-cuil');
+  cuilInput.addEventListener('input', () => {
+    const pos = cuilInput.selectionStart;
+    const oldLen = cuilInput.value.length;
+    cuilInput.value = formatCUIL(cuilInput.value);
+    const newLen = cuilInput.value.length;
+    cuilInput.setSelectionRange(pos + (newLen - oldLen), pos + (newLen - oldLen));
+  });
 
   // Modal closes
   document.querySelectorAll('[data-close-modal]').forEach(btn => {
