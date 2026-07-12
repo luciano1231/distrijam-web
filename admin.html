@@ -15,8 +15,9 @@
   ══════════════════════════════════════ -->
   <div class="admin-login" id="admin-login">
     <div class="login-card">
-      <div class="login-icon">🔐</div>
-      <div class="login-title">Panel Admin</div>
+      <div class="nav-logo" style="justify-content:center; margin-bottom:10px;">
+        <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam Logo" class="nav-logo-img" style="height:40px;">
+      </div>
       <div class="login-sub">Acceso exclusivo para administradores de <strong>Distrijam</strong></div>
       <div class="login-error" id="login-error">Contraseña incorrecta. Volvé a intentar.</div>
       <form id="login-form">
@@ -43,11 +44,10 @@
     <nav class="nav" id="nav">
       <div class="nav-inner">
         <a href="index.html" class="nav-logo">
-          <div class="nav-logo-icon">🔩</div>
-          <div class="nav-logo-text">DISTRI<span>JAM</span></div>
+          <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam Logo" style="height:35px;">
         </a>
-        <div class="nav-links">
-          <span style="color:var(--text-dim); font-size:0.8rem; padding:8px 16px;">Panel de Administración</span>
+        <div class="nav-links" style="display:flex; justify-content:center; flex:1;">
+          <span style="color:var(--text-dim); font-size:1rem; font-weight:600; padding:8px 16px;">Gestión de Productos</span>
         </div>
         <div style="display:flex; gap:8px; align-items:center;">
           <button class="btn btn-secondary" id="view-catalog-btn" style="padding:8px 16px; font-size:0.8rem;">
@@ -57,11 +57,6 @@
         </div>
       </div>
     </nav>
-
-    <!-- Header bar -->
-    <div class="admin-header-bar">
-      <h1>Gestión de Productos <span>— Distrijam</span></h1>
-    </div>
 
     <div class="admin-content">
 
@@ -87,6 +82,16 @@
           </div>
         </div>
 
+        <!-- Datalist para Presentación -->
+        <datalist id="presentacion-list">
+          <option value="Caja x 50 U."></option>
+          <option value="Caja x 100 U."></option>
+          <option value="Caja x 200 U."></option>
+          <option value="Unidad"></option>
+          <option value="Bolsa x 10 U."></option>
+          <option value="Bolsa x 50 U."></option>
+        </datalist>
+
         <!-- Form Card -->
         <div class="admin-form-card">
           <div class="admin-card-title">Agregar Producto al Catálogo</div>
@@ -94,16 +99,16 @@
 
             <!-- Image Upload -->
             <div class="form-group">
-              <label class="form-label">Foto del Producto *</label>
+              <label class="form-label">Fotos del Producto (Hasta 4 imágenes) *</label>
               <div class="image-upload-area" id="upload-area">
-                <input type="file" id="product-image-input" accept="image/*" />
-                <div class="upload-placeholder">
+                <input type="file" id="product-image-input" accept="image/*" multiple />
+                <div class="upload-placeholder" id="upload-placeholder">
                   <div class="upload-icon">📷</div>
-                  <div class="upload-text">Hacé clic para subir una imagen</div>
-                  <div class="upload-hint">JPG, PNG o WEBP · Máx. 2MB</div>
+                  <div class="upload-text">Hacé clic para subir una o varias imágenes</div>
+                  <div class="upload-hint">JPG, PNG o WEBP · Máx. 2MB por foto</div>
                 </div>
-                <img class="upload-preview" id="upload-preview" src="" alt="Vista previa" />
-                <div class="upload-change-overlay">📷 Cambiar imagen</div>
+                <!-- Galería de miniaturas subidas -->
+                <div id="upload-gallery" class="upload-gallery"></div>
               </div>
             </div>
 
@@ -137,6 +142,17 @@
                         style="min-height:80px;"></textarea>
             </div>
 
+            <!-- Variants (Medidas) -->
+            <div class="form-group">
+              <label class="form-label">Medidas y Presentaciones *</label>
+              <div id="variants-container" class="variants-container">
+                <!-- Se llenará dinámicamente con JS -->
+              </div>
+              <button type="button" class="btn btn-secondary" id="btn-add-variant" style="width:100%; margin-top:10px;">
+                + Agregar Medida
+              </button>
+            </div>
+
             <!-- Actions -->
             <div style="display:flex; gap:10px; margin-top:4px;">
               <button type="submit" class="btn-add-product" style="flex:1;">
@@ -167,14 +183,14 @@
           <div class="admin-list-header">
             <h2>Productos en el Catálogo</h2>
             <div class="admin-tabs">
-              <button class="admin-tab active" data-filter="all">Personalizados</button>
-              <button class="admin-tab" data-filter="custom">Solo míos</button>
+              <button class="admin-tab active" data-filter="all">Todos</button>
+              <button class="admin-tab" data-filter="custom">Personalizados</button>
             </div>
           </div>
           <div id="admin-product-list">
             <div class="admin-empty-list">
               <div class="icon">📦</div>
-              <p>No hay productos personalizados aún.<br>Usá el formulario para agregar el primero.</p>
+              <p>Cargando productos...</p>
             </div>
           </div>
         </div>
@@ -182,8 +198,30 @@
         <!-- Note about default products -->
         <div style="margin-top:16px; padding:16px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); font-size:0.8rem; color:var(--text-dim);">
           <strong style="color:var(--steel);">ℹ️ Productos base:</strong>
-          El catálogo incluye 32 productos predeterminados (tuercas, bulones, autoperforantes y tarugos) que ya vienen cargados y no se pueden eliminar desde acá. 
-          Los productos que agregués acá <em>se suman</em> a esos 32.
+          El catálogo incluye 32 productos predeterminados que ya vienen cargados. Los personalizados se suman a estos.
+        </div>
+        
+        <!-- Category Management Card -->
+        <div class="admin-form-card" style="margin-top:32px;">
+          <div class="admin-card-title">Gestión de Categorías</div>
+          
+          <form id="add-category-form" novalidate style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border);">
+            <div style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap;">
+              <div class="form-group" style="flex:1; min-width:150px; margin:0;">
+                <label class="form-label">Nombre de Categoría</label>
+                <input type="text" id="cat-name-input" class="form-input" placeholder="Ej: Herramientas" required />
+              </div>
+              <div class="form-group" style="flex:1; min-width:150px; margin:0;">
+                <label class="form-label">Logo / Ícono</label>
+                <input type="file" id="cat-image-input" class="form-input" accept="image/*" style="padding: 10px;" required />
+              </div>
+              <button type="submit" class="btn btn-secondary" style="height:48px;">Crear Categoría</button>
+            </div>
+          </form>
+          
+          <div id="admin-category-list" style="display:flex; flex-direction:column; gap:10px;">
+            <!-- Dinámico desde JS -->
+          </div>
         </div>
       </div>
 
