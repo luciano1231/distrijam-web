@@ -219,6 +219,130 @@ ul {
   box-shadow: 0 4px 16px rgba(192, 57, 43, 0.4);
 }
 
+/* ======================================================
+   PRODUCT DROPDOWN MENU
+   ====================================================== */
+.nav-item-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--red-dark);
+  min-width: 260px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius);
+  border: 1px solid var(--red-dark);
+  padding: 8px 0;
+  z-index: 1001;
+  list-style: none;
+  margin: 0;
+  animation: navFadeIn 0.2s ease;
+}
+
+.nav-item-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-item {
+  position: relative;
+}
+
+.dropdown-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--white-real);
+  text-transform: uppercase;
+  transition: var(--transition);
+  letter-spacing: 0.03em;
+}
+
+.dropdown-link:hover {
+  background: var(--red);
+  color: var(--white-real);
+}
+
+/* Submenu lateral */
+.submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background: var(--red-dark);
+  min-width: 240px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius);
+  border: 1px solid var(--red-dark);
+  padding: 8px 0;
+  z-index: 1002;
+  list-style: none;
+  margin: 0;
+  max-height: 400px;
+  overflow-y: auto;
+  animation: navFadeIn 0.2s ease;
+}
+
+.dropdown-item:hover .submenu {
+  display: block;
+}
+
+.submenu-link {
+  display: block;
+  padding: 8px 20px;
+  font-size: 0.775rem;
+  font-weight: 500;
+  color: var(--white-real);
+  transition: var(--transition);
+  white-space: nowrap;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.submenu-link:hover {
+  background: var(--red);
+  color: var(--white-real);
+}
+
+/* Indicadores de submenú */
+.dropdown-link::after {
+  content: "›";
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-left: 10px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dropdown-link.no-submenu::after {
+  content: "";
+}
+
+/* Desplazamiento fino */
+.submenu::-webkit-scrollbar {
+  width: 6px;
+}
+.submenu::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+.submenu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+@keyframes navFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .nav-hamburger {
   display: none;
   flex-direction: column;
