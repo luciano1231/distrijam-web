@@ -19,6 +19,7 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         server-dir: ./public_html/  # Ajustá esto según la carpeta de tu hosting
+        protocol: ftps
 
     - name: Purge Cloudflare Cache
       if: success()
