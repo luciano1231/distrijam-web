@@ -4352,7 +4352,7 @@
   {
     "id": "clavo-punta-paris",
     "name": "CLAVO PUNTA PARIS",
-    "category": "clavos",
+    "category": "remaches y clavos",
     "brand": "Telé",
     "description": "CLAVO PUNTA PARIS. Consulte medidas y disponibilidad.",
     "features": "Consulte características técnicas de este producto.",
@@ -4388,7 +4388,7 @@
   {
     "id": "clavo-torcionado",
     "name": "CLAVO TORCIONADO",
-    "category": "clavos",
+    "category": "remaches y clavos",
     "brand": "Telé",
     "description": "CLAVO TORCIONADO. Consulte medidas y disponibilidad.",
     "features": "Consulte características técnicas de este producto.",
@@ -8126,7 +8126,7 @@
   {
     "id": "remachadora-profesional",
     "name": "REMACHADORA PROFESIONAL",
-    "category": "remaches",
+    "category": "remaches y clavos",
     "brand": "Telé",
     "description": "REMACHADORA PROFESIONAL. Consulte medidas y disponibilidad.",
     "features": "Consulte características técnicas de este producto.",
@@ -8144,7 +8144,7 @@
   {
     "id": "remache",
     "name": "REMACHE",
-    "category": "remaches",
+    "category": "remaches y clavos",
     "brand": "Telé",
     "description": "REMACHE. Consulte medidas y disponibilidad.",
     "features": "Consulte características técnicas de este producto.",
