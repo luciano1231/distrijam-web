@@ -310,10 +310,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ── Universal Version Switcher (V1 a V4) ──────────────
 const DISTRIJAM_VERSIONS = {
-  v1: { short: 'V1', name: 'Clásica',    home: 'index.html',  themeClass: null,       accent: '#C0392B', title: 'Versión 1: Diseño Clásico (oscuro rojo)' },
+  v1: { short: 'V1', name: 'Clásica',    home: 'index.html',  themeClass: null,       accent: '#C0392B', title: 'Versión 1: Clásica (oscura, roja)' },
   v2: { short: 'V2', name: 'B2B',        home: 'index2.html', themeClass: 'theme-v2', accent: '#1E3A8A', title: 'Versión 2: Corporativa B2B (pizarra y azul)' },
-  v3: { short: 'V3', name: 'Industrial', home: 'index3.html', themeClass: 'theme-v3', accent: '#F59E0B', title: 'Versión 3: Industrial (grafito y ámbar)' },
-  v4: { short: 'V4', name: 'Editorial',  home: 'index4.html', themeClass: 'theme-v4', accent: '#0F766E', title: 'Versión 4: Editorial (claro y serif)' }
+  v3: { short: 'V3', name: 'Industrial', home: 'index3.html', themeClass: 'theme-v3', accent: '#C2700A', title: 'Versión 3: Industrial clara (blanco y ámbar)' },
+  v4: { short: 'V4', name: 'Tech',       home: 'index4.html', themeClass: 'theme-v4', accent: '#0F766E', title: 'Versión 4: Tech nocturna (carbón y turquesa)' },
+  v5: { short: 'V5', name: 'Cercana',    home: 'index5.html', themeClass: 'theme-v5', accent: '#C2410C', title: 'Versión 5: Cercana (crema y terracota)' }
 };
 
 const DISTRIJAM_ALL_THEME_CLASSES = Object.values(DISTRIJAM_VERSIONS)
@@ -393,11 +394,13 @@ function injectVersionPillStyles() {
       background:var(--dvp-accent,#C0392B);box-shadow:0 2px 8px rgba(0,0,0,.45)}
     .distrijam-version-pill .dvp-btn.active::before{content:'';width:5px;height:5px;background:#fff;
       border-radius:50%;display:inline-block}
-    .distrijam-version-pill .dvp-btn .dvp-name{display:inline}
-    @media (max-width:900px){
+    /* Con cinco versiones el nombre completo no entra: sólo lo muestra la activa */
+    .distrijam-version-pill .dvp-btn .dvp-name{display:none}
+    .distrijam-version-pill .dvp-btn.active .dvp-name{display:inline}
+    @media (max-width:760px){
       .distrijam-version-pill .dvp-label{display:none}
-      .distrijam-version-pill .dvp-btn .dvp-name{display:none}
-      .distrijam-version-pill .dvp-btn{padding:6px 10px}
+      .distrijam-version-pill .dvp-btn.active .dvp-name{display:none}
+      .distrijam-version-pill .dvp-btn{padding:6px 9px}
     }
     @media (max-width:640px){
       .distrijam-version-pill{top:auto;bottom:16px;right:50%;transform:translateX(50%)}
@@ -405,12 +408,12 @@ function injectVersionPillStyles() {
     /* En las páginas compartidas la barra superior es fija y arranca en el
        tope, así que se le reserva la esquina que ocupa el selector. */
     @media (min-width:901px){
-      body.catalog-page .nav-inner{padding-right:400px}
-      body.admin-body .admin-header-bar{padding-right:400px}
+      body.catalog-page .nav-inner{padding-right:330px}
+      body.admin-body .admin-header-bar{padding-right:330px}
     }
     @media (min-width:641px) and (max-width:900px){
-      body.catalog-page .nav-inner{padding-right:250px}
-      body.admin-body .admin-header-bar{padding-right:250px}
+      body.catalog-page .nav-inner{padding-right:230px}
+      body.admin-body .admin-header-bar{padding-right:230px}
     }
     @media print{.distrijam-version-pill{display:none}}
   `;

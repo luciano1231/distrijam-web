@@ -1,0 +1,105 @@
+/* ======================================================
+   DISTRIJAM — filtros-rail.css
+   Selector de categorías del catálogo, versión riel.
+   Reemplaza las pestañas que se partían en dos filas por
+   una sola fila con desplazamiento horizontal.
+
+   Sólo se aplica a los temas V3, V4 y V5. Cada tema define
+   --rail-* para ponerle sus propios colores.
+   ====================================================== */
+
+:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tabs {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 2px 14px !important;
+  margin: 0 !important;
+  border: none !important;
+  scroll-behavior: smooth;
+  scrollbar-width: none;                 /* Firefox */
+  -ms-overflow-style: none;              /* Edge antiguo */
+  /* El contenido se desvanece en los bordes para sugerir que hay más */
+  mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 26px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 26px), transparent 100%);
+}
+
+:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab {
+  flex: 0 0 auto !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px !important;
+  border-radius: 100px !important;
+  border: 1px solid var(--rail-border, #D8DCE2) !important;
+  background: var(--rail-bg, #FFFFFF) !important;
+  color: var(--rail-text, #4A5058) !important;
+  font-size: 0.86rem !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap;
+  scroll-snap-align: center;
+  transition: background .18s ease, color .18s ease, border-color .18s ease !important;
+}
+
+:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab:hover {
+  background: var(--rail-bg-hover, #F1F3F6) !important;
+  color: var(--rail-text-strong, #16181D) !important;
+  border-color: var(--rail-border-hover, #B9C0C9) !important;
+  transform: none !important;
+}
+
+:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab.active {
+  background: var(--rail-active-bg, #16181D) !important;
+  color: var(--rail-active-text, #FFFFFF) !important;
+  border-color: var(--rail-active-bg, #16181D) !important;
+  font-weight: 700 !important;
+}
+
+/* La cuenta de productos, como globo dentro de la píldora */
+:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab .tab-count {
+  display: inline-block;
+  min-width: 20px;
+  padding: 1px 7px !important;
+  border-radius: 100px !important;
+  background: var(--rail-count-bg, #EDF0F3) !important;
+  color: var(--rail-count-text, #6B7483) !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab.active .tab-count {
+  background: var(--rail-active-count-bg, rgba(255, 255, 255, 0.22)) !important;
+  color: var(--rail-active-count-text, #FFFFFF) !important;
+}
+
+/* Categorías sin productos: se atenúan en vez de ocupar lugar como si tuvieran */
+:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab.is-empty {
+  opacity: 0.42;
+}
+:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab.is-empty:hover {
+  opacity: 0.72;
+}
+
+/* Los emojis de categoría se ven desprolijos dentro de la píldora */
+:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab {
+  font-variant-emoji: text;
+}
+
+@media (max-width: 860px) {
+  :is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tabs {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  :is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab {
+    padding: 8px 14px !important;
+    font-size: 0.82rem !important;
+  }
+}

@@ -58,8 +58,11 @@ function renderFilters() {
   Object.entries(allCategories).forEach(([key, cat]) => {
     const count = key === 'all' ? products.length : products.filter(p => p.category === key).length;
     const btn = document.createElement('button');
-    btn.className = `filter-tab ${activeFilter === key ? 'active' : ''}`;
+    // is-empty permite que cada tema atenúe las categorías sin productos
+    btn.className = `filter-tab ${activeFilter === key ? 'active' : ''} ${count === 0 ? 'is-empty' : ''}`.trim();
     btn.dataset.cat = key;
+    btn.type = 'button';
+    btn.setAttribute('aria-pressed', String(activeFilter === key));
     
     // Render icon or custom image
     let iconHtml = '';
@@ -73,6 +76,13 @@ function renderFilters() {
     btn.addEventListener('click', () => { activeFilter = key; renderFilters(); renderProducts(); });
     container.appendChild(btn);
   });
+
+  // En los temas que muestran los filtros como un riel horizontal, la categoría
+  // activa puede quedar fuera de la vista al llegar desde ?cat=
+  const active = container.querySelector('.filter-tab.active');
+  if (active && container.scrollWidth > container.clientWidth) {
+    active.scrollIntoView({ block: 'nearest', inline: 'center' });
+  }
 }
 
 // ── Render Products ───────────────────────────────────

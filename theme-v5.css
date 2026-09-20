@@ -1,0 +1,271 @@
+/* ======================================================
+   DISTRIJAM — theme-v5.css
+   VERSIÓN 5 · "CERCANA / COMERCIAL"
+   Repinta las páginas compartidas (catálogo, producto y
+   administración) en crema con terracota.
+   ====================================================== */
+
+:root.theme-v5,
+body.theme-v5 {
+  --primary: #C2410C !important;
+  --primary-dark: #9A3412 !important;
+  --primary-light: #FDEBE0 !important;
+
+  --red: #C2410C !important;
+  --red-dark: #9A3412 !important;
+  --red-light: #EA580C !important;
+  --gold: #2B2019 !important;
+  --gold-light: #6B5A4D !important;
+  --steel: #9C8A7C !important;
+
+  --bg: #FDF8F3 !important;
+  --bg-2: #FFFFFF !important;
+  --bg-card: #FFFFFF !important;
+  --bg-card-2: #F6EADD !important;
+
+  --text: #2B2019 !important;
+  --text-dim: #6B5A4D !important;
+  --text-muted: #9C8A7C !important;
+
+  --border: #EADFD2 !important;
+  --border-light: #F3EAE0 !important;
+
+  --white: #2B2019 !important;
+  --white-real: #FFFFFF !important;
+
+  --shadow: 0 2px 10px rgba(43, 32, 25, 0.06) !important;
+  --shadow-lg: 0 18px 44px rgba(43, 32, 25, 0.12) !important;
+
+  --radius: 14px !important;
+  --radius-lg: 22px !important;
+
+  /* Colores del riel de categorías (filtros-rail.css) */
+  --rail-bg: #FFFFFF;
+  --rail-bg-hover: #F6EADD;
+  --rail-border: #EADFD2;
+  --rail-border-hover: #DCC8B2;
+  --rail-text: #6B5A4D;
+  --rail-text-strong: #2B2019;
+  --rail-active-bg: #C2410C;
+  --rail-active-text: #FFFFFF;
+  --rail-count-bg: #F6EADD;
+  --rail-count-text: #9C8A7C;
+  --rail-active-count-bg: rgba(255, 255, 255, 0.26);
+  --rail-active-count-text: #FFFFFF;
+}
+
+body.theme-v5 {
+  background: #FDF8F3 !important;
+  color: #2B2019 !important;
+}
+
+body.theme-v5 ::selection { background: #C2410C; color: #fff; }
+
+/* ── NAVEGACIÓN ────────────────────────────────────── */
+body.theme-v5 .nav {
+  background: rgba(253, 248, 243, 0.92) !important;
+  border-bottom: 1px solid #F3EAE0 !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+body.theme-v5 .nav.scrolled {
+  background: rgba(253, 248, 243, 0.98) !important;
+  box-shadow: 0 6px 26px rgba(43, 32, 25, 0.07) !important;
+}
+body.theme-v5 .nav-link { border-radius: 100px !important; }
+body.theme-v5 .nav-link:hover { background: #F6EADD !important; color: #2B2019 !important; }
+body.theme-v5 .nav-link.active { color: #C2410C !important; background: #FDEBE0 !important; font-weight: 600 !important; }
+body.theme-v5 .nav-cta {
+  background: #C2410C !important;
+  color: #FFFFFF !important;
+  border-radius: 100px !important;
+  font-weight: 600 !important;
+}
+body.theme-v5 .nav-cta:hover { background: #EA580C !important; }
+body.theme-v5 .nav-mobile { background: #FFFFFF !important; border-color: #EADFD2 !important; }
+
+/* Menú desplegable de productos */
+body.theme-v5 .dropdown-menu,
+body.theme-v5 .submenu {
+  background: #FFFFFF !important;
+  border: 1px solid #EADFD2 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 24px 52px rgba(43, 32, 25, 0.14) !important;
+}
+body.theme-v5 .dropdown-link,
+body.theme-v5 .submenu-link { color: #6B5A4D !important; }
+body.theme-v5 .dropdown-link:hover,
+body.theme-v5 .submenu-link:hover { background: #F6EADD !important; color: #C2410C !important; }
+
+/* ── BOTONES ───────────────────────────────────────── */
+body.theme-v5 .btn { border-radius: 100px !important; }
+body.theme-v5 .btn-primary,
+body.theme-v5 .btn-add-cart,
+body.theme-v5 .btn-select-variant {
+  background: #C2410C !important;
+  color: #FFFFFF !important;
+  border-radius: 100px !important;
+  font-weight: 600 !important;
+}
+body.theme-v5 .btn-primary:hover,
+body.theme-v5 .btn-add-cart:hover,
+body.theme-v5 .btn-select-variant:hover {
+  background: #EA580C !important;
+  color: #FFFFFF !important;
+}
+body.theme-v5 .btn-secondary { color: #2B2019 !important; border-color: #EADFD2 !important; }
+body.theme-v5 .btn-secondary:hover { border-color: #2B2019 !important; background: #F6EADD !important; color: #2B2019 !important; }
+body.theme-v5 .btn-gold { background: #2B2019 !important; color: #FFFFFF !important; }
+
+/* ── CATÁLOGO ──────────────────────────────────────── */
+body.theme-v5.catalog-page {
+  background: #FDF8F3 !important;
+  background-image: none !important;
+}
+
+body.theme-v5 .catalog-header {
+  background: #F6EADD !important;
+  border-bottom: 1px solid #EADFD2 !important;
+}
+body.theme-v5 .catalog-header h1 {
+  color: #2B2019 !important;
+  font-family: 'Outfit', 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.03em !important;
+}
+body.theme-v5 .catalog-header h1 span { color: #C2410C !important; }
+body.theme-v5 .catalog-header-sub { color: #6B5A4D !important; }
+
+body.theme-v5 .catalog-search input {
+  background: #FFFFFF !important;
+  border: 2px solid #EADFD2 !important;
+  color: #2B2019 !important;
+  border-radius: 100px !important;
+}
+body.theme-v5 .catalog-search input:focus { border-color: #C2410C !important; }
+body.theme-v5 .catalog-search input::placeholder { color: #9C8A7C !important; }
+body.theme-v5 .catalog-count { color: #6B5A4D !important; }
+body.theme-v5 .catalog-count strong { color: #2B2019 !important; }
+
+body.theme-v5 .product-card {
+  background: #FFFFFF !important;
+  border: 1px solid #EADFD2 !important;
+  border-radius: 22px !important;
+  box-shadow: none !important;
+}
+body.theme-v5 .product-card:hover {
+  border-color: #DCC8B2 !important;
+  box-shadow: 0 20px 44px rgba(43, 32, 25, 0.13) !important;
+  transform: translateY(-5px) !important;
+}
+body.theme-v5 .product-name {
+  color: #2B2019 !important;
+  font-family: 'Outfit', 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+body.theme-v5 .product-desc { color: #6B5A4D !important; }
+body.theme-v5 .product-cat-badge {
+  background: #FDEBE0 !important;
+  color: #9A3412 !important;
+  border: none !important;
+  border-radius: 100px !important;
+  font-weight: 600 !important;
+}
+body.theme-v5 .btn-quick-view { border-color: #EADFD2 !important; color: #6B5A4D !important; }
+body.theme-v5 .btn-quick-view:hover { border-color: #C2410C !important; color: #C2410C !important; }
+
+/* ── CARRITO ───────────────────────────────────────── */
+body.theme-v5 .cart-sidebar { background: #FFFFFF !important; border-left: 1px solid #EADFD2 !important; }
+body.theme-v5 .cart-header {
+  background: transparent !important;
+  border-bottom: 1px solid #EADFD2 !important;
+  padding-bottom: 14px !important;
+}
+body.theme-v5 .cart-title {
+  color: #2B2019 !important;
+  font-family: 'Outfit', 'Inter', sans-serif !important;
+  font-size: 1.12rem !important;
+}
+body.theme-v5 .cart-badge { background: #C2410C !important; color: #FFFFFF !important; }
+body.theme-v5 .cart-item { border-color: #F3EAE0 !important; }
+body.theme-v5 .cart-item-name { color: #2B2019 !important; }
+body.theme-v5 .cart-clear-btn { color: #9C8A7C !important; }
+body.theme-v5 .cart-clear-btn:hover { color: #DC2626 !important; }
+body.theme-v5 .cart-fab { background: #C2410C !important; color: #FFFFFF !important; box-shadow: 0 8px 26px rgba(194, 65, 12, 0.3) !important; }
+body.theme-v5 .btn-quote { background: #128C4A !important; color: #FFFFFF !important; border-radius: 100px !important; font-weight: 600 !important; }
+body.theme-v5 .btn-quote:hover { background: #0E7A40 !important; }
+
+/* Modal de cotización */
+body.theme-v5 .modal-content,
+body.theme-v5 .quote-modal { background: #FFFFFF !important; border: 1px solid #EADFD2 !important; border-radius: 22px !important; }
+body.theme-v5 .form-input,
+body.theme-v5 .form-textarea,
+body.theme-v5 select {
+  background: #FDF8F3 !important;
+  border: 1px solid #EADFD2 !important;
+  color: #2B2019 !important;
+}
+body.theme-v5 .form-input:focus,
+body.theme-v5 .form-textarea:focus { border-color: #C2410C !important; }
+body.theme-v5 .form-label { color: #6B5A4D !important; }
+
+/* ── PÁGINA DE PRODUCTO ────────────────────────────── */
+body.theme-v5 .single-product-layout {
+  background: #FFFFFF !important;
+  border: 1px solid #EADFD2 !important;
+  border-radius: 22px !important;
+  box-shadow: 0 2px 14px rgba(43, 32, 25, 0.05) !important;
+}
+body.theme-v5 .prod-category-badge {
+  background: #FDEBE0 !important;
+  color: #9A3412 !important;
+  border: none !important;
+  border-radius: 100px !important;
+}
+body.theme-v5 .thumb-img { border-color: #EADFD2 !important; }
+body.theme-v5 .thumb-img.active { border-color: #C2410C !important; }
+body.theme-v5 .variant-table th { background: #F6EADD !important; color: #2B2019 !important; }
+body.theme-v5 .variant-table td { border-color: #F3EAE0 !important; color: #6B5A4D !important; }
+body.theme-v5 .variant-table tr:hover td { background: #FDF8F3 !important; }
+body.theme-v5 .btn-wa-quote,
+body.theme-v5 .btn-add-cart-detail {
+  background: #128C4A !important;
+  color: #FFFFFF !important;
+  border-radius: 100px !important;
+  font-weight: 600 !important;
+}
+body.theme-v5 .btn-wa-quote:hover,
+body.theme-v5 .btn-add-cart-detail:hover { background: #0E7A40 !important; }
+
+/* ── ADMINISTRACIÓN ────────────────────────────────── */
+body.theme-v5.admin-body { background: #FDF8F3 !important; }
+body.theme-v5 .admin-header-bar { background: #2B2019 !important; color: #FFFFFF !important; border-bottom: none !important; }
+body.theme-v5 .admin-card-title::before { background: #C2410C !important; }
+body.theme-v5 .admin-form-card,
+body.theme-v5 .admin-table-card,
+body.theme-v5 .login-card {
+  background: #FFFFFF !important;
+  border: 1px solid #EADFD2 !important;
+  border-radius: 22px !important;
+  box-shadow: 0 2px 14px rgba(43, 32, 25, 0.05) !important;
+}
+body.theme-v5 .admin-table th { background: #F6EADD !important; color: #2B2019 !important; }
+body.theme-v5 .admin-table td { border-color: #F3EAE0 !important; }
+
+/* ── FOOTER ────────────────────────────────────────── */
+body.theme-v5 .footer { background: #2B2019 !important; border-top: none !important; }
+body.theme-v5 .footer p,
+body.theme-v5 .footer span,
+body.theme-v5 .footer a { color: rgba(255, 255, 255, 0.6) !important; }
+body.theme-v5 .footer-col h4 { color: #EA580C !important; }
+body.theme-v5 .footer a:hover { color: #FFFFFF !important; }
+body.theme-v5 .footer .nav-logo-img { filter: brightness(0) invert(1); }
+
+/* ── TOASTS ────────────────────────────────────────── */
+body.theme-v5 .toast {
+  background: #FFFFFF !important;
+  border: 1px solid #EADFD2 !important;
+  border-left: 3px solid #C2410C !important;
+  color: #2B2019 !important;
+}

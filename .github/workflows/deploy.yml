@@ -1,8 +1,10 @@
 name: Despliegue a Ferozo
+
 on:
   push:
     branches:
       - main  # Rama principal
+  workflow_dispatch:   # Permite lanzar el despliegue a mano desde la pestaña Actions
 
 jobs:
   web-deploy:
@@ -10,7 +12,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Get latest code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
+    # Le agrega ?v=<hash del commit> a cada CSS y JS propio referenciado en los
+    # HTML. Así el navegador y Cloudflare ven una URL distinta en cada despliegue
+    # y no pueden servir una copia vieja, aunque falle la purga de caché.
+    - name: Versionar CSS y JS (cache busting)
+      run: |
+        python3 - <<'PY'
+        import pathlib, re, os
+
+        sha = os.environ['GITHUB_SHA'][:8]
+        pattern = re.compile(r'(\b(?:href|src)=")(?!https?:|//)([^"?#]+\.(?:css|js))(")')
+        total = 0
+
+        for path in pathlib.Path('.').glob('*.html'):
+            text = path.read_text(encoding='utf-8')
+            new_text, n = pattern.subn(rf'\g<1>\g<2>?v={sha}\g<3>', text)
+            if n:
+                path.write_text(new_text, encoding='utf-8')
+                total += n
+                print(f'{path}: {n} referencias versionadas')
+
+        print(f'Total: {total} referencias con ?v={sha}')
+        PY
 
     - name: Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -21,10 +46,32 @@ jobs:
         server-dir: ./public_html/  # Ajustá esto según la carpeta de tu hosting
         protocol: ftps
 
+    # El curl anterior no miraba la respuesta: si Cloudflare rechazaba la purga
+    # (token vencido, zone id equivocado) el paso igual daba "success" y el sitio
+    # seguía sirviendo archivos viejos hasta 4 horas. Ahora falla a la vista.
     - name: Purge Cloudflare Cache
       if: success()
+      env:
+        ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       run: |
-        curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
-          -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+        if [ -z "$ZONE_ID" ] || [ -z "$API_TOKEN" ]; then
+          echo "::error::Faltan los secretos CLOUDFLARE_ZONE_ID o CLOUDFLARE_API_TOKEN."
+          echo "Cargalos en Settings > Secrets and variables > Actions del repositorio."
+          exit 1
+        fi
+
+        respuesta=$(curl -sS -X POST \
+          "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/purge_cache" \
+          -H "Authorization: Bearer $API_TOKEN" \
           -H "Content-Type: application/json" \
-          --data '{"purge_everything":true}'
+          --data '{"purge_everything":true}')
+
+        echo "Respuesta de Cloudflare: $respuesta"
+
+        if echo "$respuesta" | grep -q '"success":[[:space:]]*true'; then
+          echo "Caché de Cloudflare purgada correctamente."
+        else
+          echo "::error::Cloudflare rechazó la purga de caché. El sitio puede seguir mostrando archivos viejos."
+          exit 1
+        fi
