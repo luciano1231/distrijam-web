@@ -8,7 +8,7 @@
    --rail-* para ponerle sus propios colores.
    ====================================================== */
 
-:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tabs {
+:is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tabs {
   display: flex !important;
   flex-wrap: nowrap !important;
   gap: 8px !important;
@@ -25,11 +25,11 @@
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 26px), transparent 100%);
 }
 
-:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tabs::-webkit-scrollbar {
+:is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tabs::-webkit-scrollbar {
   display: none;
 }
 
-:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab {
+:is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tab {
   flex: 0 0 auto !important;
   display: inline-flex !important;
   align-items: center;
@@ -47,14 +47,14 @@
   transition: background .18s ease, color .18s ease, border-color .18s ease !important;
 }
 
-:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab:hover {
+:is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tab:hover {
   background: var(--rail-bg-hover, #F1F3F6) !important;
   color: var(--rail-text-strong, #16181D) !important;
   border-color: var(--rail-border-hover, #B9C0C9) !important;
   transform: none !important;
 }
 
-:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab.active {
+:is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tab.active {
   background: var(--rail-active-bg, #16181D) !important;
   color: var(--rail-active-text, #FFFFFF) !important;
   border-color: var(--rail-active-bg, #16181D) !important;
@@ -62,7 +62,7 @@
 }
 
 /* La cuenta de productos, como globo dentro de la píldora */
-:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab .tab-count {
+:is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tab .tab-count {
   display: inline-block;
   min-width: 20px;
   padding: 1px 7px !important;
@@ -75,30 +75,30 @@
   font-variant-numeric: tabular-nums;
 }
 
-:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab.active .tab-count {
+:is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tab.active .tab-count {
   background: var(--rail-active-count-bg, rgba(255, 255, 255, 0.22)) !important;
   color: var(--rail-active-count-text, #FFFFFF) !important;
 }
 
 /* Categorías sin productos: se atenúan en vez de ocupar lugar como si tuvieran */
-:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab.is-empty {
+:is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tab.is-empty {
   opacity: 0.42;
 }
-:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab.is-empty:hover {
+:is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tab.is-empty:hover {
   opacity: 0.72;
 }
 
 /* Los emojis de categoría se ven desprolijos dentro de la píldora */
-:is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab {
+:is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tab {
   font-variant-emoji: text;
 }
 
 @media (max-width: 860px) {
-  :is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tabs {
+  :is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tabs {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
-  :is(body.theme-v3, body.theme-v4, body.theme-v5) .filter-tab {
+  :is(body.theme-v3, body.theme-v4, body.theme-v5, body.theme-v6) .filter-tab {
     padding: 8px 14px !important;
     font-size: 0.82rem !important;
   }

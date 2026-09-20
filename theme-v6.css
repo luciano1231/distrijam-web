@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&display=swap');
+
+/* ======================================================
+   DISTRIJAM — theme-v6.css
+   VERSIÓN 6 · "SHOWROOM"
+   Repinta las páginas compartidas (catálogo, producto y
+   administración) en blanco con el rojo de la marca.
+   ====================================================== */
+
+:root.theme-v6,
+body.theme-v6 {
+  --primary: #C0392B !important;
+  --primary-dark: #A5281B !important;
+  --primary-light: #FCEDEB !important;
+
+  --red: #C0392B !important;
+  --red-dark: #A5281B !important;
+  --red-light: #E74C3C !important;
+  --gold: #1A1D21 !important;
+  --gold-light: #565D66 !important;
+  --steel: #8A929C !important;
+
+  --bg: #FFFFFF !important;
+  --bg-2: #F5F6F8 !important;
+  --bg-card: #FFFFFF !important;
+  --bg-card-2: #F5F6F8 !important;
+
+  --text: #1A1D21 !important;
+  --text-dim: #565D66 !important;
+  --text-muted: #8A929C !important;
+
+  --border: #E1E4E9 !important;
+  --border-light: #EFF1F4 !important;
+
+  --white: #1A1D21 !important;
+  --white-real: #FFFFFF !important;
+
+  --shadow: 0 2px 8px rgba(26, 29, 33, 0.05) !important;
+  --shadow-lg: 0 16px 40px rgba(26, 29, 33, 0.1) !important;
+
+  --radius: 10px !important;
+  --radius-lg: 18px !important;
+
+  /* Colores del riel de categorías (filtros-rail.css) */
+  --rail-bg: #FFFFFF;
+  --rail-bg-hover: #F5F6F8;
+  --rail-border: #E1E4E9;
+  --rail-border-hover: #C3C9D2;
+  --rail-text: #565D66;
+  --rail-text-strong: #1A1D21;
+  --rail-active-bg: #C0392B;
+  --rail-active-text: #FFFFFF;
+  --rail-count-bg: #F5F6F8;
+  --rail-count-text: #8A929C;
+  --rail-active-count-bg: rgba(255, 255, 255, 0.26);
+  --rail-active-count-text: #FFFFFF;
+}
+
+body.theme-v6 {
+  background: #FFFFFF !important;
+  color: #1A1D21 !important;
+}
+
+body.theme-v6 ::selection { background: #C0392B; color: #fff; }
+
+/* ── NAVEGACIÓN ────────────────────────────────────── */
+body.theme-v6 .nav {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-bottom: 1px solid #E1E4E9 !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+body.theme-v6 .nav.scrolled {
+  background: rgba(255, 255, 255, 0.99) !important;
+  box-shadow: 0 6px 24px rgba(26, 29, 33, 0.07) !important;
+}
+body.theme-v6 .nav-link:hover { background: #F5F6F8 !important; color: #1A1D21 !important; }
+body.theme-v6 .nav-link.active { color: #C0392B !important; font-weight: 700 !important; }
+body.theme-v6 .nav-cta {
+  background: #C0392B !important;
+  color: #FFFFFF !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+body.theme-v6 .nav-cta:hover { background: #E74C3C !important; }
+body.theme-v6 .nav-mobile { background: #FFFFFF !important; border-color: #E1E4E9 !important; }
+
+/* Menú desplegable de productos */
+body.theme-v6 .dropdown-menu,
+body.theme-v6 .submenu {
+  background: #FFFFFF !important;
+  border: 1px solid #E1E4E9 !important;
+  box-shadow: 0 24px 52px rgba(26, 29, 33, 0.14) !important;
+}
+body.theme-v6 .dropdown-link,
+body.theme-v6 .submenu-link { color: #565D66 !important; }
+body.theme-v6 .dropdown-link:hover,
+body.theme-v6 .submenu-link:hover { background: #F5F6F8 !important; color: #C0392B !important; }
+
+/* ── BOTONES ───────────────────────────────────────── */
+body.theme-v6 .btn-primary,
+body.theme-v6 .btn-add-cart,
+body.theme-v6 .btn-select-variant {
+  background: #C0392B !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+}
+body.theme-v6 .btn-primary:hover,
+body.theme-v6 .btn-add-cart:hover,
+body.theme-v6 .btn-select-variant:hover {
+  background: #E74C3C !important;
+  color: #FFFFFF !important;
+}
+body.theme-v6 .btn-secondary { color: #1A1D21 !important; border-color: #E1E4E9 !important; }
+body.theme-v6 .btn-secondary:hover { border-color: #C0392B !important; color: #C0392B !important; }
+body.theme-v6 .btn-gold { background: #1A1D21 !important; color: #FFFFFF !important; }
+
+/* ── CATÁLOGO ──────────────────────────────────────── */
+body.theme-v6.catalog-page {
+  background: #FFFFFF !important;
+  background-image: none !important;
+}
+
+body.theme-v6 .catalog-header {
+  background: #F5F6F8 !important;
+  border-bottom: 1px solid #E1E4E9 !important;
+}
+body.theme-v6 .catalog-header h1 {
+  color: #1A1D21 !important;
+  font-family: 'Manrope', 'Inter', sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+}
+body.theme-v6 .catalog-header h1 span { color: #C0392B !important; }
+body.theme-v6 .catalog-header-sub { color: #565D66 !important; }
+
+body.theme-v6 .catalog-search input {
+  background: #FFFFFF !important;
+  border: 1px solid #E1E4E9 !important;
+  color: #1A1D21 !important;
+  border-radius: 10px !important;
+}
+body.theme-v6 .catalog-search input:focus { border-color: #C0392B !important; }
+body.theme-v6 .catalog-search input::placeholder { color: #8A929C !important; }
+body.theme-v6 .catalog-count { color: #565D66 !important; }
+body.theme-v6 .catalog-count strong { color: #1A1D21 !important; }
+
+body.theme-v6 .product-card {
+  background: #FFFFFF !important;
+  border: 1px solid #E1E4E9 !important;
+  border-radius: 18px !important;
+  box-shadow: none !important;
+}
+body.theme-v6 .product-card:hover {
+  border-color: #C0392B !important;
+  box-shadow: 0 20px 42px rgba(26, 29, 33, 0.11) !important;
+  transform: translateY(-5px) !important;
+}
+body.theme-v6 .product-name {
+  color: #1A1D21 !important;
+  font-family: 'Manrope', 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+body.theme-v6 .product-desc { color: #565D66 !important; }
+body.theme-v6 .product-cat-badge {
+  background: #FCEDEB !important;
+  color: #A5281B !important;
+  border: none !important;
+  border-radius: 100px !important;
+  font-weight: 700 !important;
+}
+body.theme-v6 .btn-quick-view { border-color: #E1E4E9 !important; color: #565D66 !important; }
+body.theme-v6 .btn-quick-view:hover { border-color: #C0392B !important; color: #C0392B !important; }
+
+/* ── CARRITO ───────────────────────────────────────── */
+body.theme-v6 .cart-sidebar { background: #FFFFFF !important; border-left: 1px solid #E1E4E9 !important; }
+body.theme-v6 .cart-header {
+  background: transparent !important;
+  border-bottom: 1px solid #E1E4E9 !important;
+  padding-bottom: 14px !important;
+}
+body.theme-v6 .cart-title {
+  color: #1A1D21 !important;
+  font-family: 'Manrope', 'Inter', sans-serif !important;
+  font-size: 1.1rem !important;
+}
+body.theme-v6 .cart-badge { background: #C0392B !important; color: #FFFFFF !important; }
+body.theme-v6 .cart-item { border-color: #EFF1F4 !important; }
+body.theme-v6 .cart-item-name { color: #1A1D21 !important; }
+body.theme-v6 .cart-clear-btn { color: #8A929C !important; }
+body.theme-v6 .cart-clear-btn:hover { color: #C0392B !important; }
+body.theme-v6 .cart-fab { background: #C0392B !important; color: #FFFFFF !important; box-shadow: 0 8px 26px rgba(192, 57, 43, 0.32) !important; }
+body.theme-v6 .btn-quote { background: #128C4A !important; color: #FFFFFF !important; border-radius: 10px !important; font-weight: 600 !important; }
+body.theme-v6 .btn-quote:hover { background: #0E7A40 !important; }
+
+/* Modal de cotización */
+body.theme-v6 .modal-content,
+body.theme-v6 .quote-modal { background: #FFFFFF !important; border: 1px solid #E1E4E9 !important; }
+body.theme-v6 .form-input,
+body.theme-v6 .form-textarea,
+body.theme-v6 select {
+  background: #FFFFFF !important;
+  border: 1px solid #E1E4E9 !important;
+  color: #1A1D21 !important;
+}
+body.theme-v6 .form-input:focus,
+body.theme-v6 .form-textarea:focus { border-color: #C0392B !important; }
+body.theme-v6 .form-label { color: #565D66 !important; }
+
+/* ── PÁGINA DE PRODUCTO ────────────────────────────── */
+body.theme-v6 .single-product-layout {
+  background: #FFFFFF !important;
+  border: 1px solid #E1E4E9 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 2px 12px rgba(26, 29, 33, 0.05) !important;
+}
+body.theme-v6 .prod-category-badge {
+  background: #FCEDEB !important;
+  color: #A5281B !important;
+  border: none !important;
+  border-radius: 100px !important;
+}
+body.theme-v6 .thumb-img { border-color: #E1E4E9 !important; }
+body.theme-v6 .thumb-img.active { border-color: #C0392B !important; }
+body.theme-v6 .variant-table th { background: #F5F6F8 !important; color: #1A1D21 !important; }
+body.theme-v6 .variant-table td { border-color: #EFF1F4 !important; color: #565D66 !important; }
+body.theme-v6 .variant-table tr:hover td { background: #F5F6F8 !important; }
+body.theme-v6 .btn-wa-quote,
+body.theme-v6 .btn-add-cart-detail {
+  background: #128C4A !important;
+  color: #FFFFFF !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+body.theme-v6 .btn-wa-quote:hover,
+body.theme-v6 .btn-add-cart-detail:hover { background: #0E7A40 !important; }
+
+/* ── ADMINISTRACIÓN ────────────────────────────────── */
+body.theme-v6.admin-body { background: #F5F6F8 !important; }
+body.theme-v6 .admin-header-bar { background: #1A1D21 !important; color: #FFFFFF !important; border-bottom: none !important; }
+body.theme-v6 .admin-card-title::before { background: #C0392B !important; }
+body.theme-v6 .admin-form-card,
+body.theme-v6 .admin-table-card,
+body.theme-v6 .login-card {
+  background: #FFFFFF !important;
+  border: 1px solid #E1E4E9 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 2px 12px rgba(26, 29, 33, 0.05) !important;
+}
+body.theme-v6 .admin-table th { background: #F5F6F8 !important; color: #1A1D21 !important; }
+body.theme-v6 .admin-table td { border-color: #EFF1F4 !important; }
+
+/* ── FOOTER ────────────────────────────────────────── */
+body.theme-v6 .footer { background: #1A1D21 !important; border-top: none !important; }
+body.theme-v6 .footer p,
+body.theme-v6 .footer span,
+body.theme-v6 .footer a { color: rgba(255, 255, 255, 0.6) !important; }
+body.theme-v6 .footer-col h4 { color: #E74C3C !important; }
+body.theme-v6 .footer a:hover { color: #FFFFFF !important; }
+/* El logo es negro sobre transparente: se invierte para el footer oscuro */
+body.theme-v6 .footer .nav-logo-img { filter: brightness(0) invert(1); }
+
+/* ── TOASTS ────────────────────────────────────────── */
+body.theme-v6 .toast {
+  background: #FFFFFF !important;
+  border: 1px solid #E1E4E9 !important;
+  border-left: 3px solid #C0392B !important;
+  color: #1A1D21 !important;
+}

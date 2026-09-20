@@ -314,7 +314,8 @@ const DISTRIJAM_VERSIONS = {
   v2: { short: 'V2', name: 'B2B',        home: 'index2.html', themeClass: 'theme-v2', accent: '#1E3A8A', title: 'Versión 2: Corporativa B2B (pizarra y azul)' },
   v3: { short: 'V3', name: 'Industrial', home: 'index3.html', themeClass: 'theme-v3', accent: '#C2700A', title: 'Versión 3: Industrial clara (blanco y ámbar)' },
   v4: { short: 'V4', name: 'Tech',       home: 'index4.html', themeClass: 'theme-v4', accent: '#0F766E', title: 'Versión 4: Tech nocturna (carbón y turquesa)' },
-  v5: { short: 'V5', name: 'Cercana',    home: 'index5.html', themeClass: 'theme-v5', accent: '#C2410C', title: 'Versión 5: Cercana (crema y terracota)' }
+  v5: { short: 'V5', name: 'Cercana',    home: 'index5.html', themeClass: 'theme-v5', accent: '#C2410C', title: 'Versión 5: Cercana (crema y terracota)' },
+  v6: { short: 'V6', name: 'Showroom',   home: 'index6.html', themeClass: 'theme-v6', accent: '#C0392B', title: 'Versión 6: Showroom (blanco y rojo de marca)' }
 };
 
 const DISTRIJAM_ALL_THEME_CLASSES = Object.values(DISTRIJAM_VERSIONS)
@@ -408,12 +409,12 @@ function injectVersionPillStyles() {
     /* En las páginas compartidas la barra superior es fija y arranca en el
        tope, así que se le reserva la esquina que ocupa el selector. */
     @media (min-width:901px){
-      body.catalog-page .nav-inner{padding-right:330px}
-      body.admin-body .admin-header-bar{padding-right:330px}
+      body.catalog-page .nav-inner{padding-right:370px}
+      body.admin-body .admin-header-bar{padding-right:370px}
     }
     @media (min-width:641px) and (max-width:900px){
-      body.catalog-page .nav-inner{padding-right:230px}
-      body.admin-body .admin-header-bar{padding-right:230px}
+      body.catalog-page .nav-inner{padding-right:250px}
+      body.admin-body .admin-header-bar{padding-right:250px}
     }
     @media print{.distrijam-version-pill{display:none}}
   `;

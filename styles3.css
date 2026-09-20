@@ -233,31 +233,58 @@ ul { list-style: none; }
 .v3-mobile .v3-btn { margin-top: 16px; border-bottom: none; }
 
 /* ── HERO ──────────────────────────────────────────── */
+/* La foto ocupa todo el hero; el degradado horizontal sostiene la lectura */
 .v3-hero {
-  position: relative; overflow: hidden;
-  background: linear-gradient(180deg, #FFFFFF 0%, var(--v3-black) 100%);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   border-bottom: 1px solid var(--v3-line);
+  min-height: 620px;
+  display: flex;
+  align-items: center;
 }
+
+.v3-hero-bg { position: absolute; inset: 0; z-index: -1; }
+
+.v3-hero-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 74% center;
+}
+
+.v3-hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.985) 0%,
+    rgba(255, 255, 255, 0.965) 34%,
+    rgba(255, 255, 255, 0.88) 50%,
+    rgba(255, 255, 255, 0.46) 70%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+}
+
 .v3-hero-grid-bg {
-  position: absolute; inset: 0; pointer-events: none;
+  position: absolute; inset: 0; pointer-events: none; z-index: -1;
   background-image:
-    linear-gradient(rgba(22,24,29,.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(22,24,29,.06) 1px, transparent 1px);
+    linear-gradient(rgba(22,24,29,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22,24,29,.05) 1px, transparent 1px);
   background-size: 52px 52px;
-  mask-image: radial-gradient(ellipse 80% 70% at 30% 40%, #000 20%, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 30% 40%, #000 20%, transparent 78%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 42%, transparent 66%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 42%, transparent 66%);
 }
-.v3-hero-glow {
-  position: absolute; top: -220px; right: -160px; width: 720px; height: 720px;
-  background: radial-gradient(circle, rgba(245,158,11,.14) 0%, transparent 62%);
-  pointer-events: none;
-}
+
+
 
 .v3-hero-inner {
   position: relative; z-index: 2;
-  max-width: var(--v3-maxw); margin: 0 auto; padding: 88px 32px 96px;
-  display: grid; grid-template-columns: 1.08fr .92fr; gap: 64px; align-items: center;
+  max-width: var(--v3-maxw); margin: 0 auto; padding: 92px 32px 88px;
+  width: 100%;
 }
+
+.v3-hero-copy { max-width: 660px; }
+
 
 .v3-eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
@@ -343,54 +370,48 @@ ul { list-style: none; }
 .v3-hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
 
 /* Panel técnico del hero */
-.v3-hero-panel {
-  background: var(--v3-surface); border: 1px solid var(--v3-line);
-  border-radius: var(--v3-radius-lg); overflow: hidden;
-  box-shadow: 0 30px 70px rgba(22,24,29,.13);
-}
-.v3-panel-media { position: relative; aspect-ratio: 4/3; overflow: hidden; }
-.v3-panel-media img { width: 100%; height: 100%; object-fit: cover; }
-.v3-panel-media::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(8,9,11,.95) 0%, rgba(8,9,11,.15) 50%, transparent 100%);
-}
-.v3-panel-tag {
-  position: absolute; top: 14px; left: 14px; z-index: 2;
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(8,9,11,.82); backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,.18); border-radius: 100px;
-  padding: 6px 13px; font-family: var(--v3-font-mono); font-size: .68rem;
-  letter-spacing: .06em; text-transform: uppercase; color: #fff;
-}
-.v3-panel-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--v3-wa); animation: v3Pulse 2s infinite; }
-.v3-panel-caption {
-  position: absolute; left: 18px; bottom: 16px; z-index: 2;
-  font-family: var(--v3-font-display); font-size: 1.35rem; font-weight: 800;
-  text-transform: uppercase; letter-spacing: .02em; color: #fff; line-height: 1.1;
-}
 
-.v3-panel-specs { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--v3-line); }
-.v3-spec-cell { padding: 18px 14px; text-align: center; border-right: 1px solid var(--v3-line); }
-.v3-spec-cell:last-child { border-right: none; }
-.v3-spec-val {
-  font-family: var(--v3-font-display); font-size: 1.65rem; font-weight: 800;
-  color: var(--v3-amber); line-height: 1;
-}
-.v3-spec-lbl {
-  font-family: var(--v3-font-mono); font-size: .64rem; text-transform: uppercase;
-  letter-spacing: .1em; color: var(--v3-text-muted); margin-top: 7px;
-}
 
-.v3-panel-norms { padding: 16px 18px; border-top: 1px solid var(--v3-line); background: var(--v3-black); }
-.v3-panel-norms-label {
-  font-family: var(--v3-font-mono); font-size: .64rem; text-transform: uppercase;
-  letter-spacing: .1em; color: var(--v3-text-muted); margin-bottom: 10px;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .v3-chips { display: flex; flex-wrap: wrap; gap: 7px; }
 .v3-chip {
   font-family: var(--v3-font-mono); font-size: .68rem; color: var(--v3-text-dim);
   border: 1px solid var(--v3-line); border-radius: 3px; padding: 4px 9px;
-  background: var(--v3-surface);
+  background: rgba(255, 255, 255, .86);
+}
+
+
+/* Datos clave y normas, en lugar de la ficha que tapaba la foto */
+.v3-hero-facts {
+  display: flex; flex-wrap: wrap; gap: 34px;
+  margin-top: 34px; padding-top: 26px;
+  border-top: 1px solid var(--v3-line);
+}
+.v3-fact-val {
+  font-family: var(--v3-font-display); font-size: 1.85rem; font-weight: 800;
+  color: var(--v3-amber); line-height: 1;
+}
+.v3-fact-lbl {
+  font-family: var(--v3-font-mono); font-size: .64rem; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--v3-text-muted); margin-top: 7px;
+}
+.v3-hero-norms { margin-top: 24px; }
+.v3-hero-norms-label {
+  font-family: var(--v3-font-mono); font-size: .64rem; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--v3-text-muted); margin-bottom: 10px;
 }
 
 /* ── BANDA DE MÉTRICAS ─────────────────────────────── */
@@ -665,8 +686,7 @@ ul { list-style: none; }
   .v3-nav-links { display: none; }
   .v3-burger { display: flex; }
   .v3-nav-actions .v3-btn-catalog { display: none; }
-  .v3-hero-inner { grid-template-columns: 1fr; gap: 48px; }
-  .v3-hero-panel { max-width: 620px; }
+  .v3-hero-copy { max-width: 100%; }
   .v3-metrics-grid { grid-template-columns: repeat(2, 1fr); }
   .v3-metric:nth-child(2) { border-right: none; }
   .v3-metric:nth-child(-n+2) { border-bottom: 1px solid var(--v3-line-soft); }
@@ -679,15 +699,32 @@ ul { list-style: none; }
   .v3-container, .v3-nav-inner, .v3-hero-inner, .v3-metrics-grid,
   .v3-cta-inner, .v3-footer-grid, .v3-footer-bottom { padding-left: 20px; padding-right: 20px; }
   .v3-section { padding: 68px 0; }
-  .v3-hero-inner { padding-top: 56px; padding-bottom: 64px; }
+  .v3-hero { min-height: 0; }
+  .v3-hero-inner { padding-top: 56px; padding-bottom: 60px; }
+  /* En vertical el texto va sobre la foto: el degradado cambia de eje */
+  .v3-hero-bg img { object-position: center; }
+  .v3-hero-bg::after {
+    background: linear-gradient(
+      180deg,
+      rgba(255,255,255,.975) 0%,
+      rgba(255,255,255,.94) 56%,
+      rgba(255,255,255,.8) 80%,
+      rgba(255,255,255,.66) 100%
+    );
+  }
+  .v3-hero-grid-bg { display: none; }
+  .v3-hero-facts { gap: 22px; }
   .v3-contact-grid { grid-template-columns: 1fr; }
   .v3-footer-grid { grid-template-columns: 1fr 1fr; gap: 34px; }
-  .v3-panel-specs { grid-template-columns: 1fr; }
-  .v3-spec-cell { border-right: none; border-bottom: 1px solid var(--v3-line); }
-  .v3-spec-cell:last-child { border-bottom: none; }
 }
 
 @media (max-width: 560px) {
+  /* En pantallas muy angostas el logo + boton + hamburguesa no entraban
+     y empujaban la pagina a lo ancho. El CTA vive igual en el menu. */
+  .v3-nav-inner { height: 64px; gap: 12px; padding-left: 16px; padding-right: 16px; }
+  .v3-logo img { height: 34px; }
+  .v3-nav-actions .v3-btn { display: none; }
+
   .v3-bento { grid-template-columns: 1fr; grid-auto-rows: 260px; }
   .v3-tile-wide { grid-column: span 1; }
   .v3-metrics-grid { grid-template-columns: 1fr; }
