@@ -482,18 +482,23 @@ ul { list-style: none; }
 .v3-tile-body { position: absolute; inset: auto 0 0 0; z-index: 2; padding: 22px; }
 .v3-tile-kicker {
   font-family: var(--v3-font-mono); font-size: .64rem; text-transform: uppercase;
-  letter-spacing: .12em; color: var(--v3-amber); margin-bottom: 7px;
+  letter-spacing: .12em; color: var(--v3-amber-bright); margin-bottom: 7px;
 }
 .v3-tile-name {
   font-family: var(--v3-font-display); font-size: 1.6rem; font-weight: 800;
   text-transform: uppercase; letter-spacing: .01em; color: #fff; line-height: 1.05;
 }
-.v3-tile-text { font-size: .85rem; color: var(--v3-text-dim); line-height: 1.55; margin-top: 8px; max-width: 42ch; }
+.v3-tile-text { font-size: .85rem; color: rgba(255, 255, 255, .84); line-height: 1.55; margin-top: 8px; max-width: 42ch; }
 .v3-tile-specs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.v3-tile-specs .v3-chip {
+  background: rgba(255, 255, 255, .16);
+  border-color: rgba(255, 255, 255, .3);
+  color: rgba(255, 255, 255, .92);
+}
 .v3-tile-link {
   display: inline-flex; align-items: center; gap: 7px; margin-top: 14px;
   font-family: var(--v3-font-display); font-size: .95rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .05em; color: var(--v3-amber);
+  text-transform: uppercase; letter-spacing: .05em; color: var(--v3-amber-bright);
   transition: gap .2s ease;
 }
 .v3-tile:hover .v3-tile-link { gap: 13px; }
