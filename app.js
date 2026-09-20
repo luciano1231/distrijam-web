@@ -161,4 +161,76 @@ async function initProductDropdown() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initProductDropdown();
+  initVersionSwitcher();
 });
+
+// ── Universal Version Switcher (V1 Clásica / V2 B2B) ───────
+function initVersionSwitcher() {
+  const isIndex2 = window.location.pathname.includes('index2.html');
+  const isIndex1 = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
+  
+  let savedVer = localStorage.getItem('distrijam_version');
+  if (!savedVer) {
+    savedVer = isIndex2 ? 'v2' : (isIndex1 ? 'v1' : 'v2');
+  }
+
+  function applyTheme(ver) {
+    if (ver === 'v2') {
+      document.documentElement.classList.add('theme-v2');
+      document.body.classList.add('theme-v2');
+    } else {
+      document.documentElement.classList.remove('theme-v2');
+      document.body.classList.remove('theme-v2');
+    }
+
+    // Actualizar enlaces de navegación que apunten al inicio
+    document.querySelectorAll('a[href="index.html"], a[href="index2.html"]').forEach(link => {
+      if (link.closest('.distrijam-version-pill') || link.closest('.version-banner')) return;
+      link.href = ver === 'v2' ? 'index2.html' : 'index.html';
+    });
+
+    // Actualizar botones en el pill
+    const btnV1 = document.getElementById('dvp-v1');
+    const btnV2 = document.getElementById('dvp-v2');
+    if (btnV1 && btnV2) {
+      btnV1.classList.toggle('active', ver === 'v1');
+      btnV2.classList.toggle('active', ver === 'v2');
+    }
+  }
+
+  // Crear el widget flotante si no existe
+  if (!document.getElementById('distrijam-version-pill')) {
+    const pill = document.createElement('aside');
+    pill.className = 'distrijam-version-pill';
+    pill.id = 'distrijam-version-pill';
+    pill.setAttribute('aria-label', 'Selector de versión');
+    pill.innerHTML = `
+      <span class="dvp-label">Versión</span>
+      <button type="button" class="dvp-btn dvp-v1" id="dvp-v1" title="Versión 1: Diseño Clásico">V1 Clásica</button>
+      <button type="button" class="dvp-btn dvp-v2" id="dvp-v2" title="Versión 2: Diseño B2B Corporativo">V2 B2B</button>
+    `;
+    document.body.appendChild(pill);
+
+    document.getElementById('dvp-v1').addEventListener('click', () => {
+      localStorage.setItem('distrijam_version', 'v1');
+      if (window.location.pathname.includes('index2.html')) {
+        window.location.href = 'index.html';
+      } else {
+        applyTheme('v1');
+        if (typeof showToast === 'function') showToast('Cambiado a Versión 1 (Clásica)', 'info');
+      }
+    });
+
+    document.getElementById('dvp-v2').addEventListener('click', () => {
+      localStorage.setItem('distrijam_version', 'v2');
+      if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+        window.location.href = 'index2.html';
+      } else {
+        applyTheme('v2');
+        if (typeof showToast === 'function') showToast('Cambiado a Versión 2 (B2B Corporativa)', 'success');
+      }
+    });
+  }
+
+  applyTheme(savedVer);
+}

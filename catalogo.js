@@ -132,16 +132,22 @@ function renderProducts() {
 document.addEventListener('DOMContentLoaded', async () => {
   await loadProducts();
 
-  // Check URL params for pre-selected category
+  // Check URL params for pre-selected category or search query
   const urlParams = new URLSearchParams(window.location.search);
   const catParam = urlParams.get('cat');
   if (catParam && CATEGORIES[catParam]) activeFilter = catParam;
 
+  const searchInput = document.getElementById('catalog-search');
+  const qParam = urlParams.get('q');
+  if (qParam) {
+    searchQuery = qParam;
+    if (searchInput) searchInput.value = qParam;
+  }
+
   renderFilters();
   renderProducts();
 
-  // Search
-  const searchInput = document.getElementById('catalog-search');
+  // Search input listener
   if (searchInput) {
     searchInput.addEventListener('input', () => {
       searchQuery = searchInput.value;

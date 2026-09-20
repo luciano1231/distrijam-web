@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Distrijam — Distribuidora Mayorista de Bulonería y Fijaciones | Corrientes</title>
+  <meta name="description"
+    content="Distrijam: Distribución mayorista de bulones, tornillos, tuercas, arandelas y anclajes en Corrientes y región NEA. Abastecimiento profesional a ferreterías y constructoras." />
+  <link rel="stylesheet" href="styles2.css" />
+  <link rel="stylesheet" href="theme-v2.css" />
+</head>
+
+<body>
+
+  <!-- TOPBAR CORPORATIVA -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span class="topbar-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Iberá 1740, Corrientes (W3400)
+        </span>
+        <span class="topbar-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Lun a Vie: 08:00 - 17:00 hs
+        </span>
+        <span class="topbar-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.49 5.49l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+5403794007195">0379 400-7195</a>
+        </span>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-badge">Atención a Gremios y Ferreterías</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVEGACIÓN PRINCIPAL -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index2.html" class="nav-logo">
+        <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam - Distribuidora Mayorista" class="nav-logo-img">
+      </a>
+
+      <nav class="nav-links">
+        <a href="index2.html" class="nav-link active" data-page="index2.html">Inicio</a>
+        
+        <!-- Dropdown dinámico integrado con app.js -->
+        <div class="nav-item-dropdown">
+          <a href="catalogo.html" class="nav-link" data-page="catalogo.html">
+            Productos <span style="font-size:0.75rem; margin-left:2px;">▾</span>
+          </a>
+          <ul class="dropdown-menu" id="dropdown-productos"></ul>
+        </div>
+
+        <a href="#lineas-productos" class="nav-link">Líneas</a>
+        <a href="#empresa" class="nav-link">Empresa</a>
+        <a href="#ubicacion" class="nav-link">Ubicación</a>
+        <a href="#contacto" class="nav-link">Contacto</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="catalogo.html" class="btn-nav-catalog">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          Catálogo Mayorista
+        </a>
+        <a href="https://wa.me/5493794007195?text=Hola%20Distrijam,%20quisiera%20solicitar%20cotizaci%C3%B3n%20mayorista." target="_blank" class="btn-nav-wa">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Cotizar WhatsApp
+        </a>
+      </div>
+
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menú de navegación">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MENÚ MÓVIL DESPLEGABLE -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index2.html" class="nav-link">Inicio</a>
+    <a href="catalogo.html" class="nav-link">Catálogo de Productos</a>
+    <a href="#lineas-productos" class="nav-link">Líneas de Fijación</a>
+    <a href="#empresa" class="nav-link">Quiénes Somos</a>
+    <a href="#ubicacion" class="nav-link">Ubicación y Depósito</a>
+    <a href="#contacto" class="nav-link">Contacto</a>
+    <a href="https://wa.me/5493794007195" target="_blank" class="btn-quote-wa" style="text-align:center; justify-content:center; margin-top:10px;">
+      WhatsApp Directo
+    </a>
+  </div>
+
+  <!-- HERO TÉCNICO B2B -->
+  <section class="hero-corporate">
+    <div class="hero-container">
+      <div>
+        <div class="hero-badge-tag">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Distribución Mayorista · Corrientes y Región NEA
+        </div>
+
+        <h1 class="hero-main-title">
+          Fijaciones industriales y bulonería de <span class="text-highlight">alta exigencia</span>.
+        </h1>
+
+        <p class="hero-lead-text">
+          Proveedor integral de bulones, tuercas, arandelas, autoperforantes y anclajes para ferreterías, talleres, industrias y empresas constructoras. Asesoramiento técnico y cotizaciones ágiles por WhatsApp.
+        </p>
+
+        <!-- Buscador Rápido de Portada -->
+        <form class="hero-search-box" id="hero-search-form" action="catalogo.html" method="GET">
+          <div class="hero-search-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <input 
+            type="text" 
+            id="hero-search-input" 
+            name="q" 
+            class="hero-search-input" 
+            placeholder="Buscar por artículo o medida (ej: Autoperforante 10x3/4, Bulón 8.8, Arandela 3/8)..." 
+            autocomplete="off" 
+          />
+          <button type="submit" class="hero-search-btn">Buscar</button>
+          
+          <!-- Contenedor dinámico de sugerencias -->
+          <div class="search-suggestions" id="search-suggestions"></div>
+        </form>
+
+        <div class="hero-cta-group">
+          <a href="catalogo.html" class="btn-corporate-primary">
+            Explorar Catálogo Mayorista →
+          </a>
+          <a href="https://wa.me/5493794007195?text=Hola,%20quisiera%20solicitar%20la%20lista%20de%20precios%20mayorista." target="_blank" class="btn-corporate-secondary">
+            Solicitar Lista de Precios
+          </a>
+        </div>
+      </div>
+
+      <!-- Ficha de Productos B2B con Imagen Representativa -->
+      <aside class="hero-product-showcase">
+        <div class="hero-showcase-media">
+          <img 
+            src="imagenes/foto1.jpg" 
+            alt="Catálogo mayorista de tuercas, tornillos, bulones, arandelas y tarugos Distrijam" 
+            class="hero-showcase-img"
+            loading="eager"
+          />
+          <div class="hero-showcase-overlay"></div>
+          
+          <div class="hero-showcase-badge-top">
+            <span class="dot"></span>
+            Stock Permanente · Retiro Inmediato
+          </div>
+
+          <div class="hero-showcase-badge-bottom">
+            Bulonería &amp; Fijaciones Industriales
+          </div>
+        </div>
+
+        <div class="hero-showcase-details">
+          <div class="hero-showcase-meta-grid">
+            <div class="hero-meta-cell">
+              <div class="hero-meta-val">+500</div>
+              <div class="hero-meta-lbl">Medidas en Stock</div>
+            </div>
+            <div class="hero-meta-cell">
+              <div class="hero-meta-val">24/48 hs</div>
+              <div class="hero-meta-lbl">Despacho NEA</div>
+            </div>
+            <div class="hero-meta-cell">
+              <div class="hero-meta-val">Grado 8.8</div>
+              <div class="hero-meta-lbl">Alta Resistencia</div>
+            </div>
+          </div>
+
+          <div class="hero-showcase-standards">
+            <span>Normas y Especificaciones:</span>
+            <div class="hero-standards-chips">
+              <span class="hero-std-chip">DIN 933/934</span>
+              <span class="hero-std-chip">ISO</span>
+              <span class="hero-std-chip">IRAM</span>
+              <span class="hero-std-chip">Zincado / Inox</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- STRIP DE VENTAJAS TÉCNICAS -->
+  <section class="trust-strip">
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <div>
+          <div class="trust-title">Stock Inmediato</div>
+          <div class="trust-desc">Disponibilidad en depósito para retiro en el día o envío coordinado.</div>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="trust-title">Calidad Certificada</div>
+          <div class="trust-desc">Bulonería grado 2, 5 y 8.8. Roscas métricas y en pulgadas estandarizadas.</div>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div>
+          <div class="trust-title">Logística Regional</div>
+          <div class="trust-desc">Cobertura a transporte y comisionistas con destino a todo el NEA.</div>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div>
+          <div class="trust-title">Atención Personalizada</div>
+          <div class="trust-desc">Soporte directo para ferreteros, jefes de compras y directores de obra.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LÍNEAS DE PRODUCTOS (CATEGORÍAS) -->
+  <section class="section" id="lineas-productos">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-kicker">Catálogo Técnico</span>
+        <h2 class="section-title">Líneas Principales de Fijación</h2>
+        <p class="section-desc">Seleccioná la línea que necesitás para ver el desglose de medidas, presentaciones por caja o kilogramo y especificaciones de material.</p>
+      </div>
+
+      <div class="category-matrix">
+        
+        <!-- Autoperforantes -->
+        <article class="category-tile">
+          <div class="category-img-container">
+            <img src="imagenes/cat1.jpg" alt="Tornillos Autoperforantes" loading="lazy" />
+          </div>
+          <div class="category-tile-meta">Línea Construcción & Chapa</div>
+          <h3 class="category-tile-title">Tornillos Autoperforantes</h3>
+          <p class="category-tile-text">Fijaciones con punta mecha para cubiertas metálicas, perfiles C, paneles sándwich y estructuras Steel Framing / Drywall.</p>
+          <div class="category-tile-specs">
+            <span class="spec-badge">Cabeza Hexagonal</span>
+            <span class="spec-badge">Trompeta / Drywall</span>
+            <span class="spec-badge">Arandela EPDM</span>
+          </div>
+          <a href="catalogo.html?cat=autoperforantes" class="category-tile-link">Ver catálogo de medidas →</a>
+        </article>
+
+        <!-- Bulones y Tirafondos -->
+        <article class="category-tile">
+          <div class="category-img-container">
+            <img src="imagenes/cat2.jpg" alt="Bulones y Tirafondos" loading="lazy" />
+          </div>
+          <div class="category-tile-meta">Línea Mecánica & Estructuras</div>
+          <h3 class="category-tile-title">Bulones y Tirafondos</h3>
+          <p class="category-tile-text">Bulonería grado estándar y de alta resistencia (8.8). Modelos cabeza hexagonal, cuello cuadrado para carrocería y tirafondos para madera.</p>
+          <div class="category-tile-specs">
+            <span class="spec-badge">Grado 2 y 8.8</span>
+            <span class="spec-badge">Métrico y Pulgada</span>
+            <span class="spec-badge">Zincado / Pulido</span>
+          </div>
+          <a href="catalogo.html?cat=bulones" class="category-tile-link">Ver catálogo de medidas →</a>
+        </article>
+
+        <!-- Tuercas y Arandelas -->
+        <article class="category-tile">
+          <div class="category-img-container">
+            <img src="imagenes/cat3.jpg" alt="Tuercas y Arandelas" loading="lazy" />
+          </div>
+          <div class="category-tile-meta">Línea Ajuste & Seguridad</div>
+          <h3 class="category-tile-title">Tuercas y Arandelas</h3>
+          <p class="category-tile-text">Componentes complementarios de sujeción: tuercas hexagonales, autofrenantes con inserto de nylon, arandelas planas, grower y chapistas.</p>
+          <div class="category-tile-specs">
+            <span class="spec-badge">DIN 934 / DIN 127</span>
+            <span class="spec-badge">Grower / Presión</span>
+            <span class="spec-badge">Bicromado e Inox</span>
+          </div>
+          <a href="catalogo.html?cat=tuercas" class="category-tile-link">Ver catálogo de medidas →</a>
+        </article>
+
+        <!-- Tarugos y Anclajes -->
+        <article class="category-tile">
+          <div class="category-img-container">
+            <img src="imagenes/cat4.jpg" alt="Tarugos y Fijaciones" loading="lazy" />
+          </div>
+          <div class="category-tile-meta">Línea Fijación en Obra</div>
+          <h3 class="category-tile-title">Tarugos y Anclajes</h3>
+          <p class="category-tile-text">Sistemas de fijación para hormigón macizo, ladrillo hueco y placas de yeso. Tacos tipo Fischer SX/FU, anclajes metálicos y químicos.</p>
+          <div class="category-tile-specs">
+            <span class="spec-badge">Con y sin tope</span>
+            <span class="spec-badge">Para pared hueca</span>
+            <span class="spec-badge">Anclajes pesados</span>
+          </div>
+          <a href="catalogo.html?cat=tarugos" class="category-tile-link">Ver catálogo de medidas →</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIÉNES SOMOS & INFRAESTRUCTURA (EMPRESA + MAPA) -->
+  <section class="section section-alt" id="empresa">
+    <div class="container">
+      <div class="about-b2b-grid">
+        
+        <!-- Texto Institucional -->
+        <div class="about-b2b-content">
+          <span class="section-kicker">Solidez y Trayectoria</span>
+          <h2 class="section-title">El socio confiable para tu abastecimiento</h2>
+          <p class="section-desc">
+            En <strong>Distrijam</strong> entendemos que una obra o un negocio ferretero no pueden detenerse por falta de insumos de fijación. Desde nuestro depósito central en la ciudad de Corrientes, proveemos con regularidad a corralones, ferreterías industriales y empresas constructoras de toda la región.
+          </p>
+
+          <div class="about-feature-list">
+            <div class="about-feature-item">
+              <div class="about-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.29 7 8.71 5 8.71-5"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+              </div>
+              <div>
+                <div class="about-feature-title">Inventario Permanente y Diversificado</div>
+                <div class="about-feature-desc">Mantenemos stock constante de medidas críticas para evitar quiebres en los cronogramas de compra de nuestros clientes.</div>
+              </div>
+            </div>
+
+            <div class="about-feature-item">
+              <div class="about-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <div>
+                <div class="about-feature-title">Facturación y Condiciones Mayoristas Claras</div>
+                <div class="about-feature-desc">Cotizaciones formales y transparentes, adaptadas a compras programadas por volumen.</div>
+              </div>
+            </div>
+
+            <div class="about-feature-item">
+              <div class="about-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+              </div>
+              <div>
+                <div class="about-feature-title">Punto de Retiro Directo en Corrientes</div>
+                <div class="about-feature-desc">Fácil acceso para carga y despacho inmediato en nuestro local y depósito sobre calle Iberá.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta Técnica de Ubicación / Google Maps -->
+        <div class="map-technical-card" id="ubicacion">
+          <div class="map-technical-header">
+            <div class="map-technical-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Depósito Central & Mostrador Comercial
+            </div>
+            <span class="map-technical-badge">Corrientes Capital</span>
+          </div>
+
+          <div class="map-technical-frame">
+            <iframe
+              src="https://maps.google.com/maps?q=Iber%C3%A1%201740,%20Corrientes,%20Argentina&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" title="Ubicación Distrijam Corrientes">
+            </iframe>
+          </div>
+
+          <div class="map-technical-footer">
+            <div class="map-address-text">
+              <strong>Iberá 1740</strong>, W3400 Corrientes, Argentina.
+            </div>
+            <a href="https://maps.google.com/?q=Iberá+1740+Corrientes" target="_blank" class="btn-open-map">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Abrir en Google Maps
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER DE COTIZACIÓN DIRECTA (CTA B2B) -->
+  <section class="quote-banner-section">
+    <div class="quote-banner-inner">
+      <div>
+        <h2 class="quote-banner-title">¿Tenés una lista de materiales o pliego para cotizar?</h2>
+        <p class="quote-banner-text">
+          Envianos tu listado directamente a nuestro WhatsApp oficial o armá tu pedido en el catálogo interactivo para recibir una propuesta formal en minutos.
+        </p>
+      </div>
+      <div class="quote-banner-actions">
+        <a href="https://wa.me/5493794007195?text=Hola%20Distrijam,%20tengo%20un%20listado%20de%20materiales%20para%20cotizar." target="_blank" class="btn-quote-wa">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Enviar Consulta por WhatsApp
+        </a>
+        <a href="catalogo.html" class="btn-quote-catalog">
+          Ir al Catálogo Digital
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CANALES DE CONTACTO DIRECTO -->
+  <section class="contact-data-strip" id="contacto">
+    <div class="contact-data-grid">
+      <div class="contact-data-card">
+        <div class="contact-data-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.49 5.49l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="contact-data-label">Línea Telefónica</div>
+          <div class="contact-data-value"><a href="tel:+5403794007195">0379 400-7195</a></div>
+        </div>
+      </div>
+
+      <div class="contact-data-card">
+        <div class="contact-data-icon" style="color:#15803D;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        </div>
+        <div>
+          <div class="contact-data-label">WhatsApp Mayorista</div>
+          <div class="contact-data-value"><a href="https://wa.me/5493794007195" target="_blank">+54 9 379 400-7195</a></div>
+        </div>
+      </div>
+
+      <div class="contact-data-card">
+        <div class="contact-data-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="contact-data-label">Ubicación y Despacho</div>
+          <div class="contact-data-value"><a href="https://maps.google.com/?q=Iberá+1740+Corrientes" target="_blank">Iberá 1740, Corrientes</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER CORPORATIVO -->
+  <footer class="footer-corporate">
+    <div class="footer-main-grid">
+      <div>
+        <a href="index2.html" class="nav-logo" style="margin-bottom:12px;">
+          <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam" class="nav-logo-img" style="filter: brightness(0) invert(1);">
+        </a>
+        <p class="footer-brand-desc">
+          Distribuidora mayorista de fijaciones, bulonería y anclajes técnicos. Abastecimiento profesional en Corrientes Capital y toda la región NEA.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Navegación</h4>
+        <div class="footer-links">
+          <a href="index2.html" class="footer-link">Inicio</a>
+          <a href="catalogo.html" class="footer-link">Catálogo de Productos</a>
+          <a href="#lineas-productos" class="footer-link">Líneas de Fijación</a>
+          <a href="#empresa" class="footer-link">Quiénes Somos</a>
+          <a href="#ubicacion" class="footer-link">Punto de Retiro</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Líneas Técnicas</h4>
+        <div class="footer-links">
+          <a href="catalogo.html?cat=autoperforantes" class="footer-link">Tornillos Autoperforantes</a>
+          <a href="catalogo.html?cat=bulones" class="footer-link">Bulones y Tirafondos</a>
+          <a href="catalogo.html?cat=tuercas" class="footer-link">Tuercas y Arandelas</a>
+          <a href="catalogo.html?cat=tarugos" class="footer-link">Tarugos y Anclajes</a>
+          <a href="catalogo.html?cat=varillas" class="footer-link">Varillas Roscadas</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Atención B2B</h4>
+        <div class="footer-links">
+          <span class="footer-link">Iberá 1740, Corrientes</span>
+          <span class="footer-link">Tel: 0379 400-7195</span>
+          <span class="footer-link">Lunes a Viernes 08:00 - 17:00</span>
+          <a href="https://wa.me/5493794007195" target="_blank" class="footer-link" style="color:#22C55E;">💬 WhatsApp de Ventas</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <p>© 2024 Distrijam. Todos los derechos reservados.</p>
+      <div>
+        <a href="index.html" style="margin-right: 18px;">Opción 1 Original</a>
+        <a href="admin.html">Acceso Administración</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts compartidos y buscador interactivo -->
+  <script src="app.js"></script>
+  <script>
+    // Buscador interactivo de portada conectado a productos.json
+    (async function initHeroSearch() {
+      const input = document.getElementById('hero-search-input');
+      const suggestionsBox = document.getElementById('search-suggestions');
+      if (!input || !suggestionsBox) return;
+
+      let catalogProducts = [];
+      try {
+        const res = await fetch('productos.json');
+        if (res.ok) {
+          catalogProducts = await res.json();
+        }
+      } catch (err) {
+        console.warn('No se pudo precargar productos para búsqueda:', err);
+      }
+
+      input.addEventListener('input', () => {
+        const query = input.value.trim().toLowerCase();
+        if (query.length < 2) {
+          suggestionsBox.style.display = 'none';
+          suggestionsBox.innerHTML = '';
+          return;
+        }
+
+        const matches = catalogProducts.filter(p => 
+          p.name.toLowerCase().includes(query) || 
+          (p.category && p.category.toLowerCase().includes(query))
+        ).slice(0, 6);
+
+        if (matches.length === 0) {
+          suggestionsBox.innerHTML = `
+            <div style="padding:12px 16px; font-size:0.85rem; color:#64748B;">
+              No se encontraron coincidencias directas. Presioná 'Buscar' para ver en el catálogo.
+            </div>
+          `;
+          suggestionsBox.style.display = 'block';
+          return;
+        }
+
+        suggestionsBox.innerHTML = matches.map(p => `
+          <div class="suggestion-item" onclick="window.location.href='producto.html?id=${encodeURIComponent(p.id)}'">
+            <div>
+              <strong>${p.name}</strong>
+              <div style="font-size:0.75rem; color:#64748B;">${p.variants && p.variants[0] ? p.variants[0].medida : ''}</div>
+            </div>
+            <span class="suggestion-cat">${p.category}</span>
+          </div>
+        `).join('');
+
+        suggestionsBox.style.display = 'block';
+      });
+
+      // Ocultar sugerencias al hacer clic fuera
+      document.addEventListener('click', (e) => {
+        if (!input.contains(e.target) && !suggestionsBox.contains(e.target)) {
+          suggestionsBox.style.display = 'none';
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>
