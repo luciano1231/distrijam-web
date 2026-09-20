@@ -492,77 +492,16 @@
     </div>
 
     <div class="footer-bottom-bar">
-      <p>© 2024 Distrijam. Todos los derechos reservados.</p>
+      <p>© <span data-current-year>2026</span> Distrijam. Todos los derechos reservados.</p>
       <div>
-        <a href="index.html" style="margin-right: 18px;">Opción 1 Original</a>
         <a href="admin.html">Acceso Administración</a>
       </div>
     </div>
   </footer>
 
-  <!-- Scripts compartidos y buscador interactivo -->
+  <!-- Scripts compartidos: el buscador vive ahora en app.js (initHeroSearch) -->
   <script src="app.js"></script>
-  <script>
-    // Buscador interactivo de portada conectado a productos.json
-    (async function initHeroSearch() {
-      const input = document.getElementById('hero-search-input');
-      const suggestionsBox = document.getElementById('search-suggestions');
-      if (!input || !suggestionsBox) return;
 
-      let catalogProducts = [];
-      try {
-        const res = await fetch('productos.json');
-        if (res.ok) {
-          catalogProducts = await res.json();
-        }
-      } catch (err) {
-        console.warn('No se pudo precargar productos para búsqueda:', err);
-      }
-
-      input.addEventListener('input', () => {
-        const query = input.value.trim().toLowerCase();
-        if (query.length < 2) {
-          suggestionsBox.style.display = 'none';
-          suggestionsBox.innerHTML = '';
-          return;
-        }
-
-        const matches = catalogProducts.filter(p => 
-          p.name.toLowerCase().includes(query) || 
-          (p.category && p.category.toLowerCase().includes(query))
-        ).slice(0, 6);
-
-        if (matches.length === 0) {
-          suggestionsBox.innerHTML = `
-            <div style="padding:12px 16px; font-size:0.85rem; color:#64748B;">
-              No se encontraron coincidencias directas. Presioná 'Buscar' para ver en el catálogo.
-            </div>
-          `;
-          suggestionsBox.style.display = 'block';
-          return;
-        }
-
-        suggestionsBox.innerHTML = matches.map(p => `
-          <div class="suggestion-item" onclick="window.location.href='producto.html?id=${encodeURIComponent(p.id)}'">
-            <div>
-              <strong>${p.name}</strong>
-              <div style="font-size:0.75rem; color:#64748B;">${p.variants && p.variants[0] ? p.variants[0].medida : ''}</div>
-            </div>
-            <span class="suggestion-cat">${p.category}</span>
-          </div>
-        `).join('');
-
-        suggestionsBox.style.display = 'block';
-      });
-
-      // Ocultar sugerencias al hacer clic fuera
-      document.addEventListener('click', (e) => {
-        if (!input.contains(e.target) && !suggestionsBox.contains(e.target)) {
-          suggestionsBox.style.display = 'none';
-        }
-      });
-    })();
-  </script>
 </body>
 
 </html>

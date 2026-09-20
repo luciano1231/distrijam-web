@@ -1,0 +1,280 @@
+/* ======================================================
+   DISTRIJAM — theme-v4.css
+   VERSIÓN 4 · "EDITORIAL"
+   Repinta las páginas compartidas (catálogo, producto y
+   administración) en papel cálido con acento verde.
+   ====================================================== */
+
+:root.theme-v4,
+body.theme-v4 {
+  --primary: #0F766E !important;
+  --primary-dark: #0B564F !important;
+  --primary-light: #E6F4F1 !important;
+
+  --red: #14161A !important;          /* Acción primaria en tinta */
+  --red-dark: #000000 !important;
+  --red-light: #0F766E !important;    /* Hover en verde */
+  --gold: #0F766E !important;
+  --gold-light: #14907F !important;
+  --steel: #8A9099 !important;
+
+  --bg: #FBFAF8 !important;
+  --bg-2: #FFFFFF !important;
+  --bg-card: #FFFFFF !important;
+  --bg-card-2: #F3F0EA !important;
+
+  --text: #14161A !important;
+  --text-dim: #494F57 !important;
+  --text-muted: #8A9099 !important;
+
+  --border: #E3DFD6 !important;
+  --border-light: #EFEBE3 !important;
+
+  --white: #14161A !important;
+  --white-real: #FFFFFF !important;
+
+  --shadow: 0 2px 10px rgba(20, 22, 26, 0.05) !important;
+  --shadow-lg: 0 18px 44px rgba(20, 22, 26, 0.1) !important;
+
+  --radius: 6px !important;
+  --radius-lg: 10px !important;
+}
+
+body.theme-v4 {
+  background: #FBFAF8 !important;
+  color: #14161A !important;
+}
+
+body.theme-v4 ::selection { background: #0F766E; color: #fff; }
+
+/* ── NAVEGACIÓN ────────────────────────────────────── */
+body.theme-v4 .nav {
+  background: rgba(251, 250, 248, 0.9) !important;
+  border-bottom: 1px solid #EFEBE3 !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+body.theme-v4 .nav.scrolled {
+  background: rgba(251, 250, 248, 0.98) !important;
+  box-shadow: 0 6px 26px rgba(20, 22, 26, 0.06) !important;
+}
+body.theme-v4 .nav-link { border-radius: 100px !important; }
+body.theme-v4 .nav-link:hover { background: #F3F0EA !important; color: #14161A !important; }
+body.theme-v4 .nav-link.active { color: #0F766E !important; font-weight: 600 !important; }
+body.theme-v4 .nav-cta {
+  background: #14161A !important;
+  color: #FFFFFF !important;
+  border-radius: 100px !important;
+  font-weight: 600 !important;
+}
+body.theme-v4 .nav-cta:hover { background: #0F766E !important; }
+body.theme-v4 .nav-mobile { background: #FFFFFF !important; border-color: #E3DFD6 !important; }
+
+/* Menú desplegable de productos */
+body.theme-v4 .dropdown-menu,
+body.theme-v4 .submenu {
+  background: #FFFFFF !important;
+  border: 1px solid #E3DFD6 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 22px 50px rgba(20, 22, 26, 0.13) !important;
+}
+body.theme-v4 .dropdown-link,
+body.theme-v4 .submenu-link { color: #494F57 !important; }
+body.theme-v4 .dropdown-link:hover,
+body.theme-v4 .submenu-link:hover { background: #F3F0EA !important; color: #0F766E !important; }
+
+/* ── BOTONES ───────────────────────────────────────── */
+body.theme-v4 .btn { border-radius: 100px !important; }
+body.theme-v4 .btn-primary,
+body.theme-v4 .btn-add-cart,
+body.theme-v4 .btn-select-variant {
+  background: #14161A !important;
+  color: #FFFFFF !important;
+  border-radius: 100px !important;
+  font-weight: 600 !important;
+}
+body.theme-v4 .btn-primary:hover,
+body.theme-v4 .btn-add-cart:hover,
+body.theme-v4 .btn-select-variant:hover {
+  background: #0F766E !important;
+  color: #FFFFFF !important;
+}
+body.theme-v4 .btn-secondary {
+  color: #14161A !important;
+  border: 1px solid #E3DFD6 !important;
+}
+body.theme-v4 .btn-secondary:hover { border-color: #14161A !important; background: #F3F0EA !important; color: #14161A !important; }
+body.theme-v4 .btn-gold { background: #0F766E !important; color: #FFFFFF !important; }
+
+/* ── CATÁLOGO ──────────────────────────────────────── */
+body.theme-v4.catalog-page {
+  background: #FBFAF8 !important;
+  background-image: none !important;
+}
+
+body.theme-v4 .catalog-header {
+  background: #F3F0EA !important;
+  border-bottom: 1px solid #E3DFD6 !important;
+}
+body.theme-v4 .catalog-header h1 {
+  color: #14161A !important;
+  font-family: 'Fraunces', Georgia, serif !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.02em !important;
+}
+body.theme-v4 .catalog-header h1 span { color: #0F766E !important; font-style: italic !important; }
+body.theme-v4 .catalog-header-sub { color: #494F57 !important; }
+
+body.theme-v4 .filter-tab {
+  background: transparent !important;
+  color: #494F57 !important;
+  border: 1px solid #E3DFD6 !important;
+  border-bottom: none !important;
+}
+body.theme-v4 .filter-tab:hover { background: #FFFFFF !important; color: #14161A !important; }
+body.theme-v4 .filter-tab.active {
+  background: #FBFAF8 !important;
+  color: #0F766E !important;
+  border-top: 3px solid #0F766E !important;
+  font-weight: 600 !important;
+}
+body.theme-v4 .filter-tab .tab-count { background: #EAE5DB !important; color: #8A9099 !important; }
+body.theme-v4 .filter-tab.active .tab-count { background: #0F766E !important; color: #FFFFFF !important; }
+
+body.theme-v4 .catalog-search input {
+  background: #FFFFFF !important;
+  border: 1px solid #E3DFD6 !important;
+  color: #14161A !important;
+  border-radius: 100px !important;
+}
+body.theme-v4 .catalog-search input:focus { border-color: #0F766E !important; }
+body.theme-v4 .catalog-search input::placeholder { color: #8A9099 !important; }
+
+body.theme-v4 .product-card {
+  background: #FFFFFF !important;
+  border: 1px solid #E3DFD6 !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+body.theme-v4 .product-card:hover {
+  border-color: #0F766E !important;
+  box-shadow: 0 16px 38px rgba(20, 22, 26, 0.1) !important;
+  transform: translateY(-4px) !important;
+}
+body.theme-v4 .product-name {
+  color: #14161A !important;
+  font-family: 'Fraunces', Georgia, serif !important;
+  font-weight: 600 !important;
+}
+body.theme-v4 .product-desc { color: #494F57 !important; }
+body.theme-v4 .product-cat-badge {
+  background: #E6F4F1 !important;
+  color: #0B564F !important;
+  border: none !important;
+  border-radius: 100px !important;
+  font-weight: 600 !important;
+}
+body.theme-v4 .btn-quick-view { border-color: #E3DFD6 !important; color: #494F57 !important; }
+body.theme-v4 .btn-quick-view:hover { border-color: #0F766E !important; color: #0F766E !important; }
+
+/* ── CARRITO ───────────────────────────────────────── */
+body.theme-v4 .cart-sidebar { background: #FFFFFF !important; border-left: 1px solid #E3DFD6 !important; }
+/* Cabecera del carrito sobria: una regla fina en vez de una barra oscura,
+   que en la paleta clara dejaba el título ilegible. */
+body.theme-v4 .cart-header {
+  background: transparent !important;
+  border-bottom: 1px solid #E3DFD6 !important;
+  padding-bottom: 14px !important;
+}
+body.theme-v4 .cart-title {
+  color: #14161A !important;
+  font-family: 'Fraunces', Georgia, serif !important;
+  font-size: 1.1rem !important;
+}
+body.theme-v4 .cart-badge { background: #0F766E !important; color: #FFFFFF !important; }
+body.theme-v4 .cart-item { border-color: #EFEBE3 !important; }
+body.theme-v4 .cart-item-name { color: #14161A !important; }
+body.theme-v4 .cart-clear-btn { color: #8A9099 !important; }
+body.theme-v4 .cart-clear-btn:hover { color: #DC2626 !important; }
+body.theme-v4 .cart-fab { background: #14161A !important; color: #FFFFFF !important; box-shadow: 0 8px 26px rgba(20, 22, 26, 0.28) !important; }
+body.theme-v4 .btn-quote {
+  background: #128C4A !important;
+  color: #FFFFFF !important;
+  border-radius: 100px !important;
+  font-weight: 600 !important;
+}
+body.theme-v4 .btn-quote:hover { background: #0E7A40 !important; }
+
+/* Modal de cotización */
+body.theme-v4 .modal-content,
+body.theme-v4 .quote-modal { background: #FFFFFF !important; border: 1px solid #E3DFD6 !important; border-radius: 12px !important; }
+body.theme-v4 .form-input,
+body.theme-v4 .form-textarea,
+body.theme-v4 select {
+  background: #FBFAF8 !important;
+  border: 1px solid #E3DFD6 !important;
+  color: #14161A !important;
+}
+body.theme-v4 .form-input:focus,
+body.theme-v4 .form-textarea:focus { border-color: #0F766E !important; }
+body.theme-v4 .form-label { color: #494F57 !important; }
+
+/* ── PÁGINA DE PRODUCTO ────────────────────────────── */
+body.theme-v4 .single-product-layout {
+  background: #FFFFFF !important;
+  border: 1px solid #E3DFD6 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 12px rgba(20, 22, 26, 0.04) !important;
+}
+body.theme-v4 .prod-category-badge {
+  background: #E6F4F1 !important;
+  color: #0B564F !important;
+  border: none !important;
+  border-radius: 100px !important;
+}
+body.theme-v4 .thumb-img { border-color: #E3DFD6 !important; }
+body.theme-v4 .thumb-img.active { border-color: #0F766E !important; }
+body.theme-v4 .variant-table th { background: #F3F0EA !important; color: #14161A !important; }
+body.theme-v4 .variant-table td { border-color: #EFEBE3 !important; color: #494F57 !important; }
+body.theme-v4 .variant-table tr:hover td { background: #FBFAF8 !important; }
+body.theme-v4 .btn-wa-quote,
+body.theme-v4 .btn-add-cart-detail {
+  background: #128C4A !important;
+  color: #FFFFFF !important;
+  border-radius: 100px !important;
+  font-weight: 600 !important;
+}
+body.theme-v4 .btn-wa-quote:hover,
+body.theme-v4 .btn-add-cart-detail:hover { background: #0E7A40 !important; }
+
+/* ── ADMINISTRACIÓN ────────────────────────────────── */
+body.theme-v4.admin-body { background: #FBFAF8 !important; }
+body.theme-v4 .admin-header-bar { background: #14161A !important; color: #FFFFFF !important; border-bottom: none !important; }
+body.theme-v4 .admin-card-title::before { background: #0F766E !important; }
+body.theme-v4 .admin-form-card,
+body.theme-v4 .admin-table-card,
+body.theme-v4 .login-card {
+  background: #FFFFFF !important;
+  border: 1px solid #E3DFD6 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 12px rgba(20, 22, 26, 0.04) !important;
+}
+body.theme-v4 .admin-table th { background: #F3F0EA !important; color: #14161A !important; }
+body.theme-v4 .admin-table td { border-color: #EFEBE3 !important; }
+
+/* ── FOOTER ────────────────────────────────────────── */
+body.theme-v4 .footer { background: #14161A !important; border-top: none !important; color: rgba(251, 250, 248, 0.7) !important; }
+body.theme-v4 .footer p,
+body.theme-v4 .footer span,
+body.theme-v4 .footer a { color: rgba(251, 250, 248, 0.62) !important; }
+body.theme-v4 .footer-col h4 { color: #2DD4BF !important; }
+body.theme-v4 .footer a:hover { color: #FFFFFF !important; }
+body.theme-v4 .footer .nav-logo-img { filter: brightness(0) invert(1); }
+
+/* ── TOASTS ────────────────────────────────────────── */
+body.theme-v4 .toast {
+  background: #FFFFFF !important;
+  border: 1px solid #E3DFD6 !important;
+  border-left: 3px solid #0F766E !important;
+  color: #14161A !important;
+}

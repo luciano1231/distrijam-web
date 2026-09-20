@@ -36,89 +36,7 @@ body.theme-v2 {
   --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08) !important;
 }
 
-/* ======================================================
-   WIDGET DEL BOTÓN CAMBIADOR DE VERSIÓN (TOP RIGHT)
-   ====================================================== */
-.distrijam-version-pill {
-  position: fixed;
-  top: 14px;
-  right: 18px;
-  z-index: 99999;
-  background: rgba(15, 23, 42, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50px;
-  padding: 3px 5px;
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
-  user-select: none;
-  animation: fadeInPill 0.3s ease;
-}
-
-@keyframes fadeInPill {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.distrijam-version-pill .dvp-label {
-  color: #94A3B8;
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 0 8px 0 6px;
-}
-
-.distrijam-version-pill .dvp-btn {
-  border: none;
-  outline: none;
-  background: transparent;
-  color: #CBD5E1;
-  font-size: 0.74rem;
-  font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.distrijam-version-pill .dvp-btn:hover {
-  color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Estado activo V1 (Clásico / Rojo) */
-.distrijam-version-pill .dvp-btn.dvp-v1.active {
-  background: #C0392B;
-  color: #FFFFFF;
-  font-weight: 700;
-  box-shadow: 0 2px 6px rgba(192, 57, 43, 0.4);
-}
-
-/* Estado activo V2 (B2B Corporativo / Azul) */
-.distrijam-version-pill .dvp-btn.dvp-v2.active {
-  background: #1E3A8A;
-  color: #FFFFFF;
-  font-weight: 700;
-  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.5);
-}
-
-/* Indicador de punto */
-.distrijam-version-pill .dvp-btn.active::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  background: #FFFFFF;
-  border-radius: 50%;
-  display: inline-block;
-}
+/* El widget selector de versión se estiliza desde app.js (injectVersionPillStyles) */
 
 /* ======================================================
    ESTILOS ESPECÍFICOS V2 PARA CATÁLOGO
@@ -223,6 +141,12 @@ body.theme-v2 .cart-header {
   border-bottom: 1px solid #334155 !important;
 }
 
+/* .cart-title hereda var(--white), que en esta paleta clara es #0F172A:
+   sin este override quedaba texto oscuro sobre la barra oscura. */
+body.theme-v2 .cart-title {
+  color: #FFFFFF !important;
+}
+
 body.theme-v2 .cart-clear-btn {
   color: #94A3B8 !important;
 }
@@ -301,28 +225,25 @@ body.theme-v2 .admin-table-card {
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
 }
 
+/* El texto debe forzarse a blanco: --white vale #0F172A en esta paleta
+   clara, así que sin este override el botón quedaba oscuro sobre oscuro. */
 body.theme-v2 .btn-primary {
   background: #0F172A !important;
+  color: #FFFFFF !important;
 }
 
 body.theme-v2 .btn-primary:hover {
   background: #1E3A8A !important;
+  color: #FFFFFF !important;
 }
 
-/* ======================================================
-   RESPONSIVE PARA EL WIDGET
-   ====================================================== */
-@media (max-width: 640px) {
-  .distrijam-version-pill {
-    top: auto;
-    bottom: 20px;
-    right: 14px;
-  }
-  .distrijam-version-pill .dvp-label {
-    display: none;
-  }
-  .distrijam-version-pill .dvp-btn {
-    padding: 6px 12px;
-    font-size: 0.72rem;
-  }
+body.theme-v2 .btn-secondary {
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
 }
+
+body.theme-v2 .btn-secondary:hover {
+  border-color: #1E3A8A !important;
+  color: #1E3A8A !important;
+}
+

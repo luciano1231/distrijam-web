@@ -649,9 +649,22 @@ ul {
   transition: background var(--transition-fast);
 }
 
-.suggestion-item:hover {
+.suggestion-item:hover,
+.suggestion-item.active {
   background-color: var(--slate-100);
   color: var(--primary);
+}
+
+.suggestion-meta {
+  font-size: 0.75rem;
+  color: var(--slate-600);
+  margin-top: 2px;
+}
+
+.suggestion-empty {
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  color: var(--slate-600);
 }
 
 .suggestion-cat {

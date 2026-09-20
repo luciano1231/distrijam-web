@@ -1,0 +1,244 @@
+/* ======================================================
+   DISTRIJAM — theme-v3.css
+   VERSIÓN 3 · "INDUSTRIAL / FORJA"
+   Repinta las páginas compartidas (catálogo, producto y
+   administración) en grafito + ámbar de seguridad.
+   ====================================================== */
+
+:root.theme-v3,
+body.theme-v3 {
+  --primary: #F59E0B !important;
+  --primary-dark: #B45309 !important;
+  --primary-light: #FBBF24 !important;
+
+  --red: #F59E0B !important;          /* Acción primaria en ámbar */
+  --red-dark: #B45309 !important;
+  --red-light: #FBBF24 !important;
+  --gold: #7D8794 !important;         /* Acento secundario en acero */
+  --gold-light: #A2ABB8 !important;
+  --steel: #7D8794 !important;
+
+  --bg: #0D0F12 !important;
+  --bg-2: #14171C !important;
+  --bg-card: #14171C !important;
+  --bg-card-2: #1B1F26 !important;
+
+  --text: #E9ECF1 !important;
+  --text-dim: #A2ABB8 !important;
+  --text-muted: #6B7483 !important;
+
+  --border: #262B33 !important;
+  --border-light: #333A44 !important;
+
+  --white: #FFFFFF !important;
+  --white-real: #FFFFFF !important;
+
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.45) !important;
+  --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.6) !important;
+
+  --radius: 4px !important;
+  --radius-lg: 8px !important;
+}
+
+body.theme-v3 {
+  background: #0D0F12 !important;
+  color: #E9ECF1 !important;
+}
+
+body.theme-v3 ::selection { background: #F59E0B; color: #08090B; }
+
+/* ── NAVEGACIÓN ────────────────────────────────────── */
+body.theme-v3 .nav {
+  background: rgba(13, 15, 18, 0.92) !important;
+  border-bottom: 1px solid #1E232A !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+body.theme-v3 .nav.scrolled {
+  background: rgba(8, 9, 11, 0.97) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55) !important;
+}
+body.theme-v3 .nav-link:hover { background: #1B1F26 !important; color: #FFFFFF !important; }
+body.theme-v3 .nav-link.active { color: #F59E0B !important; }
+body.theme-v3 .nav-cta { background: #F59E0B !important; color: #08090B !important; font-weight: 700 !important; }
+body.theme-v3 .nav-cta:hover { background: #FBBF24 !important; }
+body.theme-v3 .nav-hamburger span { background: #E9ECF1 !important; }
+/* El logo es negro sobre transparente: se invierte para que se lea en oscuro */
+body.theme-v3 .nav-logo-img { filter: brightness(0) invert(1); }
+body.theme-v3 .nav-mobile { background: #14171C !important; border-color: #262B33 !important; }
+
+/* Menú desplegable de productos */
+body.theme-v3 .dropdown-menu,
+body.theme-v3 .submenu {
+  background: #1B1F26 !important;
+  border: 1px solid #262B33 !important;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.65) !important;
+}
+body.theme-v3 .dropdown-link,
+body.theme-v3 .submenu-link { color: #A2ABB8 !important; }
+body.theme-v3 .dropdown-link:hover,
+body.theme-v3 .submenu-link:hover { background: #14171C !important; color: #F59E0B !important; }
+
+/* ── BOTONES ───────────────────────────────────────── */
+/* Texto oscuro sobre ámbar: es el par con mejor contraste */
+body.theme-v3 .btn-primary,
+body.theme-v3 .btn-add-cart,
+body.theme-v3 .btn-select-variant {
+  background: #F59E0B !important;
+  color: #08090B !important;
+  font-weight: 700 !important;
+  border-radius: 4px !important;
+}
+body.theme-v3 .btn-primary:hover,
+body.theme-v3 .btn-add-cart:hover,
+body.theme-v3 .btn-select-variant:hover {
+  background: #FBBF24 !important;
+  color: #08090B !important;
+}
+body.theme-v3 .btn-secondary {
+  color: #E9ECF1 !important;
+  border-color: #333A44 !important;
+}
+body.theme-v3 .btn-secondary:hover { border-color: #F59E0B !important; color: #F59E0B !important; }
+body.theme-v3 .btn-gold { background: #7D8794 !important; color: #08090B !important; }
+
+/* ── CATÁLOGO ──────────────────────────────────────── */
+body.theme-v3.catalog-page {
+  background: #0D0F12 !important;
+  background-image: none !important;
+}
+
+body.theme-v3 .catalog-header {
+  background: linear-gradient(135deg, #08090B 0%, #14171C 100%) !important;
+  border-bottom: 1px solid #262B33 !important;
+}
+body.theme-v3 .catalog-header h1 { color: #FFFFFF !important; }
+body.theme-v3 .catalog-header h1 span { color: #F59E0B !important; }
+body.theme-v3 .catalog-header-sub { color: #A2ABB8 !important; }
+
+body.theme-v3 .filter-tab {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #A2ABB8 !important;
+  border: 1px solid #262B33 !important;
+  border-bottom: none !important;
+}
+body.theme-v3 .filter-tab:hover { background: rgba(255, 255, 255, 0.1) !important; color: #FFFFFF !important; }
+body.theme-v3 .filter-tab.active {
+  background: #0D0F12 !important;
+  color: #FFFFFF !important;
+  border-top: 3px solid #F59E0B !important;
+  font-weight: 700 !important;
+}
+body.theme-v3 .filter-tab .tab-count { background: rgba(255, 255, 255, 0.1) !important; color: #A2ABB8 !important; }
+body.theme-v3 .filter-tab.active .tab-count { background: #F59E0B !important; color: #08090B !important; }
+
+body.theme-v3 .catalog-search input {
+  background: #14171C !important;
+  border: 1px solid #262B33 !important;
+  color: #E9ECF1 !important;
+}
+body.theme-v3 .catalog-search input:focus { border-color: #F59E0B !important; }
+body.theme-v3 .catalog-search input::placeholder { color: #6B7483 !important; }
+body.theme-v3 .catalog-count { color: #A2ABB8 !important; }
+body.theme-v3 .catalog-count strong { color: #FFFFFF !important; }
+
+body.theme-v3 .product-card {
+  background: #14171C !important;
+  border: 1px solid #262B33 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+body.theme-v3 .product-card:hover {
+  border-color: rgba(245, 158, 11, 0.5) !important;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.55) !important;
+  transform: translateY(-4px) !important;
+}
+body.theme-v3 .product-name { color: #FFFFFF !important; }
+body.theme-v3 .product-desc { color: #A2ABB8 !important; }
+body.theme-v3 .product-cat-badge {
+  background: rgba(245, 158, 11, 0.1) !important;
+  color: #F59E0B !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+  font-weight: 600 !important;
+}
+body.theme-v3 .btn-quick-view { border-color: #333A44 !important; color: #A2ABB8 !important; }
+body.theme-v3 .btn-quick-view:hover { border-color: #F59E0B !important; color: #F59E0B !important; }
+
+/* ── CARRITO ───────────────────────────────────────── */
+body.theme-v3 .cart-sidebar { background: #14171C !important; border-left: 1px solid #262B33 !important; }
+body.theme-v3 .cart-header { background: #08090B !important; color: #FFFFFF !important; border-bottom: 1px solid #262B33 !important; }
+body.theme-v3 .cart-badge { background: #F59E0B !important; color: #08090B !important; }
+body.theme-v3 .cart-item { border-color: #262B33 !important; }
+body.theme-v3 .cart-item-name { color: #FFFFFF !important; }
+body.theme-v3 .cart-clear-btn { color: #6B7483 !important; }
+body.theme-v3 .cart-clear-btn:hover { color: #EF4444 !important; }
+body.theme-v3 .cart-fab { background: #F59E0B !important; color: #08090B !important; box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35) !important; }
+body.theme-v3 .btn-quote { background: #25D366 !important; color: #05240F !important; font-weight: 700 !important; border-radius: 4px !important; }
+body.theme-v3 .btn-quote:hover { background: #1FBF5B !important; }
+
+/* Modal de cotización */
+body.theme-v3 .modal-content,
+body.theme-v3 .quote-modal { background: #14171C !important; border: 1px solid #262B33 !important; }
+body.theme-v3 .form-input,
+body.theme-v3 .form-textarea,
+body.theme-v3 select {
+  background: #0D0F12 !important;
+  border: 1px solid #262B33 !important;
+  color: #E9ECF1 !important;
+}
+body.theme-v3 .form-input:focus,
+body.theme-v3 .form-textarea:focus { border-color: #F59E0B !important; }
+body.theme-v3 .form-label { color: #A2ABB8 !important; }
+
+/* ── PÁGINA DE PRODUCTO ────────────────────────────── */
+body.theme-v3 .single-product-layout {
+  background: #14171C !important;
+  border: 1px solid #262B33 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45) !important;
+}
+body.theme-v3 .prod-category-badge {
+  background: rgba(245, 158, 11, 0.1) !important;
+  color: #F59E0B !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+body.theme-v3 .thumb-img { border-color: #262B33 !important; }
+body.theme-v3 .thumb-img.active { border-color: #F59E0B !important; }
+body.theme-v3 .variant-table th { background: #1B1F26 !important; color: #E9ECF1 !important; }
+body.theme-v3 .variant-table td { border-color: #262B33 !important; color: #A2ABB8 !important; }
+body.theme-v3 .variant-table tr:hover td { background: #1B1F26 !important; }
+body.theme-v3 .btn-wa-quote,
+body.theme-v3 .btn-add-cart-detail {
+  background: #25D366 !important;
+  color: #05240F !important;
+  border-radius: 4px !important;
+  font-weight: 700 !important;
+}
+body.theme-v3 .btn-wa-quote:hover,
+body.theme-v3 .btn-add-cart-detail:hover { background: #1FBF5B !important; }
+
+/* ── ADMINISTRACIÓN ────────────────────────────────── */
+body.theme-v3.admin-body { background: #0D0F12 !important; }
+body.theme-v3 .admin-header-bar { background: #08090B !important; color: #FFFFFF !important; border-bottom: 1px solid #262B33 !important; }
+body.theme-v3 .admin-card-title::before { background: #F59E0B !important; }
+body.theme-v3 .admin-form-card,
+body.theme-v3 .admin-table-card,
+body.theme-v3 .login-card {
+  background: #14171C !important;
+  border: 1px solid #262B33 !important;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45) !important;
+}
+body.theme-v3 .admin-table th { background: #1B1F26 !important; color: #E9ECF1 !important; }
+body.theme-v3 .admin-table td { border-color: #262B33 !important; }
+
+/* ── FOOTER ────────────────────────────────────────── */
+body.theme-v3 .footer { background: #08090B !important; border-top: 1px solid #1E232A !important; }
+body.theme-v3 .footer-col h4 { color: #F59E0B !important; }
+body.theme-v3 .footer a:hover { color: #F59E0B !important; }
+
+/* ── TOASTS ────────────────────────────────────────── */
+body.theme-v3 .toast {
+  background: #1B1F26 !important;
+  border: 1px solid #262B33 !important;
+  color: #E9ECF1 !important;
+}
