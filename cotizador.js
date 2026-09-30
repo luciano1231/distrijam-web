@@ -517,6 +517,50 @@ function cotAgregarDesdeCodigo(codigo) {
 }
 
 /* ── Inicio ───────────────────────────────────────── */
+/* ── Servidor ─────────────────────────────────────── */
+function cotRenderEstadoServidor(texto, estado) {
+  const el = document.getElementById('cot-server-status');
+  if (!el) return;
+  el.className = 'cot-price-status cot-price-status--' + estado;
+  el.innerHTML = texto;
+}
+
+/* Trae del servidor los pedidos que todavía no están en este navegador.
+   No hace falta ninguna clave: alcanza con la sesión del panel. */
+async function cotTraerDelServidor(avisar) {
+  try {
+    const res = await fetch('api.php?a=pedidos', { cache: 'no-store' });
+    const data = await res.json().catch(() => null);
+
+    if (!res.ok || !data || !data.ok) {
+      const motivo = data && data.error ? data.error : 'No se pudo conectar.';
+      cotRenderEstadoServidor('<strong>Servidor:</strong> ' + escapeHtml(motivo), 'off');
+      if (avisar) showToast(motivo, 'error', 5000);
+      return 0;
+    }
+
+    const pedidos = cotLeerPedidos();
+    const conocidos = new Set(pedidos.map(p => p.ref));
+    let nuevos = 0;
+
+    (data.pedidos || []).forEach(payload => {
+      if (!payload || !Array.isArray(payload.i) || conocidos.has(payload.r)) return;
+      pedidos.push(cotDesdePayload(payload));
+      conocidos.add(payload.r);
+      nuevos++;
+    });
+
+    if (nuevos) cotGuardarPedidos(pedidos);
+    cotRenderEstadoServidor(
+      `<strong>Conectado:</strong> ${data.total} pedido(s) en el servidor.`, 'on');
+    return nuevos;
+  } catch (e) {
+    cotRenderEstadoServidor('<strong>Servidor:</strong> sin respuesta.', 'off');
+    if (avisar) showToast('No se pudo conectar con el servidor', 'error');
+    return 0;
+  }
+}
+
 /* Los precios viven en el servidor, fuera de public_html, y sólo se
    entregan a quien tiene sesión abierta. Así el administrador los ve sin
    importar nada y los clientes no pueden pedirlos. */
