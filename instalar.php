@@ -3,8 +3,15 @@
  * DISTRIJAM — instalación del receptor de pedidos (se corre una sola vez)
  *
  * Genera la clave que el panel usa para leer los pedidos y la guarda fuera
- * de public_html. La clave se muestra una única vez y NUNCA pasa por el
- * repositorio: por eso se genera acá y no viene escrita en el código.
+ * de public_html. La clave NUNCA pasa por el repositorio, que es público:
+ * por eso se genera acá y no viene escrita en el código.
+ *
+ * Reglas para que esta página no sea una puerta abierta:
+ *  - Nunca genera nada con sólo visitarla: hace falta enviar el formulario.
+ *  - Si ya hay una clave, para cambiarla hay que escribir la actual. Quien
+ *    no la tenga no puede rotarla para quedarse con uuna válida.
+ *  - Si se perdió la clave, se borra el archivo clave.txt por FTP y se
+ *    vuelve a instalar.
  */
 
 const CARPETA_DATOS = '/datos_distrijam';
@@ -12,21 +19,40 @@ const CARPETA_DATOS = '/datos_distrijam';
 $dir = dirname(__DIR__) . CARPETA_DATOS;
 $archivoClave = $dir . '/clave.txt';
 
-$mensaje = '';
-$clave = null;
+$claveNueva = null;
+$error = '';
 $yaExiste = is_file($archivoClave);
-$regenerar = isset($_POST['regenerar']);
 
-if (!$yaExiste || $regenerar) {
-    if (!is_dir($dir) && !@mkdir($dir, 0750, true)) {
-        $mensaje = 'No se pudo crear la carpeta de datos en ' . htmlspecialchars($dir);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $puedeGenerar = false;
+
+    if (!$yaExiste) {
+        // Primera instalación: no hay nada que proteger todavía
+        $puedeGenerar = true;
     } else {
-        $clave = bin2hex(random_bytes(16));
-        if (@file_put_contents($archivoClave, $clave, LOCK_EX) === false) {
-            $mensaje = 'No se pudo guardar la clave.';
-            $clave = null;
+        $actual = trim((string) file_get_contents($archivoClave));
+        $enviada = isset($_POST['actual']) ? trim((string) $_POST['actual']) : '';
+        if ($enviada !== '' && hash_equals($actual, $enviada)) {
+            $puedeGenerar = true;
         } else {
-            @chmod($archivoClave, 0600);
+            usleep(500000);
+            $error = 'La clave actual no coincide. Si la perdiste, borrá el archivo '
+                   . 'clave.txt por FTP y volvé a entrar acá.';
+        }
+    }
+
+    if ($puedeGenerar) {
+        if (!is_dir($dir) && !@mkdir($dir, 0750, true)) {
+            $error = 'No se pudo crear la carpeta de datos.';
+        } else {
+            $claveNueva = bin2hex(random_bytes(16));
+            if (@file_put_contents($archivoClave, $claveNueva, LOCK_EX) === false) {
+                $error = 'No se pudo guardar la clave.';
+                $claveNueva = null;
+            } else {
+                @chmod($archivoClave, 0600);
+                $yaExiste = true;
+            }
         }
     }
 }
@@ -57,9 +83,12 @@ $cantidad = is_array($pedidos) ? count($pedidos) : 0;
           padding: 14px 16px; font-size: .9rem; margin: 18px 0; }
     .error { background: #FDECEA; border: 1px solid #F5C2C0; border-radius: 10px;
              padding: 14px 16px; font-size: .9rem; margin: 18px 0; }
-    ol { padding-left: 20px; } li { margin-bottom: 8px; }
-    button { background: #C0392B; color: #fff; border: 0; border-radius: 8px;
-             padding: 11px 20px; font-size: .92rem; font-weight: 600; cursor: pointer; }
+    label { display: block; font-size: .88rem; font-weight: 600; margin: 16px 0 6px; }
+    input[type=text] { width: 100%; box-sizing: border-box; padding: 11px 13px; font-size: .95rem;
+                       font-family: ui-monospace, monospace; border: 1px solid #D5D9E0;
+                       border-radius: 8px; }
+    button { margin-top: 16px; background: #C0392B; color: #fff; border: 0; border-radius: 8px;
+             padding: 12px 22px; font-size: .95rem; font-weight: 600; cursor: pointer; }
     code { background: #F0F1F4; padding: 2px 6px; border-radius: 4px; font-size: .88rem; }
   </style>
 </head>
@@ -68,27 +97,37 @@ $cantidad = is_array($pedidos) ? count($pedidos) : 0;
     <h1>Receptor de pedidos</h1>
     <div class="sub">Instalación por única vez.</div>
 
-    <?php if ($mensaje !== ''): ?>
-      <div class="error"><?= htmlspecialchars($mensaje) ?></div>
+    <?php if ($error !== ''): ?>
+      <div class="error"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
-    <?php if ($clave !== null): ?>
+    <?php if ($claveNueva !== null): ?>
       <div class="ok">Listo. El receptor quedó instalado.</div>
       <p><strong>Esta es tu clave. Se muestra una sola vez:</strong></p>
-      <div class="clave"><?= htmlspecialchars($clave) ?></div>
+      <div class="clave"><?= htmlspecialchars($claveNueva) ?></div>
       <div class="aviso">
         Copiala y pegala en el panel, en <strong>Pedidos a cotizar → Conectar con el servidor</strong>.
-        Si la perdés, volvé a esta página y generá una nueva.
       </div>
-      <p><strong>Ahora borrá este archivo del servidor</strong> (<code>instalar.php</code>)
-         para que nadie más pueda generar claves.</p>
+      <p><strong>Ahora borrá este archivo del servidor</strong> (<code>instalar.php</code>).</p>
 
     <?php elseif ($yaExiste): ?>
-      <div class="ok">El receptor ya está instalado y hay <?= $cantidad ?> pedido(s) guardado(s).</div>
-      <p>La clave no se puede volver a mostrar. Si la perdiste, generá una nueva:
-         el panel te va a pedir que la cargues de nuevo.</p>
+      <div class="ok">Ya hay una clave instalada. Pedidos guardados: <?= $cantidad ?>.</div>
+      <p>La clave no se puede volver a mostrar. Para reemplazarla tenés que escribir la actual:</p>
       <form method="post">
-        <button type="submit" name="regenerar" value="1">Generar una clave nueva</button>
+        <label for="actual">Clave actual</label>
+        <input type="text" id="actual" name="actual" autocomplete="off" spellcheck="false" />
+        <button type="submit">Reemplazar por una nueva</button>
+      </form>
+      <div class="aviso">
+        ¿La perdiste? Borrá <code><?= htmlspecialchars($archivoClave) ?></code> por FTP
+        o desde el administrador de archivos del hosting, y recargá esta página.
+      </div>
+
+    <?php else: ?>
+      <p>Todavía no hay clave. Al generarla, el panel va a poder leer los pedidos que
+         llegan del catálogo.</p>
+      <form method="post">
+        <button type="submit">Generar la clave</button>
       </form>
     <?php endif; ?>
 
