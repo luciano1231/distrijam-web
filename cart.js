@@ -218,6 +218,23 @@ function buildOrderPayload() {
   };
 }
 
+// Deja el pedido en una bandeja del navegador para que el panel lo levante
+// solo. Sirve cuando el pedido se arma en la misma máquina que administra
+// el sitio (pruebas locales, o el propio mostrador). Si el cliente pide
+// desde su celular, el pedido igual viaja en el código del mensaje.
+function depositarPedido(payload) {
+  try {
+    const bandeja = JSON.parse(localStorage.getItem('distrijam_pedidos_inbox') || '[]');
+    if (!bandeja.some(p => p.r === payload.r)) {
+      bandeja.push(payload);
+      // No se acumulan pedidos viejos indefinidamente
+      localStorage.setItem('distrijam_pedidos_inbox', JSON.stringify(bandeja.slice(-50)));
+    }
+  } catch (e) {
+    console.warn('No se pudo guardar el pedido en la bandeja local:', e);
+  }
+}
+
 function buildWhatsAppMessage(payload) {
   const [name, cuil, phone, message] = payload.c;
 
@@ -258,6 +275,7 @@ function sendWhatsApp() {
   }
 
   const payload = buildOrderPayload();
+  depositarPedido(payload);
   const url = `https://wa.me/${WA_NUMBER}?text=${buildWhatsAppMessage(payload)}`;
   window.open(url, '_blank');
   document.getElementById('quote-modal').classList.remove('open');

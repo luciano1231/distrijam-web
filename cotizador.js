@@ -452,13 +452,72 @@ function cotAgregarDesdeCodigo(codigo) {
 }
 
 /* ── Inicio ───────────────────────────────────────── */
+/* Si precios.json está junto al sitio (trabajo local), se toma solo.
+   En el servidor ese archivo no se publica, así que ahí no existe y el
+   administrador lo importa a mano: es lo que mantiene los precios fuera
+   del alcance de los clientes. */
+async function cotAutocargarPrecios() {
+  if (Object.keys(cotPrecios).length > 0) return;
+  try {
+    const res = await fetch('precios.json', { cache: 'no-store' });
+    if (!res.ok) return;
+    const data = await res.json();
+    const precios = data.precios || data;
+    const limpio = {};
+    Object.entries(precios).forEach(([k, v]) => {
+      const n = Number(v);
+      if (n > 0) limpio[k] = n;
+    });
+    if (Object.keys(limpio).length) {
+      cotPrecios = limpio;
+      cotGuardarPrecios(cotPrecios);
+    }
+  } catch (e) {
+    /* Sin archivo local: se importa a mano. */
+  }
+}
+
+/* Levanta los pedidos que el carrito dejó en la bandeja de este navegador */
+function cotRecogerBandeja() {
+  let bandeja;
+  try {
+    bandeja = JSON.parse(localStorage.getItem('distrijam_pedidos_inbox') || '[]');
+  } catch (e) {
+    return 0;
+  }
+  if (!Array.isArray(bandeja) || bandeja.length === 0) return 0;
+
+  const pedidos = cotLeerPedidos();
+  const conocidos = new Set(pedidos.map(p => p.ref));
+  let nuevos = 0;
+
+  bandeja.forEach(payload => {
+    if (!payload || !Array.isArray(payload.i)) return;
+    if (conocidos.has(payload.r)) return;
+    pedidos.push(cotDesdePayload(payload));
+    conocidos.add(payload.r);
+    nuevos++;
+  });
+
+  if (nuevos) cotGuardarPedidos(pedidos);
+  return nuevos;
+}
+
 async function initCotizador() {
   if (!document.getElementById('cot-section')) return;
 
   cotPrecios = cotLeerPrecios();
   await cotCargarCatalogo();
+  await cotAutocargarPrecios();
+
+  const nuevos = cotRecogerBandeja();
+
   cotRenderEstadoPrecios();
   cotRenderLista();
+
+  if (nuevos > 0) {
+    showToast(`${nuevos} pedido(s) nuevo(s) recibido(s)`, 'success', 5000);
+  }
 
   const form = document.getElementById('cot-paste-form');
   if (form) {

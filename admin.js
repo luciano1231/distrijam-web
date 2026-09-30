@@ -76,7 +76,9 @@ function deleteProduct(id) {
 }
 
 // ── Default products count (from catalog.js definition) ──
-const DEFAULT_COUNT = 32;
+// Se completa al leer productos.json; el 32 anterior era un número fijo
+// que quedó viejo cuando cambió el catálogo.
+let DEFAULT_COUNT = 0;
 
 // ── UI: Show/hide ─────────────────────────────────────
 function showLogin() {
@@ -88,6 +90,22 @@ function showDashboard() {
   document.getElementById('admin-dashboard').style.display = 'block';
   renderStats();
   renderProductList('all');
+  cargarConteoCatalogo();
+}
+
+// El panel mostraba un total fijo: se lee del catálogo publicado
+async function cargarConteoCatalogo() {
+  try {
+    const res = await fetch('productos.json');
+    if (!res.ok) return;
+    const productos = await res.json();
+    DEFAULT_COUNT = productos.length;
+    renderStats();
+    const nota = document.getElementById('nota-base-count');
+    if (nota) nota.textContent = productos.length;
+  } catch (e) {
+    console.warn('No se pudo leer productos.json para las estadísticas:', e);
+  }
 }
 
 // ── Stats ─────────────────────────────────────────────
@@ -102,9 +120,9 @@ function renderStats() {
   const cats = {};
   custom.forEach(p => { cats[p.category] = (cats[p.category] || 0) + 1; });
   const topCat = Object.entries(cats).sort((a,b) => b[1]-a[1])[0];
-  const customCats = getCustomCategories();
-  const catLabel = getAllCategories()[topCat[0]] || topCat[0];
-  document.getElementById('stat-categories').textContent = topCat ? catLabel : '—';
+  const etiquetas = getAllCategories();
+  document.getElementById('stat-categories').textContent =
+    topCat ? (etiquetas[topCat[0]] || topCat[0]) : '—';
 }
 
 // ── Product List ──────────────────────────────────────
