@@ -385,7 +385,7 @@ function cotImprimir() {
           <tr>
             <th>Producto</th>
             <th class="pq-num">Cant.</th>
-            <th class="pq-num">Precio unit.</th>
+            <th class="pq-num">Precio unit.<br><span class="pq-th-sub">final c/IVA</span></th>
             <th class="pq-num">Subtotal</th>
           </tr>
         </thead>
@@ -396,13 +396,14 @@ function cotImprimir() {
         <div class="pq-tot-row"><span>Subtotal</span><strong>${money(t.subtotal)}</strong></div>
         ${t.pct > 0 ? `<div class="pq-tot-row pq-desc"><span>Descuento (${t.pct}%)</span><strong>− ${money(t.descuento)}</strong></div>` : ''}
         <div class="pq-tot-row pq-final"><span>Total</span><strong>${money(t.total)}</strong></div>
+        <div class="pq-tot-iva">IVA incluido</div>
       </div>
 
       ${p.cliente.nota ? `<div class="pq-nota"><span>Nota del cliente:</span> ${escapeHtml(p.cliente.nota)}</div>` : ''}
 
       <footer class="pq-foot">
         <p class="pq-validez">Presupuesto válido por ${DIAS_VALIDEZ} días — hasta el ${vence.toLocaleDateString('es-AR')}.</p>
-        <p class="pq-legal">Los precios pueden estar sujetos a disponibilidad de stock al momento de confirmar el pedido.</p>
+        <p class="pq-legal">Precios finales expresados en pesos argentinos, con IVA incluido. Sujetos a disponibilidad de stock al momento de confirmar el pedido.</p>
       </footer>
     </div>`;
 
