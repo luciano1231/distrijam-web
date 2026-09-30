@@ -567,15 +567,29 @@ function cotRecogerBandeja() {
   return nuevos;
 }
 
+let cotIniciado = false;
+
 async function initCotizador() {
+  if (cotIniciado) return;
   if (!document.getElementById('cot-section')) return;
+  cotIniciado = true;
 
-  cotPrecios = cotLeerPrecios();
-  await cotCargarCatalogo();
-  await cotCargarPreciosDelServidor();
+  try {
+    cotPrecios = cotLeerPrecios();
+    await cotCargarCatalogo();
+    await cotCargarPreciosDelServidor();
+  } catch (e) {
+    console.error('Cotizador: fallo al cargar catálogo o precios', e);
+  }
 
-  let nuevos = cotRecogerBandeja();
-  nuevos += await cotTraerDelServidor(false);
+  let nuevos = 0;
+  try {
+    nuevos = cotRecogerBandeja();
+    nuevos += await cotTraerDelServidor(false);
+  } catch (e) {
+    console.error('Cotizador: fallo al traer pedidos', e);
+    cotRenderEstadoServidor('<strong>Error al traer pedidos.</strong> ' + escapeHtml(e.message), 'off');
+  }
 
   cotRenderEstadoPrecios();
   cotRenderLista();
@@ -652,5 +666,15 @@ async function initCotizador() {
 }
 
 // El panel avisa cuando hay sesión: recién ahí el servidor entrega
-// pedidos y precios.
+// pedidos y precios. Igual se intenta al cargar, por si el aviso no llega
+// (sesión ya abierta, o un error que corta el arranque del panel): sin esa
+// segunda vía el cotizador quedaba esperando para siempre.
 document.addEventListener('distrijam:sesion-lista', initCotizador);
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    const panel = document.getElementById('admin-dashboard');
+    const visible = panel && getComputedStyle(panel).display !== 'none';
+    if (visible) initCotizador();
+  }, 600);
+});
