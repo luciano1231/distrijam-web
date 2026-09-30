@@ -230,7 +230,8 @@
   display: flex; justify-content: space-between; align-items: flex-start;
   gap: 24px; padding-bottom: 16px; border-bottom: 2px solid #111;
 }
-.pq-logo { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; }
+/* El logo es horizontal (2292x500) y va en lugar del nombre escrito */
+.pq-logo { height: 30px; width: auto; display: block; }
 .pq-rubro { font-size: 11px; color: #555; margin-top: 2px; }
 .pq-emp { font-size: 10.5px; color: #444; text-align: right; line-height: 1.7; }
 
@@ -297,6 +298,12 @@
   body.cot-printing .cot-print { display: block !important; }
 
   @page { size: A4; margin: 14mm; }
+
+  /* Sin esto el navegador descarta fondos y bajaría la calidad del logo */
+  body.cot-printing .cot-print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
 
 /* Etiqueta sólo para lectores de pantalla */

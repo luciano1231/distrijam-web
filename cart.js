@@ -1,9 +1,8 @@
 // ── Shared Cart State & Functions ─────────────────────────
 let cart = [];
-// Destino de los pedidos de cotización.
-// TEMPORAL: número de pruebas mientras se trabaja en local.
-// Antes de publicar hay que volver al de la empresa: 5493794007195
-const WA_NUMBER = '5493794675203';
+// Destino de los pedidos de cotización: número de la empresa.
+// (El 5493794675203 es el de pruebas, sólo para trabajo local.)
+const WA_NUMBER = '5493794007195';
 
 function loadCart() {
   try {

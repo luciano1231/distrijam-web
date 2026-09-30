@@ -356,7 +356,7 @@ function cotImprimir() {
     <div class="pq-sheet">
       <header class="pq-head">
         <div>
-          <div class="pq-logo">${EMPRESA.nombre}</div>
+          <img class="pq-logo" src="Logo/LogoDistrijamCompleto.png" alt="${EMPRESA.nombre}" />
           <div class="pq-rubro">${EMPRESA.rubro}</div>
         </div>
         <div class="pq-emp">
