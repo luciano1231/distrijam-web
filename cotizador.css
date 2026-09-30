@@ -362,3 +362,11 @@
   border: 1px solid var(--border); background: var(--bg-card); color: var(--text);
 }
 .cot-estado-sel:focus { outline: none; border-color: var(--red); }
+
+/* Estado de conexión con el servidor, junto al de la lista de precios */
+.cot-estados-conexion {
+  display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
+}
+@media (max-width: 760px) {
+  .cot-estados-conexion { align-items: stretch; width: 100%; }
+}

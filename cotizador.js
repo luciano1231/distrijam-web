@@ -11,6 +11,7 @@
 
 const COT_PRECIOS_KEY = 'distrijam_precios';
 const COT_PEDIDOS_KEY = 'distrijam_pedidos';
+const COT_CLAVE_KEY = 'distrijam_clave_servidor';
 
 const EMPRESA = {
   nombre: 'DISTRIJAM',
@@ -531,6 +532,80 @@ async function cotAutocargarPrecios() {
   }
 }
 
+/* ── Servidor de pedidos ──────────────────────────── */
+function cotLeerClave() {
+  return localStorage.getItem(COT_CLAVE_KEY) || '';
+}
+
+function cotRenderEstadoServidor(texto, estado) {
+  const el = document.getElementById('cot-server-status');
+  if (!el) return;
+  el.className = 'cot-price-status cot-price-status--' + estado;
+  el.innerHTML = texto;
+}
+
+/* Trae del servidor los pedidos que todavía no están en este navegador */
+async function cotTraerDelServidor(avisar) {
+  const clave = cotLeerClave();
+  if (!clave) {
+    cotRenderEstadoServidor('<strong>Sin conectar al servidor.</strong> Los pedidos se cargan pegando el código.', 'off');
+    return 0;
+  }
+
+  try {
+    const res = await fetch('pedidos.php?clave=' + encodeURIComponent(clave), { cache: 'no-store' });
+    const data = await res.json().catch(() => null);
+
+    if (!res.ok || !data || !data.ok) {
+      const motivo = data && data.error ? data.error : 'No se pudo conectar.';
+      cotRenderEstadoServidor('<strong>Servidor:</strong> ' + escapeHtml(motivo), 'off');
+      if (avisar) showToast(motivo, 'error', 5000);
+      return 0;
+    }
+
+    const pedidos = cotLeerPedidos();
+    const conocidos = new Set(pedidos.map(p => p.ref));
+    let nuevos = 0;
+
+    (data.pedidos || []).forEach(payload => {
+      if (!payload || !Array.isArray(payload.i) || conocidos.has(payload.r)) return;
+      pedidos.push(cotDesdePayload(payload));
+      conocidos.add(payload.r);
+      nuevos++;
+    });
+
+    if (nuevos) cotGuardarPedidos(pedidos);
+    cotRenderEstadoServidor(
+      `<strong>Conectado al servidor:</strong> ${data.total} pedido(s) recibido(s).`, 'on');
+    return nuevos;
+  } catch (e) {
+    cotRenderEstadoServidor('<strong>Servidor:</strong> sin respuesta.', 'off');
+    if (avisar) showToast('No se pudo conectar con el servidor', 'error');
+    return 0;
+  }
+}
+
+function cotPedirClave() {
+  const actual = cotLeerClave();
+  const clave = prompt(
+    'Pegá la clave que te dio instalar.php. Dejalo vacío para desconectar.',
+    actual
+  );
+  if (clave === null) return;
+
+  const limpia = clave.trim();
+  if (limpia === '') {
+    localStorage.removeItem(COT_CLAVE_KEY);
+    showToast('Desconectado del servidor', 'info');
+  } else {
+    localStorage.setItem(COT_CLAVE_KEY, limpia);
+  }
+  cotTraerDelServidor(true).then(nuevos => {
+    cotRenderLista();
+    if (nuevos > 0) showToast(`${nuevos} pedido(s) traído(s) del servidor`, 'success', 5000);
+  });
+}
+
 /* Levanta los pedidos que el carrito dejó en la bandeja de este navegador */
 function cotRecogerBandeja() {
   let bandeja;
@@ -564,13 +639,26 @@ async function initCotizador() {
   await cotCargarCatalogo();
   await cotAutocargarPrecios();
 
-  const nuevos = cotRecogerBandeja();
+  let nuevos = cotRecogerBandeja();
+  nuevos += await cotTraerDelServidor(false);
 
   cotRenderEstadoPrecios();
   cotRenderLista();
 
   if (nuevos > 0) {
     showToast(`${nuevos} pedido(s) nuevo(s) recibido(s)`, 'success', 5000);
+  }
+
+  const conectar = document.getElementById('cot-conectar');
+  if (conectar) conectar.addEventListener('click', cotPedirClave);
+
+  const actualizar = document.getElementById('cot-actualizar');
+  if (actualizar) {
+    actualizar.addEventListener('click', async () => {
+      const n = await cotTraerDelServidor(true);
+      cotRenderLista();
+      showToast(n > 0 ? `${n} pedido(s) nuevo(s)` : 'No hay pedidos nuevos', n > 0 ? 'success' : 'info');
+    });
   }
 
   const form = document.getElementById('cot-paste-form');

@@ -237,6 +237,22 @@ function depositarPedido(payload) {
   }
 }
 
+// Deja el pedido en el servidor para que aparezca solo en el panel, sin que
+// nadie tenga que pegar el código. Si el servidor no responde no pasa nada:
+// el pedido igual viaja en el mensaje de WhatsApp.
+function enviarPedidoAlServidor(payload) {
+  try {
+    fetch('pedidos.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).catch(() => {});
+  } catch (e) {
+    /* Sin servidor (trabajo local): queda el código del mensaje. */
+  }
+}
+
 function buildWhatsAppMessage(payload) {
   const [name, cuil, phone, message] = payload.c;
 
@@ -278,6 +294,7 @@ function sendWhatsApp() {
 
   const payload = buildOrderPayload();
   depositarPedido(payload);
+  enviarPedidoAlServidor(payload);
   const url = `https://wa.me/${WA_NUMBER}?text=${buildWhatsAppMessage(payload)}`;
   window.open(url, '_blank');
   document.getElementById('quote-modal').classList.remove('open');
