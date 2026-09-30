@@ -1,0 +1,322 @@
+/* ======================================================
+   DISTRIJAM — cotizador.css
+   Sección "Pedidos a cotizar" del panel + hoja de presupuesto.
+   ====================================================== */
+
+/* ── SECCIÓN ───────────────────────────────────────── */
+.cot-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 12px);
+  padding: 26px 28px;
+  margin-bottom: 32px;
+}
+
+.cot-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap; margin-bottom: 20px;
+}
+.cot-header h2 {
+  font-size: 1.25rem; font-weight: 800; color: var(--white);
+  letter-spacing: -0.01em; margin: 0;
+}
+.cot-sub { font-size: 0.85rem; color: var(--text-dim); margin-top: 4px; }
+
+.cot-price-status {
+  font-size: 0.8rem; padding: 9px 14px; border-radius: 100px;
+  border: 1px solid var(--border); background: var(--bg-card-2);
+  color: var(--text-dim);
+}
+.cot-price-status code {
+  font-family: ui-monospace, monospace; font-size: 0.78rem;
+  background: rgba(127, 127, 127, 0.14); padding: 1px 5px; border-radius: 4px;
+}
+.cot-price-status--on { border-color: rgba(21, 128, 61, 0.35); background: rgba(21, 128, 61, 0.08); }
+.cot-price-status--off { border-color: rgba(217, 119, 6, 0.35); background: rgba(217, 119, 6, 0.08); }
+
+.cot-tools {
+  display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+  margin-bottom: 22px;
+}
+.cot-paste { display: flex; gap: 10px; flex: 1; min-width: 280px; }
+.cot-paste input {
+  flex: 1; min-width: 0; padding: 12px 16px; font-size: 0.88rem;
+  font-family: ui-monospace, monospace;
+  background: var(--bg-card-2); color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius, 8px);
+}
+.cot-paste input:focus { outline: none; border-color: var(--red); }
+.cot-import input[type="file"] { display: none; }
+.cot-import { cursor: pointer; }
+
+/* ── LISTADO DE PEDIDOS ────────────────────────────── */
+.cot-empty {
+  text-align: center; padding: 44px 24px; color: var(--text-dim);
+  border: 1px dashed var(--border); border-radius: var(--radius, 8px);
+}
+.cot-empty-icon { font-size: 2.4rem; margin-bottom: 12px; }
+.cot-empty p { font-size: 0.88rem; line-height: 1.7; max-width: 52ch; margin: 0 auto 6px; }
+.cot-empty code {
+  font-family: ui-monospace, monospace;
+  background: rgba(127, 127, 127, 0.14); padding: 1px 5px; border-radius: 4px;
+}
+
+.cot-card {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+  padding: 18px 20px; margin-bottom: 12px;
+  background: var(--bg-card-2); border: 1px solid var(--border);
+  border-radius: var(--radius, 8px);
+  transition: border-color 0.2s ease;
+}
+.cot-card:hover { border-color: var(--red); }
+
+.cot-card-ref { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.cot-ref {
+  font-family: ui-monospace, monospace; font-size: 0.95rem; font-weight: 700;
+  color: var(--white);
+}
+.cot-estado {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 3px 10px; border-radius: 100px;
+}
+.cot-estado--pendiente { background: rgba(217, 119, 6, 0.14); color: #B45309; }
+.cot-estado--cotizado { background: rgba(21, 128, 61, 0.14); color: #15803D; }
+
+.cot-card-cliente { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.cot-card-cliente strong { font-size: 0.95rem; color: var(--text); }
+.cot-card-cliente span { font-size: 0.8rem; color: var(--text-muted); }
+.cot-card-meta { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+
+.cot-card-side { display: flex; align-items: center; gap: 18px; }
+.cot-card-total {
+  font-size: 1.15rem; font-weight: 800; color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+.cot-card-actions { display: flex; align-items: center; gap: 8px; }
+.cot-del {
+  width: 34px; height: 34px; border-radius: 8px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); font-size: 0.9rem; line-height: 1;
+}
+.cot-del:hover { border-color: #DC2626; color: #DC2626; }
+
+/* ── MODAL DEL REMITO ──────────────────────────────── */
+.cot-modal-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(3px);
+  display: none; align-items: flex-start; justify-content: center;
+  padding: 36px 20px; overflow-y: auto;
+}
+.cot-modal-overlay.open { display: flex; }
+
+.cot-modal {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 12px);
+  width: 100%; max-width: 900px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+}
+
+.cot-modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 22px 26px; border-bottom: 1px solid var(--border);
+}
+.cot-modal-head h3 { font-size: 1.1rem; font-weight: 800; color: var(--white); margin: 0; }
+.cot-modal-head .cot-ref { font-size: 1.05rem; }
+.cot-modal-close {
+  width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border);
+  background: transparent; color: var(--text-dim); font-size: 1rem;
+}
+.cot-modal-close:hover { border-color: var(--red); color: var(--red); }
+
+.cot-modal-body { padding: 22px 26px; }
+
+.cot-cliente-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  padding: 16px 18px; margin-bottom: 20px;
+  background: var(--bg-card-2); border: 1px solid var(--border);
+  border-radius: var(--radius, 8px);
+}
+.cot-cliente-grid > div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.cot-cliente-grid span {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-muted); font-weight: 700;
+}
+.cot-cliente-grid strong { font-size: 0.9rem; color: var(--text); word-break: break-word; }
+.cot-cliente-grid .cot-nota { grid-column: 1 / -1; }
+
+/* Tabla editable */
+.cot-table { width: 100%; border-collapse: collapse; }
+.cot-table th {
+  text-align: left; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-muted); font-weight: 700;
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+}
+.cot-table td { padding: 12px; border-bottom: 1px solid var(--border-light, var(--border)); vertical-align: middle; }
+.cot-td-num { text-align: right; width: 130px; }
+.cot-table th.cot-td-num { text-align: right; }
+.cot-item-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+.cot-item-meta { font-size: 0.76rem; color: var(--text-muted); margin-top: 2px; }
+.cot-linea { font-weight: 700; color: var(--white); font-variant-numeric: tabular-nums; }
+
+.cot-input {
+  width: 100%; padding: 8px 10px; text-align: right;
+  font-size: 0.88rem; font-variant-numeric: tabular-nums;
+  background: var(--bg-card-2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px;
+}
+.cot-input:focus { outline: none; border-color: var(--red); }
+.cot-qty { max-width: 80px; }
+
+/* Ítem sin precio en la lista importada */
+.cot-row-warn .cot-precio {
+  border-color: rgba(217, 119, 6, 0.5);
+  background: rgba(217, 119, 6, 0.06);
+}
+
+/* Totales */
+.cot-resumen {
+  display: flex; justify-content: flex-end; margin-top: 22px;
+}
+.cot-resumen-box {
+  width: 100%; max-width: 340px;
+  background: var(--bg-card-2); border: 1px solid var(--border);
+  border-radius: var(--radius, 8px); padding: 18px 20px;
+}
+.cot-res-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; font-size: 0.88rem; color: var(--text-dim); padding: 6px 0;
+}
+.cot-res-row strong { color: var(--text); font-variant-numeric: tabular-nums; }
+.cot-res-desc { display: flex; align-items: center; gap: 8px; }
+.cot-res-desc input {
+  width: 74px; padding: 6px 8px; text-align: right;
+  background: var(--bg-card); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem;
+}
+.cot-res-total {
+  margin-top: 8px; padding-top: 14px; border-top: 1px solid var(--border);
+  font-size: 1.05rem; color: var(--text);
+}
+.cot-res-total strong { font-size: 1.35rem; font-weight: 800; color: var(--white); }
+
+.cot-modal-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+  padding: 18px 26px; border-top: 1px solid var(--border);
+}
+.cot-foot-hint { font-size: 0.78rem; color: var(--text-muted); }
+.cot-foot-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+@media (max-width: 760px) {
+  .cot-section { padding: 20px 18px; }
+  .cot-cliente-grid { grid-template-columns: 1fr 1fr; }
+  .cot-card-side { width: 100%; justify-content: space-between; }
+  .cot-td-num { width: auto; }
+  .cot-modal-body { padding: 18px; }
+}
+
+/* ══════════════════════════════════════════════════
+   HOJA DE PRESUPUESTO (sólo al imprimir)
+   ══════════════════════════════════════════════════ */
+.cot-print { display: none; }
+
+.pq-sheet {
+  color: #111; background: #fff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 12px; line-height: 1.55;
+}
+.pq-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 24px; padding-bottom: 16px; border-bottom: 2px solid #111;
+}
+.pq-logo { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; }
+.pq-rubro { font-size: 11px; color: #555; margin-top: 2px; }
+.pq-emp { font-size: 10.5px; color: #444; text-align: right; line-height: 1.7; }
+
+.pq-title {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 24px; margin-top: 22px;
+}
+.pq-title h1 { font-size: 22px; font-weight: 800; margin: 0; letter-spacing: -0.02em; }
+.pq-ref { display: flex; gap: 26px; }
+.pq-ref div { display: flex; flex-direction: column; }
+.pq-ref span { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #777; }
+.pq-ref strong { font-size: 13px; }
+
+.pq-cliente {
+  display: flex; gap: 34px; flex-wrap: wrap;
+  margin-top: 18px; padding: 12px 16px;
+  background: #F4F4F2; border: 1px solid #E0E0DC; border-radius: 4px;
+}
+.pq-cliente div { display: flex; flex-direction: column; }
+.pq-cliente span { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #777; }
+.pq-cliente strong { font-size: 12.5px; }
+
+.pq-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.pq-table th {
+  text-align: left; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: #444; padding: 8px 10px; border-bottom: 1.5px solid #111;
+}
+.pq-table td { padding: 9px 10px; border-bottom: 1px solid #E5E5E2; vertical-align: top; }
+.pq-num { text-align: right; white-space: nowrap; }
+.pq-item { font-weight: 600; font-size: 11.5px; }
+.pq-item-meta { font-size: 10px; color: #666; margin-top: 1px; }
+
+.pq-totales { margin-top: 18px; margin-left: auto; width: 300px; }
+.pq-tot-row {
+  display: flex; justify-content: space-between; gap: 20px;
+  padding: 6px 0; font-size: 12px;
+}
+.pq-desc { color: #B45309; }
+.pq-final {
+  margin-top: 6px; padding-top: 10px; border-top: 2px solid #111;
+  font-size: 15px; font-weight: 800;
+}
+
+.pq-nota {
+  margin-top: 18px; padding: 10px 14px; font-size: 11px;
+  background: #F4F4F2; border-left: 3px solid #999; border-radius: 3px;
+}
+.pq-nota span { font-weight: 700; }
+
+.pq-foot { margin-top: 26px; padding-top: 14px; border-top: 1px solid #DDD; }
+.pq-validez { font-size: 12px; font-weight: 700; color: #111; }
+.pq-legal { font-size: 10px; color: #777; margin-top: 4px; }
+
+/* Al imprimir se oculta el panel y se muestra sólo la hoja */
+@media print {
+  body.cot-printing .admin-dashboard,
+  body.cot-printing .admin-login,
+  body.cot-printing .cot-modal-overlay,
+  body.cot-printing .toast-container,
+  body.cot-printing .distrijam-version-pill,
+  body.cot-printing #dj-back-to-top { display: none !important; }
+
+  body.cot-printing { background: #fff !important; }
+  body.cot-printing .cot-print { display: block !important; }
+
+  @page { size: A4; margin: 14mm; }
+}
+
+/* Etiqueta sólo para lectores de pantalla */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* .btn-secondary viene pensado para el hero oscuro (texto blanco): dentro
+   del panel y del modal claro quedaba invisible. */
+.cot-section .btn-secondary,
+.cot-modal-foot .btn-secondary {
+  background: var(--bg-card-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.cot-section .btn-secondary:hover,
+.cot-modal-foot .btn-secondary:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: var(--bg-card);
+}

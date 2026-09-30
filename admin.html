@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="theme-v4.css" />
   <link rel="stylesheet" href="theme-v5.css" />
   <link rel="stylesheet" href="theme-v6.css" />
+  <link rel="stylesheet" href="cotizador.css" />
 </head>
 <body class="admin-body">
 
@@ -62,6 +63,33 @@
         </div>
       </div>
     </nav>
+
+    <!-- ══ PEDIDOS A COTIZAR ══ -->
+    <div class="admin-content" style="display:block; padding-bottom:0;">
+      <section class="cot-section" id="cot-section">
+        <div class="cot-header">
+          <div>
+            <h2>Pedidos a cotizar</h2>
+            <p class="cot-sub">Pegá el código que llega en el mensaje de WhatsApp para abrir el remito con precios.</p>
+          </div>
+          <div class="cot-price-status" id="cot-price-status"></div>
+        </div>
+
+        <div class="cot-tools">
+          <form class="cot-paste" id="cot-paste-form">
+            <label for="cot-code-input" class="sr-only">Código del pedido</label>
+            <input type="text" id="cot-code-input" placeholder="Pegá acá el código DJ1...." autocomplete="off" />
+            <button type="submit" class="btn btn-primary">Abrir pedido</button>
+          </form>
+          <label class="cot-import">
+            <input type="file" id="cot-price-file" accept=".json,application/json" />
+            <span class="btn btn-secondary">Importar lista de precios</span>
+          </label>
+        </div>
+
+        <div id="cot-list"></div>
+      </section>
+    </div>
 
     <div class="admin-content">
 
@@ -130,10 +158,16 @@
               <div style="position:relative;">
                 <select class="form-select" id="product-category" required style="padding-right:32px;">
                   <option value="">Seleccioná una categoría</option>
-                  <option value="autoperforantes">🔧 Autoperforantes</option>
-                  <option value="bulones">⚙️ Bulones y Tirafondos</option>
-                  <option value="tuercas">🔩 Tuercas y Arandelas</option>
-                  <option value="tarugos">🏗️ Tarugos</option>
+                  <option value="arandelas">Arandelas</option>
+                  <option value="autoperforantes">Autoperforantes</option>
+                  <option value="bulones">Bulones</option>
+                  <option value="ganchos">Ganchos</option>
+                  <option value="pitones">Pitones</option>
+                  <option value="remaches-clavos">Remaches y Clavos</option>
+                  <option value="tarugos">Tarugos</option>
+                  <option value="tirafondos">Tirafondos</option>
+                  <option value="tuercas">Tuercas</option>
+                  <option value="varillas">Varillas Roscadas</option>
                 </select>
                 <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--text-dim);">▾</span>
               </div>
@@ -233,7 +267,68 @@
     </div>
   </div>
 
+  <!-- ══ DETALLE DEL REMITO ══ -->
+  <div class="cot-modal-overlay" id="cot-modal" role="dialog" aria-modal="true" aria-label="Detalle del pedido">
+    <div class="cot-modal">
+      <div class="cot-modal-head">
+        <div>
+          <h3>Remito <span class="cot-ref" id="cot-modal-ref"></span></h3>
+        </div>
+        <button type="button" class="cot-modal-close" data-cot-close aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="cot-modal-body">
+        <div class="cot-cliente-grid" id="cot-modal-cliente"></div>
+
+        <table class="cot-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="cot-td-num">Cantidad</th>
+              <th class="cot-td-num">Precio unit.</th>
+              <th class="cot-td-num">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="cot-modal-items"></tbody>
+        </table>
+
+        <div class="cot-resumen">
+          <div class="cot-resumen-box">
+            <div class="cot-res-row">
+              <span>Subtotal</span>
+              <strong id="cot-subtotal">$ 0,00</strong>
+            </div>
+            <div class="cot-res-row">
+              <span class="cot-res-desc">
+                Descuento
+                <input type="number" id="cot-desc-input" min="0" max="100" step="0.5" value="0" aria-label="Porcentaje de descuento" />%
+              </span>
+              <strong id="cot-descuento">$ 0,00</strong>
+            </div>
+            <div class="cot-res-row cot-res-total">
+              <span>Total</span>
+              <strong id="cot-total">$ 0,00</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cot-modal-foot">
+        <span class="cot-foot-hint">Los precios se toman de la lista importada y podés editarlos acá.</span>
+        <div class="cot-foot-actions">
+          <button type="button" class="btn btn-secondary" data-cot-close>Cerrar</button>
+          <button type="button" class="btn btn-secondary" id="cot-save">Guardar cambios</button>
+          <button type="button" class="btn btn-primary" id="cot-print-btn">Imprimir / Guardar PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hoja de presupuesto: sólo se ve al imprimir -->
+  <div class="cot-print" id="cot-print"></div>
+
   <script src="app.js"></script>
   <script src="admin.js"></script>
+  <script src="cotizador.js"></script>
 </body>
 </html>

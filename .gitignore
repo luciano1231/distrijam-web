@@ -1,0 +1,4 @@
+# La lista de precios NO se publica: cualquier archivo subido al servidor
+# queda accesible para cualquier visitante. El panel la importa desde la
+# computadora del administrador.
+precios.json

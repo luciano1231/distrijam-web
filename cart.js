@@ -182,15 +182,46 @@ function isValidCUIL(value) {
   return digits.length === 11;
 }
 
-function buildWhatsAppMessage() {
-  const name = document.getElementById('quote-name').value.trim() || 'Sin nombre';
-  const phone = document.getElementById('quote-phone').value.trim();
-  const cuil = document.getElementById('quote-cuil').value.trim();
-  const message = document.getElementById('quote-message').value.trim();
+// ── Código de pedido ──────────────────────────────────
+// El sitio no tiene servidor, así que el pedido viaja dentro del propio
+// mensaje de WhatsApp: se codifica en un texto que el administrador pega en
+// el panel para reconstruir el remito completo. Sólo lleva el id de cada
+// variante y la cantidad; el resto (nombre, medida, precio) lo resuelve el
+// panel. Nunca incluye precios.
+function encodeOrderCode(payload) {
+  const bytes = new TextEncoder().encode(JSON.stringify(payload));
+  let bin = '';
+  bytes.forEach(b => { bin += String.fromCharCode(b); });
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+function newOrderRef(timestamp) {
+  return 'R' + timestamp.toString(36).toUpperCase().slice(-7);
+}
+
+function buildOrderPayload() {
+  const ts = Date.now();
+  return {
+    v: 1,
+    r: newOrderRef(ts),
+    f: ts,
+    c: [
+      document.getElementById('quote-name').value.trim(),
+      document.getElementById('quote-cuil').value.trim(),
+      document.getElementById('quote-phone').value.trim(),
+      document.getElementById('quote-message').value.trim()
+    ],
+    i: cart.map(item => [item.variantId, item.qty])
+  };
+}
+
+function buildWhatsAppMessage(payload) {
+  const [name, cuil, phone, message] = payload.c;
 
   let text = `🔩 *PEDIDO DE COTIZACIÓN — DISTRIJAM*\n`;
   text += `━━━━━━━━━━━━━━━━━━━\n`;
-  text += `👤 *Cliente:* ${name}\n`;
+  text += `🧾 *Remito:* ${payload.r}\n`;
+  text += `👤 *Cliente:* ${name || 'Sin nombre'}\n`;
   text += `🆔 *CUIL:* ${cuil}\n`;
   if (phone) text += `📱 *Teléfono:* ${phone}\n`;
   text += `\n📋 *Productos solicitados:*\n`;
@@ -200,6 +231,8 @@ function buildWhatsAppMessage() {
   text += `\n📦 *Total:* ${cart.length} ítem(s), ${cartTotal()} unidades`;
   if (message) text += `\n\n💬 *Nota:* ${message}`;
   text += `\n━━━━━━━━━━━━━━━━━━━`;
+  text += `\n_Código del pedido (no borrar):_\n`;
+  text += `DJ1.${encodeOrderCode(payload)}`;
   return encodeURIComponent(text);
 }
 
@@ -221,10 +254,11 @@ function sendWhatsApp() {
     return;
   }
 
-  const url = `https://wa.me/${WA_NUMBER}?text=${buildWhatsAppMessage()}`;
+  const payload = buildOrderPayload();
+  const url = `https://wa.me/${WA_NUMBER}?text=${buildWhatsAppMessage(payload)}`;
   window.open(url, '_blank');
   document.getElementById('quote-modal').classList.remove('open');
-  showToast('¡Pedido enviado por WhatsApp! 🎉', 'success', 5000);
+  showToast(`¡Pedido ${payload.r} enviado por WhatsApp! 🎉`, 'success', 5000);
 }
 
 // ── Init Shared Cart UI ────────────────────────────────
