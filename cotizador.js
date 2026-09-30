@@ -26,6 +26,13 @@ const DIAS_VALIDEZ = 7;
 let cotPrecios = {};
 let cotCatalogo = {};   // variantId -> { nombre, medida, presentacion, descripcion }
 let cotPedidoAbierto = null;
+let cotFiltro = 'todos';
+
+const ESTADOS = {
+  pendiente: 'Pendiente',
+  cotizado: 'Cotizado',
+  enviado: 'Enviado'
+};
 
 const money = (n) => new Intl.NumberFormat('es-AR', {
   style: 'currency', currency: 'ARS', minimumFractionDigits: 2
@@ -181,13 +188,47 @@ function cotImportarPrecios(file) {
 }
 
 /* ── Listado de pedidos ───────────────────────────── */
+function cotRenderFiltros(pedidos) {
+  const cont = document.getElementById('cot-filtros');
+  if (!cont) return;
+
+  const cuenta = { todos: pedidos.length, pendiente: 0, cotizado: 0, enviado: 0 };
+  pedidos.forEach(p => { cuenta[p.estado] = (cuenta[p.estado] || 0) + 1; });
+
+  const opciones = [['todos', 'Todos'], ...Object.entries(ESTADOS)];
+  cont.innerHTML = opciones.map(([clave, etiqueta]) => `
+    <button type="button" class="cot-filtro ${cotFiltro === clave ? 'active' : ''}" data-filtro="${clave}">
+      ${etiqueta} <span class="cot-filtro-n">${cuenta[clave] || 0}</span>
+    </button>`).join('');
+
+  cont.querySelectorAll('.cot-filtro').forEach(b => {
+    b.addEventListener('click', () => {
+      cotFiltro = b.dataset.filtro;
+      cotRenderLista();
+    });
+  });
+}
+
+function cotCambiarEstado(ref, estado) {
+  const lista = cotLeerPedidos();
+  const p = lista.find(x => x.ref === ref);
+  if (!p) return;
+  p.estado = estado;
+  cotGuardarPedidos(lista);
+  if (cotPedidoAbierto && cotPedidoAbierto.ref === ref) cotPedidoAbierto.estado = estado;
+  cotRenderLista();
+  showToast(`${ref}: ${ESTADOS[estado].toLowerCase()}`, 'success');
+}
+
 function cotRenderLista() {
   const cont = document.getElementById('cot-list');
   if (!cont) return;
 
-  const pedidos = cotLeerPedidos().sort((a, b) => b.fecha - a.fecha);
+  const todos = cotLeerPedidos().sort((a, b) => b.fecha - a.fecha);
+  cotRenderFiltros(todos);
+  const pedidos = cotFiltro === 'todos' ? todos : todos.filter(p => p.estado === cotFiltro);
 
-  if (pedidos.length === 0) {
+  if (todos.length === 0) {
     cont.innerHTML = `
       <div class="cot-empty">
         <div class="cot-empty-icon">🧾</div>
@@ -195,6 +236,11 @@ function cotRenderLista() {
         <p>Cuando un cliente envía su pedido por WhatsApp, el mensaje incluye un
            código que empieza con <code>DJ1.</code> Pegalo arriba para abrir el remito.</p>
       </div>`;
+    return;
+  }
+
+  if (pedidos.length === 0) {
+    cont.innerHTML = `<div class="cot-empty"><p>No hay pedidos con ese estado.</p></div>`;
     return;
   }
 
@@ -206,7 +252,7 @@ function cotRenderLista() {
         <div class="cot-card-main">
           <div class="cot-card-ref">
             <span class="cot-ref">${escapeHtml(p.ref)}</span>
-            <span class="cot-estado cot-estado--${escapeHtml(p.estado)}">${p.estado === 'cotizado' ? 'Cotizado' : 'Pendiente'}</span>
+            <span class="cot-estado cot-estado--${escapeHtml(p.estado)}">${ESTADOS[p.estado] || 'Pendiente'}</span>
           </div>
           <div class="cot-card-cliente">
             <strong>${escapeHtml(p.cliente.nombre || 'Sin nombre')}</strong>
@@ -219,6 +265,11 @@ function cotRenderLista() {
         <div class="cot-card-side">
           <div class="cot-card-total">${Object.keys(cotPrecios).length ? money(t.total) : '—'}</div>
           <div class="cot-card-actions">
+            <label class="sr-only" for="est-${escapeHtml(p.ref)}">Estado del pedido</label>
+            <select class="cot-estado-sel" id="est-${escapeHtml(p.ref)}" data-ref="${escapeHtml(p.ref)}">
+              ${Object.entries(ESTADOS).map(([c, e]) =>
+                `<option value="${c}"${p.estado === c ? ' selected' : ''}>${e}</option>`).join('')}
+            </select>
             <button type="button" class="btn btn-primary cot-open" data-ref="${escapeHtml(p.ref)}">Abrir remito</button>
             <button type="button" class="cot-del" data-ref="${escapeHtml(p.ref)}" title="Eliminar pedido">✕</button>
           </div>
@@ -231,6 +282,9 @@ function cotRenderLista() {
   });
   cont.querySelectorAll('.cot-del').forEach(b => {
     b.addEventListener('click', () => cotEliminar(b.dataset.ref));
+  });
+  cont.querySelectorAll('.cot-estado-sel').forEach(sel => {
+    sel.addEventListener('change', () => cotCambiarEstado(sel.dataset.ref, sel.value));
   });
 }
 
@@ -560,6 +614,16 @@ async function initCotizador() {
     guardar.addEventListener('click', () => {
       cotGuardarAbierto();
       showToast('Cambios guardados', 'success');
+    });
+  }
+
+  const enviado = document.getElementById('cot-enviado');
+  if (enviado) {
+    enviado.addEventListener('click', () => {
+      if (!cotPedidoAbierto) return;
+      cotGuardarAbierto();
+      cotCambiarEstado(cotPedidoAbierto.ref, 'enviado');
+      cotCerrar();
     });
   }
 

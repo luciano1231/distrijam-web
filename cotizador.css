@@ -336,3 +336,29 @@
 .pq-tot-iva {
   text-align: right; font-size: 10px; color: #777; margin-top: 4px;
 }
+
+/* ── FILTROS POR ESTADO ────────────────────────────── */
+.cot-filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.cot-filtro {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 14px; border-radius: 100px;
+  border: 1px solid var(--border); background: var(--bg-card-2);
+  color: var(--text-dim); font-size: 0.82rem; font-weight: 600;
+  transition: all 0.18s ease;
+}
+.cot-filtro:hover { border-color: var(--border-light); color: var(--text); }
+.cot-filtro.active { background: var(--red); border-color: var(--red); color: var(--white-real); }
+.cot-filtro-n {
+  min-width: 18px; padding: 1px 6px; border-radius: 100px;
+  background: rgba(127, 127, 127, 0.18); font-size: 0.7rem; font-weight: 700;
+  text-align: center; font-variant-numeric: tabular-nums;
+}
+.cot-filtro.active .cot-filtro-n { background: rgba(255, 255, 255, 0.25); }
+
+.cot-estado--enviado { background: rgba(37, 99, 235, 0.14); color: #1D4ED8; }
+
+.cot-estado-sel {
+  padding: 7px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 600;
+  border: 1px solid var(--border); background: var(--bg-card); color: var(--text);
+}
+.cot-estado-sel:focus { outline: none; border-color: var(--red); }
