@@ -20,6 +20,7 @@ $dir = dirname(__DIR__) . CARPETA_DATOS;
 $archivoClave = $dir . '/clave.txt';
 
 $claveNueva = null;
+$seBorro = false;
 $error = '';
 $yaExiste = is_file($archivoClave);
 
@@ -52,6 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 @chmod($archivoClave, 0600);
                 $yaExiste = true;
+                // Se borra a sí mismo: así no queda una página en internet
+                // capaz de generar claves, y no hay que borrarla por FTP.
+                $seBorro = @unlink(__FILE__);
             }
         }
     }
@@ -106,9 +110,15 @@ $cantidad = is_array($pedidos) ? count($pedidos) : 0;
       <p><strong>Esta es tu clave. Se muestra una sola vez:</strong></p>
       <div class="clave"><?= htmlspecialchars($claveNueva) ?></div>
       <div class="aviso">
-        Copiala y pegala en el panel, en <strong>Pedidos a cotizar → Conectar con el servidor</strong>.
+        Copiala ahora. Pegala en el panel, en
+        <strong>Pedidos a cotizar → Conectar con el servidor</strong>.
       </div>
-      <p><strong>Ahora borrá este archivo del servidor</strong> (<code>instalar.php</code>).</p>
+      <?php if ($seBorro): ?>
+        <div class="ok">Esta página ya se eliminó sola del servidor. No hace falta que hagas nada más.</div>
+      <?php else: ?>
+        <div class="error">No se pudo eliminar sola. Borrá <code>instalar.php</code> del servidor
+          por FTP o desde el administrador de archivos del hosting.</div>
+      <?php endif; ?>
 
     <?php elseif ($yaExiste): ?>
       <div class="ok">Ya hay una clave instalada. Pedidos guardados: <?= $cantidad ?>.</div>
