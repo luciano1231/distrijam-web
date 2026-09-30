@@ -2,10 +2,10 @@
 /**
  * DISTRIJAM — receptor de pedidos
  *
- * POST  /pedidos.php          El catálogo deposita un pedido. Abierto, como
- *                             cualquier formulario de contacto.
- * GET   /pedidos.php?clave=X  El panel lee los pedidos. Requiere la clave que
- *                             genera instalar.php.
+ * POST /pedidos.php   El catálogo deposita un pedido. Abierto, como cualquier
+ *                     formulario de contacto.
+ *
+ * Leerlos es otra cosa: eso lo hace api.php y exige sesión del panel.
  *
  * Los pedidos llevan nombre, teléfono y CUIL, así que se guardan FUERA de
  * public_html: nadie puede pedirlos por URL, sólo este script los lee.
@@ -43,15 +43,6 @@ function limpiar($valor) {
 /** La referencia se usa como nombre de archivo: sólo letras y números */
 function refValida($ref) {
     return is_string($ref) && preg_match('/^[A-Z0-9]{4,16}$/', $ref) === 1;
-}
-
-function leerClaveGuardada() {
-    $archivo = carpeta() . '/clave.txt';
-    if (!is_file($archivo)) {
-        return null;
-    }
-    $clave = trim((string) file_get_contents($archivo));
-    return $clave === '' ? null : $clave;
 }
 
 /* ─────────────── Recibir un pedido ─────────────── */
@@ -128,42 +119,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     salir(201, ['ok' => true, 'ref' => $ref]);
 }
 
-/* ─────────────── Listar pedidos (panel) ─────────────── */
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $guardada = leerClaveGuardada();
-    if ($guardada === null) {
-        salir(503, ['error' => 'El receptor todavía no está instalado. Abrí instalar.php una vez.']);
-    }
-
-    $enviada = isset($_GET['clave']) ? (string) $_GET['clave'] : '';
-    if (!hash_equals($guardada, $enviada)) {
-        // Una pausa corta encarece probar claves al azar
-        usleep(400000);
-        salir(403, ['error' => 'Clave incorrecta.']);
-    }
-
-    $archivos = glob(carpeta() . '/pedido_*.json');
-    if ($archivos === false) {
-        $archivos = [];
-    }
-
-    $pedidos = [];
-    foreach ($archivos as $ruta) {
-        $contenido = @file_get_contents($ruta);
-        if ($contenido === false) {
-            continue;
-        }
-        $pedido = json_decode($contenido, true);
-        if (is_array($pedido) && isset($pedido['r'])) {
-            $pedidos[] = $pedido;
-        }
-    }
-
-    usort($pedidos, function ($a, $b) {
-        return $b['f'] - $a['f'];
-    });
-
-    salir(200, ['ok' => true, 'total' => count($pedidos), 'pedidos' => $pedidos]);
-}
+/* La lectura de pedidos vive en api.php y exige sesión del panel. */
 
 salir(405, ['error' => 'Método no permitido.']);

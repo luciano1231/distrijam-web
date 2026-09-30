@@ -2,9 +2,10 @@
    DISTRIJAM — admin.js (Panel de Administración)
    ====================================================== */
 
-const ADMIN_PASSWORD = 'distrijam2024';
-const STORAGE_KEY    = 'distrijam_products';
-const AUTH_KEY       = 'distrijam_auth';
+// La contraseña ya no está acá: la verifica el servidor contra un hash
+// guardado fuera de public_html. Antes estaba escrita en este archivo, que
+// cualquiera puede leer en el repositorio público.
+const STORAGE_KEY = 'distrijam_products';
 
 const CATEGORIES_MAP = {
   arandelas:       'Arandelas',
@@ -35,20 +36,33 @@ function getAllCategories() {
   return all;
 }
 
-// ── Auth ─────────────────────────────────────────────
-function isAuthenticated() {
-  return sessionStorage.getItem(AUTH_KEY) === 'true';
-}
-function login(password) {
-  if (password === ADMIN_PASSWORD) {
-    sessionStorage.setItem(AUTH_KEY, 'true');
-    return true;
+// ── Sesión contra el servidor ─────────────────────────
+async function estadoSesion() {
+  try {
+    const res = await fetch('api.php?a=estado', { cache: 'no-store' });
+    return await res.json();
+  } catch (e) {
+    return { ok: false, logueado: false, instalado: false, sinServidor: true };
   }
-  return false;
 }
-function logout() {
-  sessionStorage.removeItem(AUTH_KEY);
-  showLogin();
+
+async function login(password) {
+  try {
+    const res = await fetch('api.php?a=entrar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ clave: password })
+    });
+    const data = await res.json().catch(() => ({}));
+    return { ok: res.ok && data.ok === true, error: data.error || 'No se pudo entrar.' };
+  } catch (e) {
+    return { ok: false, error: 'No hay conexión con el servidor.' };
+  }
+}
+
+async function logout() {
+  try { await fetch('api.php?a=salir'); } catch (e) {}
+  location.reload();
 }
 
 // ── Products (custom ones only) ───────────────────────
@@ -464,25 +478,44 @@ document.addEventListener('DOMContentLoaded', () => {
   
   document.getElementById('add-category-form').addEventListener('submit', handleAddCategory);
 
-  // Check existing session
-  if (isAuthenticated()) {
-    showDashboard();
-  } else {
-    showLogin();
-  }
+  // Sesión existente
+  const errEl = document.getElementById('login-error');
+  estadoSesion().then(estado => {
+    if (estado.logueado) {
+      showDashboard();
+      document.dispatchEvent(new CustomEvent('distrijam:sesion-lista'));
+    } else {
+      showLogin();
+      if (estado.sinServidor) {
+        errEl.textContent = 'No hay conexión con el servidor.';
+        errEl.style.display = 'block';
+      } else if (!estado.instalado) {
+        errEl.textContent = 'El panel todavía no está configurado en el servidor.';
+        errEl.style.display = 'block';
+      }
+    }
+  });
 
-  // Login form
-  document.getElementById('login-form').addEventListener('submit', (e) => {
+  // Login
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const pwd = document.getElementById('login-password').value;
-    const errEl = document.getElementById('login-error');
-    if (login(pwd)) {
+    const campo = document.getElementById('login-password');
+    const boton = e.target.querySelector('button[type=submit]');
+    if (boton) { boton.disabled = true; boton.textContent = 'Entrando…'; }
+
+    const r = await login(campo.value);
+
+    if (boton) { boton.disabled = false; boton.textContent = 'Ingresar →'; }
+
+    if (r.ok) {
       errEl.style.display = 'none';
       showDashboard();
+      document.dispatchEvent(new CustomEvent('distrijam:sesion-lista'));
     } else {
+      errEl.textContent = r.error;
       errEl.style.display = 'block';
-      document.getElementById('login-password').value = '';
-      document.getElementById('login-password').focus();
+      campo.value = '';
+      campo.focus();
     }
   });
 

@@ -11,7 +11,6 @@
 
 const COT_PRECIOS_KEY = 'distrijam_precios';
 const COT_PEDIDOS_KEY = 'distrijam_pedidos';
-const COT_CLAVE_KEY = 'distrijam_clave_servidor';
 
 const EMPRESA = {
   nombre: 'DISTRIJAM',
@@ -153,36 +152,47 @@ function cotRenderEstadoPrecios() {
   const n = Object.keys(cotPrecios).length;
   if (n === 0) {
     el.className = 'cot-price-status cot-price-status--off';
-    el.innerHTML = `<strong>Sin lista de precios.</strong> Importá <code>precios.json</code> para ver importes.`;
+    el.innerHTML = `<strong>Sin lista de precios.</strong> Subí <code>precios.json</code> una vez.`;
   } else {
     el.className = 'cot-price-status cot-price-status--on';
-    el.innerHTML = `<strong>Lista de precios cargada:</strong> ${n} precios en este navegador.`;
+    el.innerHTML = `<strong>Precios cargados:</strong> ${n} artículos.`;
   }
 }
 
+/* Sube la lista al servidor: queda disponible en cualquier navegador desde
+   el que se administre, sin volver a importarla. */
 function cotImportarPrecios(file) {
   const reader = new FileReader();
-  reader.onload = () => {
+  reader.onload = async () => {
+    let precios;
     try {
       const data = JSON.parse(reader.result);
-      const precios = data.precios || data;
-      if (typeof precios !== 'object' || Array.isArray(precios)) {
-        throw new Error('formato');
-      }
-      const limpio = {};
-      Object.entries(precios).forEach(([k, v]) => {
-        const num = Number(v);
-        if (num > 0) limpio[k] = num;
-      });
-      if (Object.keys(limpio).length === 0) throw new Error('vacio');
+      precios = data.precios || data;
+      if (typeof precios !== 'object' || Array.isArray(precios)) throw new Error('formato');
+    } catch (e) {
+      showToast('El archivo no tiene el formato esperado (precios.json)', 'error', 5000);
+      return;
+    }
 
-      cotPrecios = limpio;
-      cotGuardarPrecios(cotPrecios);
+    try {
+      const res = await fetch('api.php?a=precios', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ precios })
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) {
+        showToast(data.error || 'No se pudo guardar la lista en el servidor', 'error', 5000);
+        return;
+      }
+
+      await cotCargarPreciosDelServidor();
       cotRenderEstadoPrecios();
       cotRenderLista();
-      showToast(`Lista de precios importada: ${Object.keys(limpio).length} precios`, 'success');
+      showToast(`Lista guardada en el servidor: ${data.total} precios`, 'success', 5000);
     } catch (e) {
-      showToast('El archivo no tiene el formato esperado (precios.json)', 'error');
+      showToast('No hay conexión con el servidor', 'error');
     }
   };
   reader.readAsText(file);
@@ -507,103 +517,28 @@ function cotAgregarDesdeCodigo(codigo) {
 }
 
 /* ── Inicio ───────────────────────────────────────── */
-/* Si precios.json está junto al sitio (trabajo local), se toma solo.
-   En el servidor ese archivo no se publica, así que ahí no existe y el
-   administrador lo importa a mano: es lo que mantiene los precios fuera
-   del alcance de los clientes. */
-async function cotAutocargarPrecios() {
-  if (Object.keys(cotPrecios).length > 0) return;
+/* Los precios viven en el servidor, fuera de public_html, y sólo se
+   entregan a quien tiene sesión abierta. Así el administrador los ve sin
+   importar nada y los clientes no pueden pedirlos. */
+async function cotCargarPreciosDelServidor() {
   try {
-    const res = await fetch('precios.json', { cache: 'no-store' });
-    if (!res.ok) return;
-    const data = await res.json();
-    const precios = data.precios || data;
+    const res = await fetch('api.php?a=precios', { cache: 'no-store' });
+    const data = await res.json().catch(() => null);
+    if (!res.ok || !data || !data.ok) return false;
+
+    const precios = data.precios || {};
     const limpio = {};
     Object.entries(precios).forEach(([k, v]) => {
       const n = Number(v);
       if (n > 0) limpio[k] = n;
     });
-    if (Object.keys(limpio).length) {
-      cotPrecios = limpio;
-      cotGuardarPrecios(cotPrecios);
-    }
+
+    cotPrecios = limpio;
+    cotGuardarPrecios(cotPrecios);
+    return true;
   } catch (e) {
-    /* Sin archivo local: se importa a mano. */
+    return false;
   }
-}
-
-/* ── Servidor de pedidos ──────────────────────────── */
-function cotLeerClave() {
-  return localStorage.getItem(COT_CLAVE_KEY) || '';
-}
-
-function cotRenderEstadoServidor(texto, estado) {
-  const el = document.getElementById('cot-server-status');
-  if (!el) return;
-  el.className = 'cot-price-status cot-price-status--' + estado;
-  el.innerHTML = texto;
-}
-
-/* Trae del servidor los pedidos que todavía no están en este navegador */
-async function cotTraerDelServidor(avisar) {
-  const clave = cotLeerClave();
-  if (!clave) {
-    cotRenderEstadoServidor('<strong>Sin conectar al servidor.</strong> Los pedidos se cargan pegando el código.', 'off');
-    return 0;
-  }
-
-  try {
-    const res = await fetch('pedidos.php?clave=' + encodeURIComponent(clave), { cache: 'no-store' });
-    const data = await res.json().catch(() => null);
-
-    if (!res.ok || !data || !data.ok) {
-      const motivo = data && data.error ? data.error : 'No se pudo conectar.';
-      cotRenderEstadoServidor('<strong>Servidor:</strong> ' + escapeHtml(motivo), 'off');
-      if (avisar) showToast(motivo, 'error', 5000);
-      return 0;
-    }
-
-    const pedidos = cotLeerPedidos();
-    const conocidos = new Set(pedidos.map(p => p.ref));
-    let nuevos = 0;
-
-    (data.pedidos || []).forEach(payload => {
-      if (!payload || !Array.isArray(payload.i) || conocidos.has(payload.r)) return;
-      pedidos.push(cotDesdePayload(payload));
-      conocidos.add(payload.r);
-      nuevos++;
-    });
-
-    if (nuevos) cotGuardarPedidos(pedidos);
-    cotRenderEstadoServidor(
-      `<strong>Conectado al servidor:</strong> ${data.total} pedido(s) recibido(s).`, 'on');
-    return nuevos;
-  } catch (e) {
-    cotRenderEstadoServidor('<strong>Servidor:</strong> sin respuesta.', 'off');
-    if (avisar) showToast('No se pudo conectar con el servidor', 'error');
-    return 0;
-  }
-}
-
-function cotPedirClave() {
-  const actual = cotLeerClave();
-  const clave = prompt(
-    'Pegá la clave que te dio instalar.php. Dejalo vacío para desconectar.',
-    actual
-  );
-  if (clave === null) return;
-
-  const limpia = clave.trim();
-  if (limpia === '') {
-    localStorage.removeItem(COT_CLAVE_KEY);
-    showToast('Desconectado del servidor', 'info');
-  } else {
-    localStorage.setItem(COT_CLAVE_KEY, limpia);
-  }
-  cotTraerDelServidor(true).then(nuevos => {
-    cotRenderLista();
-    if (nuevos > 0) showToast(`${nuevos} pedido(s) traído(s) del servidor`, 'success', 5000);
-  });
 }
 
 /* Levanta los pedidos que el carrito dejó en la bandeja de este navegador */
@@ -637,7 +572,7 @@ async function initCotizador() {
 
   cotPrecios = cotLeerPrecios();
   await cotCargarCatalogo();
-  await cotAutocargarPrecios();
+  await cotCargarPreciosDelServidor();
 
   let nuevos = cotRecogerBandeja();
   nuevos += await cotTraerDelServidor(false);
@@ -648,9 +583,6 @@ async function initCotizador() {
   if (nuevos > 0) {
     showToast(`${nuevos} pedido(s) nuevo(s) recibido(s)`, 'success', 5000);
   }
-
-  const conectar = document.getElementById('cot-conectar');
-  if (conectar) conectar.addEventListener('click', cotPedirClave);
 
   const actualizar = document.getElementById('cot-actualizar');
   if (actualizar) {
@@ -719,4 +651,6 @@ async function initCotizador() {
   if (imprimir) imprimir.addEventListener('click', cotImprimir);
 }
 
-document.addEventListener('DOMContentLoaded', initCotizador);
+// El panel avisa cuando hay sesión: recién ahí el servidor entrega
+// pedidos y precios.
+document.addEventListener('distrijam:sesion-lista', initCotizador);
