@@ -22,6 +22,23 @@
 }
 .cot-sub { font-size: 0.85rem; color: var(--text-dim); margin-top: 4px; }
 
+/* Buscador de clientes. Vive en el HTML y no dentro de lo que se redibuja,
+   así no se pierde el foco mientras se escribe. */
+.cot-buscador { display: flex; align-items: center; gap: 10px; }
+.cot-buscador input {
+  width: 260px; max-width: 100%; height: 40px;
+  padding: 0 14px; border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-card-2); color: var(--text);
+  font: inherit; font-size: 0.88rem;
+}
+.cot-buscador input::placeholder { color: var(--text-dim); }
+.cot-buscador input:focus { outline: none; border-color: var(--red); }
+.cot-buscador-n {
+  font-size: 0.78rem; color: var(--text-dim);
+  white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+
 .cot-price-status {
   font-size: 0.8rem; padding: 9px 14px; border-radius: 100px;
   border: 1px solid var(--border); background: var(--bg-card-2);
@@ -197,9 +214,64 @@
 
 @media (max-width: 760px) {
   .cot-section { padding: 20px 18px; }
-  .cot-card-side { width: 100%; justify-content: space-between; }
+  .cot-header { gap: 14px; }
+  .cot-buscador { width: 100%; }
+  .cot-buscador input { width: 100%; flex: 1; }
   .cot-td-num { width: auto; }
   .cot-modal-body { padding: 18px; }
+}
+
+/* En pantallas angostas el total, el estado, "Abrir remito" y la ✕ no entran
+   en una sola fila: el botón partía el texto y la ✕ se salía de pantalla.
+   Acá la tarjeta se apila y las acciones pasan a dos renglones. */
+@media (max-width: 620px) {
+  .cot-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .cot-card-side {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .cot-card-total {
+    font-size: 1.3rem;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .cot-card-actions {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "estado estado"
+      "abrir  borrar";
+    gap: 8px;
+    width: 100%;
+  }
+  .cot-card-actions .cot-estado-sel {
+    grid-area: estado;
+    width: 100%;
+    height: 42px;
+  }
+  .cot-card-actions .cot-open {
+    grid-area: abrir;
+    width: 100%;
+    height: 42px;
+    white-space: nowrap;
+  }
+  .cot-card-actions .cot-del {
+    grid-area: borrar;
+    width: 42px;
+    height: 42px;
+  }
+
+  /* El selector de versión queda fijo abajo y tapaba la última tarjeta */
+  .admin-dashboard { padding-bottom: 80px; }
 }
 
 /* ══════════════════════════════════════════════════

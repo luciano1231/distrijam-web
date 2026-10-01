@@ -55,6 +55,7 @@ let cotCatalogo = {};   // variantId -> { nombre, medida, presentacion, descripc
 let cotPedidoAbierto = null;
 let cotFiltro = 'todos';
 let cotFiltroCliente = null;   // clave de CUIT, o null
+let cotBusquedaCliente = '';
 
 const ESTADOS = {
   pendiente: 'Pendiente',
@@ -335,13 +336,43 @@ function cotClientesConPedidos() {
   });
 }
 
+/* El CUIT se escribe de muchas formas (con guiones, sin, a medias), así que
+   se compara sólo por dígitos. El nombre, sin distinguir mayúsculas. */
+function cotCoincideCliente(c, texto) {
+  if (!texto) return true;
+  const q = texto.trim().toLowerCase();
+  const digitos = q.replace(/[^0-9]/g, '');
+
+  if (digitos && (c.clave.includes(digitos) ||
+      soloDigitos(c.datos.cuit).includes(digitos))) {
+    return true;
+  }
+  const campos = [c.datos.nombre, c.datos.codigo, c.datos.localidad, c.datos.vendedor];
+  return campos.some(v => (v || '').toLowerCase().includes(q));
+}
+
 function cotRenderClientes() {
   const cont = document.getElementById('cot-clientes');
   if (!cont) return;
 
-  const lista = cotClientesConPedidos();
+  const todos = cotClientesConPedidos();
+  const lista = todos.filter(c => cotCoincideCliente(c, cotBusquedaCliente));
 
-  if (lista.length === 0) {
+  const contador = document.getElementById('cot-buscar-n');
+  if (contador) {
+    contador.textContent = cotBusquedaCliente
+      ? `${lista.length} de ${todos.length}`
+      : (todos.length ? `${todos.length} cliente(s)` : '');
+  }
+
+  if (cotBusquedaCliente && lista.length === 0) {
+    cont.innerHTML = `<div class="cot-empty">
+      <p>Ningún cliente coincide con <strong>${escapeHtml(cotBusquedaCliente)}</strong>.</p>
+    </div>`;
+    return;
+  }
+
+  if (todos.length === 0) {
     cont.innerHTML = `<div class="cot-empty">
       <p><strong>Todavía no hay clientes.</strong></p>
       <p>Aparecen solos cuando llega un pedido, y podés completar sus datos
@@ -946,6 +977,14 @@ async function initCotizador() {
 
   if (nuevos > 0) {
     showToast(`${nuevos} pedido(s) nuevo(s) recibido(s)`, 'success', 5000);
+  }
+
+  const buscador = document.getElementById('cot-buscar-cliente');
+  if (buscador) {
+    buscador.addEventListener('input', () => {
+      cotBusquedaCliente = buscador.value;
+      cotRenderClientes();
+    });
   }
 
   const actualizar = document.getElementById('cot-actualizar');
