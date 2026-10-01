@@ -131,19 +131,6 @@
 
 .cot-modal-body { padding: 22px 26px; }
 
-.cot-cliente-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
-  padding: 16px 18px; margin-bottom: 20px;
-  background: var(--bg-card-2); border: 1px solid var(--border);
-  border-radius: var(--radius, 8px);
-}
-.cot-cliente-grid > div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.cot-cliente-grid span {
-  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em;
-  color: var(--text-muted); font-weight: 700;
-}
-.cot-cliente-grid strong { font-size: 0.9rem; color: var(--text); word-break: break-word; }
-.cot-cliente-grid .cot-nota { grid-column: 1 / -1; }
 
 /* Tabla editable */
 .cot-table { width: 100%; border-collapse: collapse; }
@@ -210,7 +197,6 @@
 
 @media (max-width: 760px) {
   .cot-section { padding: 20px 18px; }
-  .cot-cliente-grid { grid-template-columns: 1fr 1fr; }
   .cot-card-side { width: 100%; justify-content: space-between; }
   .cot-td-num { width: auto; }
   .cot-modal-body { padding: 18px; }
@@ -391,38 +377,75 @@
 }
 
 /* ── Datos del cliente, editables en el remito ────── */
+.cot-cli-bloque {
+  padding: 18px 20px; margin-bottom: 20px;
+  background: var(--bg-card-2); border: 1px solid var(--border);
+  border-radius: var(--radius, 8px);
+}
+
 .cot-cli-cab {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding-bottom: 14px; margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
 }
-.cot-cli-cab span {
-  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em;
-  color: var(--text-muted); font-weight: 700;
+.cot-cli-tit {
+  font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text); font-weight: 700;
 }
+.cot-cli-ref { font-size: 0.78rem; color: var(--text-muted); }
 .cot-cli-save {
-  padding: 6px 14px; border-radius: 6px; font-size: 0.78rem; font-weight: 600;
+  margin-left: auto;
+  padding: 8px 16px; border-radius: 6px; font-size: 0.8rem; font-weight: 600;
   border: 1px solid var(--border); background: var(--bg-card); color: var(--text);
+  transition: border-color 0.2s ease, color 0.2s ease;
 }
 .cot-cli-save:hover { border-color: var(--red); color: var(--red); }
 
 .cot-cli-campos {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px;
 }
-.cot-cli-campos label { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.cot-cli-campos span {
+.cot-cli-ancho-2 { grid-column: span 2; }
+
+.cot-cli-campo { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.cot-cli-campo > span {
   font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
   color: var(--text-muted); font-weight: 700;
 }
-.cot-cli-campos input {
-  width: 100%; padding: 8px 10px; font-size: 0.85rem;
+.cot-cli-campo input,
+.cot-cli-campo select {
+  width: 100%; height: 40px; padding: 0 11px; font-size: 0.88rem;
+  font-family: inherit;
   background: var(--bg-card); color: var(--text);
   border: 1px solid var(--border); border-radius: 6px;
+  transition: border-color 0.2s ease;
 }
-.cot-cli-campos input:focus { outline: none; border-color: var(--red); }
+.cot-cli-campo input:focus,
+.cot-cli-campo select:focus { outline: none; border-color: var(--red); }
+.cot-cli-campo input::placeholder { color: var(--text-muted); }
+
+/* La flecha nativa del desplegable se ve distinta en cada navegador */
+.cot-cli-campo select {
+  appearance: none; -webkit-appearance: none;
+  padding-right: 30px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 11px center;
+}
 
 .cot-cli-pie {
-  margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border);
-  font-size: 0.78rem; color: var(--text-muted);
+  margin-top: 14px; padding: 10px 12px;
+  background: var(--bg-card); border-left: 3px solid var(--border-light, var(--border));
+  border-radius: 4px; font-size: 0.82rem; color: var(--text-dim);
+}
+
+@media (max-width: 900px) {
+  .cot-cli-campos { grid-template-columns: 1fr 1fr; }
+  .cot-cli-ancho-2 { grid-column: span 2; }
+}
+@media (max-width: 560px) {
+  .cot-cli-campos { grid-template-columns: 1fr; }
+  .cot-cli-ancho-2 { grid-column: span 1; }
+  .cot-cli-save { margin-left: 0; width: 100%; }
 }
 
 /* Código de artículo en la tabla del remito */

@@ -25,16 +25,25 @@ const EMPRESA = {
   condicionIva: 'IVA Responsable Inscripto'
 };
 
-// Campos fiscales del cliente que el pedido no trae y completa el admin
+// Campos fiscales del cliente que el pedido no trae y completa el admin.
+// El ancho es en columnas de una grilla de 4.
 const CAMPOS_CLIENTE = [
-  ['nombre', 'Razón social'],
-  ['codigo', 'Código'],
-  ['cuit', 'CUIT'],
-  ['condicion', 'Condición IVA'],
-  ['direccion', 'Dirección'],
-  ['localidad', 'Localidad'],
-  ['provincia', 'Provincia'],
-  ['vendedor', 'Vendedor']
+  { campo: 'nombre',    etiqueta: 'Razón social', ancho: 2 },
+  { campo: 'codigo',    etiqueta: 'Código',       ancho: 1 },
+  { campo: 'cuit',      etiqueta: 'CUIT',         ancho: 1 },
+  { campo: 'condicion', etiqueta: 'Condición IVA', ancho: 1, opciones: true },
+  { campo: 'direccion', etiqueta: 'Dirección',    ancho: 2 },
+  { campo: 'localidad', etiqueta: 'Localidad',    ancho: 1 },
+  { campo: 'provincia', etiqueta: 'Provincia',    ancho: 1 },
+  { campo: 'vendedor',  etiqueta: 'Vendedor',     ancho: 1 }
+];
+
+const CONDICIONES_IVA = [
+  'Responsable Inscripto',
+  'Monotributo',
+  'Exento',
+  'Consumidor Final',
+  'No Responsable'
 ];
 
 let cotClientes = {};
@@ -186,7 +195,7 @@ function cotDatosCliente(pedido) {
 
 async function cotGuardarCliente() {
   const datos = {};
-  CAMPOS_CLIENTE.forEach(([campo]) => {
+  CAMPOS_CLIENTE.forEach(({ campo }) => {
     const inp = document.getElementById('cli-' + campo);
     datos[campo] = inp ? inp.value.trim() : '';
   });
@@ -421,22 +430,30 @@ function cotRenderDetalle() {
 
   // Datos fiscales editables: se guardan por CUIT y se reusan la próxima vez
   const datos = cotDatosCliente(p);
-  document.getElementById('cot-modal-cliente').innerHTML = `
+  const cajaCliente = document.getElementById('cot-modal-cliente');
+  // Clase propia: el contenedor traía una grilla de 4 columnas que descolocaba
+  // estos bloques.
+  cajaCliente.className = 'cot-cli-bloque';
+  cajaCliente.innerHTML = `
     <div class="cot-cli-cab">
-      <span>Datos del cliente</span>
+      <span class="cot-cli-tit">Datos del cliente</span>
+      <span class="cot-cli-ref">${escapeHtml(p.cliente.telefono || 'sin teléfono')} · ${fecha(p.fecha)}</span>
       <button type="button" class="cot-cli-save" id="cot-cli-guardar">Guardar cliente</button>
     </div>
     <div class="cot-cli-campos">
-      ${CAMPOS_CLIENTE.map(([campo, etiqueta]) => `
-        <label>
-          <span>${etiqueta}</span>
-          <input type="text" id="cli-${campo}" value="${escapeHtml(datos[campo])}" autocomplete="off" />
+      ${CAMPOS_CLIENTE.map(c => `
+        <label class="cot-cli-campo cot-cli-ancho-${c.ancho}">
+          <span>${c.etiqueta}</span>
+          ${c.opciones
+            ? `<select id="cli-${c.campo}">
+                 <option value=""${datos[c.campo] ? '' : ' selected'}>— Elegir —</option>
+                 ${CONDICIONES_IVA.map(o => `
+                   <option value="${escapeHtml(o)}"${datos[c.campo] === o ? ' selected' : ''}>${escapeHtml(o)}</option>`).join('')}
+               </select>`
+            : `<input type="text" id="cli-${c.campo}" value="${escapeHtml(datos[c.campo])}" autocomplete="off" />`}
         </label>`).join('')}
     </div>
-    <div class="cot-cli-pie">
-      Del pedido: ${escapeHtml(p.cliente.telefono || 'sin teléfono')} ·
-      ${fecha(p.fecha)}${p.cliente.nota ? ' · Nota: ' + escapeHtml(p.cliente.nota) : ''}
-    </div>`;
+    ${p.cliente.nota ? `<div class="cot-cli-pie"><strong>Nota del cliente:</strong> ${escapeHtml(p.cliente.nota)}</div>` : ''}`;
 
   const btnCli = document.getElementById('cot-cli-guardar');
   if (btnCli) btnCli.addEventListener('click', cotGuardarCliente);
@@ -523,7 +540,7 @@ async function cotImprimir() {
 
   // Toma lo que el admin haya escrito recién, sin obligarlo a guardar antes
   const cli = {};
-  CAMPOS_CLIENTE.forEach(([campo]) => {
+  CAMPOS_CLIENTE.forEach(({ campo }) => {
     const inp = document.getElementById('cli-' + campo);
     cli[campo] = inp ? inp.value.trim() : '';
   });
