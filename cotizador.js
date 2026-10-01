@@ -615,6 +615,25 @@ function cotRenderDetalle() {
   const btnCli = document.getElementById('cot-cli-guardar');
   if (btnCli) btnCli.addEventListener('click', cotGuardarCliente);
 
+  // Botón al chat de WhatsApp del cliente. Siempre se muestra; si el
+  // teléfono no se puede armar queda desactivado y lo explica al pasar.
+  const btnWa = document.getElementById('cot-wa-btn');
+  const numWa = cotNumeroWhatsApp(p.cliente.telefono);
+  if (btnWa) {
+    btnWa.classList.toggle('cot-wa-off', !numWa);
+    btnWa.setAttribute('aria-disabled', numWa ? 'false' : 'true');
+    if (numWa) {
+      const saludo = `Hola${p.cliente.nombre ? ' ' + p.cliente.nombre : ''}, te escribimos de Distrijam por tu pedido ${p.ref}.`;
+      btnWa.href = `https://wa.me/${numWa}?text=${encodeURIComponent(saludo)}`;
+      btnWa.title = 'Abrir el chat con ' + (p.cliente.telefono || 'el cliente');
+    } else {
+      btnWa.removeAttribute('href');
+      btnWa.title = p.cliente.telefono
+        ? `No se pudo armar un celular con "${p.cliente.telefono}"`
+        : 'El cliente no dejó teléfono';
+    }
+  }
+
   document.getElementById('cot-modal-items').innerHTML = p.items.map((it, i) => `
     <tr${it.sinPrecio && !it.precio ? ' class="cot-row-warn"' : ''}>
       <td class="cot-td-cod">${escapeHtml(it.variantId)}</td>
@@ -649,6 +668,26 @@ function cotRenderDetalle() {
       cotActualizar();
     });
   });
+}
+
+/* Pasa el teléfono que escribió el cliente al formato de wa.me para un
+   celular argentino: 549 + característica + número, sin el 0 ni el 15.
+   "3794 15 007195", "03794-007195" y "+54 9 3794 007195" dan 5493794007195. */
+function cotNumeroWhatsApp(telefono) {
+  let d = String(telefono || '').replace(/\D/g, '');
+  if (d.startsWith('00')) d = d.slice(2);
+  if (d.startsWith('54')) {
+    d = d.slice(2);
+    if (d.startsWith('9')) d = d.slice(1);
+  }
+  if (d.startsWith('0')) d = d.slice(1);
+  // El 15 va después de la característica, que tiene 2, 3 o 4 dígitos
+  if (d.length === 12) {
+    for (const i of [2, 3, 4]) {
+      if (d.slice(i, i + 2) === '15') { d = d.slice(0, i) + d.slice(i + 2); break; }
+    }
+  }
+  return d.length === 10 ? '549' + d : '';
 }
 
 function cotRenderTotales(t) {

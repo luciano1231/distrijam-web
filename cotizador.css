@@ -212,6 +212,18 @@
 .cot-foot-hint { font-size: 0.78rem; color: var(--text-muted); }
 .cot-foot-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
+/* Botón al chat del cliente; sin un celular válido queda apagado */
+.cot-wa-btn {
+  background: #25D366; color: #fff; text-decoration: none;
+}
+.cot-wa-btn:hover { background: #1da851; color: #fff; }
+.cot-wa-btn.cot-wa-off,
+.cot-wa-btn.cot-wa-off:hover {
+  background: var(--bg-card-2); color: var(--text-muted);
+  border: 1px solid var(--border); cursor: not-allowed;
+  transform: none; box-shadow: none;
+}
+
 @media (max-width: 760px) {
   .cot-section { padding: 20px 18px; }
   .cot-header { gap: 14px; }
@@ -223,7 +235,8 @@
 
 /* En pantallas angostas el total, el estado, "Abrir remito" y la ✕ no entran
    en una sola fila: el botón partía el texto y la ✕ se salía de pantalla.
-   Acá la tarjeta se apila y las acciones pasan a dos renglones. */
+   Acá la tarjeta se apila: el total va arriba y abajo, en una fila, el
+   estado, "Abrir remito" y la ✕ con anchos fijos para que nada se salga. */
 @media (max-width: 620px) {
   .cot-card {
     flex-direction: column;
@@ -246,10 +259,8 @@
 
   .cot-card-actions {
     display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "estado estado"
-      "abrir  borrar";
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 42px;
+    grid-template-areas: "estado abrir borrar";
     gap: 8px;
     width: 100%;
   }
@@ -263,12 +274,44 @@
     width: 100%;
     height: 42px;
     white-space: nowrap;
+    justify-content: center;
+    padding-left: 8px;
+    padding-right: 8px;
   }
   .cot-card-actions .cot-del {
     grid-area: borrar;
     width: 42px;
     height: 42px;
   }
+
+  /* Pie del remito: los cuatro botones con el padding de .btn se partían
+     en renglones desparejos. Acá van en una grilla: Imprimir arriba a todo
+     el ancho, debajo WhatsApp, Guardar y Enviado lado a lado, y Cerrar
+     al final. */
+  .cot-modal-overlay { padding: 12px 8px; }
+  .cot-modal-head { padding: 16px 18px; }
+  .cot-modal-foot {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px 18px;
+  }
+  .cot-foot-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+  .cot-foot-actions .btn {
+    justify-content: center;
+    text-align: center;
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 0.88rem;
+    line-height: 1.2;
+  }
+  .cot-foot-actions #cot-print-btn { grid-column: 1 / -1; order: -2; }
+  .cot-foot-actions .cot-wa-btn { grid-column: 1 / -1; order: -1; }
+  .cot-foot-actions [data-cot-close] { grid-column: 1 / -1; order: 1; }
 
   /* El selector de versión queda fijo abajo y tapaba la última tarjeta */
   .admin-dashboard { padding-bottom: 80px; }
