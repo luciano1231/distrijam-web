@@ -13,13 +13,31 @@ const COT_PRECIOS_KEY = 'distrijam_precios';
 const COT_PEDIDOS_KEY = 'distrijam_pedidos';
 
 const EMPRESA = {
-  nombre: 'DISTRIJAM',
-  rubro: 'Distribuidora mayorista de fijaciones y bulonería',
-  direccion: 'Iberá 1740, W3400 Corrientes, Argentina',
-  telefono: '0379 400-7195',
-  whatsapp: '+54 9 379 400-7195',
-  horario: 'Lunes a viernes de 08:00 a 17:00'
+  nombre: 'DISTRIJAM S.A.',
+  direccion: 'IBERA 1740',
+  localidad: 'Corrientes',
+  telefono: '3794 007195',
+  email: 'autoperforantes@distrijam.com.ar',
+  web: '',
+  cuit: '30-71566968-0',
+  dgr: '30-71566968-0',
+  inicioActividades: '01/08/2017',
+  condicionIva: 'IVA Responsable Inscripto'
 };
+
+// Campos fiscales del cliente que el pedido no trae y completa el admin
+const CAMPOS_CLIENTE = [
+  ['nombre', 'Razón social'],
+  ['codigo', 'Código'],
+  ['cuit', 'CUIT'],
+  ['condicion', 'Condición IVA'],
+  ['direccion', 'Dirección'],
+  ['localidad', 'Localidad'],
+  ['provincia', 'Provincia'],
+  ['vendedor', 'Vendedor']
+];
+
+let cotClientes = {};
 
 const DIAS_VALIDEZ = 7;
 
@@ -128,6 +146,7 @@ function cotDesdePayload(data) {
         nombre: info.nombre || vid,
         medida: info.medida || '',
         presentacion: info.presentacion || '',
+        descripcionLarga: info.descripcion || '',
         qty: Number(qty) || 1,
         // Precio unitario editable. Arranca en la lista importada.
         precio: Number(cotPrecios[vid]) || 0,
@@ -135,6 +154,79 @@ function cotDesdePayload(data) {
       };
     })
   };
+}
+
+/* ── Clientes ─────────────────────────────────────── */
+const soloDigitos = (v) => String(v || '').replace(/[^0-9]/g, '');
+
+async function cotCargarClientes() {
+  try {
+    const res = await fetch('api.php?a=clientes', { cache: 'no-store' });
+    const data = await res.json().catch(() => null);
+    if (res.ok && data && data.ok) cotClientes = data.clientes || {};
+  } catch (e) {
+    /* Se sigue con los datos que trae el pedido. */
+  }
+}
+
+/* Completa los datos fiscales con lo guardado para ese CUIT */
+function cotDatosCliente(pedido) {
+  const guardado = cotClientes[soloDigitos(pedido.cliente.cuil)] || {};
+  return {
+    nombre: guardado.nombre || pedido.cliente.nombre || '',
+    codigo: guardado.codigo || '',
+    cuit: guardado.cuit || pedido.cliente.cuil || '',
+    condicion: guardado.condicion || '',
+    direccion: guardado.direccion || '',
+    localidad: guardado.localidad || '',
+    provincia: guardado.provincia || '',
+    vendedor: guardado.vendedor || ''
+  };
+}
+
+async function cotGuardarCliente() {
+  const datos = {};
+  CAMPOS_CLIENTE.forEach(([campo]) => {
+    const inp = document.getElementById('cli-' + campo);
+    datos[campo] = inp ? inp.value.trim() : '';
+  });
+
+  if (soloDigitos(datos.cuit) === '') {
+    showToast('Hace falta el CUIT para guardar el cliente', 'error');
+    return;
+  }
+
+  try {
+    const res = await fetch('api.php?a=clientes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    });
+    const r = await res.json().catch(() => ({}));
+    if (!res.ok || !r.ok) {
+      showToast(r.error || 'No se pudo guardar el cliente', 'error');
+      return;
+    }
+    cotClientes[soloDigitos(datos.cuit)] = datos;
+    showToast('Cliente guardado', 'success');
+  } catch (e) {
+    showToast('No hay conexión con el servidor', 'error');
+  }
+}
+
+/* Número correlativo de presupuesto, igual que el sistema anterior */
+async function cotNumeroPresupuesto(ref) {
+  try {
+    const res = await fetch('api.php?a=numero', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ref })
+    });
+    const r = await res.json().catch(() => ({}));
+    return r && r.numero ? r.numero : null;
+  } catch (e) {
+    return null;
+  }
 }
 
 /* ── Totales ──────────────────────────────────────── */
@@ -326,16 +418,32 @@ function cotRenderDetalle() {
   const t = cotTotales(p);
 
   document.getElementById('cot-modal-ref').textContent = p.ref;
+
+  // Datos fiscales editables: se guardan por CUIT y se reusan la próxima vez
+  const datos = cotDatosCliente(p);
   document.getElementById('cot-modal-cliente').innerHTML = `
-    <div><span>Cliente</span><strong>${escapeHtml(p.cliente.nombre || '—')}</strong></div>
-    <div><span>CUIL</span><strong>${escapeHtml(p.cliente.cuil || '—')}</strong></div>
-    <div><span>Teléfono</span><strong>${escapeHtml(p.cliente.telefono || '—')}</strong></div>
-    <div><span>Fecha</span><strong>${fecha(p.fecha)}</strong></div>
-    ${p.cliente.nota ? `<div class="cot-nota"><span>Nota del cliente</span><strong>${escapeHtml(p.cliente.nota)}</strong></div>` : ''}
-  `;
+    <div class="cot-cli-cab">
+      <span>Datos del cliente</span>
+      <button type="button" class="cot-cli-save" id="cot-cli-guardar">Guardar cliente</button>
+    </div>
+    <div class="cot-cli-campos">
+      ${CAMPOS_CLIENTE.map(([campo, etiqueta]) => `
+        <label>
+          <span>${etiqueta}</span>
+          <input type="text" id="cli-${campo}" value="${escapeHtml(datos[campo])}" autocomplete="off" />
+        </label>`).join('')}
+    </div>
+    <div class="cot-cli-pie">
+      Del pedido: ${escapeHtml(p.cliente.telefono || 'sin teléfono')} ·
+      ${fecha(p.fecha)}${p.cliente.nota ? ' · Nota: ' + escapeHtml(p.cliente.nota) : ''}
+    </div>`;
+
+  const btnCli = document.getElementById('cot-cli-guardar');
+  if (btnCli) btnCli.addEventListener('click', cotGuardarCliente);
 
   document.getElementById('cot-modal-items').innerHTML = p.items.map((it, i) => `
     <tr${it.sinPrecio && !it.precio ? ' class="cot-row-warn"' : ''}>
+      <td class="cot-td-cod">${escapeHtml(it.variantId)}</td>
       <td>
         <div class="cot-item-name">${escapeHtml(it.nombre)}</div>
         <div class="cot-item-meta">${escapeHtml(it.medida)}${it.presentacion ? ' · ' + escapeHtml(it.presentacion) : ''}</div>
@@ -398,78 +506,131 @@ function cotGuardarAbierto(estado) {
 }
 
 /* ── Hoja de cotización para imprimir ─────────────── */
-function cotImprimir() {
+/* La descripción del proveedor suele traer ya la presentación ("X 100 UNID."),
+   así que sólo se agrega cuando falta, para no repetirla. */
+function descripcionDeLinea(it) {
+  const base = it.descripcionLarga || (it.nombre + (it.medida ? ' ' + it.medida : ''));
+  const pres = (it.presentacion || '').trim();
+  if (!pres) return base;
+  const norm = (x) => x.toLowerCase().replace(/[^a-z0-9]/g, '');
+  return norm(base).includes(norm(pres)) ? base : base + ' · ' + pres;
+}
+
+async function cotImprimir() {
   const p = cotPedidoAbierto;
   if (!p) return;
   const t = cotTotales(p);
 
+  // Toma lo que el admin haya escrito recién, sin obligarlo a guardar antes
+  const cli = {};
+  CAMPOS_CLIENTE.forEach(([campo]) => {
+    const inp = document.getElementById('cli-' + campo);
+    cli[campo] = inp ? inp.value.trim() : '';
+  });
+
+  const numero = (await cotNumeroPresupuesto(p.ref)) || p.ref;
   const emitida = new Date();
   const vence = new Date(emitida.getTime() + DIAS_VALIDEZ * 24 * 60 * 60 * 1000);
 
   const filas = p.items.map(it => `
     <tr>
-      <td>
-        <div class="pq-item">${escapeHtml(it.nombre)}</div>
-        <div class="pq-item-meta">${escapeHtml(it.medida)}${it.presentacion ? ' · ' + escapeHtml(it.presentacion) : ''}</div>
-      </td>
+      <td class="pq-cod">${escapeHtml(it.variantId)}</td>
+      <td>${escapeHtml(descripcionDeLinea(it))}</td>
       <td class="pq-num">${it.qty}</td>
+      <td class="pq-uni">Unidad</td>
       <td class="pq-num">${money(it.precio)}</td>
+      <td class="pq-num pq-iva">0,00%</td>
+      <td class="pq-num">0,00</td>
       <td class="pq-num">${money(it.precio * it.qty)}</td>
     </tr>`).join('');
 
+  const lineaCliente2 = [cli.direccion, cli.localidad, cli.provincia]
+    .filter(Boolean).join(' · ');
+
   document.getElementById('cot-print').innerHTML = `
-    <div class="pq-sheet">
-      <header class="pq-head">
-        <div>
-          <img class="pq-logo" src="Logo/LogoDistrijamCompleto.png" alt="${EMPRESA.nombre}" />
-          <div class="pq-rubro">${EMPRESA.rubro}</div>
+    <div class="pq-hoja">
+      <header class="pq-cab">
+        <div class="pq-marca">
+          <img src="Logo/LogoDistrijamCompleto.png" alt="${escapeHtml(EMPRESA.nombre)}" class="pq-logo" />
+          <div class="pq-marca-sub">DISTRIBUIDORA MAYORISTA</div>
         </div>
-        <div class="pq-emp">
-          <div>${EMPRESA.direccion}</div>
-          <div>Tel: ${EMPRESA.telefono} · WhatsApp: ${EMPRESA.whatsapp}</div>
-          <div>${EMPRESA.horario}</div>
+
+        <div class="pq-novalido">
+          <div class="pq-equis">X</div>
+          <div>Documento no válido<br>como Factura</div>
+        </div>
+
+        <div class="pq-titulo">
+          <div class="pq-titulo-h">PRESUPUESTO</div>
+          <table class="pq-titulo-t">
+            <tr><td>Nro.:</td><td><strong>${escapeHtml(numero)}</strong></td></tr>
+            <tr><td>Fecha:</td><td>${emitida.toLocaleDateString('es-AR')}</td></tr>
+          </table>
         </div>
       </header>
 
-      <div class="pq-title">
-        <h1>Presupuesto</h1>
-        <div class="pq-ref">
-          <div><span>Remito</span><strong>${escapeHtml(p.ref)}</strong></div>
-          <div><span>Emitido</span><strong>${emitida.toLocaleDateString('es-AR')}</strong></div>
+      <section class="pq-empresa">
+        <div>
+          <div class="pq-emp-nombre">${escapeHtml(EMPRESA.nombre)}</div>
+          <div>${escapeHtml(EMPRESA.direccion)}</div>
+          <div>${escapeHtml(EMPRESA.localidad)}</div>
+          <div>Tel. ${escapeHtml(EMPRESA.telefono)}</div>
+          <div>email: ${escapeHtml(EMPRESA.email)}</div>
         </div>
-      </div>
-
-      <section class="pq-cliente">
-        <div><span>Cliente</span><strong>${escapeHtml(p.cliente.nombre || '—')}</strong></div>
-        <div><span>CUIL</span><strong>${escapeHtml(p.cliente.cuil || '—')}</strong></div>
-        <div><span>Teléfono</span><strong>${escapeHtml(p.cliente.telefono || '—')}</strong></div>
+        <div class="pq-emp-fiscal">
+          <div>CUIT Nro.: ${escapeHtml(EMPRESA.cuit)}</div>
+          <div>DGR Nro.: ${escapeHtml(EMPRESA.dgr)}</div>
+          <div>Inicio Actividades: ${escapeHtml(EMPRESA.inicioActividades)}</div>
+          <div class="pq-emp-iva">${escapeHtml(EMPRESA.condicionIva)}</div>
+        </div>
       </section>
 
-      <table class="pq-table">
+      <section class="pq-cliente">
+        <div class="pq-cli-izq">
+          <div class="pq-cli-nombre">${escapeHtml(cli.nombre || p.cliente.nombre || '—')}
+            ${cli.codigo ? '<span class="pq-cli-cod">(Cod. ' + escapeHtml(cli.codigo) + ')</span>' : ''}</div>
+          ${lineaCliente2 ? '<div>' + escapeHtml(lineaCliente2) + '</div>' : ''}
+          <div>${escapeHtml(cli.condicion || '')} ${escapeHtml(cli.cuit || p.cliente.cuil || '')}</div>
+        </div>
+        <div class="pq-cli-der">
+          ${cli.vendedor ? '<div>Vendedor: ' + escapeHtml(cli.vendedor) + '</div>' : ''}
+          ${p.cliente.telefono ? '<div>Tel.: ' + escapeHtml(p.cliente.telefono) + '</div>' : ''}
+        </div>
+      </section>
+
+      <table class="pq-tabla">
         <thead>
           <tr>
-            <th>Producto</th>
-            <th class="pq-num">Cant.</th>
-            <th class="pq-num">Precio unit.<br><span class="pq-th-sub">final c/IVA</span></th>
-            <th class="pq-num">Subtotal</th>
+            <th class="pq-cod">Cod. Artículo</th>
+            <th>Descripción</th>
+            <th class="pq-num">Cantidad</th>
+            <th class="pq-uni"></th>
+            <th class="pq-num">Precio Unit.</th>
+            <th class="pq-num">IVA</th>
+            <th class="pq-num">% Bonif.</th>
+            <th class="pq-num">Importe</th>
           </tr>
         </thead>
         <tbody>${filas}</tbody>
       </table>
 
-      <div class="pq-totales">
-        <div class="pq-tot-row"><span>Subtotal</span><strong>${money(t.subtotal)}</strong></div>
-        ${t.pct > 0 ? `<div class="pq-tot-row pq-desc"><span>Descuento (${t.pct}%)</span><strong>− ${money(t.descuento)}</strong></div>` : ''}
-        <div class="pq-tot-row pq-final"><span>Total</span><strong>${money(t.total)}</strong></div>
-        <div class="pq-tot-iva">IVA incluido</div>
+      <div class="pq-pie">
+        <div class="pq-pie-izq">
+          ${p.cliente.nota ? '<div class="pq-nota"><strong>Nota del cliente:</strong> ' + escapeHtml(p.cliente.nota) + '</div>' : ''}
+          <div class="pq-validez">Presupuesto válido por ${DIAS_VALIDEZ} días — hasta el ${vence.toLocaleDateString('es-AR')}.</div>
+        </div>
+
+        <table class="pq-totales">
+          <tr><td>Subtotal:</td><td class="pq-num">${money(t.subtotal)}</td></tr>
+          <tr><td>Bonif.: ${t.pct > 0 ? t.pct.toLocaleString('es-AR') + '%' : ''}</td>
+              <td class="pq-num">${money(t.descuento)}</td></tr>
+          <tr><td>Recargo:</td><td class="pq-num">0,00</td></tr>
+          <tr class="pq-sep"><td>Subtotal:</td><td class="pq-num">${money(t.total)}</td></tr>
+          <tr><td>IVA:</td><td class="pq-num">0,00</td></tr>
+          <tr><td>Percep.:</td><td class="pq-num">0,00</td></tr>
+          <tr class="pq-total"><td>TOTAL:</td><td class="pq-num">${money(t.total)}</td></tr>
+        </table>
       </div>
-
-      ${p.cliente.nota ? `<div class="pq-nota"><span>Nota del cliente:</span> ${escapeHtml(p.cliente.nota)}</div>` : ''}
-
-      <footer class="pq-foot">
-        <p class="pq-validez">Presupuesto válido por ${DIAS_VALIDEZ} días — hasta el ${vence.toLocaleDateString('es-AR')}.</p>
-        <p class="pq-legal">Precios finales expresados en pesos argentinos, con IVA incluido. Sujetos a disponibilidad de stock al momento de confirmar el pedido.</p>
-      </footer>
     </div>`;
 
   cotGuardarAbierto('cotizado');
@@ -622,6 +783,7 @@ async function initCotizador() {
     cotPrecios = cotLeerPrecios();
     await cotCargarCatalogo();
     await cotCargarPreciosDelServidor();
+    await cotCargarClientes();
   } catch (e) {
     console.error('Cotizador: fallo al cargar catálogo o precios', e);
   }

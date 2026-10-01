@@ -221,69 +221,88 @@
    ══════════════════════════════════════════════════ */
 .cot-print { display: none; }
 
-.pq-sheet {
-  color: #111; background: #fff;
-  font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 12px; line-height: 1.55;
+.pq-hoja {
+  color: #000; background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px; line-height: 1.35;
 }
-.pq-head {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  gap: 24px; padding-bottom: 16px; border-bottom: 2px solid #111;
-}
-/* El logo es horizontal (2292x500) y va en lugar del nombre escrito */
-.pq-logo { height: 30px; width: auto; display: block; }
-.pq-rubro { font-size: 11px; color: #555; margin-top: 2px; }
-.pq-emp { font-size: 10.5px; color: #444; text-align: right; line-height: 1.7; }
 
-.pq-title {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  gap: 24px; margin-top: 22px;
+/* ── Encabezado: marca, aviso y número ── */
+.pq-cab {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 16px; align-items: start;
+  border-bottom: 1.5px solid #000; padding-bottom: 8px;
 }
-.pq-title h1 { font-size: 22px; font-weight: 800; margin: 0; letter-spacing: -0.02em; }
-.pq-ref { display: flex; gap: 26px; }
-.pq-ref div { display: flex; flex-direction: column; }
-.pq-ref span { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #777; }
-.pq-ref strong { font-size: 13px; }
+.pq-logo { height: 34px; width: auto; display: block; }
+.pq-marca-sub {
+  font-size: 10px; font-weight: 700; letter-spacing: .18em; margin-top: 3px;
+}
+.pq-novalido { text-align: center; font-size: 8.5px; line-height: 1.3; padding-top: 2px; }
+.pq-equis {
+  display: inline-block; border: 1.5px solid #000; width: 30px; height: 30px;
+  font-size: 20px; font-weight: 700; line-height: 28px; margin-bottom: 3px;
+}
+.pq-titulo { text-align: right; }
+.pq-titulo-h { font-size: 15px; font-weight: 700; letter-spacing: .02em; }
+.pq-titulo-t { margin-left: auto; font-size: 10.5px; border-collapse: collapse; }
+.pq-titulo-t td { padding: 1px 0 1px 10px; text-align: right; }
+.pq-titulo-t td:first-child { color: #333; }
 
+/* ── Datos de la empresa ── */
+.pq-empresa {
+  display: flex; justify-content: space-between; gap: 24px;
+  padding: 8px 0 10px; border-bottom: 1px solid #000;
+}
+.pq-emp-nombre { font-weight: 700; font-size: 11px; }
+.pq-emp-fiscal { text-align: right; }
+.pq-emp-iva { font-weight: 700; margin-top: 4px; }
+
+/* ── Datos del cliente ── */
 .pq-cliente {
-  display: flex; gap: 34px; flex-wrap: wrap;
-  margin-top: 18px; padding: 12px 16px;
-  background: #F4F4F2; border: 1px solid #E0E0DC; border-radius: 4px;
+  display: flex; justify-content: space-between; gap: 24px;
+  padding: 8px 0 10px; border-bottom: 1.5px solid #000;
 }
-.pq-cliente div { display: flex; flex-direction: column; }
-.pq-cliente span { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #777; }
-.pq-cliente strong { font-size: 12.5px; }
+.pq-cli-nombre { font-weight: 700; font-size: 11px; }
+.pq-cli-cod { font-weight: 400; font-size: 10px; margin-left: 6px; }
+.pq-cli-der { text-align: right; }
 
-.pq-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-.pq-table th {
-  text-align: left; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.08em;
-  color: #444; padding: 8px 10px; border-bottom: 1.5px solid #111;
+/* ── Detalle ── */
+.pq-tabla { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.pq-tabla th {
+  text-align: left; font-size: 9.5px; font-weight: 700;
+  background: #E8E8E8; border-bottom: 1px solid #000;
+  padding: 5px 6px;
 }
-.pq-table td { padding: 9px 10px; border-bottom: 1px solid #E5E5E2; vertical-align: top; }
+.pq-tabla td { padding: 4px 6px; border-bottom: 1px solid #DDD; vertical-align: top; }
 .pq-num { text-align: right; white-space: nowrap; }
-.pq-item { font-weight: 600; font-size: 11.5px; }
-.pq-item-meta { font-size: 10px; color: #666; margin-top: 1px; }
+.pq-tabla th.pq-num { text-align: right; }
+.pq-cod { white-space: nowrap; font-family: "Courier New", monospace; font-size: 9px; }
+.pq-uni { font-size: 9px; color: #333; }
+.pq-pres { color: #555; font-size: 9px; }
+.pq-iva { color: #333; }
 
-.pq-totales { margin-top: 18px; margin-left: auto; width: 300px; }
-.pq-tot-row {
-  display: flex; justify-content: space-between; gap: 20px;
-  padding: 6px 0; font-size: 12px;
+/* ── Pie: nota y totales ── */
+.pq-pie {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 26px; margin-top: 22px;
 }
-.pq-desc { color: #B45309; }
-.pq-final {
-  margin-top: 6px; padding-top: 10px; border-top: 2px solid #111;
-  font-size: 15px; font-weight: 800;
-}
-
+.pq-pie-izq { font-size: 9.5px; max-width: 58%; }
 .pq-nota {
-  margin-top: 18px; padding: 10px 14px; font-size: 11px;
-  background: #F4F4F2; border-left: 3px solid #999; border-radius: 3px;
+  padding: 7px 10px; background: #F2F2F2; border-left: 2px solid #999;
+  margin-bottom: 10px;
 }
-.pq-nota span { font-weight: 700; }
+.pq-validez { font-weight: 700; }
 
-.pq-foot { margin-top: 26px; padding-top: 14px; border-top: 1px solid #DDD; }
-.pq-validez { font-size: 12px; font-weight: 700; color: #111; }
-.pq-legal { font-size: 10px; color: #777; margin-top: 4px; }
+.pq-totales {
+  border-collapse: collapse; font-size: 10.5px;
+  border: 1px solid #000; min-width: 250px;
+}
+.pq-totales td { padding: 3px 10px; }
+.pq-totales td:first-child { font-weight: 700; }
+.pq-totales .pq-sep td { border-top: 1px solid #999; }
+.pq-totales .pq-total td {
+  border-top: 1.5px solid #000; font-size: 12.5px; font-weight: 700; padding-top: 5px;
+}
 
 /* Al imprimir se oculta el panel y se muestra sólo la hoja */
 @media print {
@@ -369,4 +388,50 @@
 }
 @media (max-width: 760px) {
   .cot-estados-conexion { align-items: stretch; width: 100%; }
+}
+
+/* ── Datos del cliente, editables en el remito ────── */
+.cot-cli-cab {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 12px;
+}
+.cot-cli-cab span {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-muted); font-weight: 700;
+}
+.cot-cli-save {
+  padding: 6px 14px; border-radius: 6px; font-size: 0.78rem; font-weight: 600;
+  border: 1px solid var(--border); background: var(--bg-card); color: var(--text);
+}
+.cot-cli-save:hover { border-color: var(--red); color: var(--red); }
+
+.cot-cli-campos {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+}
+.cot-cli-campos label { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.cot-cli-campos span {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-muted); font-weight: 700;
+}
+.cot-cli-campos input {
+  width: 100%; padding: 8px 10px; font-size: 0.85rem;
+  background: var(--bg-card); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px;
+}
+.cot-cli-campos input:focus { outline: none; border-color: var(--red); }
+
+.cot-cli-pie {
+  margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border);
+  font-size: 0.78rem; color: var(--text-muted);
+}
+
+/* Código de artículo en la tabla del remito */
+.cot-td-cod {
+  font-family: ui-monospace, monospace; font-size: 0.78rem;
+  color: var(--text-dim); white-space: nowrap; width: 110px;
+}
+
+@media (max-width: 760px) {
+  .cot-cli-campos { grid-template-columns: 1fr 1fr; }
+  .cot-td-cod { width: auto; }
 }

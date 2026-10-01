@@ -176,4 +176,126 @@ if ($accion === 'precios') {
     }
 }
 
+/* ─────────────── Clientes ─────────────── */
+/* Los datos fiscales del cliente (dirección, condición de IVA, vendedor)
+   no vienen en el pedido: los completa el administrador una vez y quedan
+   guardados para los próximos presupuestos de ese mismo CUIT. */
+
+function claveCuit($cuit) {
+    return preg_replace('/[^0-9]/', '', (string) $cuit);
+}
+
+function leerClientes() {
+    $archivo = carpeta() . '/clientes.json';
+    if (!is_file($archivo)) {
+        return [];
+    }
+    $datos = json_decode((string) file_get_contents($archivo), true);
+    return is_array($datos) ? $datos : [];
+}
+
+function guardarClientes($clientes) {
+    $dir = carpeta();
+    if (!is_dir($dir) && !@mkdir($dir, 0750, true)) {
+        return false;
+    }
+    $ok = @file_put_contents(
+        $dir . '/clientes.json',
+        json_encode($clientes, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT),
+        LOCK_EX
+    );
+    if ($ok !== false) {
+        @chmod($dir . '/clientes.json', 0640);
+    }
+    return $ok !== false;
+}
+
+if ($accion === 'clientes') {
+    exigirSesion();
+
+    if ($metodo === 'GET') {
+        salir(200, ['ok' => true, 'clientes' => leerClientes()]);
+    }
+
+    if ($metodo === 'POST') {
+        $cuerpo = json_decode(file_get_contents('php://input'), true);
+        if (!is_array($cuerpo)) {
+            salir(400, ['error' => 'Formato inválido.']);
+        }
+
+        // Admite uno solo o una tanda (para importar desde otro sistema)
+        $entrantes = isset($cuerpo['clientes']) && is_array($cuerpo['clientes'])
+            ? $cuerpo['clientes']
+            : [$cuerpo];
+
+        $clientes = leerClientes();
+        $campos = ['nombre', 'codigo', 'cuit', 'condicion', 'direccion',
+                   'localidad', 'provincia', 'telefono', 'vendedor'];
+        $guardados = 0;
+
+        foreach ($entrantes as $entrante) {
+            if (!is_array($entrante)) {
+                continue;
+            }
+            $clave = claveCuit(isset($entrante['cuit']) ? $entrante['cuit'] : '');
+            if ($clave === '') {
+                continue;
+            }
+            $limpio = [];
+            foreach ($campos as $campo) {
+                $valor = isset($entrante[$campo]) ? (string) $entrante[$campo] : '';
+                $limpio[$campo] = mb_substr(trim($valor), 0, 160);
+            }
+            $clientes[$clave] = $limpio;
+            $guardados++;
+        }
+
+        if ($guardados === 0) {
+            salir(400, ['error' => 'Hace falta al menos un CUIT válido.']);
+        }
+        if (!guardarClientes($clientes)) {
+            salir(500, ['error' => 'No se pudo guardar.']);
+        }
+        salir(200, ['ok' => true, 'guardados' => $guardados, 'total' => count($clientes)]);
+    }
+}
+
+/* ─────────────── Número de presupuesto ─────────────── */
+/* Correlativo propio, como el del sistema viejo. Se pide una sola vez por
+   remito: si ya tiene número, se devuelve el mismo. */
+if ($accion === 'numero' && $metodo === 'POST') {
+    exigirSesion();
+
+    $cuerpo = json_decode(file_get_contents('php://input'), true);
+    $ref = isset($cuerpo['ref']) ? (string) $cuerpo['ref'] : '';
+    if (!preg_match('/^[A-Z0-9]{4,16}$/', $ref)) {
+        salir(400, ['error' => 'Referencia inválida.']);
+    }
+
+    $dir = carpeta();
+    if (!is_dir($dir) && !@mkdir($dir, 0750, true)) {
+        salir(500, ['error' => 'No se pudo preparar el almacenamiento.']);
+    }
+
+    $archivo = $dir . '/numeros.json';
+    $datos = is_file($archivo) ? json_decode((string) file_get_contents($archivo), true) : null;
+    if (!is_array($datos)) {
+        $datos = ['ultimo' => 0, 'asignados' => []];
+    }
+
+    if (isset($datos['asignados'][$ref])) {
+        salir(200, ['ok' => true, 'numero' => $datos['asignados'][$ref], 'nuevo' => false]);
+    }
+
+    $datos['ultimo'] = (int) $datos['ultimo'] + 1;
+    $numero = str_pad((string) $datos['ultimo'], 8, '0', STR_PAD_LEFT);
+    $datos['asignados'][$ref] = $numero;
+
+    if (@file_put_contents($archivo, json_encode($datos), LOCK_EX) === false) {
+        salir(500, ['error' => 'No se pudo guardar el número.']);
+    }
+
+    salir(200, ['ok' => true, 'numero' => $numero, 'nuevo' => true]);
+}
+
 salir(404, ['error' => 'Acción desconocida.']);
