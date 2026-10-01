@@ -237,7 +237,12 @@ if ($accion === 'clientes') {
             if (!is_array($entrante)) {
                 continue;
             }
-            $clave = claveCuit(isset($entrante['cuit']) ? $entrante['cuit'] : '');
+            // Se indexa por el CUIT que llega en el pedido, no por el que
+            // escribe el admin: si lo corrige, el cliente tiene que seguir
+            // encontrandose cuando ese mismo comprador vuelva a pedir.
+            $clave = claveCuit(isset($entrante['clave']) && $entrante['clave'] !== ''
+                ? $entrante['clave']
+                : (isset($entrante['cuit']) ? $entrante['cuit'] : ''));
             if ($clave === '') {
                 continue;
             }

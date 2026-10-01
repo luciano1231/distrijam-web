@@ -54,6 +54,7 @@ let cotPrecios = {};
 let cotCatalogo = {};   // variantId -> { nombre, medida, presentacion, descripcion }
 let cotPedidoAbierto = null;
 let cotFiltro = 'todos';
+let cotFiltroCliente = null;   // clave de CUIT, o null
 
 const ESTADOS = {
   pendiente: 'Pendiente',
@@ -195,12 +196,15 @@ function cotDatosCliente(pedido) {
 
 async function cotGuardarCliente() {
   const datos = {};
+  // La clave es el CUIT con el que llega el pedido; el del formulario puede
+  // venir corregido y cambiaría la identidad del cliente.
+  datos.clave = cotPedidoAbierto ? soloDigitos(cotPedidoAbierto.cliente.cuil) : '';
   CAMPOS_CLIENTE.forEach(({ campo }) => {
     const inp = document.getElementById('cli-' + campo);
     datos[campo] = inp ? inp.value.trim() : '';
   });
 
-  if (soloDigitos(datos.cuit) === '') {
+  if (soloDigitos(datos.cuit) === '' && datos.clave === '') {
     showToast('Hace falta el CUIT para guardar el cliente', 'error');
     return;
   }
@@ -216,8 +220,9 @@ async function cotGuardarCliente() {
       showToast(r.error || 'No se pudo guardar el cliente', 'error');
       return;
     }
-    cotClientes[soloDigitos(datos.cuit)] = datos;
+    cotClientes[datos.clave || soloDigitos(datos.cuit)] = datos;
     showToast('Cliente guardado', 'success');
+    cotRenderClientes();
   } catch (e) {
     showToast('No hay conexión con el servidor', 'error');
   }
@@ -299,10 +304,125 @@ function cotImportarPrecios(file) {
   reader.readAsText(file);
 }
 
+/* ── Listado de clientes ──────────────────────────── */
+/* Un cliente existe si pidió alguna vez o si el admin le cargó los datos:
+   se juntan las dos fuentes para que no falte ninguno. */
+function cotClientesConPedidos() {
+  const pedidos = cotLeerPedidos();
+  const mapa = {};
+
+  Object.entries(cotClientes).forEach(([clave, datos]) => {
+    mapa[clave] = { clave, datos, pedidos: 0, ultimo: 0, cargado: true };
+  });
+
+  pedidos.forEach(p => {
+    const clave = soloDigitos(p.cliente.cuil);
+    if (!clave) return;
+    if (!mapa[clave]) {
+      mapa[clave] = {
+        clave,
+        datos: { nombre: p.cliente.nombre, cuit: p.cliente.cuil },
+        pedidos: 0, ultimo: 0, cargado: false
+      };
+    }
+    mapa[clave].pedidos++;
+    if (p.fecha > mapa[clave].ultimo) mapa[clave].ultimo = p.fecha;
+  });
+
+  return Object.values(mapa).sort((a, b) => {
+    if (b.ultimo !== a.ultimo) return b.ultimo - a.ultimo;
+    return (a.datos.nombre || '').localeCompare(b.datos.nombre || '');
+  });
+}
+
+function cotRenderClientes() {
+  const cont = document.getElementById('cot-clientes');
+  if (!cont) return;
+
+  const lista = cotClientesConPedidos();
+
+  if (lista.length === 0) {
+    cont.innerHTML = `<div class="cot-empty">
+      <p><strong>Todavía no hay clientes.</strong></p>
+      <p>Aparecen solos cuando llega un pedido, y podés completar sus datos
+         fiscales abriendo el remito.</p>
+    </div>`;
+    return;
+  }
+
+  cont.innerHTML = `
+    <table class="cot-tabla-cli">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>CUIT</th>
+          <th>Condición</th>
+          <th>Localidad</th>
+          <th>Vendedor</th>
+          <th class="cot-td-num">Remitos</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${lista.map(c => `
+          <tr${cotFiltroCliente === c.clave ? ' class="cot-cli-activo"' : ''}>
+            <td>
+              <div class="cot-cli-nom">${escapeHtml(c.datos.nombre || 'Sin nombre')}</div>
+              ${c.datos.codigo ? `<div class="cot-cli-cod">Cód. ${escapeHtml(c.datos.codigo)}</div>` : ''}
+              ${!c.cargado ? '<div class="cot-cli-falta">Datos sin completar</div>' : ''}
+            </td>
+            <td class="cot-cli-cuit">${escapeHtml(c.datos.cuit || '—')}</td>
+            <td>${escapeHtml(c.datos.condicion || '—')}</td>
+            <td>${escapeHtml(c.datos.localidad || '—')}</td>
+            <td>${escapeHtml(c.datos.vendedor || '—')}</td>
+            <td class="cot-td-num"><strong>${c.pedidos}</strong></td>
+            <td class="cot-td-num">
+              <button type="button" class="cot-ver-remitos" data-clave="${escapeHtml(c.clave)}">
+                ${cotFiltroCliente === c.clave ? 'Ver todos' : 'Ver remitos'}
+              </button>
+            </td>
+          </tr>`).join('')}
+      </tbody>
+    </table>`;
+
+  cont.querySelectorAll('.cot-ver-remitos').forEach(b => {
+    b.addEventListener('click', () => {
+      cotFiltroCliente = (cotFiltroCliente === b.dataset.clave) ? null : b.dataset.clave;
+      cotFiltro = 'todos';
+      cotRenderClientes();
+      cotRenderLista();
+      const seccion = document.getElementById('cot-list');
+      if (seccion) seccion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+}
+
 /* ── Listado de pedidos ───────────────────────────── */
 function cotRenderFiltros(pedidos) {
   const cont = document.getElementById('cot-filtros');
   if (!cont) return;
+
+  const aviso = document.getElementById('cot-filtro-cliente');
+  if (aviso) {
+    if (cotFiltroCliente) {
+      const c = cotClientes[cotFiltroCliente] || {};
+      const nombre = c.nombre || (pedidos[0] && pedidos[0].cliente.nombre) || cotFiltroCliente;
+      aviso.innerHTML = `Mostrando sólo los remitos de <strong>${escapeHtml(nombre)}</strong>
+        <button type="button" id="cot-quitar-filtro">Ver todos</button>`;
+      aviso.style.display = 'flex';
+      const quitar = document.getElementById('cot-quitar-filtro');
+      if (quitar) {
+        quitar.addEventListener('click', () => {
+          cotFiltroCliente = null;
+          cotRenderClientes();
+          cotRenderLista();
+        });
+      }
+    } else {
+      aviso.style.display = 'none';
+      aviso.innerHTML = '';
+    }
+  }
 
   const cuenta = { todos: pedidos.length, pendiente: 0, cotizado: 0, enviado: 0 };
   pedidos.forEach(p => { cuenta[p.estado] = (cuenta[p.estado] || 0) + 1; });
@@ -336,7 +456,13 @@ function cotRenderLista() {
   const cont = document.getElementById('cot-list');
   if (!cont) return;
 
-  const todos = cotLeerPedidos().sort((a, b) => b.fecha - a.fecha);
+  let todos = cotLeerPedidos().sort((a, b) => b.fecha - a.fecha);
+
+  // Si se eligió un cliente, el resto de la sección habla sólo de él
+  if (cotFiltroCliente) {
+    todos = todos.filter(p => soloDigitos(p.cliente.cuil) === cotFiltroCliente);
+  }
+
   cotRenderFiltros(todos);
   const pedidos = cotFiltro === 'todos' ? todos : todos.filter(p => p.estado === cotFiltro);
 
@@ -816,6 +942,7 @@ async function initCotizador() {
 
   cotRenderEstadoPrecios();
   cotRenderLista();
+  cotRenderClientes();
 
   if (nuevos > 0) {
     showToast(`${nuevos} pedido(s) nuevo(s) recibido(s)`, 'success', 5000);
@@ -826,6 +953,7 @@ async function initCotizador() {
     actualizar.addEventListener('click', async () => {
       const n = await cotTraerDelServidor(true);
       cotRenderLista();
+      cotRenderClientes();
       showToast(n > 0 ? `${n} pedido(s) nuevo(s)` : 'No hay pedidos nuevos', n > 0 ? 'success' : 'info');
     });
   }
