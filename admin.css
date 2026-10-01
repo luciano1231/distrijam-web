@@ -200,7 +200,8 @@ body.admin-body { background: var(--bg); }
 .admin-tab.active { background: var(--bg-card); color: var(--white); }
 
 /* Product rows */
-.admin-product-list { }
+/* Con los ~100 productos base la lista quedaba larguísima: scroll propio */
+#admin-product-list { max-height: 640px; overflow-y: auto; }
 .admin-product-row {
   display: flex;
   align-items: center;

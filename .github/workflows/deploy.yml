@@ -37,6 +37,10 @@ jobs:
         print(f'Total: {total} referencias con ?v={sha}')
         PY
 
+    # Sitemap para Google con una URL por producto, al día con productos.json
+    - name: Generar sitemap.xml
+      run: python3 scripts/gen_sitemap.py
+
     - name: Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:

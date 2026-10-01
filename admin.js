@@ -93,6 +93,8 @@ function deleteProduct(id) {
 // Se completa al leer productos.json; el 32 anterior era un número fijo
 // que quedó viejo cuando cambió el catálogo.
 let DEFAULT_COUNT = 0;
+// Productos del proveedor, para listarlos en la pestaña "Todos"
+let PRODUCTOS_BASE = [];
 
 // ── UI: Show/hide ─────────────────────────────────────
 function showLogin() {
@@ -114,7 +116,9 @@ async function cargarConteoCatalogo() {
     if (!res.ok) return;
     const productos = await res.json();
     DEFAULT_COUNT = productos.length;
+    PRODUCTOS_BASE = productos;
     renderStats();
+    renderProductList(currentListFilter);
     const nota = document.getElementById('nota-base-count');
     if (nota) nota.textContent = productos.length;
   } catch (e) {
@@ -154,8 +158,11 @@ function renderProductList(filter) {
 
   let items = [];
   if (filter === 'all') {
-    // Show custom products first, then note about default
-    items = custom.map(p => ({ ...p, source: 'custom' }));
+    // "Todos" mostraba sólo los personalizados y quedaba vacío aunque el
+    // catálogo tuviera los del proveedor: van primero los propios y después
+    // los base, que no se pueden borrar desde acá.
+    items = custom.map(p => ({ ...p, source: 'custom' }))
+      .concat(PRODUCTOS_BASE.map(p => ({ ...p, source: 'default' })));
   } else if (filter === 'custom') {
     items = custom.map(p => ({ ...p, source: 'custom' }));
   }
@@ -166,7 +173,7 @@ function renderProductList(filter) {
         <div class="icon">📦</div>
         <p>${filter === 'custom'
           ? 'No hay productos personalizados aún.<br>Usá el formulario para agregar el primero.'
-          : 'No hay productos que mostrar.'}</p>
+          : (DEFAULT_COUNT ? 'No hay productos que mostrar.' : 'Cargando productos...')}</p>
       </div>`;
     return;
   }
@@ -175,25 +182,29 @@ function renderProductList(filter) {
   container.innerHTML = items.map(p => {
     const catLabel = allCategories[p.category] || p.category;
     const imgSrc   = p.image || '';
+    const esBase   = p.source === 'default';
     return `
       <div class="admin-product-row" data-id="${p.id}">
-        <img class="admin-product-thumb" src="${imgSrc}" alt="${p.name}"
+        <img class="admin-product-thumb" src="${imgSrc}" alt="${escapeHtml(p.name)}" loading="lazy"
              onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'52\\' height=\\'52\\'><rect width=\\'52\\' height=\\'52\\' fill=\\'%23222\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'%23555\\' font-size=\\'24\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'>🔩</text></svg>'">
         <div class="admin-product-info">
-          <div class="admin-product-name">${p.name}</div>
+          <div class="admin-product-name">${escapeHtml(p.name)}</div>
           <div class="admin-product-cat">
             <span class="admin-cat-dot"></span>
-            ${catLabel}
+            ${escapeHtml(catLabel)}${esBase && p.variants ? ` <span style="color:var(--text-muted)">· ${p.variants.length} medida(s)</span>` : ''}
             ${p.createdAt ? `<span style="color:var(--text-muted)">· ${new Date(p.createdAt).toLocaleDateString('es-AR')}</span>` : ''}
           </div>
         </div>
-        <span class="admin-product-source custom">Personalizado</span>
-        <button class="admin-delete-btn" data-id="${p.id}" title="Eliminar producto">✕</button>
+        ${esBase
+          ? `<span class="admin-product-source default">Base</span>
+             <button class="admin-delete-btn disabled" tabindex="-1" aria-hidden="true">✕</button>`
+          : `<span class="admin-product-source custom">Personalizado</span>
+             <button class="admin-delete-btn" data-id="${p.id}" title="Eliminar producto">✕</button>`}
       </div>`;
   }).join('');
 
   // Delete events
-  container.querySelectorAll('.admin-delete-btn').forEach(btn => {
+  container.querySelectorAll('.admin-delete-btn:not(.disabled)').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = parseInt(btn.dataset.id);
       if (confirm('¿Eliminar este producto del catálogo?')) {

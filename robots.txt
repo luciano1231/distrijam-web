@@ -1,0 +1,12 @@
+# Distrijam — qué puede recorrer Google
+User-agent: *
+Allow: /
+# Panel, servidor y archivos internos: no aportan nada al buscador
+Disallow: /admin.html
+Disallow: /api.php
+Disallow: /pedidos.php
+Disallow: /instalar.php
+Disallow: /scripts/
+Disallow: /*.xlsx$
+
+Sitemap: https://distrijam.com.ar/sitemap.xml

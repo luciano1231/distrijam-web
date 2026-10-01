@@ -31,9 +31,65 @@ async function loadProductData() {
   }
 }
 
+/* Todas las fichas compartían el título "Detalle del Producto" y la misma
+   descripción, así que para Google eran páginas iguales. Acá cada producto
+   pone su nombre, medidas y categoría en el título, la descripción y el
+   enlace canónico, más la ruta Inicio › Catálogo › Producto. */
+function actualizarSeoProducto(p, categoria) {
+  const base = 'https://distrijam.com.ar/';
+  const url = base + 'producto.html?id=' + encodeURIComponent(p.id);
+  const medidas = (p.variants || []).map(v => v.medida).filter(Boolean);
+  const resumenMedidas = medidas.length
+    ? ` Medidas: ${medidas.slice(0, 8).join(', ')}${medidas.length > 8 ? ' y más' : ''}.`
+    : '';
+  const desc = `${p.name} — ${categoria} por mayor en Distrijam, Corrientes.${resumenMedidas} Pedí cotización por WhatsApp.`;
+
+  document.title = `${p.name} | ${categoria} — Distrijam`;
+
+  const ponerMeta = (selector, crear, valor) => {
+    let el = document.head.querySelector(selector);
+    if (!el) { el = crear(); document.head.appendChild(el); }
+    el.setAttribute(el.tagName === 'LINK' ? 'href' : 'content', valor);
+  };
+  const meta = (attr, nombre) => () => {
+    const m = document.createElement('meta');
+    m.setAttribute(attr, nombre);
+    return m;
+  };
+
+  ponerMeta('meta[name="description"]', meta('name', 'description'), desc);
+  ponerMeta('link[rel="canonical"]', () => {
+    const l = document.createElement('link');
+    l.rel = 'canonical';
+    return l;
+  }, url);
+  ponerMeta('meta[property="og:title"]', meta('property', 'og:title'), document.title);
+  ponerMeta('meta[property="og:description"]', meta('property', 'og:description'), desc);
+  ponerMeta('meta[property="og:url"]', meta('property', 'og:url'), url);
+  if (p.image) ponerMeta('meta[property="og:image"]', meta('property', 'og:image'), base + p.image);
+
+  const ld = document.createElement('script');
+  ld.type = 'application/ld+json';
+  ld.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: base },
+      { '@type': 'ListItem', position: 2, name: 'Catálogo', item: base + 'catalogo.html' },
+      { '@type': 'ListItem', position: 3, name: p.name, item: url }
+    ]
+  });
+  document.head.appendChild(ld);
+}
+
 function showError() {
   document.getElementById('product-loading').style.display = 'none';
   document.getElementById('product-error').style.display = 'block';
+  // Un id que no existe no debe quedar en Google como página vacía
+  const robots = document.createElement('meta');
+  robots.name = 'robots';
+  robots.content = 'noindex';
+  document.head.appendChild(robots);
 }
 
 function renderProduct(p) {
@@ -95,6 +151,7 @@ function renderProduct(p) {
   
   document.getElementById('prod-category').textContent = catMap[p.category] || p.category;
   document.getElementById('prod-title').textContent = p.name;
+  actualizarSeoProducto(p, catMap[p.category] || p.category);
   document.getElementById('prod-desc').textContent = p.description;
   
   // Set lower tabs content
