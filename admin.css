@@ -275,7 +275,9 @@ body.admin-body { background: var(--bg); }
 /* Stats bar */
 .admin-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* La columna izquierda mide 420px: cuatro tarjetas en fila no entraban y
+     la última se metía debajo de la lista de productos. Van de a dos. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   margin-bottom: 32px;
 }
@@ -287,6 +289,7 @@ body.admin-body { background: var(--bg); }
 }
 .admin-stat-value { font-size: 1.8rem; font-weight: 800; color: var(--white); }
 .admin-stat-label { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+.admin-stat-card { min-width: 0; overflow-wrap: anywhere; }
 .admin-stat-card.highlight { border-color: rgba(192,57,43,0.3); }
 .admin-stat-card.highlight .admin-stat-value { color: var(--red-light); }
 
@@ -294,8 +297,22 @@ body.admin-body { background: var(--bg); }
 @media (max-width: 1024px) {
   .admin-content { grid-template-columns: 1fr; }
   .admin-form-card { position: static; }
-  .admin-stats { grid-template-columns: repeat(2, 1fr); }
+  .admin-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
+@media (max-width: 640px) {
+  .admin-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Alta de categoría: .btn-secondary trae texto blanco (pensado para el hero
+   oscuro) y en la tarjeta clara el botón "Crear Categoría" no se veía.
+   El selector de archivo además quedaba cortado: va a todo el ancho. */
+#add-category-form .btn-secondary {
+  background: var(--bg-card-2); color: var(--text);
+  border: 1px solid var(--border); justify-content: center;
+}
+#add-category-form .btn-secondary:hover { border-color: var(--red); color: var(--red); }
+#add-category-form .form-group { flex-basis: 100% !important; }
+#add-category-form input[type="file"] { width: 100%; min-width: 0; }
 @media (max-width: 640px) {
   .admin-content { padding: 20px; }
   .admin-header-bar { padding: 16px 20px; }

@@ -210,7 +210,11 @@
   padding: 18px 26px; border-top: 1px solid var(--border);
 }
 .cot-foot-hint { font-size: 0.78rem; color: var(--text-muted); }
-.cot-foot-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.cot-foot-hint { flex-basis: 100%; }
+/* Con WhatsApp son cinco botones: con el padding de .btn no entraban en
+   una fila y Imprimir caía abajo. Se achica el relleno y no se parten. */
+.cot-foot-actions { display: flex; gap: 8px; flex-wrap: nowrap; margin-left: auto; }
+.cot-foot-actions .btn { padding: 12px 18px; white-space: nowrap; }
 
 /* Botón al chat del cliente; sin un celular válido queda apagado */
 .cot-wa-btn {
@@ -222,6 +226,11 @@
   background: var(--bg-card-2); color: var(--text-muted);
   border: 1px solid var(--border); cursor: not-allowed;
   transform: none; box-shadow: none;
+}
+
+/* Entre el celular y el escritorio el modal se angosta: ahí sí se parten */
+@media (max-width: 960px) {
+  .cot-foot-actions { flex-wrap: wrap; }
 }
 
 @media (max-width: 760px) {
@@ -302,6 +311,7 @@
     width: 100%;
   }
   .cot-foot-actions .btn {
+    white-space: normal;
     justify-content: center;
     text-align: center;
     min-height: 44px;
@@ -606,6 +616,16 @@
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 .cot-ver-remitos:hover { border-color: var(--red); color: var(--red); }
+
+/* Botoncito de WhatsApp en la tabla de clientes */
+.cot-cli-wa {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #25D366; color: #fff; text-decoration: none;
+  transition: background 0.2s ease;
+}
+.cot-cli-wa:hover { background: #1da851; }
+.cot-cli-wa-off { background: none; color: var(--text-muted); cursor: default; }
 
 /* Aviso de que la lista está filtrada por un cliente */
 .cot-filtro-cliente {
