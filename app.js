@@ -313,7 +313,10 @@ const DISTRIJAM_VERSIONS = {
   v3: { short: 'V3', name: 'Industrial', home: 'index3.html', themeClass: 'theme-v3', accent: '#C2700A', title: 'Versión 3: Industrial clara (blanco y ámbar)' },
   v4: { short: 'V4', name: 'Tech',       home: 'index4.html', themeClass: 'theme-v4', accent: '#0F766E', title: 'Versión 4: Tech nocturna (carbón y turquesa)' },
   v5: { short: 'V5', name: 'Cercana',    home: 'index5.html', themeClass: 'theme-v5', accent: '#C2410C', title: 'Versión 5: Cercana (crema y terracota)' },
-  v6: { short: 'V6', name: 'Showroom',   home: 'index6.html', themeClass: 'theme-v6', accent: '#C0392B', title: 'Versión 6: Showroom (blanco y rojo de marca)' }
+  v6: { short: 'V6', name: 'Showroom',   home: 'index6.html', themeClass: 'theme-v6', accent: '#C0392B', title: 'Versión 6: Showroom (blanco y rojo de marca)' },
+  g1: { short: 'G1', name: 'Titanium',   home: 'index-g1.html', themeClass: 'theme-g1', accent: '#F59E0B', title: 'Modelo G1: Titanium Forge & Luxury Dark' },
+  g2: { short: 'G2', name: 'Nordic',     home: 'index-g2.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Modelo G2: Nordic Clean & Neo-Cobalt' },
+  g3: { short: 'G3', name: 'Apex',       home: 'index-g3.html', themeClass: 'theme-g3', accent: '#E11D48', title: 'Modelo G3: Apex Obsidian & Precision Crimson' }
 };
 
 const DISTRIJAM_ALL_THEME_CLASSES = Object.values(DISTRIJAM_VERSIONS)
@@ -379,7 +382,8 @@ function injectVersionPillStyles() {
       background:rgba(15,23,42,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
       border:1px solid rgba(255,255,255,.2);border-radius:50px;padding:3px 5px;
       display:inline-flex;align-items:center;gap:2px;box-shadow:0 6px 20px rgba(0,0,0,.35);
-      font-family:'Inter',-apple-system,sans-serif;user-select:none;animation:dvpFade .3s ease}
+      font-family:'Inter',-apple-system,sans-serif;user-select:none;animation:dvpFade .3s ease;
+      max-width:calc(100vw - 36px);overflow-x:auto;-webkit-overflow-scrolling:touch}
     @keyframes dvpFade{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
     .distrijam-version-pill .dvp-label{color:#94A3B8;font-size:.68rem;font-weight:700;
       text-transform:uppercase;letter-spacing:.08em;padding:0 8px 0 6px;white-space:nowrap}

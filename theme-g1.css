@@ -1,0 +1,70 @@
+/* ======================================================
+   DISTRIJAM — theme-g1.css
+   MODELO G1 · TITANIUM FORGE THEME OVERLAY
+   Para páginas compartidas: catálogo, producto y administración.
+   ====================================================== */
+
+:root.theme-g1,
+body.theme-g1 {
+  --primary: #F59E0B !important;
+  --primary-dark: #D97706 !important;
+  --primary-light: rgba(245, 158, 11, 0.15) !important;
+
+  --red: #F59E0B !important;
+  --red-dark: #D97706 !important;
+  --red-light: #FBBF24 !important;
+  --gold: #F59E0B !important;
+  --gold-light: #FDE68A !important;
+  --steel: #94A3B8 !important;
+
+  --bg: #0A0D14 !important;
+  --bg-2: #0F1420 !important;
+  --bg-card: #141A29 !important;
+  --bg-card-2: #1E2638 !important;
+
+  --text: #F1F5F9 !important;
+  --text-dim: #94A3B8 !important;
+  --text-muted: #64748B !important;
+
+  --border: rgba(255, 255, 255, 0.1) !important;
+  --border-light: rgba(255, 255, 255, 0.06) !important;
+
+  --white: #F1F5F9 !important;
+  --white-real: #0A0D14 !important;
+
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.8) !important;
+
+  --rail-bg: #141A29;
+  --rail-bg-hover: #1E2638;
+  --rail-border: rgba(255, 255, 255, 0.1);
+  --rail-border-hover: rgba(245, 158, 11, 0.4);
+  --rail-text: #94A3B8;
+  --rail-text-strong: #F1F5F9;
+  --rail-active-bg: #F59E0B;
+  --rail-active-text: #0A0D14;
+  --rail-count-bg: #0A0D14;
+  --rail-count-text: #94A3B8;
+  --rail-active-count-bg: rgba(0, 0, 0, 0.25);
+  --rail-active-count-text: #0A0D14;
+}
+
+body.theme-g1 {
+  background: #0A0D14 !important;
+  color: #F1F5F9 !important;
+}
+
+body.theme-g1 .nav {
+  background: rgba(10, 13, 20, 0.94) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.theme-g1 .product-card {
+  background: #141A29 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.theme-g1 .product-card:hover {
+  border-color: #F59E0B !important;
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.2) !important;
+}

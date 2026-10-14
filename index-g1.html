@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Distrijam — Modelo G1 | Titanium Forge & Fijaciones Industriales</title>
+  <meta name="description"
+    content="Distrijam: Distribuidora mayorista de tuercas, tornillos, bulones 8.8, autoperforantes y varillas en Corrientes y NEA. Stock permanente y cotización exprés por WhatsApp." />
+  <link rel="canonical" href="https://distrijam.com.ar/index-g1.html" />
+  <link rel="icon" type="image/png" href="Logo/logo-distrijam.png" />
+  <link rel="apple-touch-icon" href="Logo/logo-distrijam.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Distrijam" />
+  <meta property="og:locale" content="es_AR" />
+  <meta property="og:title" content="Distrijam — Modelo G1 | Titanium Forge & Fijaciones Industriales" />
+  <meta property="og:description"
+    content="Distribución mayorista de bulonería técnica y fijaciones de alta resistencia. Entrega en 24/48 hs en todo el NEA." />
+  <meta property="og:image" content="imagenes/landing-titanium-bolts.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HardwareStore",
+    "name": "Distrijam",
+    "legalName": "DISTRIJAM S.A.",
+    "url": "https://distrijam.com.ar/",
+    "logo": "https://distrijam.com.ar/Logo/logo-distrijam.png",
+    "image": "https://distrijam.com.ar/imagenes/landing-titanium-bolts.jpg",
+    "description": "Distribuidora mayorista de bulones, tornillos autoperforantes, tuercas y fijaciones industriales en Corrientes, Argentina.",
+    "telephone": "+543794007195",
+    "email": "autoperforantes@distrijam.com.ar",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Iberá 1740",
+      "addressLocality": "Corrientes",
+      "addressRegion": "Corrientes",
+      "postalCode": "W3400",
+      "addressCountry": "AR"
+    },
+    "areaServed": "Argentina"
+  }
+  </script>
+
+  <link rel="stylesheet" href="styles-g1.css" />
+</head>
+
+<body>
+
+  <!-- ── TOPBAR STATUS & HORARIOS ── -->
+  <div class="g1-topbar">
+    <div class="g1-container">
+      <div class="g1-topbar-inner">
+        <div class="g1-topbar-left">
+          <span class="g1-topbar-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+            </svg>
+            Iberá 1740, Corrientes Capital
+          </span>
+          <span class="g1-topbar-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+            </svg>
+            Lun a Vie: 08:00 a 17:00 hs
+          </span>
+          <span class="g1-topbar-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.49 5.49l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            <a href="tel:+5403794007195">0379 400-7195</a>
+          </span>
+        </div>
+
+        <div class="g1-topbar-right">
+          <div class="g1-topbar-badge">
+            <span class="g1-live-dot"></span>
+            <span>Venta Mayorista Directa B2B</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NAVBAR PRINCIPAL ── -->
+  <header class="g1-header nav" id="nav">
+    <div class="g1-container">
+      <div class="g1-nav-inner">
+        <a href="index-g1.html" class="g1-logo" aria-label="Distrijam Inicio">
+          <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam — Fijaciones & Bulonería" />
+        </a>
+
+        <nav class="g1-nav-links">
+          <a href="index-g1.html" class="g1-nav-link active">Inicio</a>
+          <div class="nav-item-dropdown">
+            <a href="catalogo.html" class="g1-nav-link" data-page="catalogo.html">
+              Productos <span style="font-size:0.75rem; vertical-align:middle;">▾</span>
+            </a>
+            <ul class="dropdown-menu" id="dropdown-productos"></ul>
+          </div>
+          <a href="#lineas" class="g1-nav-link">Líneas</a>
+          <a href="#cotizador" class="g1-nav-link">Cotizador</a>
+          <a href="#empresa" class="g1-nav-link">Empresa</a>
+          <a href="#faq" class="g1-nav-link">Preguntas</a>
+          <a href="#contacto" class="g1-nav-link">Contacto</a>
+        </nav>
+
+        <div class="g1-nav-actions">
+          <a href="catalogo.html" class="g1-btn g1-btn-secondary">Catálogo Web</a>
+          <a href="https://wa.me/5493794007195?text=Hola%20Distrijam,%20solicito%20cotizaci%C3%B3n%20mayorista."
+            target="_blank" rel="noopener" class="g1-btn g1-btn-primary">
+            Cotizar por WhatsApp
+          </a>
+          <button class="g1-burger" id="nav-hamburger" aria-label="Abrir menú">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="g1-mobile-menu" id="nav-mobile">
+    <a href="index-g1.html" class="g1-mobile-link">Inicio</a>
+    <a href="catalogo.html" class="g1-mobile-link">Catálogo Completo</a>
+    <a href="#lineas" class="g1-mobile-link">Líneas de Fijación</a>
+    <a href="#cotizador" class="g1-mobile-link">Cotizador Express</a>
+    <a href="#empresa" class="g1-mobile-link">Empresa y Depósito</a>
+    <a href="#faq" class="g1-mobile-link">Preguntas Frecuentes</a>
+    <a href="#contacto" class="g1-mobile-link">Contacto</a>
+    <a href="https://wa.me/5493794007195" target="_blank" rel="noopener" class="g1-btn g1-btn-wa" style="margin-top: 10px;">
+      WhatsApp Directo
+    </a>
+  </div>
+
+  <main>
+    <!-- ── HERO SECTION ── -->
+    <section class="g1-hero">
+      <div class="g1-hero-bg">
+        <img src="imagenes/landing-titanium-bolts.jpg" alt="Fijaciones industriales y bulonería de precisión Distrijam" />
+      </div>
+      <div class="g1-hero-overlay"></div>
+
+      <div class="g1-container">
+        <div class="g1-hero-grid">
+          <div class="g1-hero-content reveal">
+            <div class="g1-hero-badge">
+              <span class="g1-live-dot"></span> Grados 2 · 5 · 8.8 | DIN · ISO · IRAM
+            </div>
+
+            <h1 class="g1-hero-title">
+              Fijaciones técnicas con <em>precisión milimétrica</em>
+            </h1>
+
+            <p class="g1-hero-lead">
+              Abastecimiento mayorista de bulonería, tornillos autoperforantes y anclajes estructurales.
+              Stock garantizado para ferreterías, constructoras y talleres en Corrientes y todo el NEA.
+            </p>
+
+            <!-- Buscador en tiempo real conectado al catálogo -->
+            <div class="g1-search-box">
+              <form class="g1-search-form" action="catalogo.html" method="GET" role="search">
+                <span class="g1-search-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                </span>
+                <input type="text" id="hero-search-input" name="q" class="g1-search-input"
+                  placeholder="Buscar artículo, medida o norma (ej: bulón 8.8, autoperforante 14x2)..." autocomplete="off" />
+                <button type="submit" class="g1-btn g1-btn-primary" style="padding: 9px 18px; font-size: 0.88rem;">
+                  Buscar
+                </button>
+                <div class="search-suggestions" id="search-suggestions" role="listbox"></div>
+              </form>
+            </div>
+
+            <div class="g1-hero-cta">
+              <a href="catalogo.html" class="g1-btn g1-btn-primary g1-btn-lg">Explorar Catálogo (+500 ítems)</a>
+              <a href="#cotizador" class="g1-btn g1-btn-secondary g1-btn-lg">Cotizador Rápido</a>
+            </div>
+
+            <div class="g1-metrics-row">
+              <div class="g1-metric-item">
+                <div class="g1-metric-val">+500<span>+</span></div>
+                <div class="g1-metric-lbl">Medidas en stock</div>
+              </div>
+              <div class="g1-metric-item">
+                <div class="g1-metric-val">24/48<span>h</span></div>
+                <div class="g1-metric-lbl">Despacho en NEA</div>
+              </div>
+              <div class="g1-metric-item">
+                <div class="g1-metric-val">+20<span>años</span></div>
+                <div class="g1-metric-lbl">Trayectoria B2B</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── COTIZADOR EXPRESS INTERACTIVO ── -->
+          <div class="g1-hero-widget reveal" id="cotizador">
+            <div class="g1-express-card">
+              <div class="g1-express-header">
+                <span class="g1-express-tag">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
+                  Cotizador Instantáneo
+                </span>
+                <h3 class="g1-express-title">Armá tu pedido rápido</h3>
+              </div>
+
+              <div class="g1-form-group">
+                <label class="g1-form-label" for="g1-cat-select">Línea de producto</label>
+                <select id="g1-cat-select" class="g1-select">
+                  <option value="autoperforantes">Tornillos Autoperforantes (Punta Mecha / Aguja)</option>
+                  <option value="bulones">Bulones Hexagonales Grado 2 y 8.8</option>
+                  <option value="tuercas">Tuercas & Arandelas (Zincadas / Grower)</option>
+                  <option value="tarugos">Tarugos & Anclajes para Hormigón / Drywall</option>
+                  <option value="varillas">Varillas Roscadas (1m y 2m)</option>
+                </select>
+              </div>
+
+              <div class="g1-form-group">
+                <label class="g1-form-label" for="g1-variant-select">Medida / Especificación</label>
+                <select id="g1-variant-select" class="g1-select">
+                  <!-- Dynamically populated via JS -->
+                </select>
+              </div>
+
+              <div class="g1-form-row">
+                <div class="g1-form-group">
+                  <label class="g1-form-label" for="g1-qty-input">Cantidad</label>
+                  <input type="number" id="g1-qty-input" class="g1-input" min="1" value="100" />
+                </div>
+                <div class="g1-form-group">
+                  <label class="g1-form-label" for="g1-unit-select">Unidad</label>
+                  <select id="g1-unit-select" class="g1-select">
+                    <option value="unidades">Unidades</option>
+                    <option value="cajas">Cajas cerradas</option>
+                    <option value="kg">Kilos (Granel)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="g1-express-summary">
+                <span>Total a consultar:</span>
+                <strong id="g1-summary-text">100 unidades de Autoperforantes</strong>
+              </div>
+
+              <button type="button" id="g1-send-wa-btn" class="g1-btn g1-btn-wa" style="width: 100%;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+                Solicitar Cotización Inmediata
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── NORMAS TÉCNICAS STRIP ── -->
+    <div class="g1-norms-strip">
+      <div class="g1-container">
+        <div class="g1-norms-inner">
+          <div class="g1-norm-item">
+            <span class="g1-norm-badge">DIN 933 / 931</span>
+            <span>Bulones Cabeza Hexagonal</span>
+          </div>
+          <div class="g1-norm-item">
+            <span class="g1-norm-badge">DIN 7504</span>
+            <span>Autoperforantes Punta Mecha</span>
+          </div>
+          <div class="g1-norm-item">
+            <span class="g1-norm-badge">DIN 934 / 127</span>
+            <span>Tuercas & Arandelas Presión</span>
+          </div>
+          <div class="g1-norm-item">
+            <span class="g1-norm-badge">GRADOS 2 · 5 · 8.8</span>
+            <span>Tracción & Resistencia Mecánica</span>
+          </div>
+          <div class="g1-norm-item">
+            <span class="g1-norm-badge">IRAM / ISO</span>
+            <span>Trazabilidad y Calidad Fabril</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── LÍNEAS DE PRODUCTOS ── -->
+    <section class="g1-section" id="lineas">
+      <div class="g1-container">
+        <div class="g1-section-head reveal">
+          <span class="g1-eyebrow">Catálogo Mayorista</span>
+          <h2 class="g1-title">Líneas de <em>fijación técnica</em></h2>
+          <p class="g1-desc">
+            Abastecemos con medidas estándar y especiales bajo normas de calidad internacional.
+            Consultá disponibilidad inmediata por caja o volumen.
+          </p>
+        </div>
+
+        <div class="g1-cat-grid">
+          <!-- Tarjeta 1 -->
+          <div class="g1-cat-card reveal">
+            <div class="g1-cat-media">
+              <img src="imagenes/landing-precision-caliper.jpg" alt="Tornillos Autoperforantes" loading="lazy" />
+              <span class="g1-cat-tag">Alta Rotación</span>
+            </div>
+            <div class="g1-cat-body">
+              <h3 class="g1-cat-title">Tornillos Autoperforantes</h3>
+              <p class="g1-cat-text">
+                Punta mecha para cubiertas metálicas, perfiles C, panel sándwich y drywall. Con arandela vulcanizada EPDM y cabeza hexagonal.
+              </p>
+              <div class="g1-cat-foot">
+                <span class="g1-norm-badge">DIN 7504-K</span>
+                <a href="catalogo.html?cat=autoperforantes" class="g1-cat-link">Ver catálogo →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta 2 -->
+          <div class="g1-cat-card reveal">
+            <div class="g1-cat-media">
+              <img src="imagenes/landing-titanium-bolts.jpg" alt="Bulones y Tirafondos" loading="lazy" />
+              <span class="g1-cat-tag">Grado 2 y 8.8</span>
+            </div>
+            <div class="g1-cat-body">
+              <h3 class="g1-cat-title">Bulones y Tirafondos</h3>
+              <p class="g1-cat-text">
+                Bulonería métrica y en pulgadas, rosca completa y parcial. Tratamiento zincado azul y bicromado anticorrosivo.
+              </p>
+              <div class="g1-cat-foot">
+                <span class="g1-norm-badge">DIN 933 / SAE</span>
+                <a href="catalogo.html?cat=bulones" class="g1-cat-link">Ver catálogo →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta 3 -->
+          <div class="g1-cat-card reveal">
+            <div class="g1-cat-media">
+              <img src="imagenes/cat3.jpg" alt="Tuercas y Arandelas" loading="lazy" />
+              <span class="g1-cat-tag">Accesorios</span>
+            </div>
+            <div class="g1-cat-body">
+              <h3 class="g1-cat-title">Tuercas & Arandelas</h3>
+              <p class="g1-cat-text">
+                Hexagonales, autofrenantes con inserto de nylon, planas chapistas, grower y biseladas de alta tenacidad.
+              </p>
+              <div class="g1-cat-foot">
+                <span class="g1-norm-badge">DIN 985 / 127</span>
+                <a href="catalogo.html?cat=tuercas" class="g1-cat-link">Ver catálogo →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta 4 -->
+          <div class="g1-cat-card reveal">
+            <div class="g1-cat-media">
+              <img src="imagenes/cat4.jpg" alt="Tarugos y Anclajes Químicos" loading="lazy" />
+              <span class="g1-cat-tag">Fijación Estructural</span>
+            </div>
+            <div class="g1-cat-body">
+              <h3 class="g1-cat-title">Tarugos & Anclajes</h3>
+              <p class="g1-cat-text">
+                Fijaciones para hormigón macizo, mampostería hueca y placa de yeso. Brocas mecánicas y tarugos de poliamida.
+              </p>
+              <div class="g1-cat-foot">
+                <span class="g1-norm-badge">Nylon Puro</span>
+                <a href="catalogo.html?cat=tarugos" class="g1-cat-link">Ver catálogo →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VALORES / POR QUÉ ELEGIRNOS ── -->
+    <section class="g1-section g1-section-alt">
+      <div class="g1-container">
+        <div class="g1-section-head reveal">
+          <span class="g1-eyebrow">Ventajas B2B</span>
+          <h2 class="g1-title">Un proveedor que <em>cumple tiempos y stock</em></h2>
+          <p class="g1-desc">
+            Nos enfocamos en la continuidad operativa de distribuidores, corralones y obras de gran envergadura.
+          </p>
+        </div>
+
+        <div class="g1-values-grid">
+          <div class="g1-value-card reveal">
+            <span class="g1-value-num">01</span>
+            <h3 class="g1-value-title">Stock Permanente</h3>
+            <p class="g1-value-text">
+              Más de 500 medidas críticas disponibles en depósito para despacho inmediato sin quiebres de inventario.
+            </p>
+          </div>
+
+          <div class="g1-value-card reveal">
+            <span class="g1-value-num">02</span>
+            <h3 class="g1-value-title">Despacho en 24/48 hs</h3>
+            <p class="g1-value-text">
+              Coordinamos envíos ágiles a través de transportes o comisionistas hacia Corrientes, Chaco, Misiones y Formosa.
+            </p>
+          </div>
+
+          <div class="g1-value-card reveal">
+            <span class="g1-value-num">03</span>
+            <h3 class="g1-value-title">Asesoramiento Técnico</h3>
+            <p class="g1-value-text">
+              Te orientamos en la elección correcta de recubrimiento, resistencia de tracción y pasos de rosca para cada material.
+            </p>
+          </div>
+
+          <div class="g1-value-card reveal">
+            <span class="g1-value-num">04</span>
+            <h3 class="g1-value-title">Precios Mayoristas</h3>
+            <p class="g1-value-text">
+              Listas de precios competitivas por volumen y embalajes cerrados para maximizar la rentabilidad de tu comercio.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── EMPRESA & UBICACIÓN ── -->
+    <section class="g1-section" id="empresa">
+      <div class="g1-container">
+        <div class="g1-about-grid">
+          <div class="reveal">
+            <span class="g1-eyebrow">Distrijam Corrientes</span>
+            <h2 class="g1-title">Más de 20 años en el <em>corazón del NEA</em></h2>
+            <p class="g1-desc">
+              Desde nuestro centro de almacenamiento y despacho en calle Iberá, abastecemos con solidez a los sectores más exigentes:
+              construcción tradicional y steel framing, carpintería metálica, tornerías y ferreterías industriales.
+            </p>
+
+            <div class="g1-checklist">
+              <div class="g1-check-item">
+                <div class="g1-check-icon">✓</div>
+                <div>
+                  <div class="g1-check-title">Atención personalizada y mostrador comercial</div>
+                  <div class="g1-check-desc">Retiro exprés sin demoras para profesionales y transportistas.</div>
+                </div>
+              </div>
+              <div class="g1-check-item">
+                <div class="g1-check-icon">✓</div>
+                <div>
+                  <div class="g1-check-title">Documentación y facturación formal</div>
+                  <div class="g1-check-desc">Cotizaciones transparentes, comprobantes fiscales y seguimiento de envíos.</div>
+                </div>
+              </div>
+              <div class="g1-check-item">
+                <div class="g1-check-icon">✓</div>
+                <div>
+                  <div class="g1-check-title">Líneas especiales bajo pedido</div>
+                  <div class="g1-check-desc">Fijaciones en acero inoxidable AISI 304/316 y medidas de gran escala.</div>
+                </div>
+              </div>
+            </div>
+
+            <a href="https://wa.me/5493794007195" target="_blank" rel="noopener" class="g1-btn g1-btn-primary">
+              Contactar con un Asesor
+            </a>
+          </div>
+
+          <!-- Tarjeta de mapa y horarios -->
+          <div class="g1-map-box reveal" id="contacto">
+            <div class="g1-map-frame">
+              <iframe
+                src="https://maps.google.com/maps?q=Iber%C3%A1%201740,%20Corrientes,%20Argentina&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                title="Depósito Central Distrijam en Iberá 1740, Corrientes"></iframe>
+            </div>
+            <div class="g1-map-info">
+              <div class="g1-map-info-item">
+                <span class="g1-map-info-label">Dirección:</span>
+                <span class="g1-map-info-val">Iberá 1740, W3400 Corrientes</span>
+              </div>
+              <div class="g1-map-info-item">
+                <span class="g1-map-info-label">Teléfono:</span>
+                <span class="g1-map-info-val"><a href="tel:+5403794007195">0379 400-7195</a></span>
+              </div>
+              <div class="g1-map-info-item">
+                <span class="g1-map-info-label">Horario:</span>
+                <span class="g1-map-info-val">Lunes a Viernes 08:00 – 17:00</span>
+              </div>
+              <div class="g1-map-info-item">
+                <span class="g1-map-info-label">WhatsApp Directo:</span>
+                <span class="g1-map-info-val" style="color: #22C55E;">+54 9 379 400-7195</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PREGUNTAS FRECUENTES ── -->
+    <section class="g1-section g1-section-alt" id="faq">
+      <div class="g1-container">
+        <div class="g1-section-head reveal">
+          <span class="g1-eyebrow">Dudas Habituales</span>
+          <h2 class="g1-title">Preguntas <em>frecuentes</em></h2>
+        </div>
+
+        <div class="g1-faq-list reveal">
+          <div class="g1-faq-item">
+            <button class="g1-faq-btn" type="button" aria-expanded="false">
+              ¿Cuál es la compra mínima para acceder a precios mayoristas?
+              <span class="g1-faq-icon">+</span>
+            </button>
+            <div class="g1-faq-content">
+              Trabajamos con ferreterías, corralones, talleres y constructoras bajo presentaciones de caja cerrada o por kilogramo según el artículo. Consultanos tu listado y te armamos una propuesta escalonada.
+            </div>
+          </div>
+
+          <div class="g1-faq-item">
+            <button class="g1-faq-btn" type="button" aria-expanded="false">
+              ¿Cómo realizo un pedido o solicito una cotización formal?
+              <span class="g1-faq-icon">+</span>
+            </button>
+            <div class="g1-faq-content">
+              Podés usar nuestro cotizador instantáneo aquí arriba, navegar el catálogo web seleccionando medidas o enviarnos tu planilla de cómputo de materiales por WhatsApp al 0379 400-7195.
+            </div>
+          </div>
+
+          <div class="g1-faq-item">
+            <button class="g1-faq-btn" type="button" aria-expanded="false">
+              ¿Hacen envíos a otras provincias del NEA?
+              <span class="g1-faq-icon">+</span>
+            </button>
+            <div class="g1-faq-content">
+              Sí, despachamos diariamente a toda la provincia de Corrientes, Chaco, Formosa y Misiones mediante el transporte o comisionista que elijas. Los pedidos confirmados antes de las 12 hs se preparan en el mismo día.
+            </div>
+          </div>
+
+          <div class="g1-faq-item">
+            <button class="g1-faq-btn" type="button" aria-expanded="false">
+              ¿Puedo retirar personalmente en el depósito de calle Iberá?
+              <span class="g1-faq-icon">+</span>
+            </button>
+            <div class="g1-faq-content">
+              Por supuesto. Contamos con mostrador comercial y playa de carga en Iberá 1740, de lunes a viernes de 08:00 a 17:00 hs continuado.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA BANNER FINAL ── -->
+    <section class="g1-section">
+      <div class="g1-container">
+        <div class="g1-cta-banner reveal">
+          <div>
+            <h2 class="g1-cta-title">¿Tenés una lista de materiales para cotizar?</h2>
+            <p class="g1-cta-desc">
+              Envianos tus cómputos hoy mismo y recibí tu presupuesto detallado con disponibilidad y plazos de entrega.
+            </p>
+          </div>
+          <div class="g1-cta-actions">
+            <a href="https://wa.me/5493794007195?text=Hola%20Distrijam,%20tengo%20un%20listado%20de%20materiales%20para%20cotizar."
+              target="_blank" rel="noopener" class="g1-btn g1-btn-primary g1-btn-lg">
+              Enviar por WhatsApp
+            </a>
+            <a href="catalogo.html" class="g1-btn g1-btn-secondary g1-btn-lg">Ver Catálogo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── FOOTER CORPORATIVO ── -->
+  <footer class="g1-footer">
+    <div class="g1-container">
+      <div class="g1-footer-grid">
+        <div class="g1-footer-brand">
+          <a href="index-g1.html">
+            <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam Logo" style="height: 40px; filter: brightness(0) invert(1);" />
+          </a>
+          <p>
+            Distribuidora mayorista de tuercas, tornillos, bulonería y fijaciones industriales.
+            Abastecimiento integral para la construcción y la industria en el NEA.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="g1-footer-col-title">Navegación</h4>
+          <div class="g1-footer-links">
+            <a href="index-g1.html" class="g1-footer-link">Inicio</a>
+            <a href="catalogo.html" class="g1-footer-link">Catálogo Completo</a>
+            <a href="#lineas" class="g1-footer-link">Líneas de Fijación</a>
+            <a href="#cotizador" class="g1-footer-link">Cotizador Express</a>
+            <a href="#empresa" class="g1-footer-link">Quiénes Somos</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="g1-footer-col-title">Líneas Técnicas</h4>
+          <div class="g1-footer-links">
+            <a href="catalogo.html?cat=autoperforantes" class="g1-footer-link">Autoperforantes</a>
+            <a href="catalogo.html?cat=bulones" class="g1-footer-link">Bulones Grado 2 y 8.8</a>
+            <a href="catalogo.html?cat=tuercas" class="g1-footer-link">Tuercas y Arandelas</a>
+            <a href="catalogo.html?cat=tarugos" class="g1-footer-link">Tarugos y Anclajes</a>
+            <a href="catalogo.html?cat=varillas" class="g1-footer-link">Varillas Roscadas</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="g1-footer-col-title">Contacto B2B</h4>
+          <div class="g1-footer-links">
+            <span class="g1-footer-link">Iberá 1740, Corrientes</span>
+            <span class="g1-footer-link">Tel: 0379 400-7195</span>
+            <span class="g1-footer-link">Lun a Vie · 08:00 a 17:00 hs</span>
+            <a href="https://wa.me/5493794007195" target="_blank" rel="noopener" class="g1-footer-link" style="color:#22C55E;">
+              💬 WhatsApp de Ventas
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="g1-footer-bottom">
+        <p>© <span data-current-year>2026</span> Distrijam S.A. Todos los derechos reservados.</p>
+        <p><a href="admin.html" style="color: var(--g1-text-muted);">Acceso Administración</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts compartidos -->
+  <script src="app.js"></script>
+
+  <!-- Script interactivo específico de Modelo G1 -->
+  <script>
+    // ── Interactive Fast Quote Builder ──────────────────────
+    const sampleVariants = {
+      autoperforantes: [
+        'Hexagonal c/arandela EPDM 14 x 2"',
+        'Hexagonal c/arandela EPDM 14 x 2-1/2"',
+        'Trompeta para Drywall / Yeso 6 x 1"',
+        'Punta aguja T1 para chapa fina 8 x 1/2"',
+        'Alas para madera sobre perfil 10 x 1-5/8"'
+      ],
+      bulones: [
+        'Bulón Hexagonal Grado 8.8 M8 x 30 mm',
+        'Bulón Hexagonal Grado 8.8 M10 x 40 mm',
+        'Bulón Hexagonal Grado 8.8 M12 x 50 mm',
+        'Bulón SAE Grado 5 3/8" x 2"',
+        'Tirafondo cabeza hexagonal 1/4" x 2-1/2"'
+      ],
+      tuercas: [
+        'Tuerca Hexagonal Zincada M8 (caja x 100)',
+        'Tuerca Hexagonal Zincada M10 (caja x 100)',
+        'Tuerca Autofrenante con nylon M12',
+        'Arandela Plana Biselada 3/8"',
+        'Arandela Grower Presión 1/2"'
+      ],
+      tarugos: [
+        'Tarugo Nylon c/tope N° 6 (caja x 100)',
+        'Tarugo Nylon c/tope N° 8 (caja x 100)',
+        'Tarugo Nylon c/tope N° 10 (caja x 50)',
+        'Tarugo para placa de yeso / Durlock',
+        'Anclaje metálico con expansión 3/8" x 3"'
+      ],
+      varillas: [
+        'Varilla Roscada Zincada 1/4" x 1 metro',
+        'Varilla Roscada Zincada 3/8" x 1 metro',
+        'Varilla Roscada Zincada 1/2" x 1 metro',
+        'Varilla Roscada M12 Grado 8.8 x 1 metro',
+        'Varilla Roscada M16 x 1 metro'
+      ]
+    };
+
+    const catSelect = document.getElementById('g1-cat-select');
+    const varSelect = document.getElementById('g1-variant-select');
+    const qtyInput = document.getElementById('g1-qty-input');
+    const unitSelect = document.getElementById('g1-unit-select');
+    const summaryText = document.getElementById('g1-summary-text');
+    const sendWaBtn = document.getElementById('g1-send-wa-btn');
+
+    function populateVariants() {
+      if (!catSelect || !varSelect) return;
+      const cat = catSelect.value;
+      const list = sampleVariants[cat] || [];
+      varSelect.innerHTML = list.map(item => `<option value="${item}">${item}</option>`).join('');
+      updateSummary();
+    }
+
+    function updateSummary() {
+      if (!summaryText || !varSelect || !qtyInput || !unitSelect) return;
+      const qty = qtyInput.value || '100';
+      const unit = unitSelect.options[unitSelect.selectedIndex].text;
+      const item = varSelect.value || '';
+      summaryText.textContent = `${qty} ${unit.toLowerCase()} de ${item}`;
+    }
+
+    if (catSelect) {
+      catSelect.addEventListener('change', populateVariants);
+      populateVariants();
+    }
+    if (varSelect) varSelect.addEventListener('change', updateSummary);
+    if (qtyInput) qtyInput.addEventListener('input', updateSummary);
+    if (unitSelect) unitSelect.addEventListener('change', updateSummary);
+
+    if (sendWaBtn) {
+      sendWaBtn.addEventListener('click', () => {
+        const text = summaryText.textContent;
+        const msg = encodeURIComponent(`Hola Distrijam, quisiera solicitar cotización y disponibilidad para: ${text}. Muchas gracias.`);
+        window.open(`https://wa.me/5493794007195?text=${msg}`, '_blank');
+      });
+    }
+
+    // ── FAQ Accordion ───────────────────────────────────────
+    document.querySelectorAll('.g1-faq-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.g1-faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.g1-faq-item.open').forEach(el => el.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+
+</html>

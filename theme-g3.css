@@ -1,0 +1,70 @@
+/* ======================================================
+   DISTRIJAM — theme-g3.css
+   MODELO G3 · APEX OBSIDIAN & CRIMSON THEME OVERLAY
+   Para páginas compartidas: catálogo, producto y administración.
+   ====================================================== */
+
+:root.theme-g3,
+body.theme-g3 {
+  --primary: #E11D48 !important;
+  --primary-dark: #BE123C !important;
+  --primary-light: rgba(225, 29, 72, 0.15) !important;
+
+  --red: #E11D48 !important;
+  --red-dark: #BE123C !important;
+  --red-light: #F43F5E !important;
+  --gold: #E11D48 !important;
+  --gold-light: #FDA4AF !important;
+  --steel: #94A3B8 !important;
+
+  --bg: #0B0C10 !important;
+  --bg-2: #10121A !important;
+  --bg-card: #151824 !important;
+  --bg-card-2: #1F2436 !important;
+
+  --text: #F8FAFC !important;
+  --text-dim: #94A3B8 !important;
+  --text-muted: #64748B !important;
+
+  --border: rgba(255, 255, 255, 0.1) !important;
+  --border-light: rgba(255, 255, 255, 0.06) !important;
+
+  --white: #F8FAFC !important;
+  --white-real: #0B0C10 !important;
+
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.8) !important;
+
+  --rail-bg: #151824;
+  --rail-bg-hover: #1F2436;
+  --rail-border: rgba(255, 255, 255, 0.1);
+  --rail-border-hover: rgba(225, 29, 72, 0.4);
+  --rail-text: #94A3B8;
+  --rail-text-strong: #F8FAFC;
+  --rail-active-bg: #E11D48;
+  --rail-active-text: #FFFFFF;
+  --rail-count-bg: #0B0C10;
+  --rail-count-text: #94A3B8;
+  --rail-active-count-bg: rgba(255, 255, 255, 0.25);
+  --rail-active-count-text: #FFFFFF;
+}
+
+body.theme-g3 {
+  background: #0B0C10 !important;
+  color: #F8FAFC !important;
+}
+
+body.theme-g3 .nav {
+  background: rgba(11, 12, 16, 0.94) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.theme-g3 .product-card {
+  background: #151824 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.theme-g3 .product-card:hover {
+  border-color: #E11D48 !important;
+  box-shadow: 0 8px 30px rgba(225, 29, 72, 0.25) !important;
+}

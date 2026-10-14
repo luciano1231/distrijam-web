@@ -1,0 +1,71 @@
+/* ======================================================
+   DISTRIJAM — theme-g2.css
+   MODELO G2 · NORDIC CLEAN & NEO-COBALT THEME OVERLAY
+   Para páginas compartidas: catálogo, producto y administración.
+   ====================================================== */
+
+:root.theme-g2,
+body.theme-g2 {
+  --primary: #1D4ED8 !important;
+  --primary-dark: #1E40AF !important;
+  --primary-light: #EFF6FF !important;
+
+  --red: #1D4ED8 !important;
+  --red-dark: #1E40AF !important;
+  --red-light: #3B82F6 !important;
+  --gold: #0F172A !important;
+  --gold-light: #334155 !important;
+  --steel: #64748B !important;
+
+  --bg: #FFFFFF !important;
+  --bg-2: #F8FAFC !important;
+  --bg-card: #FFFFFF !important;
+  --bg-card-2: #F1F5F9 !important;
+
+  --text: #0F172A !important;
+  --text-dim: #475569 !important;
+  --text-muted: #64748B !important;
+
+  --border: #E2E8F0 !important;
+  --border-light: #F1F5F9 !important;
+
+  --white: #0F172A !important;
+  --white-real: #FFFFFF !important;
+
+  --shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+  --shadow-lg: 0 16px 36px rgba(15, 23, 42, 0.1) !important;
+
+  --rail-bg: #FFFFFF;
+  --rail-bg-hover: #F8FAFC;
+  --rail-border: #E2E8F0;
+  --rail-border-hover: #1D4ED8;
+  --rail-text: #475569;
+  --rail-text-strong: #0F172A;
+  --rail-active-bg: #1D4ED8;
+  --rail-active-text: #FFFFFF;
+  --rail-count-bg: #F1F5F9;
+  --rail-count-text: #64748B;
+  --rail-active-count-bg: rgba(255, 255, 255, 0.25);
+  --rail-active-count-text: #FFFFFF;
+}
+
+body.theme-g2 {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+body.theme-g2 .nav {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+
+body.theme-g2 .product-card {
+  background: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
+}
+
+body.theme-g2 .product-card:hover {
+  border-color: #1D4ED8 !important;
+  box-shadow: 0 12px 30px rgba(29, 78, 216, 0.15) !important;
+}
