@@ -369,54 +369,54 @@ function applyDistrijamTheme(ver) {
   document.querySelectorAll('.dvp-btn').forEach(btn => {
     const isActive = btn.dataset.ver === ver;
     btn.classList.toggle('active', isActive);
-    btn.setAttribute('aria-pressed', String(isActive));
+    btn.setAttribute('aria-current', isActive ? 'true' : 'false');
   });
+
+  // El botoncito muestra sólo la versión activa ("V1")
+  const toggle = document.querySelector('.distrijam-version-pill .dvp-toggle');
+  if (toggle) {
+    toggle.textContent = cfg.short;
+    toggle.title = `Versión: ${cfg.short} ${cfg.name} — tocá para cambiar`;
+  }
 }
 
 function injectVersionPillStyles() {
   if (document.getElementById('dvp-styles')) return;
   const style = document.createElement('style');
   style.id = 'dvp-styles';
+  // Antes era una barra con las seis versiones arriba a la derecha, que
+  // tapaba el menú y obligaba a correr la navegación. Ahora es un botoncito
+  // translúcido abajo a la izquierda (encima de "volver arriba") que
+  // despliega la lista al tocarlo.
   style.textContent = `
-    .distrijam-version-pill{position:fixed;top:14px;right:18px;z-index:99999;
-      background:rgba(15,23,42,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-      border:1px solid rgba(255,255,255,.2);border-radius:50px;padding:3px 5px;
-      display:inline-flex;align-items:center;gap:2px;box-shadow:0 6px 20px rgba(0,0,0,.35);
-      font-family:'Inter',-apple-system,sans-serif;user-select:none;animation:dvpFade .3s ease;
-      max-width:calc(100vw - 36px);overflow-x:auto;-webkit-overflow-scrolling:touch}
-    @keyframes dvpFade{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-    .distrijam-version-pill .dvp-label{color:#94A3B8;font-size:.68rem;font-weight:700;
-      text-transform:uppercase;letter-spacing:.08em;padding:0 8px 0 6px;white-space:nowrap}
-    .distrijam-version-pill .dvp-btn{border:none;outline:none;background:transparent;color:#CBD5E1;
-      font-size:.73rem;font-weight:600;padding:5px 11px;border-radius:30px;cursor:pointer;
-      transition:all .2s ease;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;
-      font-family:inherit}
-    .distrijam-version-pill .dvp-btn:hover{color:#fff;background:rgba(255,255,255,.1)}
-    .distrijam-version-pill .dvp-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
-    .distrijam-version-pill .dvp-btn.active{color:#fff;font-weight:700;
-      background:var(--dvp-accent,#C0392B);box-shadow:0 2px 8px rgba(0,0,0,.45)}
-    .distrijam-version-pill .dvp-btn.active::before{content:'';width:5px;height:5px;background:#fff;
-      border-radius:50%;display:inline-block}
-    /* Con cinco versiones el nombre completo no entra: sólo lo muestra la activa */
-    .distrijam-version-pill .dvp-btn .dvp-name{display:none}
-    .distrijam-version-pill .dvp-btn.active .dvp-name{display:inline}
-    @media (max-width:760px){
-      .distrijam-version-pill .dvp-label{display:none}
-      .distrijam-version-pill .dvp-btn.active .dvp-name{display:none}
-      .distrijam-version-pill .dvp-btn{padding:6px 9px}
-    }
+    .distrijam-version-pill{position:fixed;left:26px;bottom:76px;z-index:99999;
+      font-family:'Inter',-apple-system,sans-serif;user-select:none}
+    .distrijam-version-pill .dvp-toggle{width:32px;height:32px;border-radius:50%;padding:0;
+      border:1px solid rgba(255,255,255,.25);background:rgba(15,23,42,.55);color:#E2E8F0;
+      font-size:.62rem;font-weight:700;letter-spacing:.02em;cursor:pointer;font-family:inherit;
+      display:grid;place-items:center;opacity:.45;transition:opacity .2s ease,background .2s ease;
+      box-shadow:0 2px 8px rgba(0,0,0,.2)}
+    .distrijam-version-pill .dvp-toggle:hover,
+    .distrijam-version-pill .dvp-toggle:focus-visible,
+    .distrijam-version-pill.open .dvp-toggle{opacity:1;background:rgba(15,23,42,.92)}
+    .distrijam-version-pill .dvp-toggle:focus-visible{outline:2px solid #fff;outline-offset:2px}
+    .distrijam-version-pill .dvp-menu{position:absolute;left:0;bottom:40px;min-width:170px;
+      background:rgba(15,23,42,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:5px;
+      box-shadow:0 10px 28px rgba(0,0,0,.4);display:none;flex-direction:column;gap:2px}
+    .distrijam-version-pill.open .dvp-menu{display:flex}
+    .distrijam-version-pill .dvp-btn{border:none;background:transparent;color:#CBD5E1;
+      font-size:.75rem;font-weight:600;padding:7px 10px;border-radius:7px;cursor:pointer;
+      display:flex;align-items:center;gap:8px;white-space:nowrap;text-align:left;font-family:inherit}
+    .distrijam-version-pill .dvp-btn:hover{color:#fff;background:rgba(255,255,255,.08)}
+    .distrijam-version-pill .dvp-btn:focus-visible{outline:2px solid #fff;outline-offset:-2px}
+    .distrijam-version-pill .dvp-btn::before{content:'';width:7px;height:7px;border-radius:50%;
+      background:var(--dvp-accent,#C0392B);flex-shrink:0}
+    .distrijam-version-pill .dvp-btn.active{color:#fff;font-weight:700;background:rgba(255,255,255,.1)}
+    .distrijam-version-pill .dvp-btn .dvp-short{color:#94A3B8;min-width:20px}
+    .distrijam-version-pill .dvp-btn.active .dvp-short{color:#fff}
     @media (max-width:640px){
-      .distrijam-version-pill{top:auto;bottom:16px;right:50%;transform:translateX(50%)}
-    }
-    /* En las páginas compartidas la barra superior es fija y arranca en el
-       tope, así que se le reserva la esquina que ocupa el selector. */
-    @media (min-width:901px){
-      body.catalog-page .nav-inner{padding-right:370px}
-      body.admin-body .admin-header-bar{padding-right:370px}
-    }
-    @media (min-width:641px) and (max-width:900px){
-      body.catalog-page .nav-inner{padding-right:250px}
-      body.admin-body .admin-header-bar{padding-right:250px}
+      .distrijam-version-pill{left:14px;bottom:72px}
     }
     @media print{.distrijam-version-pill{display:none}}
   `;
@@ -440,21 +440,44 @@ function initVersionSwitcher() {
     pill.id = 'distrijam-version-pill';
     pill.setAttribute('aria-label', 'Selector de versión del sitio');
     pill.innerHTML = `
-      <span class="dvp-label">Versión</span>
-      ${Object.entries(DISTRIJAM_VERSIONS).map(([key, cfg]) => `
-        <button type="button" class="dvp-btn" data-ver="${key}" title="${cfg.title}"
-                style="--dvp-accent:${cfg.accent}">
-          ${cfg.short} <span class="dvp-name">${cfg.name}</span>
-        </button>
-      `).join('')}
+      <button type="button" class="dvp-toggle" aria-haspopup="true" aria-expanded="false"
+              aria-controls="dvp-menu" title="Cambiar versión del sitio"></button>
+      <div class="dvp-menu" id="dvp-menu" role="menu">
+        ${Object.entries(DISTRIJAM_VERSIONS).map(([key, cfg]) => `
+          <button type="button" class="dvp-btn" role="menuitem" data-ver="${key}" title="${cfg.title}"
+                  style="--dvp-accent:${cfg.accent}">
+            <span class="dvp-short">${cfg.short}</span> ${cfg.name}
+          </button>
+        `).join('')}
+      </div>
     `;
     document.body.appendChild(pill);
+
+    const toggle = pill.querySelector('.dvp-toggle');
+    const abrir = (si) => {
+      pill.classList.toggle('open', si);
+      toggle.setAttribute('aria-expanded', String(si));
+    };
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      abrir(!pill.classList.contains('open'));
+    });
+    document.addEventListener('click', (e) => {
+      if (!pill.contains(e.target)) abrir(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && pill.classList.contains('open')) {
+        abrir(false);
+        toggle.focus();
+      }
+    });
 
     pill.querySelectorAll('.dvp-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const ver = btn.dataset.ver;
         const cfg = DISTRIJAM_VERSIONS[ver];
         localStorage.setItem('distrijam_version', ver);
+        abrir(false);
 
         // En una portada se navega a la portada de esa versión; en páginas
         // compartidas (catálogo, producto, admin) sólo se cambia el tema.
