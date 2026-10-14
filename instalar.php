@@ -9,6 +9,9 @@
  * (se leería en el repositorio) ni con un simple botón (un bot ya envió el
  * formulario una vez). Por eso la llave es el tiempo: sólo funciona durante
  * los primeros minutos tras publicarse, y el despliegue renueva la ventana.
+ *
+ * Para cambiar la contraseña: editar este archivo (alcanza con esta línea)
+ * y desplegar; la ventana se reabre. Último cambio: 2026-10-14.
  */
 
 const CARPETA_DATOS = '/datos_distrijam';
