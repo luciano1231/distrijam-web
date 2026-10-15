@@ -50,9 +50,14 @@ function showToast(message, type = 'info', duration = 3000) {
     document.body.appendChild(container);
   }
   const toast = document.createElement('div');
-  const icons = { success: '✓', error: '✕', info: '🔩' };
+  const ico = d => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+  const icons = {
+    success: ico('<path d="M20 6 9 17l-5-5"/>'),
+    error: ico('<path d="M18 6 6 18"/><path d="m6 6 12 12"/>'),
+    info: ico('<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>')
+  };
   toast.className = `toast ${type}`;
-  toast.innerHTML = `<span>${icons[type] || '•'}</span> ${message}`;
+  toast.innerHTML = `<span class="toast-icon">${icons[type] || icons.info}</span> ${message}`;
   container.appendChild(toast);
   setTimeout(() => toast.remove(), duration);
 }

@@ -132,7 +132,7 @@ function renderProduct(p) {
   
   // Set fallback image if broken
   document.getElementById('prod-image').onerror = function() {
-    this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23f5f5f5"/><text x="50%" y="50%" fill="%23ccc" font-size="60" text-anchor="middle" dominant-baseline="middle">🔩</text></svg>';
+    this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23f5f5f5"/><g fill="none" stroke="%23ccc" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(144 144) scale(4.66667)"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></g></svg>';
   };
 
   const catMap = {
@@ -194,17 +194,38 @@ function renderProduct(p) {
   const selectEl = document.getElementById('prod-variant-select');
   const presEl = document.getElementById('prod-presentacion');
   
-  if (p.variants && p.variants.length > 0) {
-    selectEl.innerHTML = p.variants.map(v => 
-      `<option value="${v.id}">${v.medida}</option>`
+  // Variantes con la misma medida (ej. 10 X 1.1/2 en 100, 300 y 4.000 U.)
+  // se muestran una sola vez; la cantidad por paquete se elige aparte.
+  const grupos = new Map();
+  (p.variants || []).forEach(v => {
+    const clave = (v.medida || '').trim();
+    if (!grupos.has(clave)) grupos.set(clave, []);
+    grupos.get(clave).push(v);
+  });
+  let presSelectEl = null;
+
+  if (grupos.size > 0) {
+    const medidas = [...grupos.keys()];
+    selectEl.innerHTML = medidas.map((m, i) =>
+      `<option value="${i}">${m}</option>`
     ).join('');
-    
-    // Update presentacion text on change
-    selectEl.addEventListener('change', (e) => {
-      const v = p.variants.find(va => va.id === e.target.value);
-      if(v) presEl.innerHTML = `<strong>Presentación:</strong> ${v.presentacion}`;
+
+    // Mostrar las presentaciones de la medida elegida
+    selectEl.addEventListener('change', () => {
+      const vs = grupos.get(medidas[selectEl.value]) || [];
+      if (vs.length > 1) {
+        presEl.innerHTML = `
+          <label for="prod-presentacion-select" class="form-label" style="font-weight: bold;">Presentación:</label>
+          <select id="prod-presentacion-select" class="form-input" style="padding: 12px; font-size: 1rem;">
+            ${vs.map(v => `<option value="${v.id}">${v.presentacion}</option>`).join('')}
+          </select>`;
+        presSelectEl = presEl.querySelector('select');
+      } else {
+        presEl.innerHTML = vs[0] ? `<strong>Presentación:</strong> ${vs[0].presentacion}` : '';
+        presSelectEl = null;
+      }
     });
-    
+
     // Trigger initial change
     selectEl.dispatchEvent(new Event('change'));
   } else {
@@ -213,12 +234,18 @@ function renderProduct(p) {
     selectEl.disabled = true;
   }
 
+  const varianteElegida = () => {
+    if (presSelectEl) return presSelectEl.value;
+    const vs = grupos.get([...grupos.keys()][selectEl.value]);
+    return vs && vs[0] ? vs[0].id : '';
+  };
+
   // Add to cart button
   document.getElementById('btn-add-to-cart').addEventListener('click', (e) => {
     e.preventDefault(); // Ensure it doesn't submit or refresh
     try {
       if (p.variants && p.variants.length > 0) {
-        addToCart(p, selectEl.value);
+        addToCart(p, varianteElegida());
       } else {
         showToast('Este producto no tiene medidas disponibles', 'error');
       }

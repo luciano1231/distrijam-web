@@ -50,7 +50,7 @@ function addToCart(product, variantId) {
         category: product.category,
         qty: 1
       });
-      showToast('✓ Agregado al pedido', 'success');
+      showToast('Agregado al pedido', 'success');
     }
     saveCart();
     renderCart();
@@ -121,17 +121,17 @@ function renderCart() {
   itemsEl.innerHTML = cart.map(item => `
     <div class="cart-item" data-id="${item.variantId}">
       <img class="cart-item-img" src="${item.image}" alt="${item.name}"
-           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2248%22 height=%2248%22><rect width=%2248%22 height=%2248%22 fill=%22%23222%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%23555%22 font-size=%2220%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>🔩</text></svg>'">
+           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2248%22 height=%2248%22><rect width=%2248%22 height=%2248%22 fill=%22%23222%22/><g fill=%22none%22 stroke=%22%23555%22 stroke-width=%221.2%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 transform=%22translate(17.28 17.28) scale(0.56)%22><rect width=%2218%22 height=%2218%22 x=%223%22 y=%223%22 rx=%222%22/><circle cx=%229%22 cy=%229%22 r=%222%22/><path d=%22m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21%22/></g></svg>'">
       <div class="cart-item-info">
         <div class="cart-item-name" title="${item.name}">${item.name}</div>
-        <div class="cart-item-variant">${item.medida}</div>
+        <div class="cart-item-variant">${item.medida}${item.presentacion ? ` · ${item.presentacion}` : ''}</div>
         <div class="cart-item-qty">
           <button class="qty-btn" data-action="dec" data-id="${item.variantId}">−</button>
           <span class="qty-value">${item.qty}</span>
           <button class="qty-btn" data-action="inc" data-id="${item.variantId}">+</button>
         </div>
       </div>
-      <button class="cart-item-remove" data-id="${item.variantId}" title="Quitar">✕</button>
+      <button class="cart-item-remove" data-id="${item.variantId}" title="Quitar" aria-label="Quitar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
     </div>
   `).join('');
 
@@ -168,7 +168,7 @@ function openQuoteModal() {
   
   listEl.innerHTML = cart.map(item => `
     <div class="quote-product-row">
-      <span class="name">${item.name} (${item.medida})</span>
+      <span class="name">${item.name} (${item.medida}${item.presentacion ? ` · ${item.presentacion}` : ''})</span>
       <span class="qty">× ${item.qty}</span>
     </div>
   `).join('');
@@ -298,7 +298,7 @@ function sendWhatsApp() {
   const url = `https://wa.me/${WA_NUMBER}?text=${buildWhatsAppMessage(payload)}`;
   window.open(url, '_blank');
   document.getElementById('quote-modal').classList.remove('open');
-  showToast(`¡Pedido ${payload.r} enviado por WhatsApp! 🎉`, 'success', 5000);
+  showToast(`¡Pedido ${payload.r} enviado por WhatsApp!`, 'success', 5000);
 }
 
 // ── Init Shared Cart UI ────────────────────────────────
