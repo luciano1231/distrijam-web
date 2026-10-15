@@ -237,9 +237,9 @@ if ($accion === 'clientes') {
             if (!is_array($entrante)) {
                 continue;
             }
-            // Se indexa por el CUIT que llega en el pedido, no por el que
-            // escribe el admin: si lo corrige, el cliente tiene que seguir
-            // encontrandose cuando ese mismo comprador vuelva a pedir.
+            // Se indexa por el CUIT, que es único. El panel manda como clave
+            // el CUIT del formulario; si el pedido llegó con uno mal escrito,
+            // el panel corrige el pedido antes de guardar.
             $clave = claveCuit(isset($entrante['clave']) && $entrante['clave'] !== ''
                 ? $entrante['clave']
                 : (isset($entrante['cuit']) ? $entrante['cuit'] : ''));

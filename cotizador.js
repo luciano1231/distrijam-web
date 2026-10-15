@@ -198,9 +198,18 @@ async function cotCargarClientes() {
   }
 }
 
+/* El CUIL es único: busca el cliente guardado con ese número, ya sea por
+   la clave con que se guardó o por el CUIT corregido dentro de sus datos. */
+function cotBuscarCliente(cuit) {
+  const d = soloDigitos(cuit);
+  if (!d) return null;
+  if (cotClientes[d]) return cotClientes[d];
+  return Object.values(cotClientes).find(c => soloDigitos(c.cuit) === d) || null;
+}
+
 /* Completa los datos fiscales con lo guardado para ese CUIT */
 function cotDatosCliente(pedido) {
-  const guardado = cotClientes[soloDigitos(pedido.cliente.cuil)] || {};
+  const guardado = cotBuscarCliente(pedido.cliente.cuil) || {};
   return {
     nombre: guardado.nombre || pedido.cliente.nombre || '',
     codigo: guardado.codigo || '',
@@ -215,17 +224,24 @@ function cotDatosCliente(pedido) {
 
 async function cotGuardarCliente() {
   const datos = {};
-  // La clave es el CUIT con el que llega el pedido; el del formulario puede
-  // venir corregido y cambiaría la identidad del cliente.
-  datos.clave = cotPedidoAbierto ? soloDigitos(cotPedidoAbierto.cliente.cuil) : '';
   CAMPOS_CLIENTE.forEach(({ campo }) => {
     const inp = document.getElementById('cli-' + campo);
     datos[campo] = inp ? inp.value.trim() : '';
   });
 
-  if (soloDigitos(datos.cuit) === '' && datos.clave === '') {
+  // El CUIL es único y manda: el que figura en el formulario es la
+  // identidad del cliente. Si el pedido llegó con otro (mal escrito),
+  // se corrige en el pedido para que quede asociado al cliente correcto.
+  datos.clave = soloDigitos(datos.cuit);
+  if (datos.clave === '') {
     showToast('Hace falta el CUIT para guardar el cliente', 'error');
     return;
+  }
+  const p = cotPedidoAbierto;
+  if (p && soloDigitos(p.cliente.cuil) !== datos.clave) {
+    p.cliente.cuil = datos.cuit;
+    if (datos.nombre) p.cliente.nombre = datos.nombre;
+    cotGuardarAbierto();
   }
 
   try {
@@ -239,7 +255,7 @@ async function cotGuardarCliente() {
       showToast(r.error || 'No se pudo guardar el cliente', 'error');
       return;
     }
-    cotClientes[datos.clave || soloDigitos(datos.cuit)] = datos;
+    cotClientes[datos.clave] = datos;
     showToast('Cliente guardado', 'success');
     cotRenderClientes();
   } catch (e) {
@@ -662,6 +678,18 @@ function cotRenderDetalle() {
   const btnCli = document.getElementById('cot-cli-guardar');
   if (btnCli) btnCli.addEventListener('click', cotGuardarCliente);
 
+  // Al escribir un CUIL que ya tiene un cliente guardado, se traen sus datos
+  const inpCuit = document.getElementById('cli-cuit');
+  if (inpCuit) inpCuit.addEventListener('change', () => {
+    const encontrado = cotBuscarCliente(inpCuit.value);
+    if (!encontrado) return;
+    CAMPOS_CLIENTE.forEach(({ campo }) => {
+      const inp = document.getElementById('cli-' + campo);
+      if (inp && campo !== 'cuit' && encontrado[campo]) inp.value = encontrado[campo];
+    });
+    showToast(`Cliente encontrado: ${encontrado.nombre || inpCuit.value}. Tocá «Guardar cliente» para asignarlo al pedido.`, 'success', 5000);
+  });
+
   // Botón al chat de WhatsApp del cliente. Siempre se muestra; si el
   // teléfono no se puede armar queda desactivado y lo explica al pasar.
   const btnWa = document.getElementById('cot-wa-btn');
@@ -919,7 +947,14 @@ async function cotImprimir() {
   cotGuardarAbierto('cotizado');
   document.body.classList.add('cot-printing');
 
+  // El navegador usa el título de la página como nombre del PDF.
+  const tituloOriginal = document.title;
+  document.title = ['Presupuesto', cli.nombre || p.cliente.nombre, cli.cuit || p.cliente.cuil,
+    emitida.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')]
+    .filter(Boolean).join(' ').replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
+
   const limpiar = () => {
+    document.title = tituloOriginal;
     document.body.classList.remove('cot-printing');
     window.removeEventListener('afterprint', limpiar);
   };
