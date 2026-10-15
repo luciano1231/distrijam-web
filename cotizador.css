@@ -418,7 +418,7 @@
 /* ── Pie: nota y totales ── */
 .pq-pie {
   display: flex; justify-content: space-between; align-items: flex-end;
-  gap: 26px; margin-top: 40px;
+  gap: 26px; margin-top: 110px;
 }
 .pq-pie-izq { font-size: 9.5px; max-width: 58%; }
 .pq-nota {
