@@ -67,9 +67,27 @@ const money = (n) => new Intl.NumberFormat('es-AR', {
   style: 'currency', currency: 'ARS', minimumFractionDigits: 2
 }).format(Number(n) || 0);
 
-const fecha = (ts) => new Date(ts).toLocaleDateString('es-AR', {
-  day: '2-digit', month: '2-digit', year: 'numeric'
-});
+const fechaHora = (ts) => new Date(ts).toLocaleString('es-AR', {
+  day: '2-digit', month: '2-digit', year: 'numeric',
+  hour: '2-digit', minute: '2-digit', hour12: false
+}).replace(',', '');
+
+/* Cada cambio de estado queda anotado con fecha y hora en p.historial.
+   Sólo se anota si el estado cambia de verdad: reimprimir un remito ya
+   cotizado no agrega otra línea. Los pedidos viejos no tienen historial;
+   se muestra lo que haya desde ahora. */
+function cotRegistrarEstado(p, estado) {
+  if (!p || !estado || p.estado === estado) return;
+  p.estado = estado;
+  if (!Array.isArray(p.historial)) p.historial = [];
+  p.historial.push({ estado, ts: Date.now() });
+}
+
+/* Última vez que el pedido pasó a un estado dado, o null */
+function cotCuandoEstado(p, estado) {
+  const h = (p.historial || []).filter(x => x.estado === estado);
+  return h.length ? h[h.length - 1].ts : null;
+}
 
 function escapeHtml(str) {
   return String(str == null ? '' : str).replace(/[&<>"']/g, c => (
@@ -245,11 +263,15 @@ async function cotNumeroPresupuesto(ref) {
 }
 
 /* ── Totales ──────────────────────────────────────── */
+const IVA_PCT = 21; // se aplica sobre el subtotal ya bonificado
+
 function cotTotales(pedido) {
   const subtotal = pedido.items.reduce((s, it) => s + (Number(it.precio) || 0) * (Number(it.qty) || 0), 0);
   const pct = Math.min(Math.max(Number(pedido.descuento) || 0, 0), 100);
   const descuento = subtotal * (pct / 100);
-  return { subtotal, pct, descuento, total: subtotal - descuento };
+  const neto = subtotal - descuento;
+  const iva = neto * IVA_PCT / 100;
+  return { subtotal, pct, descuento, neto, iva, total: neto + iva };
 }
 
 /* ── Lista de precios ─────────────────────────────── */
@@ -421,7 +443,7 @@ function cotRenderClientes() {
               ${!c.cargado ? '<div class="cot-cli-falta">Datos sin completar</div>' : ''}
             </td>
             <td class="cot-cli-cuit">${escapeHtml(c.datos.cuit || '—')}</td>
-            <td>${cotBotonWhatsApp(c.telefono)}</td>
+            <td>${cotBotonWhatsApp(c.telefono || c.datos.telefono)}</td>
             <td>${escapeHtml(c.datos.localidad || '—')}</td>
             <td>${escapeHtml(c.datos.vendedor || '—')}</td>
             <td class="cot-td-num"><strong>${c.pedidos}</strong></td>
@@ -494,9 +516,15 @@ function cotCambiarEstado(ref, estado) {
   const lista = cotLeerPedidos();
   const p = lista.find(x => x.ref === ref);
   if (!p) return;
-  p.estado = estado;
+  cotRegistrarEstado(p, estado);
   cotGuardarPedidos(lista);
-  if (cotPedidoAbierto && cotPedidoAbierto.ref === ref) cotPedidoAbierto.estado = estado;
+  // El remito abierto es otra copia: si no se le pasa el historial, al
+  // guardarlo después pisaría el cambio recién anotado.
+  if (cotPedidoAbierto && cotPedidoAbierto.ref === ref) {
+    cotPedidoAbierto.estado = p.estado;
+    cotPedidoAbierto.historial = p.historial;
+    cotRenderHistorial();
+  }
   cotRenderLista();
   showToast(`${ref}: ${ESTADOS[estado].toLowerCase()}`, 'success');
 }
@@ -546,7 +574,8 @@ function cotRenderLista() {
             <span>CUIL ${escapeHtml(p.cliente.cuil || '—')}</span>
           </div>
           <div class="cot-card-meta">
-            ${fecha(p.fecha)} · ${p.items.length} ítem(s) · ${unidades} unidades
+            Pedido ${fechaHora(p.fecha)} · ${p.items.length} ítem(s) · ${unidades} unidades
+            ${cotCuandoEstado(p, p.estado) ? `<br>${ESTADOS[p.estado]} ${fechaHora(cotCuandoEstado(p, p.estado))}` : ''}
           </div>
         </div>
         <div class="cot-card-side">
@@ -612,7 +641,7 @@ function cotRenderDetalle() {
   cajaCliente.innerHTML = `
     <div class="cot-cli-cab">
       <span class="cot-cli-tit">Datos del cliente</span>
-      <span class="cot-cli-ref">${escapeHtml(p.cliente.telefono || 'sin teléfono')} · ${fecha(p.fecha)}</span>
+      <span class="cot-cli-ref">${escapeHtml(p.cliente.telefono || 'sin teléfono')} · pedido ${fechaHora(p.fecha)}</span>
       <button type="button" class="cot-cli-save" id="cot-cli-guardar">Guardar cliente</button>
     </div>
     <div class="cot-cli-campos">
@@ -669,6 +698,7 @@ function cotRenderDetalle() {
     </tr>
   `).join('');
 
+  cotRenderHistorial();
   document.getElementById('cot-desc-input').value = p.descuento || 0;
   cotRenderTotales(t);
 
@@ -708,9 +738,31 @@ function cotNumeroWhatsApp(telefono) {
   return d.length === 10 ? '549' + d : '';
 }
 
+/* Línea de tiempo del remito: cuándo llegó y cada cambio de estado */
+function cotRenderHistorial() {
+  const cont = document.getElementById('cot-modal-historial');
+  const p = cotPedidoAbierto;
+  if (!cont || !p) return;
+
+  const pasos = [{ etiqueta: 'Pedido recibido', ts: p.fecha }]
+    .concat((p.historial || []).map(h => ({ etiqueta: ESTADOS[h.estado] || h.estado, ts: h.ts, estado: h.estado })));
+
+  cont.innerHTML = `
+    <span class="cot-hist-tit">Historial</span>
+    <ol class="cot-hist">
+      ${pasos.map(x => `
+        <li class="cot-hist-paso${x.estado ? ' cot-hist--' + escapeHtml(x.estado) : ''}">
+          <strong>${escapeHtml(x.etiqueta)}</strong>
+          <time datetime="${new Date(x.ts).toISOString()}">${fechaHora(x.ts)}</time>
+        </li>`).join('')}
+    </ol>
+    ${(p.historial || []).length ? '' : '<span class="cot-hist-nota">Los cambios de estado se anotan a partir de ahora.</span>'}`;
+}
+
 function cotRenderTotales(t) {
   document.getElementById('cot-subtotal').textContent = money(t.subtotal);
   document.getElementById('cot-descuento').textContent = t.descuento > 0 ? '− ' + money(t.descuento) : money(0);
+  document.getElementById('cot-iva').textContent = money(t.iva);
   document.getElementById('cot-total').textContent = money(t.total);
 }
 
@@ -728,7 +780,7 @@ function cotActualizar() {
 function cotGuardarAbierto(estado) {
   const p = cotPedidoAbierto;
   if (!p) return;
-  if (estado) p.estado = estado;
+  if (estado) cotRegistrarEstado(p, estado);
   const lista = cotLeerPedidos();
   const idx = lista.findIndex(x => x.ref === p.ref);
   if (idx >= 0) lista[idx] = p; else lista.push(p);
@@ -770,7 +822,7 @@ async function cotImprimir() {
       <td class="pq-num">${it.qty}</td>
       <td class="pq-uni">Unidad</td>
       <td class="pq-num">${money(it.precio)}</td>
-      <td class="pq-num pq-iva">0,00%</td>
+      <td class="pq-num pq-iva">${IVA_PCT.toLocaleString('es-AR', { minimumFractionDigits: 2 })}%</td>
       <td class="pq-num">0,00</td>
       <td class="pq-num">${money(it.precio * it.qty)}</td>
     </tr>`).join('');
@@ -856,8 +908,8 @@ async function cotImprimir() {
           <tr><td>Bonif.: ${t.pct > 0 ? t.pct.toLocaleString('es-AR') + '%' : ''}</td>
               <td class="pq-num">${money(t.descuento)}</td></tr>
           <tr><td>Recargo:</td><td class="pq-num">0,00</td></tr>
-          <tr class="pq-sep"><td>Subtotal:</td><td class="pq-num">${money(t.total)}</td></tr>
-          <tr><td>IVA:</td><td class="pq-num">0,00</td></tr>
+          <tr class="pq-sep"><td>Subtotal:</td><td class="pq-num">${money(t.neto)}</td></tr>
+          <tr><td>IVA ${IVA_PCT}%:</td><td class="pq-num">${money(t.iva)}</td></tr>
           <tr><td>Percep.:</td><td class="pq-num">0,00</td></tr>
           <tr class="pq-total"><td>TOTAL:</td><td class="pq-num">${money(t.total)}</td></tr>
         </table>

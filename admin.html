@@ -306,6 +306,7 @@
 
       <div class="cot-modal-body">
         <div class="cot-cliente-grid" id="cot-modal-cliente"></div>
+        <div class="cot-historial" id="cot-modal-historial"></div>
 
         <table class="cot-table">
           <thead>
@@ -333,6 +334,10 @@
               </span>
               <strong id="cot-descuento">$ 0,00</strong>
             </div>
+            <div class="cot-res-row">
+              <span>IVA 21%</span>
+              <strong id="cot-iva">$ 0,00</strong>
+            </div>
             <div class="cot-res-row cot-res-total">
               <span>Total</span>
               <strong id="cot-total">$ 0,00</strong>
@@ -342,7 +347,7 @@
       </div>
 
       <div class="cot-modal-foot">
-        <span class="cot-foot-hint">Precios de la columna «Lista 1». El IVA y la percepción quedan en cero hasta definirlos.</span>
+        <span class="cot-foot-hint">Precios de la columna «Lista 1». Se suma IVA 21% al subtotal; la percepción queda en cero.</span>
         <div class="cot-foot-actions">
           <button type="button" class="btn btn-secondary" data-cot-close>Cerrar</button>
           <button type="button" class="btn btn-secondary" id="cot-save">Guardar cambios</button>

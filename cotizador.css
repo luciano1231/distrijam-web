@@ -103,7 +103,30 @@
 .cot-card-cliente { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
 .cot-card-cliente strong { font-size: 0.95rem; color: var(--text); }
 .cot-card-cliente span { font-size: 0.8rem; color: var(--text-muted); }
-.cot-card-meta { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+.cot-card-meta { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5; }
+
+/* Historial del remito: llegada y cada cambio de estado con fecha y hora */
+.cot-historial {
+  display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap;
+  margin: 0 0 18px; padding: 12px 14px;
+  background: var(--bg-card-2); border: 1px solid var(--border);
+  border-radius: var(--radius, 8px);
+}
+.cot-hist-tit {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+  font-weight: 700; color: var(--text-muted);
+}
+.cot-hist { display: flex; flex-wrap: wrap; gap: 6px 0; list-style: none; margin: 0; padding: 0; }
+.cot-hist-paso {
+  display: flex; flex-direction: column; font-size: 0.78rem; color: var(--text-dim);
+  padding: 0 14px; border-left: 2px solid var(--border);
+}
+.cot-hist-paso:first-child { border-left: none; padding-left: 0; }
+.cot-hist-paso strong { color: var(--text); font-size: 0.8rem; }
+.cot-hist-paso time { font-variant-numeric: tabular-nums; }
+.cot-hist--cotizado strong { color: #B45309; }
+.cot-hist--enviado strong { color: #1D4ED8; }
+.cot-hist-nota { font-size: 0.74rem; color: var(--text-muted); font-style: italic; }
 
 .cot-card-side { display: flex; align-items: center; gap: 18px; }
 .cot-card-total {
