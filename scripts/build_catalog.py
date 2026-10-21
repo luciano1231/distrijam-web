@@ -15,6 +15,7 @@ import openpyxl
 import re
 import json
 import os
+import unicodedata
 
 ARCHIVO = "Archivo del proveedor Distrijam.xlsx"
 HOJA = "Productos"
@@ -24,6 +25,7 @@ HOJA = "Productos"
 # todo lo que viene después un lugar.
 COL_CODIGO = 3
 COL_CATEGORIA = 4
+COL_IMAGEN = 5
 COL_PRODUCTO = 6
 COL_MARCA = 7
 COL_MEDIDA = 8
@@ -51,6 +53,80 @@ CATEGORIAS = {
 }
 
 TOTAL_IMAGENES = 32
+
+# Carpetas donde se busca el archivo que figura en la columna "Imagen"
+CARPETAS_IMAGENES = ["imagenes/Fotos Productos", "imagenes"]
+EXTENSIONES = ["", ".jpg", ".jpeg", ".png", ".webp"]
+
+# Mapeos de nombres de Excel con diferencias respecto a los nombres de archivo en disco
+ALIAS_IMAGENES = {
+    'buloncabezaredondacuellocuadrado': 'BULON CABEZA REDONDA CON CUELLO CUADRADO.jpg',
+    'bulongrado88': 'BULON GRADO 8.jpg',
+    'dryfresada4placas': 'FRESADA 4 PLACAS.jpg',
+    'ht2max': 'Hexagonal Tipo 2 Maxx.jpg',
+    'panframing': 'TEL PAN FRAMING.jpg',
+    'tornillotanque': 'TANQUE.jpg',
+    'dryt2agujanegro': 'DRY T2 AGUJA.webp',
+    'dryt3agujanegro': 'DRY T3 AGUJA.webp',
+    'dryt4agujanegro': 'DRY T4 AGUJA.jpg',
+    'dryt2mechanegro': 'DRY T2 MECHA.webp',
+    'dryt3mechazinc': 'DRY T3 MECHA.jpg',
+    'ganchoptejido': 'GANCHO P TEJIDO.webp',
+    'ganchoj': 'GANCHO J.webp',
+    'hexagonaltipo2puntacaladap17': 'Hexagonal Tipo 2 Punta Calada P17_.jpg',
+    'tirafondohexagonal': 'TIRAFONDO.webp',
+    'drywallt1agujanegro': 'DRY T1 AGUJA NEGRA.webp',
+    'fixmaderadorado': 'FIX Madera dorado.jpg',
+    'tuercaautofrenante': 'Tuerca Autofrenante.jpg',
+    'tuercagrado2': 'Tuerca Grado 2.jpg',
+    'tarugosintope': 'Tarugo sin tope.jpg',
+}
+
+def _normalizar_clave(texto):
+    s = unicodedata.normalize('NFKD', str(texto))
+    s = ''.join(c for c in s if not unicodedata.combining(c))
+    return re.sub(r'[^a-zA-Z0-9]', '', s).lower()
+
+_ARCHIVOS_EN_DISCO = None
+
+def _indexar_archivos():
+    global _ARCHIVOS_EN_DISCO
+    if _ARCHIVOS_EN_DISCO is not None:
+        return _ARCHIVOS_EN_DISCO
+    _ARCHIVOS_EN_DISCO = {}
+    for carpeta in CARPETAS_IMAGENES:
+        if os.path.isdir(carpeta):
+            for f in os.listdir(carpeta):
+                ruta = f"{carpeta}/{f}"
+                if os.path.isfile(ruta):
+                    stem, _ = os.path.splitext(f)
+                    _ARCHIVOS_EN_DISCO[f] = ruta
+                    _ARCHIVOS_EN_DISCO[stem] = ruta
+                    clave = _normalizar_clave(stem)
+                    if clave not in _ARCHIVOS_EN_DISCO:
+                        _ARCHIVOS_EN_DISCO[clave] = ruta
+    return _ARCHIVOS_EN_DISCO
+
+def resolver_imagen(nombre):
+    """Devuelve la ruta relativa real del archivo de la columna Imagen, o None si no existe."""
+    if not nombre:
+        return None
+    nombre_str = str(nombre).strip()
+    indice = _indexar_archivos()
+    clave = _normalizar_clave(nombre_str)
+    if clave in ALIAS_IMAGENES:
+        alias_f = ALIAS_IMAGENES[clave]
+        if alias_f in indice:
+            return indice[alias_f]
+    if nombre_str in indice:
+        return indice[nombre_str]
+    for ext in EXTENSIONES:
+        con_ext = f"{nombre_str}{ext}"
+        if con_ext in indice:
+            return indice[con_ext]
+    if clave in indice:
+        return indice[clave]
+    return None
 
 # Filas que el proveedor usa como marca interna y no son productos reales
 NO_PUBLICAR = {"este no va"}
@@ -124,6 +200,7 @@ def run():
                 "features": "",
                 "applications": "",
                 "_variantes": {},
+                "_imagen": "",
             }
 
         p = productos[pid]
@@ -134,6 +211,8 @@ def run():
             if resuelta != "otros":
                 p["category"] = resuelta
 
+        if not p["_imagen"]:
+            p["_imagen"] = texto(hoja.cell(r, COL_IMAGEN).value)
         if not p["description"]:
             p["description"] = texto(hoja.cell(r, COL_DESC_PAGINA).value)
         if not p["features"]:
@@ -179,6 +258,15 @@ def run():
             p["image"] = "imagenes/Imagenes y tornillos para catalogo 900px.jpg"
         else:
             p["image"] = f"imagenes/Imagenes y tornillos para catalogo 900px{n}.jpg"
+
+        # La columna "Imagen" del Excel manda sobre el reparto automático
+        if p["_imagen"]:
+            ruta = resolver_imagen(p["_imagen"])
+            if ruta:
+                p["image"] = ruta
+            else:
+                print(f"  AVISO: no existe el archivo '{p['_imagen']}' ({p['name']}); queda la imagen por defecto")
+        del p["_imagen"]
 
         if not p["description"]:
             p["description"] = f"{p['name']}. Consulte medidas y disponibilidad."
