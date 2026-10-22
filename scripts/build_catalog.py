@@ -80,6 +80,15 @@ ALIAS_IMAGENES = {
     'tuercaautofrenante': 'Tuerca Autofrenante.jpg',
     'tuercagrado2': 'Tuerca Grado 2.jpg',
     'tarugosintope': 'Tarugo sin tope.jpg',
+    'telhelix': 'HELIX.jpg',
+    'hexagonaltipo2maderamecha': 'HT2 MADERA MECHA.jpg',
+    'pitoncontopeabierto': 'PITON ABIERTO CON TOPE.jpg',
+    'pitoncontopecerrado': 'PITON CERRADO CON TOPE.webp',
+    'pitoncontopeescuadra': 'PITON ESCUADRA CON TOPE.webp',
+    'pitonsintopeabierto': 'PITON ABIERTO SIN TOPE.webp',
+    'pitonsintopecerrado': 'PITON CERRADO SIN TOPE.webp',
+    'pitonsintopeescuadra': 'PITON ESCUADRA SIN TOPE.webp',
+    'tuercagrado88': 'TUERCA GRADO 8.webp',
 }
 
 def _normalizar_clave(texto):
