@@ -297,6 +297,55 @@
 
     .about-content {}
 
+    .history {
+      margin-top: 96px;
+      padding-top: 72px;
+      border-top: 1px solid var(--border-light);
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .history-stats {
+      display: grid;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .history-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
+
+    .history-stat strong {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      min-width: 92px;
+    }
+
+    .history-stat span {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .history-text p {
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .history-text p:last-child {
+      margin-bottom: 0;
+    }
+
+
     .about-features {
       margin-top: 32px;
       display: flex;
@@ -529,9 +578,15 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .about-grid {
+      .about-grid,
+      .history {
         grid-template-columns: 1fr;
         gap: 40px;
+      }
+
+      .history {
+        margin-top: 64px;
+        padding-top: 48px;
       }
 
       .contact-strip-inner {
@@ -749,6 +804,24 @@
           <div style="margin-top:32px;">
             <a href="catalogo.html" class="btn btn-primary">Ver catálogo completo →</a>
           </div>
+        </div>
+      </div>
+
+      <!-- HISTORIA -->
+      <div class="history">
+        <div class="reveal">
+          <div class="section-tag">Nuestra Historia</div>
+          <h2 class="section-title" style="text-align:left;">Más de veinte años<br><span>creciendo juntos</span></h2>
+          <div class="history-stats">
+            <div class="history-stat"><strong>2003</strong><span>Inicio de nuestras operaciones</span></div>
+            <div class="history-stat"><strong>+1100</strong><span>Clientes activos en el NEA</span></div>
+            <div class="history-stat"><strong>5</strong><span>Provincias con entrega: Corrientes, Chaco, Formosa, Santa Fe y Misiones</span></div>
+          </div>
+        </div>
+        <div class="history-text reveal">
+          <p>A comienzos de 2003, en un contexto económico y social atravesado por las secuelas de la crisis argentina, supimos encontrar el impulso necesario para dar nuestros primeros pasos. Fue entonces, con el apoyo de proveedores, que encontramos el respaldo fundamental para iniciar nuestras operaciones como distribuidores mayoristas de tornillería y bulonería, pilares de nuestro crecimiento y satisfacción para nuestra organización.</p>
+          <p>Desde los inicios, y con base en valores como el compromiso, la dedicación, la honestidad y la transparencia, construimos una red de más de 1100 clientes activos en el NEA, con logística propia y tercerizada a las provincias de Corrientes, Chaco, Formosa, Santa Fe y Misiones. Ofrecemos productos de primeras marcas, producidos por fabricantes con trayectoria y prestigio, respaldados con un stock significativo y un servicio de entrega rápido y seguro.</p>
+          <p>Hoy, con el lanzamiento de nuestro portal de e-commerce, reafirmamos nuestro compromiso, tanto con nuestros clientes como con nuestro propio equipo, de seguir mejorando día a día para brindar un servicio de excelencia. Cada nuevo cliente representa para nosotros un nuevo vínculo de confianza y la oportunidad de seguir creciendo juntos.</p>
         </div>
       </div>
     </div>
