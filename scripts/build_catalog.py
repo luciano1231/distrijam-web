@@ -137,6 +137,19 @@ def resolver_imagen(nombre):
         return indice[clave]
     return None
 
+# Errores de tipeo en la columna "Producto" de la planilla que partirian un producto en dos
+CORRECCION_NOMBRES = {
+    "TUERCA GRAGO 5 DORADA": "TUERCA GRADO 5 DORADA",
+    "TORILLO CAB. TANQUE C/TUERCA": "TORNILLO CAB. TANQUE C/TUERCA",
+}
+
+# Productos que deben usar una imagen puntual aunque la planilla diga otra
+# (clave: id del producto, valor: nombre de la imagen como en la columna "Imagen")
+IMAGEN_FORZADA = {
+    "tarugo-para-ladrillo-hueco-n-6-con-tope": "Tarugo para ladrillo hueco con tope",
+    "tarugo-para-ladrillo-hueco-n-8-con-tope": "Tarugo para ladrillo hueco con tope",
+}
+
 # Filas que el proveedor usa como marca interna y no son productos reales
 NO_PUBLICAR = {"este no va"}
 
@@ -196,6 +209,7 @@ def run():
         if not nombre or nombre.lower() in NO_PUBLICAR:
             continue
 
+        nombre = CORRECCION_NOMBRES.get(nombre, nombre)
         pid = slugify(nombre)
         if pid not in productos:
             marca = texto(hoja.cell(r, COL_MARCA).value)
@@ -221,7 +235,7 @@ def run():
                 p["category"] = resuelta
 
         if not p["_imagen"]:
-            p["_imagen"] = texto(hoja.cell(r, COL_IMAGEN).value)
+            p["_imagen"] = IMAGEN_FORZADA.get(pid) or texto(hoja.cell(r, COL_IMAGEN).value)
         if not p["description"]:
             p["description"] = texto(hoja.cell(r, COL_DESC_PAGINA).value)
         if not p["features"]:

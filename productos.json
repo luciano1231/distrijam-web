@@ -8923,7 +8923,7 @@
     "description": "TARUGO PARA LADRILLO HUECO Nº 6 CON TOPE. Consulte medidas y disponibilidad.",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo con tope.jpg",
+    "image": "imagenes/Fotos Productos/Tarugo para ladrillo hueco con tope.jpg",
     "variants": [
       {
         "id": "16Nº6C/TLHE",
@@ -8953,7 +8953,7 @@
     "description": "TARUGO PARA LADRILLO HUECO Nº 8 CON TOPE. Consulte medidas y disponibilidad.",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo con tope.jpg",
+    "image": "imagenes/Fotos Productos/Tarugo para ladrillo hueco con tope.jpg",
     "variants": [
       {
         "id": "16Nº8C/TPACK",
@@ -9642,8 +9642,8 @@
     ]
   },
   {
-    "id": "torillo-cab-tanque-c-tuerca",
-    "name": "TORILLO CAB. TANQUE C/TUERCA",
+    "id": "tornillo-cab-tanque-c-tuerca",
+    "name": "TORNILLO CAB. TANQUE C/TUERCA",
     "category": "bulones",
     "brand": "Telé",
     "description": "TORNILLO TANQUE",
@@ -10179,12 +10179,18 @@
     "id": "tuerca-grado-5-dorada",
     "name": "TUERCA GRADO 5 DORADA",
     "category": "tuercas",
-    "brand": "Telé",
+    "brand": "",
     "description": "TUERCA GRADO 5 DORADA. Consulte medidas y disponibilidad.",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/Tuerca Grado 5.jpg",
     "variants": [
+      {
+        "id": "04031",
+        "medida": "5 1\"",
+        "presentacion": "1 U. DOR. USS",
+        "descripcion": "TUER. G5 1 X 1 U. DOR. USS"
+      },
       {
         "id": "04031/2",
         "medida": "5 1/2 X 12H",
@@ -10310,24 +10316,6 @@
         "medida": "8 8 X 1.25",
         "presentacion": "100 U. ZINC. MA",
         "descripcion": "TUER. G8 8 X 1.25 X 100 U. ZINC. MA"
-      }
-    ]
-  },
-  {
-    "id": "tuerca-grago-5-dorada",
-    "name": "TUERCA GRAGO 5 DORADA",
-    "category": "tuercas",
-    "brand": "",
-    "description": "TUERCA GRAGO 5 DORADA. Consulte medidas y disponibilidad.",
-    "features": "Consulte características técnicas de este producto.",
-    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tuerca Grado 5.jpg",
-    "variants": [
-      {
-        "id": "04031",
-        "medida": "5 1\"",
-        "presentacion": "1 U. DOR. USS",
-        "descripcion": "TUER. G5 1 X 1 U. DOR. USS"
       }
     ]
   },
