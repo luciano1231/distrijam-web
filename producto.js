@@ -14,14 +14,12 @@ async function loadProductData() {
   }
 
   try {
-    const response = await fetch('productos.json');
-    if (!response.ok) throw new Error('Network error');
-    const products = await response.json();
+    const [products, categorias] = await Promise.all([distrijamCatalogo(), distrijamCategorias()]);
     
     currentProduct = products.find(p => p.id === productId);
     
     if (currentProduct) {
-      renderProduct(currentProduct);
+      renderProduct(currentProduct, categorias);
     } else {
       showError();
     }
@@ -92,7 +90,7 @@ function showError() {
   document.head.appendChild(robots);
 }
 
-function renderProduct(p) {
+function renderProduct(p, categorias = {}) {
   document.getElementById('product-loading').style.display = 'none';
   document.getElementById('product-container').style.display = 'block';
 
@@ -135,23 +133,11 @@ function renderProduct(p) {
     this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23f5f5f5"/><g fill="none" stroke="%23ccc" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(144 144) scale(4.66667)"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></g></svg>';
   };
 
-  const catMap = {
-    arandelas:       'Arandelas',
-    autoperforantes: 'Autoperforantes',
-    bulones:         'Bulones',
-    clavos:          'Clavos',
-    ganchos:         'Ganchos',
-    pitones:         'Pitones',
-    remaches:        'Remaches',
-    tarugos:         'Tarugos',
-    tirafondos:      'Tirafondos',
-    tuercas:         'Tuercas',
-    varillas:        'Varillas Roscadas',
-  };
+  const nombreCategoria = (categorias[p.category] && categorias[p.category].label) || p.category;
   
-  document.getElementById('prod-category').textContent = catMap[p.category] || p.category;
+  document.getElementById('prod-category').textContent = nombreCategoria;
   document.getElementById('prod-title').textContent = p.name;
-  actualizarSeoProducto(p, catMap[p.category] || p.category);
+  actualizarSeoProducto(p, nombreCategoria);
   document.getElementById('prod-desc').textContent = p.description;
   
   // Set lower tabs content
@@ -179,8 +165,8 @@ function renderProduct(p) {
             <tbody>
               ${p.variants.map(v => `
                 <tr style="border-bottom:1px solid var(--border-light);">
-                  <td style="padding:12px 8px; color:var(--text-dim);">${v.medida} <span style="font-size:0.8rem; color:var(--text-muted); margin-left:6px;">(${v.id})</span></td>
-                  <td style="padding:12px 8px; color:var(--text-dim);">${v.presentacion}</td>
+                  <td style="padding:12px 8px; color:var(--text-dim);">${distrijamEsc(v.medida)} <span style="font-size:0.8rem; color:var(--text-muted); margin-left:6px;">(${distrijamEsc(v.id)})</span></td>
+                  <td style="padding:12px 8px; color:var(--text-dim);">${distrijamEsc(v.presentacion)}</td>
                 </tr>
               `).join('')}
             </tbody>
@@ -207,7 +193,7 @@ function renderProduct(p) {
   if (grupos.size > 0) {
     const medidas = [...grupos.keys()];
     selectEl.innerHTML = medidas.map((m, i) =>
-      `<option value="${i}">${m}</option>`
+      `<option value="${i}">${distrijamEsc(m)}</option>`
     ).join('');
 
     // Mostrar las presentaciones de la medida elegida
@@ -217,11 +203,11 @@ function renderProduct(p) {
         presEl.innerHTML = `
           <label for="prod-presentacion-select" class="form-label" style="font-weight: bold;">Presentación:</label>
           <select id="prod-presentacion-select" class="form-input" style="padding: 12px; font-size: 1rem;">
-            ${vs.map(v => `<option value="${v.id}">${v.presentacion}</option>`).join('')}
+            ${vs.map(v => `<option value="${distrijamEsc(v.id)}">${distrijamEsc(v.presentacion)}</option>`).join('')}
           </select>`;
         presSelectEl = presEl.querySelector('select');
       } else {
-        presEl.innerHTML = vs[0] ? `<strong>Presentación:</strong> ${vs[0].presentacion}` : '';
+        presEl.innerHTML = vs[0] ? `<strong>Presentación:</strong> ${distrijamEsc(vs[0].presentacion)}` : '';
         presSelectEl = null;
       }
     });

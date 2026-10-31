@@ -110,95 +110,127 @@ document.querySelectorAll('.nav-link[data-page]').forEach(link => {
   if (link.dataset.page === currentPage) link.classList.add('active');
 });
 
+// ── Catálogo compartido ───────────────────────────────
+// El catálogo es productos.json (lo genera la planilla del proveedor) más lo
+// que se carga desde el panel, que el servidor entrega en api.php?a=catalogo:
+// productos propios, cambios sobre los del proveedor y categorías nuevas.
+// Todas las páginas lo leen por acá para ver lo mismo.
+const DISTRIJAM_CATEGORIAS = {
+  arandelas:         'Arandelas',
+  autoperforantes:   'Autoperforantes',
+  bulones:           'Bulones',
+  ganchos:           'Ganchos',
+  pitones:           'Pitones',
+  'remaches-clavos': 'Remaches y Clavos',
+  tarugos:           'Tarugos',
+  tirafondos:        'Tirafondos',
+  tuercas:           'Tuercas',
+  varillas:          'Varillas Roscadas',
+};
+
+function distrijamEsc(str) {
+  return String(str == null ? '' : str).replace(/[&<>"']/g, c => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+}
+
+let _distrijamCrudo = null;
+
+// { base: productos.json, extra: { productos, cambios, categorias } }
+function distrijamCatalogoCrudo(recargar = false) {
+  if (!_distrijamCrudo || recargar) {
+    _distrijamCrudo = Promise.all([
+      fetch('productos.json').then(r => {
+        if (!r.ok) throw new Error('No se pudo cargar productos.json');
+        return r.json();
+      }),
+      // Sin servidor (vista previa local) el catálogo sigue andando con lo base
+      fetch('api.php?a=catalogo', { cache: 'no-store' })
+        .then(r => (r.ok ? r.json() : null))
+        .catch(() => null),
+    ]).then(([base, extra]) => ({
+      base: Array.isArray(base) ? base : [],
+      extra: {
+        productos: Array.isArray(extra && extra.productos) ? extra.productos : [],
+        cambios: (extra && extra.cambios && typeof extra.cambios === 'object') ? extra.cambios : {},
+        categorias: Array.isArray(extra && extra.categorias) ? extra.categorias : [],
+      },
+    }));
+    _distrijamCrudo.catch(() => { _distrijamCrudo = null; });
+  }
+  return _distrijamCrudo;
+}
+
+// Un producto del proveedor con los cambios hechos desde el panel
+function distrijamAplicarCambio(p, c) {
+  if (!c) return p;
+  const imagenes = Array.isArray(c.images) && c.images.length ? c.images : null;
+  return {
+    ...p,
+    name: c.name || p.name,
+    category: c.category || p.category,
+    description: c.description || p.description,
+    image: imagenes ? imagenes[0] : p.image,
+    images: imagenes || p.images,
+  };
+}
+
+function distrijamCombinar({ base, extra }, { incluirOcultos = false } = {}) {
+  const lista = [];
+  base.forEach(p => {
+    const c = extra.cambios[p.id];
+    if (c && c.oculto && !incluirOcultos) return;
+    lista.push(distrijamAplicarCambio(p, c));
+  });
+  extra.productos.forEach(p => lista.push(p));
+  return lista.sort((a, b) => a.name.localeCompare(b.name, 'es'));
+}
+
+// Productos visibles en el sitio
+async function distrijamCatalogo(opciones) {
+  return distrijamCombinar(await distrijamCatalogoCrudo(), opciones);
+}
+
+// { id: { label, image? } } con las categorías base y las creadas en el panel
+async function distrijamCategorias() {
+  const { extra } = await distrijamCatalogoCrudo();
+  const todas = {};
+  Object.entries(DISTRIJAM_CATEGORIAS).forEach(([id, label]) => { todas[id] = { label }; });
+  extra.categorias.forEach(c => {
+    if (!todas[c.id]) todas[c.id] = { label: c.label, image: c.image };
+  });
+  return todas;
+}
+
 // ── Dynamic Dropdown Menu for Products ──────────────────
 async function initProductDropdown() {
   const dropdownContainer = document.getElementById('dropdown-productos');
   if (!dropdownContainer) return;
 
   try {
-    const response = await fetch('productos.json');
-    if (!response.ok) throw new Error('No se pudo cargar productos.json');
-    const products = await response.json();
+    const [products, categorias] = await Promise.all([distrijamCatalogo(), distrijamCategorias()]);
 
-    // Group products by category
-    const categoriesMap = {
-      arandelas:       { label: 'Arandelas', products: [] },
-      autoperforantes: { label: 'Autoperforantes', products: [] },
-      bulones:         { label: 'Bulones', products: [] },
-      ganchos:         { label: 'Ganchos', products: [] },
-      pitones:         { label: 'Pitones', products: [] },
-      'remaches-clavos': { label: 'Remaches y Clavos', products: [] },
-      tarugos:         { label: 'Tarugos', products: [] },
-      tirafondos:      { label: 'Tirafondos', products: [] },
-      tuercas:         { label: 'Tuercas', products: [] },
-      varillas:        { label: 'Varillas Roscadas', products: [] }
-    };
-
-    // Load custom categories from localStorage
-    try {
-      const customCats = JSON.parse(localStorage.getItem('distrijam_categories') || '[]');
-      customCats.forEach(c => {
-        if (!categoriesMap[c.id]) {
-          categoriesMap[c.id] = { label: c.label, products: [] };
-        }
-      });
-    } catch (e) {}
-
-    // Load custom products from localStorage
-    let allProducts = [...products];
-    try {
-      const customProds = JSON.parse(localStorage.getItem('distrijam_products') || '[]');
-      allProducts = [...customProds, ...allProducts];
-    } catch (e) {}
-
-    allProducts.forEach(p => {
-      if (categoriesMap[p.category]) {
-        categoriesMap[p.category].products.push(p);
-      }
+    const porCategoria = {};
+    products.forEach(p => {
+      if (categorias[p.category]) (porCategoria[p.category] = porCategoria[p.category] || []).push(p);
     });
 
-    // Generate HTML for categories and submenus
-    dropdownContainer.innerHTML = Object.entries(categoriesMap)
-      .map(([catId, catData]) => {
-        if (catData.products.length === 0) return '';
-        
-        // Sort products alphabetically
-        catData.products.sort((a, b) => a.name.localeCompare(b.name));
-
-        const hasSubmenu = catData.products.length > 0;
-        const linkClass = hasSubmenu ? 'dropdown-link' : 'dropdown-link no-submenu';
-        const submenuHtml = hasSubmenu
-          ? `<ul class="submenu">
-              ${catData.products.map(p => `
-                <li><a href="producto.html?id=${p.id}" class="submenu-link">${p.name}</a></li>
-              `).join('')}
-             </ul>`
-          : '';
-
-        return `
+    dropdownContainer.innerHTML = Object.entries(categorias)
+      .filter(([catId]) => porCategoria[catId])
+      .map(([catId, cat]) => `
           <li class="dropdown-item">
-            <a href="catalogo.html?cat=${catId}" class="${linkClass}">${catData.label}</a>
-            ${submenuHtml}
+            <a href="catalogo.html?cat=${encodeURIComponent(catId)}" class="dropdown-link">${distrijamEsc(cat.label)}</a>
+            <ul class="submenu">
+              ${porCategoria[catId].map(p => `
+                <li><a href="producto.html?id=${encodeURIComponent(p.id)}" class="submenu-link">${distrijamEsc(p.name)}</a></li>
+              `).join('')}
+            </ul>
           </li>
-        `;
-      }).join('');
+        `).join('');
 
   } catch (error) {
     console.error('Error al generar el dropdown de productos:', error);
-    // Fallback static list of categories if fetch fails
-    const fallbackCategories = {
-      arandelas: 'Arandelas',
-      autoperforantes: 'Autoperforantes',
-      bulones: 'Bulones',
-      ganchos: 'Ganchos',
-      pitones: 'Pitones',
-      'remaches-clavos': 'Remaches y Clavos',
-      tarugos: 'Tarugos',
-      tirafondos: 'Tirafondos',
-      tuercas: 'Tuercas',
-      varillas: 'Varillas Roscadas'
-    };
-    dropdownContainer.innerHTML = Object.entries(fallbackCategories)
+    dropdownContainer.innerHTML = Object.entries(DISTRIJAM_CATEGORIAS)
       .map(([catId, label]) => `
         <li class="dropdown-item">
           <a href="catalogo.html?cat=${catId}" class="dropdown-link no-submenu">${label}</a>
@@ -216,8 +248,7 @@ async function initHeroSearch() {
 
   let catalog = [];
   try {
-    const res = await fetch('productos.json');
-    if (res.ok) catalog = await res.json();
+    catalog = await distrijamCatalogo();
   } catch (err) {
     console.warn('No se pudo precargar productos para la búsqueda:', err);
   }
@@ -313,6 +344,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ── Universal Version Switcher (V1 a V4) ──────────────
 const DISTRIJAM_VERSIONS = {
+  m1: { short: 'M1', name: 'Portal E-Commerce', home: 'index-m1.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M1: Portal Comercial B2B & Vitrina en Vivo' },
+  m2: { short: 'M2', name: 'Dark Inmersivo', home: 'index-m2.html', themeClass: 'theme-m2', accent: '#E11D48', title: 'Nuevo Modelo M2: Corporativo Inmersivo en Pizarra y Cristal' },
   v1: { short: 'V1', name: 'Clásica',    home: 'index.html',  themeClass: null,       accent: '#C0392B', title: 'Versión 1: Clásica (oscura, roja)' },
   v2: { short: 'V2', name: 'B2B',        home: 'index2.html', themeClass: 'theme-v2', accent: '#1E3A8A', title: 'Versión 2: Corporativa B2B (pizarra y azul)' },
   v3: { short: 'V3', name: 'Industrial', home: 'index3.html', themeClass: 'theme-v3', accent: '#C2700A', title: 'Versión 3: Industrial clara (blanco y ámbar)' },
@@ -435,7 +468,8 @@ function initVersionSwitcher() {
   const homeVersion = versionOfHomePage(pageFile);
 
   // En una portada manda la portada; fuera de ella, la preferencia guardada
-  let activeVer = homeVersion || localStorage.getItem('distrijam_version') || 'v1';
+  const urlVer = new URLSearchParams(window.location.search).get('ver');
+  let activeVer = urlVer || homeVersion || localStorage.getItem('distrijam_version') || 'v1';
   if (!DISTRIJAM_VERSIONS[activeVer]) activeVer = 'v1';
   localStorage.setItem('distrijam_version', activeVer);
 

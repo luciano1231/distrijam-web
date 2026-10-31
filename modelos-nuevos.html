@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vista Previa Local — 2 Modelos Nuevos | Distrijam</title>
+  <link rel="icon" type="image/png" href="Logo/logo-distrijam.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0B0F19;
+      color: #F8FAFC;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .preview-bar {
+      background: #111827;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      z-index: 100;
+    }
+    .preview-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 0.92rem;
+    }
+    .preview-badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38BDF8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .preview-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #1F2937;
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .model-btn {
+      padding: 8px 16px;
+      border-radius: 7px;
+      border: none;
+      background: transparent;
+      color: #9CA3AF;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .model-btn:hover { color: #FFF; }
+    .model-btn.active {
+      background: #0284C7;
+      color: #FFF;
+      box-shadow: 0 2px 10px rgba(2,132,199,0.4);
+    }
+    .model-btn[data-model="m2"].active {
+      background: #D92D20;
+      box-shadow: 0 2px 10px rgba(217,45,32,0.4);
+    }
+    .model-btn[data-model="split"].active {
+      background: #059669;
+      box-shadow: 0 2px 10px rgba(5,150,105,0.4);
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .page-switch {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .page-btn {
+      padding: 7px 13px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: #E5E7EB;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .page-btn:hover, .page-btn.active {
+      background: #F8FAFC;
+      color: #0F172A;
+    }
+    .viewport {
+      flex: 1;
+      display: flex;
+      width: 100%;
+      height: calc(100vh - 58px);
+    }
+    .frame-col {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-right: 2px solid #1F2937;
+    }
+    .frame-col:last-child { border-right: none; }
+    .frame-label {
+      background: #1E293B;
+      color: #CBD5E1;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .frame-label a {
+      color: #38BDF8;
+      text-decoration: none;
+    }
+    iframe {
+      width: 100%;
+      flex: 1;
+      border: none;
+      background: #FFF;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-bar">
+    <div class="preview-brand">
+      <span>DISTRIJAM</span>
+      <span class="preview-badge">2 Nuevos Modelos Visuales</span>
+    </div>
+
+    <div class="preview-controls">
+      <button class="model-btn active" data-model="m1">
+        <span class="dot" style="background:#38BDF8;"></span>
+        Modelo 1: Portal E-Commerce B2B (Luminoso + Vitrina en Vivo)
+      </button>
+      <button class="model-btn" data-model="m2">
+        <span class="dot" style="background:#FB7185;"></span>
+        Modelo 2: Corporativo Inmersivo (Pizarra, Cristal & Pósters)
+      </button>
+      <button class="model-btn" data-model="split">
+        <span class="dot" style="background:#34D399;"></span>
+        Comparar Lado a Lado
+      </button>
+    </div>
+
+    <div class="page-switch">
+      <button class="page-btn active" data-view="home">Vista Portada</button>
+      <button class="page-btn" data-view="catalogo">Vista Catálogo</button>
+      <a href="index-m1.html" id="open-direct" target="_blank" class="page-btn" style="border-color:#38BDF8; color:#38BDF8;">
+        Abrir Pantalla Completa ↗
+      </a>
+    </div>
+  </div>
+
+  <div class="viewport" id="viewport">
+    <div class="frame-col" id="col-1">
+      <div class="frame-label" id="label-1" style="display:none;">
+        <span>MODELO 1 · Blueprint CAD & Ingeniería Mecánica</span>
+        <a href="index-m1.html" target="_blank">Abrir en pestaña nueva ↗</a>
+      </div>
+      <iframe id="frame-1" src="index-m1.html" title="Vista Previa Modelo 1"></iframe>
+    </div>
+    <div class="frame-col" id="col-2" style="display:none;">
+      <div class="frame-label" id="label-2">
+        <span>MODELO 2 · Editorial Arquitectónico & Bento</span>
+        <a href="index-m2.html" target="_blank">Abrir en pestaña nueva ↗</a>
+      </div>
+      <iframe id="frame-2" src="index-m2.html" title="Vista Previa Modelo 2"></iframe>
+    </div>
+  </div>
+
+  <script>
+    let currentModel = 'm1';
+    let currentView = 'home';
+
+    const col1 = document.getElementById('col-1');
+    const col2 = document.getElementById('col-2');
+    const label1 = document.getElementById('label-1');
+    const frame1 = document.getElementById('frame-1');
+    const frame2 = document.getElementById('frame-2');
+    const openDirect = document.getElementById('open-direct');
+
+    function updateFrames() {
+      if (currentModel === 'split') {
+        col2.style.display = 'flex';
+        label1.style.display = 'flex';
+        if (currentView === 'home') {
+          frame1.src = 'index-m1.html';
+          frame2.src = 'index-m2.html';
+        } else {
+          localStorage.setItem('distrijam_version', 'm1');
+          frame1.src = 'catalogo.html?ver=m1';
+          frame2.src = 'catalogo.html?ver=m2';
+        }
+        openDirect.href = 'index-m1.html';
+      } else {
+        col2.style.display = 'none';
+        label1.style.display = 'none';
+        localStorage.setItem('distrijam_version', currentModel);
+        const homeUrl = currentModel === 'm1' ? 'index-m1.html' : 'index-m2.html';
+        const targetUrl = currentView === 'home' ? homeUrl : 'catalogo.html';
+        frame1.src = targetUrl;
+        openDirect.href = targetUrl;
+      }
+    }
+
+    document.querySelectorAll('.model-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentModel = btn.dataset.model;
+        updateFrames();
+      });
+    });
+
+    document.querySelectorAll('.page-btn[data-view]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.page-btn[data-view]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentView = btn.dataset.view;
+        updateFrames();
+      });
+    });
+  </script>
+</body>
+</html>
+

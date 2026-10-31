@@ -114,9 +114,8 @@ function cotGuardarPedidos(lista) {
 /* ── Catálogo: resuelve id de variante -> datos del producto ── */
 async function cotCargarCatalogo() {
   try {
-    const res = await fetch('productos.json');
-    if (!res.ok) return;
-    const productos = await res.json();
+    // Con los ocultos: un pedido viejo puede traer un producto que ya no se muestra
+    const productos = await distrijamCatalogo({ incluirOcultos: true });
     productos.forEach(p => {
       (p.variants || []).forEach(v => {
         cotCatalogo[v.id] = {

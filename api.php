@@ -11,14 +11,13 @@
  * La contraseña se guarda hasheada, nunca en el repositorio (que es público).
  */
 
-session_start();
-
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 header('X-Content-Type-Options: nosniff');
 
 const CARPETA_DATOS = '/datos_distrijam';
 const MAX_PRECIOS = 3145728; // 3 MB
+const MAX_IMAGEN = 2097152;  // 2 MB por foto
 
 function carpeta() {
     return dirname(__DIR__) . CARPETA_DATOS;
@@ -29,6 +28,69 @@ function salir($codigo, $datos) {
     echo json_encode($datos, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
+
+$accion = isset($_GET['a']) ? (string) $_GET['a'] : '';
+$metodo = $_SERVER['REQUEST_METHOD'];
+
+/* ─────────────── Catálogo: lectura pública ─────────────── */
+/* Lo que se carga desde el panel (productos propios, cambios sobre los del
+   proveedor y categorías nuevas) vive fuera de public_html, igual que los
+   precios, pero es público: lo pide cada página del catálogo. No hace falta
+   sesión para leerlo, sí para escribirlo (más abajo). */
+
+function archivoCatalogo() {
+    return carpeta() . '/catalogo.json';
+}
+
+function carpetaImagenes() {
+    return carpeta() . '/imagenes_catalogo';
+}
+
+function leerCatalogo() {
+    $vacio = ['productos' => [], 'cambios' => [], 'categorias' => []];
+    if (!is_file(archivoCatalogo())) {
+        return $vacio;
+    }
+    $datos = json_decode((string) file_get_contents(archivoCatalogo()), true);
+    if (!is_array($datos)) {
+        return $vacio;
+    }
+    foreach ($vacio as $clave => $valor) {
+        if (!isset($datos[$clave]) || !is_array($datos[$clave])) {
+            $datos[$clave] = $valor;
+        }
+    }
+    return $datos;
+}
+
+function catalogoParaEnviar($cat) {
+    return [
+        'productos' => array_values($cat['productos']),
+        'cambios' => (object) $cat['cambios'],
+        'categorias' => array_values($cat['categorias']),
+    ];
+}
+
+if ($accion === 'catalogo' && $metodo === 'GET') {
+    salir(200, ['ok' => true] + catalogoParaEnviar(leerCatalogo()));
+}
+
+/* Fotos subidas desde el panel */
+if ($accion === 'img' && $metodo === 'GET') {
+    $nombre = isset($_GET['f']) ? (string) $_GET['f'] : '';
+    $tipos = ['jpg' => 'image/jpeg', 'png' => 'image/png', 'webp' => 'image/webp', 'gif' => 'image/gif'];
+    if (!preg_match('/^[a-f0-9]{16}\.(jpg|png|webp|gif)$/', $nombre, $m)
+        || !is_file(carpetaImagenes() . '/' . $nombre)) {
+        salir(404, ['error' => 'Imagen inexistente.']);
+    }
+    // El nombre es aleatorio y nunca se reutiliza: se puede cachear para siempre
+    header('Content-Type: ' . $tipos[$m[1]]);
+    header('Cache-Control: public, max-age=31536000, immutable');
+    readfile(carpetaImagenes() . '/' . $nombre);
+    exit;
+}
+
+session_start();
 
 function hashGuardado() {
     $archivo = carpeta() . '/clave_admin.txt';
@@ -48,9 +110,6 @@ function exigirSesion() {
         salir(401, ['error' => 'Sesión no iniciada.']);
     }
 }
-
-$accion = isset($_GET['a']) ? (string) $_GET['a'] : '';
-$metodo = $_SERVER['REQUEST_METHOD'];
 
 /* ─────────────── Estado de la sesión ─────────────── */
 if ($accion === 'estado') {
@@ -301,6 +360,443 @@ if ($accion === 'numero' && $metodo === 'POST') {
     }
 
     salir(200, ['ok' => true, 'numero' => $numero, 'nuevo' => true]);
+}
+
+/* ─────────────── Catálogo: ABM (con sesión) ─────────────── */
+
+const CATEGORIAS_BASE = [
+    'arandelas' => 'Arandelas',
+    'autoperforantes' => 'Autoperforantes',
+    'bulones' => 'Bulones',
+    'ganchos' => 'Ganchos',
+    'pitones' => 'Pitones',
+    'remaches-clavos' => 'Remaches y Clavos',
+    'tarugos' => 'Tarugos',
+    'tirafondos' => 'Tirafondos',
+    'tuercas' => 'Tuercas',
+    'varillas' => 'Varillas Roscadas',
+];
+
+function slug($texto) {
+    $t = mb_strtolower((string) $texto, 'UTF-8');
+    $t = strtr($t, [
+        'á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u', 'ü' => 'u', 'ñ' => 'n',
+        'à' => 'a', 'è' => 'e', 'ì' => 'i', 'ò' => 'o', 'ù' => 'u', 'â' => 'a', 'ê' => 'e',
+        'î' => 'i', 'ô' => 'o', 'û' => 'u', 'ç' => 'c',
+    ]);
+    return trim(preg_replace('/[^a-z0-9]+/', '-', $t), '-');
+}
+
+// Texto de un campo: sin caracteres de control y con largo máximo
+function campo($datos, $clave, $max) {
+    $valor = isset($datos[$clave]) && is_scalar($datos[$clave]) ? (string) $datos[$clave] : '';
+    $valor = preg_replace('/[\x00-\x09\x0B-\x1F\x7F]/u', '', $valor);
+    return mb_substr(trim((string) $valor), 0, $max);
+}
+
+// Las escrituras del catálogo sólo aceptan JSON: un formulario de otro sitio
+// no puede mandar ese tipo de contenido sin permiso del navegador.
+function cuerpoCatalogo() {
+    exigirSesion();
+    $tipo = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : '';
+    if (stripos($tipo, 'application/json') === false) {
+        salir(415, ['error' => 'Formato inválido.']);
+    }
+    $cuerpo = json_decode((string) file_get_contents('php://input'), true);
+    if (!is_array($cuerpo)) {
+        salir(400, ['error' => 'Formato inválido.']);
+    }
+    return $cuerpo;
+}
+
+// Un solo cambio a la vez: el bloqueo se libera solo al terminar el pedido
+function bloquearCatalogo() {
+    $dir = carpeta();
+    if (!is_dir($dir) && !@mkdir($dir, 0750, true)) {
+        salir(500, ['error' => 'No se pudo preparar el almacenamiento.']);
+    }
+    $candado = fopen($dir . '/catalogo.lock', 'c');
+    if ($candado === false || !flock($candado, LOCK_EX)) {
+        salir(500, ['error' => 'No se pudo bloquear el catálogo.']);
+    }
+    return $candado;
+}
+
+function guardarCatalogo($cat) {
+    $temporal = archivoCatalogo() . '.tmp';
+    $json = json_encode(catalogoParaEnviar($cat), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    if (@file_put_contents($temporal, $json) === false || !@rename($temporal, archivoCatalogo())) {
+        salir(500, ['error' => 'No se pudo guardar el catálogo.']);
+    }
+    @chmod(archivoCatalogo(), 0640);
+    limpiarImagenes($cat);
+}
+
+function productosBase() {
+    $datos = json_decode((string) @file_get_contents(__DIR__ . '/productos.json'), true);
+    return is_array($datos) ? $datos : [];
+}
+
+function buscarBase($id) {
+    foreach (productosBase() as $p) {
+        if (isset($p['id']) && $p['id'] === $id) {
+            return $p;
+        }
+    }
+    return null;
+}
+
+function categoriaExiste($cat, $id) {
+    if (isset(CATEGORIAS_BASE[$id])) {
+        return true;
+    }
+    foreach ($cat['categorias'] as $c) {
+        if ($c['id'] === $id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function indiceProducto($cat, $id) {
+    foreach ($cat['productos'] as $i => $p) {
+        if ($p['id'] === $id) {
+            return $i;
+        }
+    }
+    return -1;
+}
+
+// Sólo se aceptan fotos subidas por el panel o archivos del propio sitio
+function validarImagenes($lista) {
+    if (!is_array($lista)) {
+        return [];
+    }
+    if (count($lista) > 4) {
+        salir(400, ['error' => 'Hasta 4 imágenes por producto.']);
+    }
+    $limpias = [];
+    foreach ($lista as $url) {
+        $url = is_string($url) ? trim($url) : '';
+        if (preg_match('/^api\.php\?a=img&f=([a-f0-9]{16}\.(jpg|png|webp|gif))$/', $url, $m)
+            && is_file(carpetaImagenes() . '/' . $m[1])) {
+            $limpias[] = $url;
+        } elseif (preg_match('~^imagenes/[^?#<>"\']+$~', $url) && strpos($url, '..') === false) {
+            $limpias[] = $url;
+        } else {
+            salir(400, ['error' => 'Una de las imágenes no es válida.']);
+        }
+    }
+    return $limpias;
+}
+
+// Las fotos que ya no usa nadie se borran. Se respeta la última hora para no
+// llevarse una recién subida de un formulario que todavía no se guardó.
+function limpiarImagenes($cat) {
+    $usadas = [];
+    $anotar = function ($url) use (&$usadas) {
+        if (is_string($url) && preg_match('/f=([a-f0-9]{16}\.\w+)$/', $url, $m)) {
+            $usadas[$m[1]] = true;
+        }
+    };
+    foreach ($cat['productos'] as $p) {
+        foreach ((array) ($p['images'] ?? []) as $u) { $anotar($u); }
+    }
+    foreach ($cat['cambios'] as $c) {
+        foreach ((array) ($c['images'] ?? []) as $u) { $anotar($u); }
+    }
+    foreach ($cat['categorias'] as $c) {
+        $anotar($c['image'] ?? '');
+    }
+    foreach (glob(carpetaImagenes() . '/*') ?: [] as $ruta) {
+        if (!isset($usadas[basename($ruta)]) && filemtime($ruta) < time() - 3600) {
+            @unlink($ruta);
+        }
+    }
+}
+
+/* Subir una foto. Se manda de a una para no chocar con el límite de tamaño
+   de los pedidos del hosting. */
+if ($accion === 'catalogo_imagen' && $metodo === 'POST') {
+    $cuerpo = cuerpoCatalogo();
+    $data = isset($cuerpo['data']) && is_string($cuerpo['data']) ? $cuerpo['data'] : '';
+    if (!preg_match('/^data:image\/[a-z+]+;base64,(.+)$/s', $data, $m)) {
+        salir(400, ['error' => 'La imagen no tiene un formato válido.']);
+    }
+    $bytes = base64_decode($m[1], true);
+    if ($bytes === false || $bytes === '') {
+        salir(400, ['error' => 'La imagen no tiene un formato válido.']);
+    }
+    if (strlen($bytes) > MAX_IMAGEN) {
+        salir(413, ['error' => 'La imagen supera los 2 MB.']);
+    }
+    $info = @getimagesizefromstring($bytes);
+    $extensiones = [IMAGETYPE_JPEG => 'jpg', IMAGETYPE_PNG => 'png', IMAGETYPE_WEBP => 'webp', IMAGETYPE_GIF => 'gif'];
+    if ($info === false || !isset($extensiones[$info[2]])) {
+        salir(400, ['error' => 'El archivo no es una imagen JPG, PNG, WEBP o GIF.']);
+    }
+    $dir = carpetaImagenes();
+    if (!is_dir($dir) && !@mkdir($dir, 0750, true)) {
+        salir(500, ['error' => 'No se pudo preparar el almacenamiento.']);
+    }
+    $nombre = bin2hex(random_bytes(8)) . '.' . $extensiones[$info[2]];
+    if (@file_put_contents($dir . '/' . $nombre, $bytes) === false) {
+        salir(500, ['error' => 'No se pudo guardar la imagen.']);
+    }
+    salir(200, ['ok' => true, 'url' => 'api.php?a=img&f=' . $nombre]);
+}
+
+/* Alta o modificación de un producto propio */
+if ($accion === 'catalogo_producto' && $metodo === 'POST') {
+    $cuerpo = cuerpoCatalogo();
+    bloquearCatalogo();
+    $cat = leerCatalogo();
+    $base = productosBase();
+
+    $nombre = campo($cuerpo, 'name', 120);
+    if ($nombre === '' || slug($nombre) === '') {
+        salir(400, ['error' => 'Ingresá el nombre del producto.']);
+    }
+    $categoria = campo($cuerpo, 'category', 60);
+    if (!categoriaExiste($cat, $categoria)) {
+        salir(400, ['error' => 'Seleccioná una categoría válida.']);
+    }
+    $imagenes = validarImagenes($cuerpo['images'] ?? []);
+    if (count($imagenes) === 0) {
+        salir(400, ['error' => 'Seleccioná al menos una imagen.']);
+    }
+    $entrantes = isset($cuerpo['variants']) && is_array($cuerpo['variants']) ? array_values($cuerpo['variants']) : [];
+    if (count($entrantes) === 0) {
+        salir(400, ['error' => 'Cargá al menos una medida.']);
+    }
+    if (count($entrantes) > 100) {
+        salir(400, ['error' => 'Hasta 100 medidas por producto.']);
+    }
+
+    // Edición: se mantiene el id para no romper enlaces ni pedidos guardados
+    $id = campo($cuerpo, 'id', 140);
+    $indice = -1;
+    if ($id !== '') {
+        $indice = indiceProducto($cat, $id);
+        if ($indice < 0) {
+            salir(404, ['error' => 'El producto ya no existe.']);
+        }
+    } else {
+        $ocupados = [];
+        foreach ($base as $p) { $ocupados[$p['id']] = true; }
+        foreach ($cat['productos'] as $p) { $ocupados[$p['id']] = true; }
+        $id = slug($nombre);
+        for ($n = 2; isset($ocupados[$id]); $n++) {
+            $id = slug($nombre) . '-' . $n;
+        }
+    }
+
+    // Los códigos de medida identifican el precio: no pueden repetirse
+    $codigosUsados = [];
+    foreach ($base as $p) {
+        foreach ($p['variants'] ?? [] as $v) { $codigosUsados[$v['id']] = $p['name']; }
+    }
+    foreach ($cat['productos'] as $p) {
+        if ($p['id'] === $id) { continue; }
+        foreach ($p['variants'] ?? [] as $v) { $codigosUsados[$v['id']] = $p['name']; }
+    }
+
+    $variantes = [];
+    $propios = [];
+    foreach ($entrantes as $i => $v) {
+        $v = is_array($v) ? $v : [];
+        $medida = campo($v, 'medida', 80);
+        $presentacion = campo($v, 'presentacion', 80);
+        $codigo = campo($v, 'codigo', 40);
+        if ($medida === '' || $presentacion === '') {
+            salir(400, ['error' => 'Completá la medida y la presentación de la fila ' . ($i + 1) . '.']);
+        }
+        if ($codigo !== '' && !preg_match('#^[A-Za-z0-9./_ -]+$#', $codigo)) {
+            salir(400, ['error' => "El código \"$codigo\" tiene caracteres no permitidos."]);
+        }
+        if ($codigo === '') {
+            for ($n = $i + 1; ; $n++) {
+                $codigo = $id . '-' . $n;
+                if (!isset($codigosUsados[$codigo]) && !isset($propios[$codigo])) { break; }
+            }
+        }
+        if (isset($propios[$codigo])) {
+            salir(409, ['error' => "El código \"$codigo\" está repetido en este producto."]);
+        }
+        if (isset($codigosUsados[$codigo])) {
+            salir(409, ['error' => "El código \"$codigo\" ya lo usa \"{$codigosUsados[$codigo]}\"."]);
+        }
+        $propios[$codigo] = true;
+        $variantes[] = [
+            'id' => $codigo,
+            'medida' => $medida,
+            'presentacion' => $presentacion,
+            'descripcion' => "$nombre $medida $presentacion",
+        ];
+    }
+
+    $descripcion = campo($cuerpo, 'description', 1500);
+    $producto = [
+        'id' => $id,
+        'name' => $nombre,
+        'category' => $categoria,
+        'brand' => '',
+        'description' => $descripcion !== '' ? $descripcion : "$nombre. Consultá disponibilidad y medidas.",
+        'features' => campo($cuerpo, 'features', 1500),
+        'applications' => campo($cuerpo, 'applications', 1500),
+        'image' => $imagenes[0],
+        'images' => $imagenes,
+        'variants' => $variantes,
+        'creado' => $indice >= 0 ? ($cat['productos'][$indice]['creado'] ?? date('c')) : date('c'),
+        'modificado' => date('c'),
+    ];
+
+    if ($indice >= 0) {
+        $cat['productos'][$indice] = $producto;
+    } else {
+        $cat['productos'][] = $producto;
+    }
+    guardarCatalogo($cat);
+    salir(200, ['ok' => true, 'producto' => $producto, 'nuevo' => $indice < 0]);
+}
+
+/* Baja de un producto propio */
+if ($accion === 'catalogo_producto_borrar' && $metodo === 'POST') {
+    $cuerpo = cuerpoCatalogo();
+    bloquearCatalogo();
+    $cat = leerCatalogo();
+    $indice = indiceProducto($cat, campo($cuerpo, 'id', 140));
+    if ($indice < 0) {
+        salir(404, ['error' => 'El producto ya no existe.']);
+    }
+    array_splice($cat['productos'], $indice, 1);
+    guardarCatalogo($cat);
+    salir(200, ['ok' => true]);
+}
+
+/* Cambios sobre un producto del proveedor: ocultarlo o corregir nombre,
+   categoría, descripción y fotos. Las medidas siguen viniendo de la planilla.
+   Sólo se guarda lo que difiere del original. */
+if ($accion === 'catalogo_base' && $metodo === 'POST') {
+    $cuerpo = cuerpoCatalogo();
+    bloquearCatalogo();
+    $cat = leerCatalogo();
+    $id = campo($cuerpo, 'id', 140);
+    $original = buscarBase($id);
+    if ($original === null) {
+        salir(404, ['error' => 'No es un producto del proveedor.']);
+    }
+    $cambio = isset($cat['cambios'][$id]) ? $cat['cambios'][$id] : [];
+
+    if (array_key_exists('oculto', $cuerpo)) {
+        $cambio['oculto'] = $cuerpo['oculto'] === true;
+    }
+    if (array_key_exists('name', $cuerpo)) {
+        $nombre = campo($cuerpo, 'name', 120);
+        if ($nombre === '') {
+            salir(400, ['error' => 'Ingresá el nombre del producto.']);
+        }
+        $cambio['name'] = $nombre;
+    }
+    if (array_key_exists('category', $cuerpo)) {
+        $categoria = campo($cuerpo, 'category', 60);
+        if (!categoriaExiste($cat, $categoria)) {
+            salir(400, ['error' => 'Seleccioná una categoría válida.']);
+        }
+        $cambio['category'] = $categoria;
+    }
+    if (array_key_exists('description', $cuerpo)) {
+        $cambio['description'] = campo($cuerpo, 'description', 1500);
+    }
+    if (array_key_exists('images', $cuerpo)) {
+        $cambio['images'] = validarImagenes($cuerpo['images']);
+    }
+
+    // Lo que coincide con el original (o quedó vacío) no es un cambio
+    $originalImagenes = !empty($original['images']) ? $original['images'] : [$original['image'] ?? ''];
+    foreach (['name', 'category', 'description'] as $c) {
+        if (isset($cambio[$c]) && ($cambio[$c] === '' || $cambio[$c] === ($original[$c] ?? ''))) {
+            unset($cambio[$c]);
+        }
+    }
+    if (isset($cambio['images']) && (count($cambio['images']) === 0 || $cambio['images'] === $originalImagenes)) {
+        unset($cambio['images']);
+    }
+    if (empty($cambio['oculto'])) {
+        unset($cambio['oculto']);
+    }
+
+    if (count($cambio) === 0) {
+        unset($cat['cambios'][$id]);
+    } else {
+        $cat['cambios'][$id] = $cambio;
+    }
+    guardarCatalogo($cat);
+    salir(200, ['ok' => true, 'cambio' => (object) $cambio]);
+}
+
+/* Alta de categoría */
+if ($accion === 'catalogo_categoria' && $metodo === 'POST') {
+    $cuerpo = cuerpoCatalogo();
+    bloquearCatalogo();
+    $cat = leerCatalogo();
+    $nombre = campo($cuerpo, 'label', 40);
+    $id = slug($nombre);
+    if ($id === '') {
+        salir(400, ['error' => 'El nombre de la categoría tiene que tener letras o números.']);
+    }
+    foreach (CATEGORIAS_BASE as $idBase => $etiqueta) {
+        if ($id === $idBase || $id === slug($etiqueta)) {
+            salir(409, ['error' => "Ya existe la categoría \"$etiqueta\"."]);
+        }
+    }
+    foreach ($cat['categorias'] as $c) {
+        if ($c['id'] === $id) {
+            salir(409, ['error' => "Ya existe la categoría \"{$c['label']}\"."]);
+        }
+    }
+    $imagenes = validarImagenes(isset($cuerpo['image']) ? [$cuerpo['image']] : []);
+    if (count($imagenes) === 0) {
+        salir(400, ['error' => 'Elegí una imagen para la categoría.']);
+    }
+    $categoria = ['id' => $id, 'label' => $nombre, 'image' => $imagenes[0]];
+    $cat['categorias'][] = $categoria;
+    guardarCatalogo($cat);
+    salir(200, ['ok' => true, 'categoria' => $categoria]);
+}
+
+/* Baja de categoría: no se permite si algún producto la usa */
+if ($accion === 'catalogo_categoria_borrar' && $metodo === 'POST') {
+    $cuerpo = cuerpoCatalogo();
+    bloquearCatalogo();
+    $cat = leerCatalogo();
+    $id = campo($cuerpo, 'id', 60);
+    $indice = -1;
+    foreach ($cat['categorias'] as $i => $c) {
+        if ($c['id'] === $id) { $indice = $i; }
+    }
+    if ($indice < 0) {
+        salir(404, ['error' => 'La categoría ya no existe.']);
+    }
+    $enUso = [];
+    foreach ($cat['productos'] as $p) {
+        if ($p['category'] === $id) { $enUso[] = $p['name']; }
+    }
+    foreach ($cat['cambios'] as $idBase => $c) {
+        if (($c['category'] ?? '') === $id) {
+            $b = buscarBase($idBase);
+            $enUso[] = $b ? $b['name'] : $idBase;
+        }
+    }
+    if (count($enUso) > 0) {
+        salir(409, [
+            'error' => 'La categoría tiene ' . count($enUso) . ' producto(s): ' . implode(', ', array_slice($enUso, 0, 3))
+                . (count($enUso) > 3 ? '…' : '') . '. Cambiales la categoría antes de borrarla.',
+        ]);
+    }
+    array_splice($cat['categorias'], $indice, 1);
+    guardarCatalogo($cat);
+    salir(200, ['ok' => true]);
 }
 
 salir(404, ['error' => 'Acción desconocida.']);

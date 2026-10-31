@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://distrijam.com.ar/" />
+  <title>Distrijam — Portal Mayorista de Tuercas y Tornillos | Corrientes</title>
+  <meta name="description"
+    content="Distrijam, distribuidora mayorista de tuercas, tornillos, bulones, arandelas y tarugos en Corrientes, Argentina. Catálogo completo y cotizaciones al instante." />
+  <link rel="icon" type="image/png" href="Logo/logo-distrijam.png" />
+  <link rel="apple-touch-icon" href="Logo/logo-distrijam.png" />
+
+  <link rel="stylesheet" href="styles-m1.css" />
+</head>
+
+<body>
+
+  <!-- ── BARRA SUPERIOR COMERCIAL ── -->
+  <div class="m1-topbar">
+    <div class="m1-container">
+      <div class="m1-topbar-inner">
+        <div class="m1-topbar-left">
+          <span class="m1-topbar-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            Iberá 1740, Corrientes Capital
+          </span>
+          <span class="m1-topbar-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Lun a Vie: 08:00 a 17:00 hs
+          </span>
+          <span class="m1-topbar-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.49 5.49l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+5403794007195">0379 400-7195</a>
+          </span>
+        </div>
+        <div class="m1-topbar-right">
+          <span class="m1-topbar-pill">Envíos a Corrientes, Chaco, Formosa, Misiones y Santa Fe</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HEADER CON BUSCADOR CENTRAL INTEGRADO ── -->
+  <header class="m1-header nav" id="nav">
+    <div class="m1-container">
+      <div class="m1-nav-inner">
+        <a href="index-m1.html" class="m1-logo" aria-label="Distrijam Inicio">
+          <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam Logo" />
+        </a>
+
+        <!-- Buscador E-Commerce en el centro del Header -->
+        <div class="m1-header-search">
+          <form class="m1-search-form" action="catalogo.html" method="GET" role="search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="hero-search-input" name="q" class="m1-search-input"
+              placeholder="Buscar tornillos, bulones, tuercas, tarugos o medidas..." autocomplete="off" />
+            <button type="submit" class="m1-search-btn">Buscar</button>
+            <div class="search-suggestions" id="search-suggestions" role="listbox"></div>
+          </form>
+        </div>
+
+        <nav class="m1-nav-links" aria-label="Navegación principal">
+          <a href="index-m1.html" class="m1-nav-link active">Inicio</a>
+          <div class="nav-item-dropdown">
+            <a href="catalogo.html" class="m1-nav-link" data-page="catalogo.html">
+              Productos <span style="font-size:0.75rem;">▾</span>
+            </a>
+            <ul class="dropdown-menu" id="dropdown-productos"></ul>
+          </div>
+          <a href="#vitrina" class="m1-nav-link">Destacados</a>
+          <a href="#nosotros" class="m1-nav-link">Nosotros</a>
+          <a href="#contacto" class="m1-nav-link">Contacto</a>
+        </nav>
+
+        <div class="m1-nav-actions">
+          <a href="catalogo.html" class="m1-btn m1-btn-primary">
+            Ver Catálogo →
+          </a>
+          <button class="m1-burger" id="nav-hamburger" aria-label="Menú">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="m1-mobile-menu" id="nav-mobile">
+    <a href="index-m1.html" class="m1-mobile-link">Inicio</a>
+    <a href="catalogo.html" class="m1-mobile-link">Catálogo de Productos</a>
+    <a href="#vitrina" class="m1-mobile-link">Productos Destacados</a>
+    <a href="#nosotros" class="m1-mobile-link">Nosotros e Historia</a>
+    <a href="#contacto" class="m1-mobile-link">Contacto</a>
+    <a href="catalogo.html" class="m1-btn m1-btn-primary" style="margin-top:8px;">Ir al Catálogo →</a>
+  </div>
+
+  <main>
+    <!-- ── HERO PANORÁMICO SPLIT ── -->
+    <section class="m1-hero">
+      <div class="m1-container">
+        <div class="m1-hero-banner reveal">
+          <div>
+            <div class="m1-hero-tag">
+              ● Distribuidora Mayorista · Stock Permanente en Corrientes
+            </div>
+
+            <h1 class="m1-hero-title">
+              La solución en <span>tuercas, bulones y tornillos</span> para tu negocio.
+            </h1>
+
+            <p class="m1-hero-desc">
+              Abastecemos a ferreterías, corralones, constructoras y talleres con más de 500 referencias en stock. Armá tu pedido online en segundos y recibí tu cotización al instante por WhatsApp.
+            </p>
+
+            <div class="m1-hero-actions">
+              <a href="catalogo.html" class="m1-btn m1-btn-primary m1-btn-lg">
+                Explorar Catálogo Completo →
+              </a>
+              <a href="https://wa.me/5493794007195" target="_blank" rel="noopener" class="m1-btn m1-btn-wa m1-btn-lg">
+                Contactar por WhatsApp
+              </a>
+            </div>
+
+            <div class="m1-hero-trust">
+              <div>
+                <div class="m1-trust-val">+500<span>.</span></div>
+                <div class="m1-trust-lbl">Productos disponibles</div>
+              </div>
+              <div>
+                <div class="m1-trust-val">+1100<span>.</span></div>
+                <div class="m1-trust-lbl">Clientes activos NEA</div>
+              </div>
+              <div>
+                <div class="m1-trust-val">4.8<span>★</span></div>
+                <div class="m1-trust-lbl">Calificación Google</div>
+              </div>
+              <div>
+                <div class="m1-trust-val">+20<span>a</span></div>
+                <div class="m1-trust-lbl">Años de experiencia</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mosaico de las 4 Líneas Principales -->
+          <div class="m1-hero-showcase">
+            <a href="catalogo.html?cat=autoperforantes" class="m1-mini-card">
+              <div class="m1-mini-img">
+                <img src="imagenes/cat1.jpg" alt="Autoperforantes" />
+              </div>
+              <div class="m1-mini-title">Autoperforantes</div>
+              <div class="m1-mini-sub">Chapa, drywall y estructuras →</div>
+            </a>
+
+            <a href="catalogo.html?cat=bulones" class="m1-mini-card">
+              <div class="m1-mini-img">
+                <img src="imagenes/cat2.jpg" alt="Bulones y Tirafondos" />
+              </div>
+              <div class="m1-mini-title">Bulones y Tirafondos</div>
+              <div class="m1-mini-sub">Alta resistencia y madera →</div>
+            </a>
+
+            <a href="catalogo.html?cat=tuercas" class="m1-mini-card">
+              <div class="m1-mini-img">
+                <img src="imagenes/cat3.jpg" alt="Tuercas y Arandelas" />
+              </div>
+              <div class="m1-mini-title">Tuercas y Arandelas</div>
+              <div class="m1-mini-sub">Zincadas, inox y grower →</div>
+            </a>
+
+            <a href="catalogo.html?cat=tarugos" class="m1-mini-card">
+              <div class="m1-mini-img">
+                <img src="imagenes/cat4.jpg" alt="Tarugos" />
+              </div>
+              <div class="m1-mini-title">Tarugos y Anclajes</div>
+              <div class="m1-mini-sub">Mampostería, hueco y yeso →</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ACCESO DIRECTO A LAS 10 FAMILIAS DEL CATÁLOGO ── -->
+    <section class="m1-families-bar">
+      <div class="m1-container">
+        <div class="m1-families-track reveal">
+          <a href="catalogo.html?cat=autoperforantes" class="m1-fam-pill">
+            <div class="m1-fam-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <div>
+              <div class="m1-fam-name">Autoperforantes</div>
+              <div class="m1-fam-action">Ver medidas →</div>
+            </div>
+          </a>
+
+          <a href="catalogo.html?cat=bulones" class="m1-fam-pill">
+            <div class="m1-fam-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+            <div>
+              <div class="m1-fam-name">Bulones</div>
+              <div class="m1-fam-action">Ver medidas →</div>
+            </div>
+          </a>
+
+          <a href="catalogo.html?cat=tuercas" class="m1-fam-pill">
+            <div class="m1-fam-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+            <div>
+              <div class="m1-fam-name">Tuercas</div>
+              <div class="m1-fam-action">Ver medidas →</div>
+            </div>
+          </a>
+
+          <a href="catalogo.html?cat=arandelas" class="m1-fam-pill">
+            <div class="m1-fam-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div>
+              <div class="m1-fam-name">Arandelas</div>
+              <div class="m1-fam-action">Ver medidas →</div>
+            </div>
+          </a>
+
+          <a href="catalogo.html?cat=tarugos" class="m1-fam-pill">
+            <div class="m1-fam-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="m8 6 4-4 4 4"/><path d="M8 12h8"/><path d="M8 16h8"/></svg>
+            </div>
+            <div>
+              <div class="m1-fam-name">Tarugos</div>
+              <div class="m1-fam-action">Ver medidas →</div>
+            </div>
+          </a>
+
+          <a href="catalogo.html?cat=tirafondos" class="m1-fam-pill">
+            <div class="m1-fam-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M7 3h10"/><path d="m9 17 3 4 3-4"/></svg>
+            </div>
+            <div>
+              <div class="m1-fam-name">Tirafondos</div>
+              <div class="m1-fam-action">Ver medidas →</div>
+            </div>
+          </a>
+
+          <a href="catalogo.html?cat=varillas" class="m1-fam-pill">
+            <div class="m1-fam-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="20" x2="20" y2="4"/><line x1="6" y1="14" x2="10" y2="18"/><line x1="14" y1="6" x2="18" y2="10"/></svg>
+            </div>
+            <div>
+              <div class="m1-fam-name">Varillas Roscadas</div>
+              <div class="m1-fam-action">Ver medidas →</div>
+            </div>
+          </a>
+
+          <a href="catalogo.html?cat=pitones" class="m1-fam-pill">
+            <div class="m1-fam-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M12 11v10"/></svg>
+            </div>
+            <div>
+              <div class="m1-fam-name">Pitones</div>
+              <div class="m1-fam-action">Ver medidas →</div>
+            </div>
+          </a>
+
+          <a href="catalogo.html?cat=ganchos" class="m1-fam-pill">
+            <div class="m1-fam-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v12a4 4 0 1 1-4-4"/></svg>
+            </div>
+            <div>
+              <div class="m1-fam-name">Ganchos</div>
+              <div class="m1-fam-action">Ver medidas →</div>
+            </div>
+          </a>
+
+          <a href="catalogo.html?cat=remaches-clavos" class="m1-fam-pill">
+            <div class="m1-fam-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><circle cx="12" cy="5" r="3"/></svg>
+            </div>
+            <div>
+              <div class="m1-fam-name">Remaches y Clavos</div>
+              <div class="m1-fam-action">Ver medidas →</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VITRINA DE PRODUCTOS EN VIVO CONECTADA A PRODUCTOS.JSON ── -->
+    <section class="m1-section m1-section-white" id="vitrina">
+      <div class="m1-container">
+        <div class="m1-sec-head reveal">
+          <div>
+            <div class="m1-sec-kicker">Catálogo Interactivo</div>
+            <h2 class="m1-sec-title">Explorá nuestros productos destacados</h2>
+          </div>
+
+          <div class="m1-tabs-row" id="m1-home-tabs">
+            <button type="button" class="m1-tab-btn active" data-cat="all">Todos</button>
+            <button type="button" class="m1-tab-btn" data-cat="autoperforantes">Autoperforantes</button>
+            <button type="button" class="m1-tab-btn" data-cat="bulones">Bulones</button>
+            <button type="button" class="m1-tab-btn" data-cat="tuercas">Tuercas</button>
+            <button type="button" class="m1-tab-btn" data-cat="tarugos">Tarugos</button>
+          </div>
+        </div>
+
+        <div class="m1-live-grid" id="m1-live-grid">
+          <!-- Cargado dinámicamente desde productos.json -->
+        </div>
+
+        <div style="text-align:center; margin-top:36px;">
+          <a href="catalogo.html" class="m1-btn m1-btn-outline m1-btn-lg">
+            Ver todos los productos y medidas en el Catálogo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── NOSOTROS, VENTAJAS E HISTORIA ── -->
+    <section class="m1-section" id="nosotros">
+      <div class="m1-container">
+        <div class="m1-sec-head reveal">
+          <div>
+            <div class="m1-sec-kicker">Quiénes Somos</div>
+            <h2 class="m1-sec-title">Tu distribuidor mayorista de confianza</h2>
+          </div>
+        </div>
+
+        <div class="m1-benefits-grid reveal">
+          <div class="m1-benefit-card">
+            <div class="m1-benefit-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.29 7 8.71 5 8.71-5"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+            </div>
+            <h3 class="m1-benefit-title">Stock Permanente</h3>
+            <p class="m1-benefit-text">Amplio inventario de primeras marcas listo para retiro inmediato en mostrador o despacho en el día.</p>
+          </div>
+
+          <div class="m1-benefit-card">
+            <div class="m1-benefit-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3 class="m1-benefit-title">Cotización Rápida por WhatsApp</h3>
+            <p class="m1-benefit-text">Seleccioná las medidas en nuestra web y enviá tu pedido directamente para recibir tu presupuesto sin demoras.</p>
+          </div>
+
+          <div class="m1-benefit-card">
+            <div class="m1-benefit-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            </div>
+            <h3 class="m1-benefit-title">Logística en 5 Provincias</h3>
+            <p class="m1-benefit-text">Desde 2003 abastecemos a más de 1.100 clientes activos en Corrientes, Chaco, Formosa, Misiones y Santa Fe.</p>
+          </div>
+        </div>
+
+        <div class="m1-about-split reveal" id="contacto">
+          <div>
+            <div class="m1-sec-kicker">Más de 20 años creciendo juntos</div>
+            <h3 style="font-family:var(--m1-font-head); font-size:1.7rem; font-weight:800; margin-bottom:14px;">
+              Visitanos en Iberá 1740, Corrientes
+            </h3>
+            <p style="color:var(--m1-text-2); margin-bottom:14px;">
+              A comienzos de 2003 iniciamos nuestras operaciones como distribuidores mayoristas de tornillería y bulonería. Con compromiso, honestidad y transparencia consolidamos una red regional con logística propia y tercerizada.
+            </p>
+            <p style="color:var(--m1-text-2); margin-bottom:24px;">
+              <strong>Horario:</strong> Lunes a Viernes de 08:00 a 17:00 hs.<br>
+              <strong>Teléfono:</strong> <a href="tel:+5403794007195" style="color:var(--m1-red); font-weight:700;">0379 400-7195</a>
+            </p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <a href="https://wa.me/5493794007195" target="_blank" rel="noopener" class="m1-btn m1-btn-wa">
+                Escribir por WhatsApp
+              </a>
+              <a href="https://maps.google.com/?q=Iberá+1740+Corrientes" target="_blank" rel="noopener" class="m1-btn m1-btn-outline">
+                Cómo llegar en Google Maps →
+              </a>
+            </div>
+          </div>
+
+          <div class="m1-map-box">
+            <iframe
+              src="https://maps.google.com/maps?q=Iber%C3%A1%201740,%20Corrientes,%20Argentina&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              title="Ubicación Distrijam Iberá 1740"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="m1-footer">
+    <div class="m1-container">
+      <div class="m1-footer-grid">
+        <div>
+          <a href="index-m1.html">
+            <img src="Logo/LogoDistrijamCompleto.png" alt="Logo Distrijam" style="height:38px; filter:brightness(0) invert(1); margin-bottom:14px;" />
+          </a>
+          <p style="font-size:0.88rem; max-width:290px;">
+            Distribuidora mayorista de tuercas, tornillos, bulones, arandelas y tarugos en Corrientes, Argentina.
+          </p>
+        </div>
+
+        <div class="m1-footer-col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="index-m1.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="#nosotros">Quiénes somos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="m1-footer-col">
+          <h4>Categorías</h4>
+          <ul>
+            <li><a href="catalogo.html?cat=autoperforantes">Autoperforantes</a></li>
+            <li><a href="catalogo.html?cat=bulones">Bulones y Tirafondos</a></li>
+            <li><a href="catalogo.html?cat=tuercas">Tuercas y Arandelas</a></li>
+            <li><a href="catalogo.html?cat=tarugos">Tarugos</a></li>
+          </ul>
+        </div>
+
+        <div class="m1-footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li>Iberá 1740, W3400 Corrientes</li>
+            <li><a href="tel:+5403794007195">0379 400-7195</a></li>
+            <li><a href="https://wa.me/5493794007195" target="_blank" rel="noopener" style="color:#4ADE80;">WhatsApp Directo</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="m1-footer-bottom">
+        <p>© <span data-current-year>2026</span> Distrijam. Todos los derechos reservados.</p>
+        <p><a href="admin.html">Administración</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // ── Carga en vivo de productos destacados en la portada (Modelo 1) ──
+    let homeProducts = [];
+    let currentHomeCat = 'all';
+
+    async function initHomeShowcase() {
+      const grid = document.getElementById('m1-live-grid');
+      if (!grid) return;
+
+      try {
+        homeProducts = await distrijamCatalogo();
+      } catch (e) {
+        console.warn('Error cargando vitrina:', e);
+      }
+
+      renderHomeShowcase();
+
+      document.querySelectorAll('#m1-home-tabs .m1-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#m1-home-tabs .m1-tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentHomeCat = btn.dataset.cat;
+          renderHomeShowcase();
+        });
+      });
+    }
+
+    function renderHomeShowcase() {
+      const grid = document.getElementById('m1-live-grid');
+      if (!grid) return;
+
+      const list = (currentHomeCat === 'all'
+        ? homeProducts
+        : homeProducts.filter(p => p.category === currentHomeCat)
+      ).slice(0, 8);
+
+      if (!list.length) {
+        grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#64748B; padding:32px;">Cargando productos del catálogo...</p>`;
+        return;
+      }
+
+      grid.innerHTML = list.map(p => {
+        const varCount = p.variants ? p.variants.length : 0;
+        return `
+          <a href="producto.html?id=${encodeURIComponent(p.id)}" class="m1-prod-card">
+            <div class="m1-prod-img">
+              <img src="${distrijamEsc(p.image)}" alt="${distrijamEsc(p.name)}" loading="lazy" />
+              <span class="m1-prod-badge">${distrijamEsc(p.category)}</span>
+            </div>
+            <div class="m1-prod-body">
+              <h3 class="m1-prod-title">${distrijamEsc(p.name)}</h3>
+              <p class="m1-prod-desc">${distrijamEsc(p.description)}</p>
+              <div class="m1-prod-meta">
+                <strong>${varCount}</strong> ${varCount === 1 ? 'medida disponible' : 'medidas disponibles'}
+              </div>
+              <span class="m1-prod-btn">Elegir medida y agregar →</span>
+            </div>
+          </a>
+        `;
+      }).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', initHomeShowcase);
+  </script>
+</body>
+
+</html>

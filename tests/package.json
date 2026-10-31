@@ -1,0 +1,8 @@
+{
+  "name": "distrijam-tests",
+  "private": true,
+  "description": "Pruebas del ABM del catálogo (sh tests/correr.sh)",
+  "devDependencies": {
+    "jsdom": "^24.1.3"
+  }
+}

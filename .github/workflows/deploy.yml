@@ -49,6 +49,12 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         server-dir: ./public_html/  # Ajustá esto según la carpeta de tu hosting
         protocol: ftps
+        # Las pruebas no van al hosting (los tres primeros son los que excluye por defecto)
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          tests/**
 
     # El curl original no miraba la respuesta: si Cloudflare rechazaba la purga
     # (token vencido, zone id equivocado) el paso igual daba "success" y el sitio

@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="theme-g1.css" />
   <link rel="stylesheet" href="theme-g2.css" />
   <link rel="stylesheet" href="theme-g3.css" />
+  <link rel="stylesheet" href="theme-m1.css" />
+  <link rel="stylesheet" href="theme-m2.css" />
   <link rel="stylesheet" href="cotizador.css" />
 </head>
 <body class="admin-body">
@@ -153,14 +155,15 @@
 
         <!-- Form Card -->
         <div class="admin-form-card">
-          <div class="admin-card-title">Agregar Producto al Catálogo</div>
+          <div class="admin-card-title" id="product-form-title">Agregar Producto al Catálogo</div>
+          <div id="edit-banner" class="admin-edit-banner" style="display:none;"></div>
           <form id="add-product-form" novalidate>
 
             <!-- Image Upload -->
             <div class="form-group">
-              <label class="form-label">Fotos del Producto (Hasta 4 imágenes) *</label>
+              <label class="form-label">Fotos del Producto (Hasta 4 imágenes) <span id="images-required">*</span></label>
               <div class="image-upload-area" id="upload-area">
-                <input type="file" id="product-image-input" accept="image/*" multiple />
+                <input type="file" id="product-image-input" accept="image/jpeg,image/png,image/webp,image/gif" multiple />
                 <div class="upload-placeholder" id="upload-placeholder">
                   <div class="upload-icon">📷</div>
                   <div class="upload-text">Hacé clic para subir una o varias imágenes</div>
@@ -174,7 +177,7 @@
             <!-- Name -->
             <div class="form-group">
               <label class="form-label" for="product-name">Nombre del Producto *</label>
-              <input class="form-input" id="product-name" type="text"
+              <input class="form-input" id="product-name" type="text" maxlength="120"
                      placeholder="Ej: Tuerca Hexagonal M8 Inoxidable" required />
             </div>
 
@@ -202,13 +205,13 @@
             <!-- Description -->
             <div class="form-group">
               <label class="form-label" for="product-desc">Descripción</label>
-              <textarea class="form-textarea" id="product-desc"
+              <textarea class="form-textarea" id="product-desc" maxlength="1500"
                         placeholder="Material, medidas, normas, usos típicos, etc. (opcional)"
                         style="min-height:80px;"></textarea>
             </div>
 
             <!-- Variants (Medidas) -->
-            <div class="form-group">
+            <div class="form-group" id="variants-group">
               <label class="form-label">Medidas y Presentaciones *</label>
               <div id="variants-container" class="variants-container">
                 <!-- Se llenará dinámicamente con JS -->
@@ -220,7 +223,7 @@
 
             <!-- Actions -->
             <div style="display:flex; gap:10px; margin-top:4px;">
-              <button type="submit" class="btn-add-product" style="flex:1;">
+              <button type="submit" class="btn-add-product" id="btn-submit-product" style="flex:1;">
                 + Agregar al Catálogo
               </button>
               <button type="button" id="btn-reset-form"
@@ -235,8 +238,8 @@
             <ul style="font-size:0.78rem; color:var(--text-dim); line-height:1.7; list-style:disc; padding-left:16px;">
               <li>Usá fotos sobre fondo blanco para mejor resultado</li>
               <li>Incluí medidas y material en el nombre</li>
-              <li>Los productos agregados aparecen de inmediato en el catálogo</li>
-              <li>Las imágenes se guardan localmente en este navegador</li>
+              <li>Lo que guardás se publica en el sitio al instante, para todos los clientes</li>
+              <li>Los productos del proveedor se pueden editar u ocultar con ✎ y 👁; sus medidas siguen viniendo de la planilla</li>
             </ul>
           </div>
         </div>
@@ -250,6 +253,7 @@
             <div class="admin-tabs">
               <button class="admin-tab active" data-filter="all">Todos</button>
               <button class="admin-tab" data-filter="custom">Personalizados</button>
+              <button class="admin-tab" data-filter="hidden">Ocultos</button>
             </div>
           </div>
           <div id="admin-product-list">
@@ -264,7 +268,8 @@
         <div style="margin-top:16px; padding:16px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); font-size:0.8rem; color:var(--text-dim);">
           <strong style="color:var(--steel);">ℹ️ Productos base:</strong>
           El catálogo incluye <strong id="nota-base-count">—</strong> productos que vienen del archivo del proveedor.
-          Los personalizados que agregues acá se suman a esos.
+          Los personalizados que agregues acá se suman a esos. Los del proveedor se pueden editar (✎)
+          u ocultar del sitio (👁) sin tocar la planilla.
         </div>
         
         <!-- Category Management Card -->
@@ -275,11 +280,11 @@
             <div style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap;">
               <div class="form-group" style="flex:1; min-width:150px; margin:0;">
                 <label class="form-label">Nombre de Categoría</label>
-                <input type="text" id="cat-name-input" class="form-input" placeholder="Ej: Herramientas" required />
+                <input type="text" id="cat-name-input" class="form-input" placeholder="Ej: Herramientas" maxlength="40" required />
               </div>
               <div class="form-group" style="flex:1; min-width:150px; margin:0;">
                 <label class="form-label">Logo / Ícono</label>
-                <input type="file" id="cat-image-input" class="form-input" accept="image/*" style="padding: 10px;" required />
+                <input type="file" id="cat-image-input" class="form-input" accept="image/jpeg,image/png,image/webp,image/gif" style="padding: 10px;" required />
               </div>
               <button type="submit" class="btn btn-secondary" style="height:48px;">Crear Categoría</button>
             </div>

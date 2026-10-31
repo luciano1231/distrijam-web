@@ -1,0 +1,141 @@
+/* ======================================================
+   DISTRIJAM — theme-m2.css
+   MODELO 2 · CORPORATIVO INDUSTRIAL INMERSIVO (DARK LUXURY)
+   Para páginas compartidas: catálogo, producto y administración.
+   ====================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root.theme-m2,
+body.theme-m2 {
+  --primary: #E11D48 !important;
+  --primary-dark: #BE123C !important;
+  --primary-light: rgba(225, 29, 72, 0.16) !important;
+
+  --red: #E11D48 !important;
+  --red-dark: #BE123C !important;
+  --red-light: #FB7185 !important;
+  --gold: #F59E0B !important;
+  --gold-light: #FDE68A !important;
+  --steel: #94A3B8 !important;
+
+  --bg: #0B0E14 !important;
+  --bg-2: #111622 !important;
+  --bg-card: #161C2A !important;
+  --bg-card-2: #1E2638 !important;
+
+  --text: #F8FAFC !important;
+  --text-dim: #CBD5E1 !important;
+  --text-muted: #64748B !important;
+
+  --border: rgba(255, 255, 255, 0.09) !important;
+  --border-light: rgba(255, 255, 255, 0.06) !important;
+
+  --white: #F8FAFC !important;
+  --white-real: #FFFFFF !important;
+
+  --radius: 12px !important;
+  --radius-lg: 20px !important;
+
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.65) !important;
+
+  /* Riel de filtros */
+  --rail-bg: #161C2A;
+  --rail-bg-hover: #1E2638;
+  --rail-border: rgba(255, 255, 255, 0.1);
+  --rail-border-hover: #E11D48;
+  --rail-text: #CBD5E1;
+  --rail-text-strong: #FFFFFF;
+  --rail-active-bg: #E11D48;
+  --rail-active-text: #FFFFFF;
+  --rail-count-bg: #0B0E14;
+  --rail-count-text: #94A3B8;
+  --rail-active-count-bg: rgba(0, 0, 0, 0.3);
+  --rail-active-count-text: #FFFFFF;
+}
+
+body.theme-m2 {
+  font-family: 'Inter', sans-serif !important;
+  background: #0B0E14 !important;
+  color: #F8FAFC !important;
+}
+
+body.theme-m2 .nav {
+  background: rgba(11, 14, 20, 0.9) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+body.theme-m2 .nav .nav-logo-img {
+  filter: brightness(0) invert(1);
+}
+
+body.theme-m2 .nav-cta {
+  background: linear-gradient(135deg, #E11D48, #BE123C) !important;
+  color: #FFFFFF !important;
+  border-radius: 99px !important;
+}
+
+body.theme-m2 .catalog-header {
+  background: radial-gradient(circle at 75% 20%, rgba(225, 29, 72, 0.18), transparent 55%), #111622 !important;
+  padding: 40px 40px 26px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+body.theme-m2 .catalog-header h1 {
+  color: #FFFFFF !important;
+  font-family: 'Sora', sans-serif !important;
+}
+
+body.theme-m2 .catalog-header h1 span {
+  color: #FB7185 !important;
+}
+
+body.theme-m2 .product-card {
+  background: #161C2A !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  border-radius: 18px !important;
+}
+
+body.theme-m2 .product-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(225, 29, 72, 0.5) !important;
+  box-shadow: 0 20px 44px rgba(225, 29, 72, 0.2) !important;
+}
+
+body.theme-m2 .product-img-wrap {
+  background: #FFFFFF !important;
+}
+
+body.theme-m2 .product-name {
+  font-family: 'Sora', sans-serif !important;
+}
+
+body.theme-m2 .btn-add-cart,
+body.theme-m2 .btn-select-variant {
+  background: linear-gradient(135deg, #E11D48, #BE123C) !important;
+  color: #FFFFFF !important;
+  border-radius: 99px !important;
+}
+
+body.theme-m2 .cart-sidebar {
+  background: #111622 !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+
+body.theme-m2 .single-product-layout {
+  background: #161C2A !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 22px !important;
+  padding: 28px !important;
+}
+
+body.theme-m2 .footer {
+  background: #07090E !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+body.theme-m2 .footer .nav-logo-img {
+  filter: brightness(0) invert(1);
+}

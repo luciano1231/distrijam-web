@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://distrijam.com.ar/" />
+  <title>Distrijam — Fijaciones Industriales & Bulonería Mayorista | Corrientes</title>
+  <meta name="description"
+    content="Distrijam, distribuidora mayorista de tuercas, tornillos, bulones, arandelas y tarugos en Corrientes, Argentina. Catálogo completo y cotizaciones al instante." />
+  <link rel="icon" type="image/png" href="Logo/logo-distrijam.png" />
+  <link rel="apple-touch-icon" href="Logo/logo-distrijam.png" />
+
+  <link rel="stylesheet" href="styles-m2.css" />
+</head>
+
+<body>
+
+  <!-- ── NAVBAR CRISTAL NOCTURNO ── -->
+  <header class="m2-header nav" id="nav">
+    <div class="m2-container">
+      <div class="m2-nav-inner">
+        <a href="index-m2.html" class="m2-logo" aria-label="Distrijam Inicio">
+          <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam Logo" />
+        </a>
+
+        <nav class="m2-nav-links" aria-label="Navegación principal">
+          <a href="index-m2.html" class="m2-nav-link active">Inicio</a>
+          <div class="nav-item-dropdown">
+            <a href="catalogo.html" class="m2-nav-link" data-page="catalogo.html">
+              Productos <span style="font-size:0.75rem;">▾</span>
+            </a>
+            <ul class="dropdown-menu" id="dropdown-productos"></ul>
+          </div>
+          <a href="#categorias" class="m2-nav-link">Líneas</a>
+          <a href="#aplicaciones" class="m2-nav-link">Soluciones de Obra</a>
+          <a href="#nosotros" class="m2-nav-link">Nosotros</a>
+          <a href="#contacto" class="m2-nav-link">Contacto</a>
+        </nav>
+
+        <div class="m2-nav-actions">
+          <a href="catalogo.html" class="m2-btn m2-btn-glass">Catálogo</a>
+          <a href="https://wa.me/5493794007195?text=Hola%20Distrijam,%20solicito%20cotizaci%C3%B3n."
+            target="_blank" rel="noopener" class="m2-btn m2-btn-ruby">
+            Cotizar por WhatsApp
+          </a>
+          <button class="m2-burger" id="nav-hamburger" aria-label="Menú">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="m2-mobile-menu" id="nav-mobile">
+    <a href="index-m2.html" class="m2-mobile-link">Inicio</a>
+    <a href="catalogo.html" class="m2-mobile-link">Catálogo de Productos</a>
+    <a href="#categorias" class="m2-mobile-link">Líneas Principales</a>
+    <a href="#aplicaciones" class="m2-mobile-link">Soluciones de Obra</a>
+    <a href="#nosotros" class="m2-mobile-link">Nosotros</a>
+    <a href="#contacto" class="m2-mobile-link">Contacto</a>
+    <a href="catalogo.html" class="m2-btn m2-btn-ruby" style="margin-top:8px;">Ver Catálogo →</a>
+  </div>
+
+  <main>
+    <!-- ── HERO CINEMATOGRÁFICO CENTRADO ── -->
+    <section class="m2-hero">
+      <div class="m2-hero-bg">
+        <img src="imagenes/landing-titanium-bolts.jpg" alt="Bulonería y fijaciones industriales Distrijam" />
+      </div>
+
+      <div class="m2-container">
+        <div class="m2-hero-center reveal">
+          <div class="m2-eyebrow">
+            ★ Distribuidora Mayorista · Corrientes & NEA
+          </div>
+
+          <h1 class="m2-hero-title">
+            La solución en <span>tuercas y tornillos</span> para tu proyecto
+          </h1>
+
+          <p class="m2-hero-lead">
+            Distribuimos bulones, tuercas, arandelas, autoperforantes y tarugos al por mayor con stock permanente. Armá tu pedido online y recibí tu cotización al instante por WhatsApp.
+          </p>
+
+          <!-- Buscador Spotlight -->
+          <div class="m2-spotlight">
+            <form class="m2-spotlight-form" action="catalogo.html" method="GET" role="search">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="hero-search-input" name="q" class="m2-spotlight-input"
+                placeholder="Buscar por producto o medida (ej: autoperforante, bulón, tarugo 8)..." autocomplete="off" />
+              <button type="submit" class="m2-spotlight-btn">Buscar</button>
+              <div class="search-suggestions" id="search-suggestions" role="listbox"></div>
+            </form>
+          </div>
+
+          <div class="m2-hero-ctas">
+            <a href="catalogo.html" class="m2-btn m2-btn-ruby m2-btn-lg">
+              Explorar Catálogo Completo →
+            </a>
+            <a href="https://wa.me/5493794007195" target="_blank" rel="noopener" class="m2-btn m2-btn-wa m2-btn-lg">
+              Contactar por WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── BARRA FLOTANTE DE MÉTRICAS EN CRISTAL ── -->
+    <div class="m2-glass-metrics">
+      <div class="m2-container">
+        <div class="m2-metrics-bar reveal">
+          <div class="m2-metric">
+            <div class="m2-metric-num">+500<span>.</span></div>
+            <div class="m2-metric-lbl">Productos disponibles</div>
+          </div>
+          <div class="m2-metric">
+            <div class="m2-metric-num">+1100<span>.</span></div>
+            <div class="m2-metric-lbl">Clientes activos en el NEA</div>
+          </div>
+          <div class="m2-metric">
+            <div class="m2-metric-num">4.8<span>★</span></div>
+            <div class="m2-metric-lbl">Calificación en Google</div>
+          </div>
+          <div class="m2-metric">
+            <div class="m2-metric-num">+20<span>a</span></div>
+            <div class="m2-metric-lbl">Años de trayectoria</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── GALERÍA DE PÓSTERS INMERSIVOS ── -->
+    <section class="m2-section" id="categorias">
+      <div class="m2-container">
+        <div class="m2-sec-head reveal">
+          <span class="m2-kicker">Nuestros Productos</span>
+          <h2 class="m2-title">Todo lo que necesitás en un solo lugar</h2>
+          <p class="m2-desc">
+            Contamos con las principales líneas de fijaciones y sujeciones del mercado, para uso profesional, industrial y de construcción.
+          </p>
+        </div>
+
+        <div class="m2-poster-grid">
+          <a href="catalogo.html?cat=autoperforantes" class="m2-poster reveal">
+            <div class="m2-poster-bg">
+              <img src="imagenes/cat1.jpg" alt="Autoperforantes" loading="lazy" />
+            </div>
+            <span class="m2-poster-tag">Línea #01</span>
+            <h3 class="m2-poster-title">Autoperforantes</h3>
+            <p class="m2-poster-text">
+              Tornillos autoperforantes para chapa, drywall y estructuras metálicas. Cabeza hexagonal, Phillips y Torx.
+            </p>
+            <span class="m2-poster-link">Ver productos →</span>
+          </a>
+
+          <a href="catalogo.html?cat=bulones" class="m2-poster reveal">
+            <div class="m2-poster-bg">
+              <img src="imagenes/cat2.jpg" alt="Bulones y Tirafondos" loading="lazy" />
+            </div>
+            <span class="m2-poster-tag">Línea #02</span>
+            <h3 class="m2-poster-title">Bulones y Tirafondos</h3>
+            <p class="m2-poster-text">
+              Bulones de alta resistencia y tirafondos para madera y hormigón. Variedad de medidas y acabados.
+            </p>
+            <span class="m2-poster-link">Ver productos →</span>
+          </a>
+
+          <a href="catalogo.html?cat=tuercas" class="m2-poster reveal">
+            <div class="m2-poster-bg">
+              <img src="imagenes/cat3.jpg" alt="Tuercas y Arandelas" loading="lazy" />
+            </div>
+            <span class="m2-poster-tag">Línea #03</span>
+            <h3 class="m2-poster-title">Tuercas y Arandelas</h3>
+            <p class="m2-poster-text">
+              Tuercas hexagonales, mariposa y arandelas planas y de presión. Zincadas, inoxidables y bicromadas.
+            </p>
+            <span class="m2-poster-link">Ver productos →</span>
+          </a>
+
+          <a href="catalogo.html?cat=tarugos" class="m2-poster reveal">
+            <div class="m2-poster-bg">
+              <img src="imagenes/cat4.jpg" alt="Tarugos" loading="lazy" />
+            </div>
+            <span class="m2-poster-tag">Línea #04</span>
+            <h3 class="m2-poster-title">Tarugos y Anclajes</h3>
+            <p class="m2-poster-text">
+              Tacos de nylon, metálicos, mariposa y fijaciones para mampostería, ladrillo hueco, hormigón y yeso.
+            </p>
+            <span class="m2-poster-link">Ver productos →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── EXPLORADOR INTERACTIVO DE SOLUCIONES DE OBRA ── -->
+    <section class="m2-section m2-section-alt" id="aplicaciones">
+      <div class="m2-container">
+        <div class="m2-sec-head reveal">
+          <span class="m2-kicker">Guía Rápida de Aplicación</span>
+          <h2 class="m2-title">Fijaciones para cada especialidad</h2>
+          <p class="m2-desc">Seleccioná el tipo de proyecto para ver las líneas más utilizadas y acceder directo al catálogo.</p>
+        </div>
+
+        <div class="m2-app-box reveal">
+          <div class="m2-app-tabs">
+            <button type="button" class="m2-app-tab active" data-app="techos">Techos y Tinglados</button>
+            <button type="button" class="m2-app-tab" data-app="metal">Estructuras y Agro</button>
+            <button type="button" class="m2-app-tab" data-app="seco">Construcción en Seco</button>
+            <button type="button" class="m2-app-tab" data-app="obra">Mampostería y Madera</button>
+          </div>
+
+          <div class="m2-app-view">
+            <div>
+              <span class="m2-kicker" id="m2-app-tag">DIN 7504-K · SELLADO EPDM</span>
+              <h3 style="font-family:var(--m2-font-head); font-size:1.75rem; font-weight:800; margin-bottom:12px;" id="m2-app-title">
+                Cubiertas Metálicas y Perfiles C
+              </h3>
+              <p style="color:var(--m2-text);" id="m2-app-desc">
+                Tornillos autoperforantes cabeza hexagonal con punta mecha reforzada y arandela de chapa y neoprene vulcanizado (EPDM) para evitar filtraciones.
+              </p>
+
+              <div class="m2-app-specs" id="m2-app-specs">
+                <div class="m2-app-spec">
+                  <span style="color:var(--m2-text);">Medidas más pedidas:</span>
+                  <strong>14 x 2" · 14 x 2-1/2" · 12 x 1"</strong>
+                </div>
+                <div class="m2-app-spec">
+                  <span style="color:var(--m2-text);">Complementos:</span>
+                  <strong>Ganchos J / Bastón y Varillas Roscadas</strong>
+                </div>
+              </div>
+
+              <a href="catalogo.html?cat=autoperforantes" id="m2-app-link" class="m2-btn m2-btn-ruby">
+                Ver Autoperforantes en el Catálogo →
+              </a>
+            </div>
+
+            <div class="m2-app-img">
+              <img id="m2-app-img" src="imagenes/cat1.jpg" alt="Aplicación de obra" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── NOSOTROS, HISTORIA Y CONTACTO ── -->
+    <section class="m2-section" id="nosotros">
+      <div class="m2-container">
+        <div class="m2-split-grid">
+          <div class="reveal">
+            <span class="m2-kicker">Quiénes Somos e Historia</span>
+            <h2 class="m2-title">Más de veinte años creciendo juntos</h2>
+            <p style="color:var(--m2-text); margin-bottom:16px;">
+              A comienzos de 2003 iniciamos nuestras operaciones en Corrientes como distribuidores mayoristas de tornillería y bulonería. Con compromiso, honestidad y transparencia construimos una red de más de 1.100 clientes activos en el NEA.
+            </p>
+            <p style="color:var(--m2-text);">
+              Contamos con logística propia y tercerizada a Corrientes, Chaco, Formosa, Santa Fe y Misiones, ofreciendo stock permanente de primeras marcas y atención rápida.
+            </p>
+
+            <div class="m2-feature-cards">
+              <div class="m2-f-card">
+                <div class="m2-f-badge">2003</div>
+                <div>
+                  <strong style="display:block; margin-bottom:4px;">Trayectoria Mayorista Comprobada</strong>
+                  <span style="font-size:0.86rem; color:var(--m2-text);">Más de dos décadas abasteciendo a ferreterías, corralones y constructoras.</span>
+                </div>
+              </div>
+              <div class="m2-f-card">
+                <div class="m2-f-badge">5 Prov.</div>
+                <div>
+                  <strong style="display:block; margin-bottom:4px;">Cobertura Regional NEA</strong>
+                  <span style="font-size:0.86rem; color:var(--m2-text);">Entregas en Corrientes, Chaco, Formosa, Misiones y Santa Fe.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="m2-map-card reveal" id="contacto">
+            <div class="m2-map-frame">
+              <iframe
+                src="https://maps.google.com/maps?q=Iber%C3%A1%201740,%20Corrientes,%20Argentina&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                title="Mapa Distrijam Iberá 1740 Corrientes"></iframe>
+            </div>
+            <div class="m2-map-body">
+              <div style="display:flex; justify-content:space-between; font-size:0.9rem;">
+                <span style="color:var(--m2-text);">Dirección:</span>
+                <strong>Iberá 1740, W3400 Corrientes</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:0.9rem;">
+                <span style="color:var(--m2-text);">Teléfono:</span>
+                <strong><a href="tel:+5403794007195">0379 400-7195</a></strong>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:8px;">
+                <a href="https://wa.me/5493794007195" target="_blank" rel="noopener" class="m2-btn m2-btn-wa" style="flex:1;">
+                  Enviar Pedido por WhatsApp
+                </a>
+                <a href="catalogo.html" class="m2-btn m2-btn-glass">
+                  Ir al Catálogo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="m2-footer">
+    <div class="m2-container">
+      <div class="m2-footer-grid">
+        <div>
+          <a href="index-m2.html">
+            <img src="Logo/LogoDistrijamCompleto.png" alt="Logo Distrijam" style="height:38px; filter:brightness(0) invert(1); margin-bottom:14px;" />
+          </a>
+          <p style="font-size:0.88rem; max-width:290px;">
+            Distribuidora mayorista de tuercas, tornillos, bulones, arandelas y tarugos en Corrientes, Argentina.
+          </p>
+        </div>
+
+        <div class="m2-footer-col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="index-m2.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="#nosotros">Quiénes somos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="m2-footer-col">
+          <h4>Líneas</h4>
+          <ul>
+            <li><a href="catalogo.html?cat=autoperforantes">Autoperforantes</a></li>
+            <li><a href="catalogo.html?cat=bulones">Bulones y Tirafondos</a></li>
+            <li><a href="catalogo.html?cat=tuercas">Tuercas y Arandelas</a></li>
+            <li><a href="catalogo.html?cat=tarugos">Tarugos</a></li>
+          </ul>
+        </div>
+
+        <div class="m2-footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li>Iberá 1740, W3400 Corrientes</li>
+            <li><a href="tel:+5403794007195">0379 400-7195</a></li>
+            <li><a href="https://wa.me/5493794007195" target="_blank" rel="noopener" style="color:#34D399;">WhatsApp Directo</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="m2-footer-bottom">
+        <p>© <span data-current-year>2026</span> Distrijam. Todos los derechos reservados.</p>
+        <p><a href="admin.html">Administración</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // ── Explorador Interactivo de Aplicaciones (Modelo 2) ──
+    const appData = {
+      techos: {
+        tag: 'DIN 7504-K · SELLADO EPDM',
+        title: 'Cubiertas Metálicas y Perfiles C',
+        desc: 'Tornillos autoperforantes cabeza hexagonal con punta mecha reforzada y arandela de chapa y neoprene vulcanizado (EPDM) para evitar filtraciones.',
+        s1: '14 x 2" · 14 x 2-1/2" · 12 x 1"',
+        s2: 'Ganchos J / Bastón y Varillas Roscadas',
+        link: 'catalogo.html?cat=autoperforantes',
+        btn: 'Ver Autoperforantes en el Catálogo →',
+        img: 'imagenes/cat1.jpg'
+      },
+      metal: {
+        tag: 'ALTA RESISTENCIA · GRADO 8.8 Y SAE',
+        title: 'Carpintería Metálica, Talleres y Agro',
+        desc: 'Bulones hexagonales de acero templado, tuercas autofrenantes con anillo de nylon y arandelas de presión Grower para uniones sometidas a vibración.',
+        s1: 'Bulones M8 a M20 · 1/4" a 3/4"',
+        s2: 'Tuercas DIN 934 y Arandelas Planas/Grower',
+        link: 'catalogo.html?cat=bulones',
+        btn: 'Ver Bulones y Tuercas →',
+        img: 'imagenes/cat2.jpg'
+      },
+      seco: {
+        tag: 'STEEL FRAMING & DRYWALL',
+        title: 'Construcción en Seco y Placas de Yeso',
+        desc: 'Tornillos T1 punta aguja y mecha para unión de perfiles, T2 cabeza trompeta fosfatados para placas de yeso y tornillos con alas para madera sobre metal.',
+        s1: 'T1 8x9/16" · T2 6x1" y 6x1-5/8"',
+        s2: 'Tarugos especiales para Durlock y Huecos',
+        link: 'catalogo.html?cat=autoperforantes',
+        btn: 'Ver Línea Drywall →',
+        img: 'imagenes/cat3.jpg'
+      },
+      obra: {
+        tag: 'FIJACIÓN MURAL Y MADERERA',
+        title: 'Hormigón, Mampostería y Tirantería',
+        desc: 'Tarugos de nylon de alta expansión con y sin tope, tacos para ladrillo hueco, tirafondos hexagonales para madera y pitones/ganchos.',
+        s1: 'Tarugos N° 6, 8, 10, 12 y 14',
+        s2: 'Tirafondos, Pitones y Varillas Roscadas',
+        link: 'catalogo.html?cat=tarugos',
+        btn: 'Ver Tarugos y Tirafondos →',
+        img: 'imagenes/cat4.jpg'
+      }
+    };
+
+    document.querySelectorAll('.m2-app-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.m2-app-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const d = appData[btn.dataset.app] || appData.techos;
+        document.getElementById('m2-app-tag').textContent = d.tag;
+        document.getElementById('m2-app-title').textContent = d.title;
+        document.getElementById('m2-app-desc').textContent = d.desc;
+        document.getElementById('m2-app-specs').innerHTML = `
+          <div class="m2-app-spec"><span style="color:var(--m2-text);">Medidas más pedidas:</span><strong>${d.s1}</strong></div>
+          <div class="m2-app-spec"><span style="color:var(--m2-text);">Complementos:</span><strong>${d.s2}</strong></div>
+        `;
+        const linkEl = document.getElementById('m2-app-link');
+        linkEl.href = d.link;
+        linkEl.textContent = d.btn;
+        document.getElementById('m2-app-img').src = d.img;
+      });
+    });
+  </script>
+</body>
+
+</html>

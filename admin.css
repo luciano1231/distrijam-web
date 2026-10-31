@@ -401,3 +401,37 @@ body.admin-body { background: var(--bg); }
 .variant-row .remove-variant-btn:hover {
   color: #ff3333;
 }
+
+/* ── ABM del catálogo: edición, ocultos y modificados ── */
+.admin-row-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.admin-edit-btn,
+.admin-hide-btn {
+  width: 32px; height: 32px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.admin-edit-btn:hover { border-color: var(--gold); color: var(--gold); }
+.admin-hide-btn:hover { border-color: var(--steel); color: var(--steel); }
+.admin-product-row.is-hidden .admin-product-thumb,
+.admin-product-row.is-hidden .admin-product-info { opacity: 0.45; }
+.admin-product-source.hidden { background: rgba(192,57,43,0.12); color: var(--red); }
+.admin-product-source.edited { background: rgba(46,160,90,0.14); color: #2ea05a; }
+.admin-product-row.is-editing { background: rgba(200,151,58,0.08); }
+.admin-edit-banner {
+  margin: -4px 0 16px;
+  padding: 10px 14px;
+  border: 1px solid rgba(200,151,58,0.35);
+  background: rgba(200,151,58,0.08);
+  border-radius: var(--radius);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+.variant-row .variant-codigo { flex: 0 0 120px; }
+.btn-add-product:disabled { opacity: 0.6; cursor: wait; }
