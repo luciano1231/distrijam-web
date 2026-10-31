@@ -17,7 +17,7 @@ import json
 import os
 import unicodedata
 
-ARCHIVO = "Archivo del proveedor Distrijam.xlsx"
+ARCHIVO = "Productos distrijam Actualziados.xlsx"
 HOJA = "Productos"
 
 # Columnas de la hoja "Productos" (1-based).
@@ -141,7 +141,46 @@ def resolver_imagen(nombre):
 CORRECCION_NOMBRES = {
     "TUERCA GRAGO 5 DORADA": "TUERCA GRADO 5 DORADA",
     "TORILLO CAB. TANQUE C/TUERCA": "TORNILLO CAB. TANQUE C/TUERCA",
+    "BULON G2": "BULON GRADO 2 ZINCADO",
+    "FIX": "FIX MADERA DORADO",
 }
+
+# Presentaciones que el proveedor cambio sin actualizar el texto de la planilla
+# (se deduce del precio nuevo comparado con las medidas vecinas).
+# clave: codigo, valor: (cantidad que dice la planilla, cantidad real)
+CORRECCION_PRESENTACION = {
+    "040514": ("1 U.", "100 U."),
+    "040516": ("1 U.", "100 U."),
+    "040518": ("1 U.", "100 U."),
+    "040520": ("1 U.", "100 U."),
+    "040522": ("1 U.", "10 U."),
+    "04011": ("100 U.", "1 U."),
+    "04017/8": ("100 U.", "1 U."),
+    "04037/8": ("100 U.", "1 U."),
+    "04047/8": ("100 U.", "10 U."),
+    "09061": ("100 UNID.", "10 UNID."),
+    "090611/8": ("100 UNID.", "10 UNID."),
+    "090611/4": ("100 UNID.", "10 UNID."),
+    "090613/8": ("100 UNID.", "10 UNID."),
+    "090611/2": ("100 UNID.", "10 UNID."),
+    "09067/8": ("100 UNID.", "10 UNID."),
+    "090615/8": ("1 UNID.", "10 UNID."),
+    "090617/8": ("1 UNID.", "10 UNID."),
+    "09062": ("1 UNID.", "10 UNID."),
+    "09071": ("100 UNID.", "10 UNID."),
+    "09077/8": ("100 UNID.", "10 UNID."),
+}
+
+
+def corregir_presentacion(codigo, presentacion, descripcion):
+    if codigo not in CORRECCION_PRESENTACION:
+        return presentacion, descripcion
+    vieja, nueva = CORRECCION_PRESENTACION[codigo]
+    if presentacion.startswith(vieja):
+        presentacion = nueva + presentacion[len(vieja):]
+    descripcion = descripcion.replace(f"X {vieja}", f"X {nueva}", 1)
+    return presentacion, descripcion
+
 
 # Productos que deben usar una imagen puntual aunque la planilla diga otra
 # (clave: id del producto, valor: nombre de la imagen como en la columna "Imagen")
@@ -152,6 +191,22 @@ IMAGEN_FORZADA = {
 
 # Filas que el proveedor usa como marca interna y no son productos reales
 NO_PUBLICAR = {"este no va"}
+
+# Codigos que siguen en la planilla pero no se publican en el sitio
+CODIGOS_EXCLUIDOS = {
+    "1201FNAL10X11/2", "1201FNAL8X11/4", "09071/2", "1101FNT1A8X916Z", "1101FNT1M8X1Z",
+    "1101FNT1M8X1/2Z", "1101FNT1M8X3/4Z", "1101FNT1M8X916N", "1101FNT1M8X916Z", "1101FNT26X1",
+    "1101FNT36X11/2", "1712X4DG", "1701FN10X11/2DG", "1701FN10X11/2NG", "1701FN10X13/4DG",
+    "1701FN10X13/4NG", "1701FN10X2DG", "1701FN10X2NG", "1701FN10X21/2DG", "1701FN10X21/2NG",
+    "1701FN10X3DG", "1701FN10X3NG", "1701FN6X1DG", "1701FN6X1NG", "1701FN6X11/2DG",
+    "1701FN6X11/2NG", "1701FN6X11/4DG", "1701FN6X11/4NG", "1701FN6X13/4DG", "1701FN6X13/4NG",
+    "1701FN6X13/8DG", "1701FN6X13/8NG", "1701FN6X15/8DG", "1701FN6X15/8NG", "1701FN6X2DG",
+    "1701FN6X2NG", "1701FN6X3/4DG", "1701FN6X3/4NG", "1701FN6X5/8DG", "1701FN6X5/8NG",
+    "1701FN8X11/2DG", "1701FN8X11/2NG", "1701FN8X13/4DG", "1701FN8X13/4NG", "1701FN8X2DG",
+    "1701FN8X2NG", "1701FN8X21/2DG", "1701FN8X21/2NG", "1701FN8X3/4DG", "1701FN8X3/4NG",
+    "100414X1", "100414X11/2", "100414X2", "100414X21/2", "100414X3",
+    "1501FNPAF7X7/16", "1201FNAL10X2",
+}
 
 
 def slugify(texto):
@@ -203,10 +258,15 @@ def run():
     productos = {}
     precios = {}
     sin_precio = 0
+    excluidos = 0
 
     for r in range(2, hoja.max_row + 1):
         nombre = texto(hoja.cell(r, COL_PRODUCTO).value)
         if not nombre or nombre.lower() in NO_PUBLICAR:
+            continue
+
+        if texto(hoja.cell(r, COL_CODIGO).value) in CODIGOS_EXCLUIDOS:
+            excluidos += 1
             continue
 
         nombre = CORRECCION_NOMBRES.get(nombre, nombre)
@@ -248,6 +308,7 @@ def run():
         medida = texto(hoja.cell(r, COL_MEDIDA).value) or "Estándar"
         presentacion = texto(hoja.cell(r, COL_PRESENTACION).value)
         descripcion = texto(hoja.cell(r, COL_DESCRIPCION).value) or f"{nombre} {medida}"
+        presentacion, descripcion = corregir_presentacion(codigo, presentacion, descripcion)
 
         if vid not in p["_variantes"]:
             p["_variantes"][vid] = {
@@ -315,6 +376,7 @@ def run():
         }, f, indent=2, ensure_ascii=False)
 
     print(f"precios.json   -> {len(precios)} precios (PRIVADO, no se publica)")
+    print(f"  {excluidos} fila(s) omitidas por CODIGOS_EXCLUIDOS")
     if sin_precio:
         print(f"  aviso: {sin_precio} fila(s) sin precio en 'Lista 1'")
 

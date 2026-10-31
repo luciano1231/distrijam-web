@@ -2,3 +2,11 @@
 # queda accesible para cualquier visitante. El panel la importa desde la
 # computadora del administrador.
 precios.json
+
+# Las planillas del proveedor tienen costos y precios: tampoco se publican.
+# El despliegue sube todo lo que está en el repositorio.
+*.xlsx
+
+# Dependencias de las pruebas
+tests/node_modules/
+tests/package-lock.json

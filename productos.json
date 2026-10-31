@@ -42,14 +42,8 @@
       {
         "id": "09071",
         "medida": "1\"",
-        "presentacion": "100 UNID.",
-        "descripcion": "ARANDELA BISELADA ZINC. 1\" X 100 UNID."
-      },
-      {
-        "id": "09071/2",
-        "medida": "1/2\"",
-        "presentacion": "100 UNID.",
-        "descripcion": "ARANDELA BISELADA ZINC. 1/2\" X 100 UNID."
+        "presentacion": "10 UNID.",
+        "descripcion": "ARANDELA BISELADA ZINC. 1\" X 10 UNID."
       },
       {
         "id": "09071/4",
@@ -162,8 +156,8 @@
       {
         "id": "09077/8",
         "medida": "7/8\"",
-        "presentacion": "100 UNID.",
-        "descripcion": "ARANDELA BISELADA ZINC. 7/8\" X 100 UNID."
+        "presentacion": "10 UNID.",
+        "descripcion": "ARANDELA BISELADA ZINC. 7/8\" X 10 UNID."
       },
       {
         "id": "09077MM",
@@ -258,44 +252,44 @@
       {
         "id": "090611/2",
         "medida": "1.1/2\"",
-        "presentacion": "100 UNID.",
-        "descripcion": "A/GROWER PULIDA 1.1/2\" X 100 UNID."
+        "presentacion": "10 UNID.",
+        "descripcion": "A/GROWER PULIDA 1.1/2\" X 10 UNID."
       },
       {
         "id": "090611/4",
         "medida": "1.1/4\"",
-        "presentacion": "100 UNID.",
-        "descripcion": "A/GROWER PULIDA 1.1/4\" X 100 UNID."
+        "presentacion": "10 UNID.",
+        "descripcion": "A/GROWER PULIDA 1.1/4\" X 10 UNID."
       },
       {
         "id": "090611/8",
         "medida": "1.1/8\"",
-        "presentacion": "100 UNID.",
-        "descripcion": "A/GROWER PULIDA 1.1/8\" X 100 UNID."
+        "presentacion": "10 UNID.",
+        "descripcion": "A/GROWER PULIDA 1.1/8\" X 10 UNID."
       },
       {
         "id": "090613/8",
         "medida": "1.3/8\"",
-        "presentacion": "100 UNID.",
-        "descripcion": "A/GROWER PULIDA 1.3/8\" X 100 UNID."
+        "presentacion": "10 UNID.",
+        "descripcion": "A/GROWER PULIDA 1.3/8\" X 10 UNID."
       },
       {
         "id": "090615/8",
         "medida": "1.5/8\"",
-        "presentacion": "1 UNID.",
-        "descripcion": "A/GROWER PULIDA 1.5/8\" X 1 UNID."
+        "presentacion": "10 UNID.",
+        "descripcion": "A/GROWER PULIDA 1.5/8\" X 10 UNID."
       },
       {
         "id": "090617/8",
         "medida": "1.7/8\"",
-        "presentacion": "1 UNID.",
-        "descripcion": "A/GROWER PULIDA 1.7/8\" X 1 UNID."
+        "presentacion": "10 UNID.",
+        "descripcion": "A/GROWER PULIDA 1.7/8\" X 10 UNID."
       },
       {
         "id": "09061",
         "medida": "1\"",
-        "presentacion": "100 UNID.",
-        "descripcion": "A/GROWER PULIDA 1\" X 100 UNID."
+        "presentacion": "10 UNID.",
+        "descripcion": "A/GROWER PULIDA 1\" X 10 UNID."
       },
       {
         "id": "09061/2",
@@ -342,8 +336,8 @@
       {
         "id": "09062",
         "medida": "2\"",
-        "presentacion": "1 UNID.",
-        "descripcion": "A/GROWER PULIDA 2\" X 1 UNID."
+        "presentacion": "10 UNID.",
+        "descripcion": "A/GROWER PULIDA 2\" X 10 UNID."
       },
       {
         "id": "090620MM",
@@ -444,8 +438,8 @@
       {
         "id": "09067/8",
         "medida": "7/8\"",
-        "presentacion": "100 UNID.",
-        "descripcion": "A/GROWER PULIDA 7/8\" X 100 UNID."
+        "presentacion": "10 UNID.",
+        "descripcion": "A/GROWER PULIDA 7/8\" X 10 UNID."
       },
       {
         "id": "09067MM",
@@ -1736,6 +1730,12 @@
         "medida": "7/16 X 6",
         "presentacion": "100 U.",
         "descripcion": "BULON G2 7/16 X 6 X 100 U."
+      },
+      {
+        "id": "22031/2X11/2G",
+        "medida": "1/2 X 1.1/2",
+        "presentacion": "320 U.",
+        "descripcion": "BULON G2 1/2 X 1.1/2 X 320 U."
       }
     ]
   },
@@ -2500,10 +2500,28 @@
         "descripcion": "BULON G5 7/8 X 10 X 1 U."
       },
       {
+        "id": "22027/8X21/2E",
+        "medida": "7/8 X 2 1/2",
+        "presentacion": "1 U.",
+        "descripcion": "BULON G5 7/8 X 2 1/2 X 1 U."
+      },
+      {
         "id": "2202G57/8X2",
         "medida": "7/8 X 2",
         "presentacion": "1 U.",
         "descripcion": "BULON G5 7/8 X 2 X 1 U."
+      },
+      {
+        "id": "22027/8X31/2E",
+        "medida": "7/8 X 3 1/2",
+        "presentacion": "1 U.",
+        "descripcion": "BULON G5 7/8 X 3 1/2 X 1 U."
+      },
+      {
+        "id": "22027/8X41/2E",
+        "medida": "7/8 X 4 1/2",
+        "presentacion": "1 U.",
+        "descripcion": "BULON G5 7/8 X 4 1/2 X 1 U."
       },
       {
         "id": "2202G57/8X5",
@@ -2648,6 +2666,24 @@
         "medida": "X 5",
         "presentacion": "1 U.",
         "descripcion": "BULON G51 X 5 X 1 U."
+      }
+    ]
+  },
+  {
+    "id": "bulon-grado-5-zinc-azul",
+    "name": "BULON GRADO 5 ZINC AZUL",
+    "category": "bulones",
+    "brand": "Telé",
+    "description": "BULON GRADO 5 ZINC AZUL. Consulte medidas y disponibilidad.",
+    "features": "Consulte características técnicas de este producto.",
+    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
+    "image": "imagenes/Fotos Productos/Bulon Grado 5.jpg",
+    "variants": [
+      {
+        "id": "22057/8X21/2",
+        "medida": "7/8 X 2.1/2",
+        "presentacion": "55 UNID",
+        "descripcion": "BULON GRADO 5 ZINC AZUL 7/8 X 2.1/2 X 55 UNID"
       }
     ]
   },
@@ -4446,120 +4482,6 @@
     ]
   },
   {
-    "id": "drywall-fn-panframing",
-    "name": "DRYWALL FN PANFRAMING",
-    "category": "autoperforantes",
-    "brand": "Telé",
-    "description": "DRYWALL FN PANFRAMING. Consulte medidas y disponibilidad.",
-    "features": "Consulte características técnicas de este producto.",
-    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/TEL PAN FRAMING.jpg",
-    "variants": [
-      {
-        "id": "1501FNPAF7X7/16",
-        "medida": "7x7/16 MECHA CAJA 10000",
-        "presentacion": "",
-        "descripcion": "PAM F FN 7x7/16 MECHA CAJA 10000"
-      }
-    ]
-  },
-  {
-    "id": "drywall-fn-tipo-1-aguja",
-    "name": "DRYWALL FN TIPO 1 AGUJA",
-    "category": "autoperforantes",
-    "brand": "Telé",
-    "description": "DRYWALL FN TIPO 1 AGUJA. Consulte medidas y disponibilidad.",
-    "features": "Consulte características técnicas de este producto.",
-    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/DRY T1 AGUJA ZINC.jpg",
-    "variants": [
-      {
-        "id": "1101FNT1A8X916Z",
-        "medida": "1 AGUJA 8 X 9/16",
-        "presentacion": "10.000 UNID. ZINC",
-        "descripcion": "DRY FN T1 AGUJA 8 X 9/16  X 10.000 UNID. ZINC"
-      }
-    ]
-  },
-  {
-    "id": "drywall-fn-tipo-1-mecha",
-    "name": "DRYWALL FN TIPO 1 MECHA",
-    "category": "autoperforantes",
-    "brand": "Telé",
-    "description": "DRYWALL FN TIPO 1 MECHA. Consulte medidas y disponibilidad.",
-    "features": "Consulte características técnicas de este producto.",
-    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/DRY T1 MECHA ZINC.webp",
-    "variants": [
-      {
-        "id": "1101FNT1M8X1Z",
-        "medida": "1 MECHA 8 X 1",
-        "presentacion": "6.000 UNID. ZINC",
-        "descripcion": "DRY FN T1 MECHA 8 X 1  X 6.000 UNID. ZINC"
-      },
-      {
-        "id": "1101FNT1M8X1/2Z",
-        "medida": "1 MECHA 8 X 1/2",
-        "presentacion": "10.000 UNID. ZINC",
-        "descripcion": "DRY FN T1 MECHA 8 X 1/2  X 10.000 UNID. ZINC"
-      },
-      {
-        "id": "1101FNT1M8X3/4Z",
-        "medida": "1 MECHA 8 X 3/4",
-        "presentacion": "5.000 UNID. ZINC",
-        "descripcion": "DRY FN T1 MECHA 8 X 3/4  X 5.000 UNID. ZINC"
-      },
-      {
-        "id": "1101FNT1M8X916N",
-        "medida": "1 MECHA 8 X 9/16",
-        "presentacion": "10.000 UNID. NEGRO",
-        "descripcion": "DRY FN T1 MECHA 8 X 9/16  X 10.000 UNID. NEGRO"
-      },
-      {
-        "id": "1101FNT1M8X916Z",
-        "medida": "1 MECHA 8 X 9/16",
-        "presentacion": "10.000 UNID. ZINC",
-        "descripcion": "DRY FN T1 MECHA 8 X 9/16  X 10.000 UNID. ZINC"
-      }
-    ]
-  },
-  {
-    "id": "drywall-fn-tipo-2-aguja",
-    "name": "DRYWALL FN TIPO 2 AGUJA",
-    "category": "autoperforantes",
-    "brand": "Telé",
-    "description": "DRYWALL FN TIPO 2 AGUJA. Consulte medidas y disponibilidad.",
-    "features": "Consulte características técnicas de este producto.",
-    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/DRY T2 AGUJA.webp",
-    "variants": [
-      {
-        "id": "1101FNT26X1",
-        "medida": "2 AGUJA 6 X 1",
-        "presentacion": "10.000 UNID. NEGRO",
-        "descripcion": "DRY FN T2 AGUJA 6 X 1  X 10.000 UNID. NEGRO"
-      }
-    ]
-  },
-  {
-    "id": "drywall-fn-tipo-3-aguja",
-    "name": "DRYWALL FN TIPO 3 AGUJA",
-    "category": "autoperforantes",
-    "brand": "Telé",
-    "description": "DRYWALL FN TIPO 3 AGUJA. Consulte medidas y disponibilidad.",
-    "features": "Consulte características técnicas de este producto.",
-    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/DRY T3 AGUJA.webp",
-    "variants": [
-      {
-        "id": "1101FNT36X11/2",
-        "medida": "3 AGUJA 6 X 1.1/2",
-        "presentacion": "5.000 UNID. NEGRO",
-        "descripcion": "DRY FN T3 AGUJA 6 X 1.1/2  X 5.000 UNID. NEGRO"
-      }
-    ]
-  },
-  {
     "id": "drywall-pcl-aguja",
     "name": "DRYWALL PCL AGUJA",
     "category": "autoperforantes",
@@ -5070,246 +4992,6 @@
     ]
   },
   {
-    "id": "fix-fn",
-    "name": "FIX FN",
-    "category": "autoperforantes",
-    "brand": "Telé",
-    "description": "FIX FN. Consulte medidas y disponibilidad.",
-    "features": "Consulte características técnicas de este producto.",
-    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/FIX Madera dorado.jpg",
-    "variants": [
-      {
-        "id": "1701FN10X11/2DG",
-        "medida": "10 X 1.1/2",
-        "presentacion": "4.000 UNID. DOR",
-        "descripcion": "FIX FN 10 X 1.1/2 X 4.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN10X11/2NG",
-        "medida": "10 X 1.1/2",
-        "presentacion": "4.000 UNID. NEGRO",
-        "descripcion": "FIX FN 10 X 1.1/2 X 4.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN10X13/4DG",
-        "medida": "10 X 1.3/4",
-        "presentacion": "3.000 UNID. DOR",
-        "descripcion": "FIX FN 10 X 1.3/4 X 3.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN10X13/4NG",
-        "medida": "10 X 1.3/4",
-        "presentacion": "3.000 UNID. NEGRO",
-        "descripcion": "FIX FN 10 X 1.3/4 X 3.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN10X2DG",
-        "medida": "10 X 2",
-        "presentacion": "2.500 UNID. DOR",
-        "descripcion": "FIX FN 10 X 2 X  2.500 UNID. DOR"
-      },
-      {
-        "id": "1701FN10X2NG",
-        "medida": "10 X 2",
-        "presentacion": "2.500 UNID. NEGRO",
-        "descripcion": "FIX FN 10 X 2 X  2.500 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN10X21/2DG",
-        "medida": "10 X 2.1/2",
-        "presentacion": "2.000 UNID. DOR",
-        "descripcion": "FIX FN 10 X 2.1/2 X  2.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN10X21/2NG",
-        "medida": "10 X 2.1/2",
-        "presentacion": "2.000 UNID. NEGRO",
-        "descripcion": "FIX FN 10 X 2.1/2 X  2.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN10X3DG",
-        "medida": "10 X 3",
-        "presentacion": "1.200 UNID. DOR",
-        "descripcion": "FIX FN 10 X 3 X  1.200 UNID. DOR"
-      },
-      {
-        "id": "1701FN10X3NG",
-        "medida": "10 X 3",
-        "presentacion": "1.200 UNID. NEGRO",
-        "descripcion": "FIX FN 10 X 3 X  1.200 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN6X1DG",
-        "medida": "6 X 1",
-        "presentacion": "10.000 UNID. DOR",
-        "descripcion": "FIX FN 6 X 1  X 10.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN6X1NG",
-        "medida": "6 X 1",
-        "presentacion": "10.000 UNID. NEGRO",
-        "descripcion": "FIX FN 6 X 1  X 10.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN6X11/2DG",
-        "medida": "6 X 1.1/2",
-        "presentacion": "5.000 UNID. DOR",
-        "descripcion": "FIX FN 6 X 1.1/2 X 5.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN6X11/2NG",
-        "medida": "6 X 1.1/2",
-        "presentacion": "5.000 UNID. NEGRO",
-        "descripcion": "FIX FN 6 X 1.1/2 X 5.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN6X11/4DG",
-        "medida": "6 X 1.1/4",
-        "presentacion": "8.000 UNID. DOR",
-        "descripcion": "FIX FN 6 X 1.1/4 X 8.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN6X11/4NG",
-        "medida": "6 X 1.1/4",
-        "presentacion": "8.000 UNID. NEGRO",
-        "descripcion": "FIX FN 6 X 1.1/4 X 8.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN6X13/4DG",
-        "medida": "6 X 1.3/4",
-        "presentacion": "5.000 UNID. DOR",
-        "descripcion": "FIX FN 6 X 1.3/4 X 5.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN6X13/4NG",
-        "medida": "6 X 1.3/4",
-        "presentacion": "5.000 UNID. NEGRO",
-        "descripcion": "FIX FN 6 X 1.3/4 X 5.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN6X13/8DG",
-        "medida": "6 X 1.3/8",
-        "presentacion": "6.000 UNID. DOR",
-        "descripcion": "FIX FN 6 X 1.3/8 X 6.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN6X13/8NG",
-        "medida": "6 X 1.3/8",
-        "presentacion": "6.000 UNID. NEGRO",
-        "descripcion": "FIX FN 6 X 1.3/8 X 6.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN6X15/8DG",
-        "medida": "6 X 1.5/8",
-        "presentacion": "5.000 UNID. DOR",
-        "descripcion": "FIX FN 6 X 1.5/8 X 5.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN6X15/8NG",
-        "medida": "6 X 1.5/8",
-        "presentacion": "5.000 UNID. NEGRO",
-        "descripcion": "FIX FN 6 X 1.5/8 X 5.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN6X2DG",
-        "medida": "6 X 2",
-        "presentacion": "3.500 UNID. DOR",
-        "descripcion": "FIX FN 6 X 2 X 3.500 UNID. DOR"
-      },
-      {
-        "id": "1701FN6X2NG",
-        "medida": "6 X 2",
-        "presentacion": "3.500 UNID. NEGRO",
-        "descripcion": "FIX FN 6 X 2 X 3.500 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN6X3/4DG",
-        "medida": "6 X 3/4",
-        "presentacion": "15.000 UNID. DOR",
-        "descripcion": "FIX FN 6 X 3/4 X 15.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN6X3/4NG",
-        "medida": "6 X 3/4",
-        "presentacion": "15.000 UNID. NEGRO",
-        "descripcion": "FIX FN 6 X 3/4 X 15.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN6X5/8DG",
-        "medida": "6 X 5/8",
-        "presentacion": "20.000 UNID. DOR",
-        "descripcion": "FIX FN 6 X 5/8 X 20.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN6X5/8NG",
-        "medida": "6 X 5/8",
-        "presentacion": "20.000 UNID. NEGRO",
-        "descripcion": "FIX FN 6 X 5/8 X 20.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN8X11/2DG",
-        "medida": "8 X 1.1/2",
-        "presentacion": "5.000 UNID. DOR",
-        "descripcion": "FIX FN 8 X 1.1/2 X 5.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN8X11/2NG",
-        "medida": "8 X 1.1/2",
-        "presentacion": "5.000 UNID. NEGRO",
-        "descripcion": "FIX FN 8 X 1.1/2 X 5.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN8X13/4DG",
-        "medida": "8 X 1.3/4",
-        "presentacion": "4.000 UNID. DOR",
-        "descripcion": "FIX FN 8 X 1.3/4 X 4.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN8X13/4NG",
-        "medida": "8 X 1.3/4",
-        "presentacion": "4.000 UNID. NEGRO",
-        "descripcion": "FIX FN 8 X 1.3/4 X 4.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN8X2DG",
-        "medida": "8 X 2",
-        "presentacion": "3.000 UNID. DOR",
-        "descripcion": "FIX FN 8 X 2 X 3.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN8X2NG",
-        "medida": "8 X 2",
-        "presentacion": "3.000 UNID. NEGRO",
-        "descripcion": "FIX FN 8 X 2 X 3.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN8X21/2DG",
-        "medida": "8 X 2.1/2",
-        "presentacion": "2.000 UNID. DOR",
-        "descripcion": "FIX FN 8 X 2.1/2 X 2.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN8X21/2NG",
-        "medida": "8 X 2.1/2",
-        "presentacion": "2.000 UNID. NEGRO",
-        "descripcion": "FIX FN 8 X 2.1/2 X 2.000 UNID. NEGRO"
-      },
-      {
-        "id": "1701FN8X3/4DG",
-        "medida": "8 X 3/4",
-        "presentacion": "10.000 UNID. DOR",
-        "descripcion": "FIX FN 8 X 3/4 X 10.000 UNID. DOR"
-      },
-      {
-        "id": "1701FN8X3/4NG",
-        "medida": "8 X 3/4",
-        "presentacion": "10.000 UNID. NEGRO",
-        "descripcion": "FIX FN 8 X 3/4 X 10.000 UNID. NEGRO"
-      }
-    ]
-  },
-  {
     "id": "fix-madera-dorado",
     "name": "FIX MADERA DORADO",
     "category": "autoperforantes",
@@ -5570,12 +5252,6 @@
         "medida": "12 X 4",
         "presentacion": "50 UNID. DOR",
         "descripcion": "FIX 12 X 4  X 50 UNID. DOR"
-      },
-      {
-        "id": "1712X4DG",
-        "medida": "12 X 4",
-        "presentacion": "700 UNID. DOR",
-        "descripcion": "FIX 12 X 4  X 700 UNID. DOR"
       },
       {
         "id": "1712X5DE",
@@ -5978,6 +5654,12 @@
         "medida": "8 X 5/8",
         "presentacion": "200 UNID. DOR",
         "descripcion": "FIX 8 X 5/8  X 200 UNID. DOR"
+      },
+      {
+        "id": "176X15/8DG",
+        "medida": "6 X 1.5/8",
+        "presentacion": "5.000 UNID. DOR",
+        "descripcion": "FIX 6 X 1.5/8 X 5.000 UNID. DOR"
       }
     ]
   },
@@ -7256,48 +6938,6 @@
         "medida": "CHAPA 14 X 7/8 CONICO",
         "presentacion": "150 UNID.",
         "descripcion": "HT2 CHAPA 14 X 7/8 CONICO  X 150 UNID."
-      }
-    ]
-  },
-  {
-    "id": "hexagonal-tipo-2-fn-chapa-perfil",
-    "name": "HEXAGONAL TIPO 2 FN CHAPA-PERFIL",
-    "category": "autoperforantes",
-    "brand": "Telé",
-    "description": "HEXAGONAL TIPO 2 FN CHAPA-PERFIL. Consulte medidas y disponibilidad.",
-    "features": "Consulte características técnicas de este producto.",
-    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Hexagonal Tipo 2.jpg",
-    "variants": [
-      {
-        "id": "100414X1",
-        "medida": "2 FN 14 X 1",
-        "presentacion": "1.500 UNID.",
-        "descripcion": "HT2 FN 14 X 1  X 1.500 UNID."
-      },
-      {
-        "id": "100414X11/2",
-        "medida": "2 FN 14 X 1.1/2",
-        "presentacion": "1.200 UNID.",
-        "descripcion": "HT2 FN 14 X 1.1/2  X 1.200 UNID."
-      },
-      {
-        "id": "100414X2",
-        "medida": "2 FN 14 X 2",
-        "presentacion": "1.000 UNID.",
-        "descripcion": "HT2 FN 14 X 2  X 1.000 UNID."
-      },
-      {
-        "id": "100414X21/2",
-        "medida": "2 FN 14 X 2.1/2",
-        "presentacion": "900 UNID.",
-        "descripcion": "HT2 FN 14 X 2.1/2  X 900 UNID."
-      },
-      {
-        "id": "100414X3",
-        "medida": "2 FN 14 X 3",
-        "presentacion": "700 UNID.",
-        "descripcion": "HT2 FN 14 X 3 X 700 UNID."
       }
     ]
   },
@@ -9918,30 +9558,6 @@
     ]
   },
   {
-    "id": "tornillo-con-alas-fn",
-    "name": "TORNILLO CON ALAS FN",
-    "category": "autoperforantes",
-    "brand": "Telé",
-    "description": "TORNILLO CON ALAS FN. Consulte medidas y disponibilidad.",
-    "features": "Consulte características técnicas de este producto.",
-    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tornillo con Alas.jpg",
-    "variants": [
-      {
-        "id": "1201FNAL10X11/2",
-        "medida": "10 X 1.1/2",
-        "presentacion": "4.000 U.",
-        "descripcion": "ALAS FN 10 X 1.1/2  X 4.000 U."
-      },
-      {
-        "id": "1201FNAL8X11/4",
-        "medida": "8 X 1.1/4",
-        "presentacion": "6.000 U.",
-        "descripcion": "ALAS FN 8 X 1.1/4  X 6.000 U."
-      }
-    ]
-  },
-  {
     "id": "tuerca-autofrenante",
     "name": "TUERCA AUTOFRENANTE",
     "category": "tuercas",
@@ -10008,8 +9624,8 @@
       {
         "id": "04047/8",
         "medida": "7/8 X 9H",
-        "presentacion": "100 U. UNC",
-        "descripcion": "TUER. AUTO. 7/8 X 9H X 100 U. UNC"
+        "presentacion": "10 U. UNC",
+        "descripcion": "TUER. AUTO. 7/8 X 9H X 10 U. UNC"
       },
       {
         "id": "04049/16",
@@ -10032,32 +9648,32 @@
       {
         "id": "040514",
         "medida": "M14 X 2,0",
-        "presentacion": "1 U.",
-        "descripcion": "TUER. AUTO. M14 X 2,0 X 1 U."
+        "presentacion": "100 U.",
+        "descripcion": "TUER. AUTO. M14 X 2,0 X 100 U."
       },
       {
         "id": "040516",
         "medida": "M16 X 2,0",
-        "presentacion": "1 U.",
-        "descripcion": "TUER. AUTO. M16 X 2,0 X 1 U."
+        "presentacion": "100 U.",
+        "descripcion": "TUER. AUTO. M16 X 2,0 X 100 U."
       },
       {
         "id": "040518",
         "medida": "M18 X 2,5",
-        "presentacion": "1 U.",
-        "descripcion": "TUER. AUTO. M18 X 2,5 X 1 U."
+        "presentacion": "100 U.",
+        "descripcion": "TUER. AUTO. M18 X 2,5 X 100 U."
       },
       {
         "id": "040520",
         "medida": "M20 X 2,5",
-        "presentacion": "1 U.",
-        "descripcion": "TUER. AUTO. M20 X 2,5 X 1 U."
+        "presentacion": "100 U.",
+        "descripcion": "TUER. AUTO. M20 X 2,5 X 100 U."
       },
       {
         "id": "040522",
         "medida": "M22 X 2,5",
-        "presentacion": "1 U.",
-        "descripcion": "TUER. AUTO. M22 X 2,5 X 1 U."
+        "presentacion": "10 U.",
+        "descripcion": "TUER. AUTO. M22 X 2,5 X 10 U."
       },
       {
         "id": "040524",
@@ -10098,8 +9714,8 @@
       {
         "id": "04011",
         "medida": "2 1\"",
-        "presentacion": "100 U. ZINC. USS",
-        "descripcion": "TUER. G2 1\" X 100 U. ZINC. USS"
+        "presentacion": "1 U. ZINC. USS",
+        "descripcion": "TUER. G2 1\" X 1 U. ZINC. USS"
       },
       {
         "id": "04011/2",
@@ -10164,8 +9780,8 @@
       {
         "id": "04017/8",
         "medida": "2 7/8",
-        "presentacion": "100 U. ZINC. USS",
-        "descripcion": "TUER. G2 7/8  X 100 U. ZINC. USS"
+        "presentacion": "1 U. ZINC. USS",
+        "descripcion": "TUER. G2 7/8  X 1 U. ZINC. USS"
       },
       {
         "id": "04019/16",
@@ -10248,8 +9864,8 @@
       {
         "id": "04037/8",
         "medida": "5 7/8",
-        "presentacion": "100 U. DOR. USS",
-        "descripcion": "TUER. G5 7/8  X 100 U. DOR. USS"
+        "presentacion": "1 U. DOR. USS",
+        "descripcion": "TUER. G5 7/8  X 1 U. DOR. USS"
       },
       {
         "id": "04039/16",
