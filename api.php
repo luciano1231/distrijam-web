@@ -518,12 +518,28 @@ function limpiarImagenes($cat) {
 /* Subir una foto. Se manda de a una para no chocar con el límite de tamaño
    de los pedidos del hosting. */
 if ($accion === 'catalogo_imagen' && $metodo === 'POST') {
-    $cuerpo = cuerpoCatalogo();
-    $data = isset($cuerpo['data']) && is_string($cuerpo['data']) ? $cuerpo['data'] : '';
-    if (!preg_match('/^data:image\/[a-z+]+;base64,(.+)$/s', $data, $m)) {
-        salir(400, ['error' => 'La imagen no tiene un formato válido.']);
+    // Subida normal de archivo (multipart): es la que dejan pasar los filtros del hosting
+    if (isset($_FILES['imagen'])) {
+        exigirSesion();
+        $f = $_FILES['imagen'];
+        if (!is_array($f) || !isset($f['error']) || is_array($f['error'])) {
+            salir(400, ['error' => 'La imagen no tiene un formato válido.']);
+        }
+        if ($f['error'] === UPLOAD_ERR_INI_SIZE || $f['error'] === UPLOAD_ERR_FORM_SIZE) {
+            salir(413, ['error' => 'La imagen supera los 2 MB.']);
+        }
+        if ($f['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($f['tmp_name'])) {
+            salir(400, ['error' => 'La imagen no tiene un formato válido.']);
+        }
+        $bytes = file_get_contents($f['tmp_name']);
+    } else {
+        $cuerpo = cuerpoCatalogo();
+        $data = isset($cuerpo['data']) && is_string($cuerpo['data']) ? $cuerpo['data'] : '';
+        if (!preg_match('/^data:image\/[a-z+]+;base64,(.+)$/s', $data, $m)) {
+            salir(400, ['error' => 'La imagen no tiene un formato válido.']);
+        }
+        $bytes = base64_decode($m[1], true);
     }
-    $bytes = base64_decode($m[1], true);
     if ($bytes === false || $bytes === '') {
         salir(400, ['error' => 'La imagen no tiene un formato válido.']);
     }

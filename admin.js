@@ -62,12 +62,35 @@ async function apiCatalogo(accion, datos) {
   return data;
 }
 
+// Sube una foto como archivo (multipart): mandarla como texto base64 en un JSON
+// lo bloquea el filtro de seguridad del hosting (403)
+async function subirArchivo(dataUrl) {
+  const [cabecera, base64] = dataUrl.split(',');
+  const binario = atob(base64);
+  const bytes = new Uint8Array(binario.length);
+  for (let i = 0; i < binario.length; i++) bytes[i] = binario.charCodeAt(i);
+  const blob = new Blob([bytes], { type: (cabecera.match(/^data:([^;]+)/) || [])[1] || 'image/png' });
+  const form = new FormData();
+  form.append('imagen', blob, 'imagen');
+  let res;
+  try {
+    res = await fetch('api.php?a=catalogo_imagen', { method: 'POST', body: form });
+  } catch (e) {
+    throw new Error('No hay conexión con el servidor.');
+  }
+  const data = await res.json().catch(() => ({}));
+  if (res.status === 401) throw new Error('La sesión venció: volvé a entrar al panel.');
+  if (res.status === 403) throw new Error('El servidor bloqueó la subida de la imagen (403).');
+  if (!res.ok || data.ok !== true) throw new Error(data.error || 'No se pudo subir la imagen.');
+  return data;
+}
+
 // Sube las fotos nuevas (data:...) de a una y devuelve todas como URL
 async function subirImagenes(lista) {
   const urls = [];
   for (const img of lista) {
     if (img.startsWith('data:')) {
-      const r = await apiCatalogo('catalogo_imagen', { data: img });
+      const r = await subirArchivo(img);
       urls.push(r.url);
     } else {
       urls.push(img);

@@ -61,6 +61,21 @@ async function abrir(nav, file, { query = '', confirmar = true } = {}) {
       w.matchMedia = () => ({ matches: false, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {} });
       w.IntersectionObserver = class { observe() {} unobserve() {} disconnect() {} };
       w.fetch = async (url, opciones) => {
+        // El navegador simulado arma el FormData con clases de jsdom: se pasa al de Node
+        if (opciones && opciones.body instanceof w.FormData) {
+          const form = new FormData();
+          for (const [k, v] of opciones.body.entries()) {
+            if (typeof v === 'string') { form.append(k, v); continue; }
+            const bytes = await new Promise((ok, mal) => {
+              const lector = new w.FileReader();
+              lector.onload = () => ok(Buffer.from(lector.result));
+              lector.onerror = mal;
+              lector.readAsArrayBuffer(v);
+            });
+            form.append(k, new Blob([bytes], { type: v.type }), v.name);
+          }
+          opciones = { ...opciones, body: form };
+        }
         const r = await nav.fetch(new URL(url, w.location.href).href, opciones);
         const texto = await r.text();
         return { ok: r.ok, status: r.status, headers: r.headers, json: async () => JSON.parse(texto), text: async () => texto };

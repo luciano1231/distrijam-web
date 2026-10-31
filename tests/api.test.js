@@ -17,7 +17,7 @@ class Navegador {
     const headers = {};
     const c = Object.entries(this.cookies).map(([k, v]) => `${k}=${v}`).join('; ');
     if (c) headers.Cookie = c;
-    if (cuerpo !== undefined || crudo !== undefined) headers['Content-Type'] = tipo;
+    if (tipo && (cuerpo !== undefined || crudo !== undefined)) headers['Content-Type'] = tipo;
     const res = await fetch(BASE + 'api.php?a=' + accion, {
       method: metodo, headers,
       body: crudo !== undefined ? crudo : (cuerpo !== undefined ? JSON.stringify(cuerpo) : undefined),
@@ -104,6 +104,25 @@ const publico = async () => (await new Navegador().pedir('catalogo')).json;
   await prueba('Imágenes', 'Rechaza una imagen de más de 2 MB', async () => {
     const grande = Buffer.concat([PNG, Buffer.alloc(2.2 * 1024 * 1024)]);
     status(await admin.post('catalogo_imagen', { data: dataUrl(grande) }), 413);
+  });
+
+  // Es la forma que usa el panel: un archivo real, no texto base64 dentro de un JSON
+  const subirArchivo = (nav, bytes, nombre = 'imagen') => {
+    const f = new FormData();
+    f.append('imagen', new Blob([bytes]), nombre);
+    return nav.pedir('catalogo_imagen', { metodo: 'POST', crudo: f, tipo: null });
+  };
+  await prueba('Imágenes', 'Sube una PNG como archivo (multipart) y es idéntica al descargarla', async () => {
+    const r = await subirArchivo(admin, PNG);
+    status(r, 200);
+    esperar(/^api\.php\?a=img&f=[a-f0-9]{16}\.png$/.test(r.json.url), `url: ${r.json.url}`);
+    const g = await fetch(BASE + r.json.url);
+    esperar(Buffer.from(await g.arrayBuffer()).equals(PNG), 'el archivo descargado no es el mismo');
+  });
+  await prueba('Imágenes', 'La subida como archivo exige sesión, y rechaza lo que no es imagen o pesa más de 2 MB', async () => {
+    status(await subirArchivo(anonimo, PNG), 401);
+    status(await subirArchivo(admin, Buffer.from('<?php echo "hola"; ?>'), 'x.png'), 400);
+    status(await subirArchivo(admin, Buffer.concat([PNG, Buffer.alloc(2.2 * 1024 * 1024)])), 413);
   });
 
   await prueba('Imágenes', 'Rechaza un data: mal formado', async () => {
