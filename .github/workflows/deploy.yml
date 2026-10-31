@@ -49,6 +49,9 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         server-dir: ./public_html/  # Ajustá esto según la carpeta de tu hosting
         protocol: ftps
+        # Con los 30 s por defecto el hosting cortaba la conexión a mitad
+        # ("Timeout (control socket)", "Server sent FIN packet unexpectedly")
+        timeout: 120000
         # Las pruebas no van al hosting (los tres primeros son los que excluye por defecto)
         exclude: |
           **/.git*
