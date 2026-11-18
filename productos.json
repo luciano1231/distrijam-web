@@ -1,10 +1,10 @@
 [
   {
-    "id": "arandela-biselada-dorada",
-    "name": "ARANDELA BISELADA DORADA",
+    "id": "arandela-biselada-zinc",
+    "name": "ARANDELA BISELADA ZINC.",
     "category": "arandelas",
-    "brand": "",
-    "description": "ARANDELA BISELADA DORADA. Consulte medidas y disponibilidad.",
+    "brand": "Telé",
+    "description": "Arandela zinc dorado con bordes biselados",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/Arandela Biselada.webp",
@@ -26,19 +26,7 @@
         "medida": "5/32",
         "presentacion": "100 UNID",
         "descripcion": "A/BISELADA ZINC. 5/32\" X 100 UNID."
-      }
-    ]
-  },
-  {
-    "id": "arandela-biselada-zinc",
-    "name": "ARANDELA BISELADA ZINC.",
-    "category": "arandelas",
-    "brand": "Telé",
-    "description": "ARANDELA BISELADA ZINC.. Consulte medidas y disponibilidad.",
-    "features": "Consulte características técnicas de este producto.",
-    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Arandela Biselada.webp",
-    "variants": [
+      },
       {
         "id": "09071",
         "medida": "1\"",
@@ -184,7 +172,7 @@
     "name": "ARANDELA CHAPISTA ZINC.",
     "category": "arandelas",
     "brand": "Telé",
-    "description": "ARANDELA CHAPISTA ZINC.. Consulte medidas y disponibilidad.",
+    "description": "Arandela tipo chapista con vuelo ancho",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/Arandela Chapista.webp",
@@ -226,7 +214,7 @@
     "name": "ARANDELA CUNA",
     "category": "arandelas",
     "brand": "Telé",
-    "description": "ARANDELA CUNA. Consulte medidas y disponibilidad.",
+    "description": "Arandela convexa con forma de cuña",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/Arandela Cuña.webp",
@@ -244,7 +232,7 @@
     "name": "ARANDELA GROWER PULIDA",
     "category": "arandelas",
     "brand": "Telé",
-    "description": "ARANDELA GROWER PULIDA. Consulte medidas y disponibilidad.",
+    "description": "Arandela de presión tipo grower. Hierro natural",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/Arandela Grower de presion.jpg",
@@ -466,7 +454,7 @@
     "name": "ARANDELA NEOPRENE",
     "category": "arandelas",
     "brand": "Telé",
-    "description": "ARANDELA NEOPRENE. Consulte medidas y disponibilidad.",
+    "description": "Arandela convexa de goma",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/Arandela de goma.jpg",
@@ -484,7 +472,7 @@
     "name": "ARANDELA PLANA ZINC.",
     "category": "arandelas",
     "brand": "Telé",
-    "description": "ARANDELA PLANA ZINC.. Consulte medidas y disponibilidad.",
+    "description": "Arandela plana zincado azul",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/Arandela.jpg",
@@ -580,7 +568,7 @@
     "name": "ARANDELA VULCANIZADA",
     "category": "arandelas",
     "brand": "Telé",
-    "description": "ARANDELA VULCANIZADA. Consulte medidas y disponibilidad.",
+    "description": "Arandela vulcanizada",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/Arandela Vulcanizada.jpg",
@@ -607,7 +595,7 @@
     "description": "BULON CABEZA REDONDA",
     "features": "CABEZA REDONDA, CUELLO CUADRADO, INCLUYE TUERCAS.",
     "applications": "MUEBLES, TRANQUERAS, UNIONES MADERA + METAL, CARPINTERIA",
-    "image": "imagenes/Fotos Productos/BULON CABEZA REDONDA CON CUELLO CUADRADO.jpg",
+    "image": "imagenes/Fotos Nuevas/BULON CABEZ RED CCC.png",
     "variants": [
       {
         "id": "2501G1/4X1",
@@ -1228,10 +1216,16 @@
         "descripcion": "BULON G2 1/2 X 1 X 400 U."
       },
       {
-        "id": "22031/2X11/4G",
+        "id": "22031/2X11/2G",
         "medida": "1/2 X 1.1/2",
         "presentacion": "320 U.",
         "descripcion": "BULON G2 1/2 X 1.1/2 X 320 U."
+      },
+      {
+        "id": "22031/2X11/4G",
+        "medida": "1/2 X 1.1/4",
+        "presentacion": "360 U.",
+        "descripcion": "BULON G2 1/2 X 1.1/4 X 360 U."
       },
       {
         "id": "22031/2X13/4G",
@@ -1730,12 +1724,6 @@
         "medida": "7/16 X 6",
         "presentacion": "100 U.",
         "descripcion": "BULON G2 7/16 X 6 X 100 U."
-      },
-      {
-        "id": "22031/2X11/2G",
-        "medida": "1/2 X 1.1/2",
-        "presentacion": "320 U.",
-        "descripcion": "BULON G2 1/2 X 1.1/2 X 320 U."
       }
     ]
   },
@@ -2670,24 +2658,6 @@
     ]
   },
   {
-    "id": "bulon-grado-5-zinc-azul",
-    "name": "BULON GRADO 5 ZINC AZUL",
-    "category": "bulones",
-    "brand": "Telé",
-    "description": "BULON GRADO 5 ZINC AZUL. Consulte medidas y disponibilidad.",
-    "features": "Consulte características técnicas de este producto.",
-    "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Bulon Grado 5.jpg",
-    "variants": [
-      {
-        "id": "22057/8X21/2",
-        "medida": "7/8 X 2.1/2",
-        "presentacion": "55 UNID",
-        "descripcion": "BULON GRADO 5 ZINC AZUL 7/8 X 2.1/2 X 55 UNID"
-      }
-    ]
-  },
-  {
     "id": "bul-n-milim-trico-grado-8-8-dorado",
     "name": "BULÓN MILIMÉTRICO GRADO 8.8 DORADO",
     "category": "bulones",
@@ -3364,10 +3334,14 @@
     "name": "CHIPBOARD MADERA DORADO",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "CHIPBOARD MADERA DORADO. Consulte medidas y disponibilidad.",
+    "description": "Tornillo tipo Chipboard para madera y placas de MDF",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/CHIP DORADO.webp",
+    "image": "imagenes/Fotos Nuevas/CHIP.png",
+    "images": [
+      "imagenes/Fotos Nuevas/CHIP.png",
+      "imagenes/Fotos Nuevas/CHIP ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "203X10DE",
@@ -3832,10 +3806,14 @@
     "name": "CHIPBOARD MADERA NEGRO",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "CHIPBOARD MADERA NEGRO. Consulte medidas y disponibilidad.",
+    "description": "Tornillo tipo Chipboard para madera y placas de MDF",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/CHIP NEGRO.jpg",
+    "images": [
+      "imagenes/Fotos Productos/CHIP NEGRO.jpg",
+      "imagenes/Fotos Nuevas/CHIP ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "203X10NE",
@@ -4300,7 +4278,7 @@
     "name": "CLAVO LISO PUNTA PARIS",
     "category": "remaches-clavos",
     "brand": "",
-    "description": "CLAVO LISO PUNTA PARIS. Consulte medidas y disponibilidad.",
+    "description": "Clavo de hierro liso punta paris",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/CLAVO PUNTA PARIS.jpg",
@@ -4336,7 +4314,7 @@
     "name": "CLAVO TORCIONADO",
     "category": "remaches-clavos",
     "brand": "",
-    "description": "CLAVO TORCIONADO. Consulte medidas y disponibilidad.",
+    "description": "Clavo de hierro torcionado",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/CLAVO TORCIONADO.webp",
@@ -4378,10 +4356,14 @@
     "name": "CUT PUNTA FLECHA DORADO",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "CUT PUNTA FLECHA DORADO. Consulte medidas y disponibilidad.",
+    "description": "Tornillo tipo FIX con punta \"flecha\" para perforar delgadas laminas de madera evitando fisuras",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/CUT.jpg",
+    "image": "imagenes/Fotos Nuevas/CUT.png",
+    "images": [
+      "imagenes/Fotos Nuevas/CUT.png",
+      "imagenes/Fotos Nuevas/CUT ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "214X45DE",
@@ -4426,10 +4408,10 @@
     "name": "DECK MECHA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "DECK MECHA. Consulte medidas y disponibilidad.",
+    "description": "Tornillo tipo FIX con punta mecha, para fijacion de tablas para deck con cabeza fresadora.",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/DECK.jpg",
+    "image": "imagenes/Fotos Nuevas/DECK MECHA.png",
     "variants": [
       {
         "id": "188X11/2E",
@@ -4462,10 +4444,14 @@
     "name": "DRYWALL CABEZA FRESADA 4 PLACAS",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "DRYWALL 4 PLACAS",
+    "description": "Drywall 4 placas. Punta mecha, cabeza fresada",
     "features": "ROSCA CHAPA, PUNTA MECHA, CABEZA FRESADA",
     "applications": "UTILIZADO EN INDUSTRIA Y CONSTRUCCION PARA VINCULAR PERFILES DE ESPESORES MAYORES A 0.90mm",
-    "image": "imagenes/Fotos Productos/FRESADA 4 PLACAS.jpg",
+    "image": "imagenes/Fotos Nuevas/FRESADA 4 PLACAS.png",
+    "images": [
+      "imagenes/Fotos Nuevas/FRESADA 4 PLACAS.png",
+      "imagenes/Fotos Nuevas/FRESADA 4 PLACAS ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "11FRESADAGZ",
@@ -4486,10 +4472,14 @@
     "name": "DRYWALL PCL AGUJA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "DRYWALL PCL AGUJA",
+    "description": "Drywall punta aguja. Utilizado para vincular placas de yeso o madera a perfiles metalicos",
     "features": "ROSCA CHAPA, PUNTA AGUJA, CABEZA TROMPETA FRESADORA",
     "applications": "UTILIZADO EN INDUSTRIA Y CONSTRUCCION PARA VINCULACION DE PERFILES DE ESPESOR SUPERIOR A 0.90mm",
-    "image": "imagenes/Fotos Productos/DRY PCL AGUJA.jpg",
+    "image": "imagenes/Fotos Nuevas/DRY PCL AGUJA.png",
+    "images": [
+      "imagenes/Fotos Nuevas/DRY PCL AGUJA.png",
+      "imagenes/Fotos Nuevas/DRY PCL AGUJA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "11PCLAE8X11/4",
@@ -4510,10 +4500,14 @@
     "name": "DRYWALL PCL MECHA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "DRYWALL PCL MECHA",
+    "description": "Drywall punta mecha. Utilizado para vincular placas de yeso y madera a perfiles metalicos",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/DRY PCL MECHA.jpg",
+    "image": "imagenes/Fotos Nuevas/DRY PCL MECHA.png",
+    "images": [
+      "imagenes/Fotos Nuevas/DRY PCL MECHA.png",
+      "imagenes/Fotos Nuevas/DRY PCL MECHA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "11PCLME8X11/4",
@@ -4534,10 +4528,15 @@
     "name": "DRYWALL TIPO 1 AGUJA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "DRYWALL T1 AGUJA",
+    "description": "Drywall T1 punta aguja. Cabeza wafer y phillips",
     "features": "ROSCA CHAPA, PUNTA AGUJA, CABEZA WAFER",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/DRY T1 AGUJA ZINC.jpg",
+    "image": "imagenes/Fotos Nuevas/DRY T1 AGUJA.png",
+    "images": [
+      "imagenes/Fotos Nuevas/DRY T1 AGUJA.png",
+      "imagenes/Fotos Productos/DRY T1 AGUJA NEGRA.webp",
+      "imagenes/Fotos Nuevas/DRY T1 AGUJA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "11T1AE6X3/8Z",
@@ -4618,10 +4617,15 @@
     "name": "DRYWALL TIPO 1 MECHA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "DRYWALL T1 MECHA",
+    "description": "Drywall T1 punta mecha. Cabeza wafer y phillips",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/DRY T1 MECHA ZINC.webp",
+    "image": "imagenes/Fotos Nuevas/DRY T1 MECHA.png",
+    "images": [
+      "imagenes/Fotos Nuevas/DRY T1 MECHA.png",
+      "imagenes/Fotos Productos/DRY T1 MECHA NEGRO.webp",
+      "imagenes/Fotos Nuevas/DRY T1 MECHA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "11T1ME10X1Z",
@@ -4798,10 +4802,14 @@
     "name": "DRYWALL TIPO 2 AGUJA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "DRYWALL T1 AGUJA",
+    "description": "Drywall T2 punta aguja. Cabeza trompeta y phillips. Solo color negro",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/DRY T2 AGUJA.webp",
+    "image": "imagenes/Fotos Nuevas/DRY T2 AGUJA.png",
+    "images": [
+      "imagenes/Fotos Nuevas/DRY T2 AGUJA.png",
+      "imagenes/Fotos Nuevas/DRY T2 AGUJA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "11T2AG6X1N",
@@ -4828,10 +4836,15 @@
     "name": "DRYWALL TIPO 2 MECHA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "DRYWALL T1 MECHA",
+    "description": "Drywall T2 punta mecha. Cabeza trompeta y phillips",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/DRY T2 MECHA.webp",
+    "images": [
+      "imagenes/Fotos Productos/DRY T2 MECHA.webp",
+      "imagenes/Fotos Nuevas/DRY T2 MECHA.png",
+      "imagenes/Fotos Nuevas/DRY T2 MECHA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "11T2MM6X11/8N",
@@ -4876,10 +4889,14 @@
     "name": "DRYWALL TIPO 3 AGUJA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "DRYWALL TIPO 3 AGUJA. Consulte medidas y disponibilidad.",
+    "description": "Drywall T3 punta aguja. Cabeza trompeta y phillips",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/DRY T3 AGUJA.webp",
+    "image": "imagenes/Fotos Nuevas/DRY T3 AGUJA.png",
+    "images": [
+      "imagenes/Fotos Nuevas/DRY T3 AGUJA.png",
+      "imagenes/Fotos Nuevas/DRY T3 AGUJA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "11T3AM6X11/2",
@@ -4906,10 +4923,15 @@
     "name": "DRYWALL TIPO 3 MECHA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "DRYWALL TIPO 3 MECHA. Consulte medidas y disponibilidad.",
+    "description": "Drywall T3 punta mecha. Cabeza trompeta y phillips",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/DRY T3 MECHA NEGRO.webp",
+    "images": [
+      "imagenes/Fotos Productos/DRY T3 MECHA NEGRO.webp",
+      "imagenes/Fotos Nuevas/DRY T3 MECHA.png",
+      "imagenes/Fotos Nuevas/DRY T3 MECHA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "11T3MM6X15/8N",
@@ -4954,10 +4976,14 @@
     "name": "DRYWALL TIPO 4 AGUJA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "DRYWALL TIPO 4 AGUJA. Consulte medidas y disponibilidad.",
+    "description": "Drywall T4 punta aguja. Cabeza trompeta y phillips. Solo color negro",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/DRY T4 AGUJA.jpg",
+    "image": "imagenes/Fotos Nuevas/DRY T4 AGUJA.png",
+    "images": [
+      "imagenes/Fotos Nuevas/DRY T4 AGUJA.png",
+      "imagenes/Fotos Nuevas/DRY T4 AGUJA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "11T4AM6X2N",
@@ -4996,10 +5022,14 @@
     "name": "FIX MADERA DORADO",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "TORNILLO PARA MADERA ETC",
+    "description": "Tornillo FIX para madera y fijaciones en general. Presentaciones en color negro y dorado.",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/FIX Madera dorado.jpg",
+    "image": "imagenes/Fotos Nuevas/FIX.png",
+    "images": [
+      "imagenes/Fotos Nuevas/FIX.png",
+      "imagenes/Fotos Nuevas/FIX ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "1710X1DM",
@@ -5668,10 +5698,14 @@
     "name": "FIX MADERA NEGRO",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "FIX MADERA NEGRO. Consulte medidas y disponibilidad.",
+    "description": "Tornillo FIX para madera y fijaciones en general. Presentaciones en color negro y dorado.",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/FIX Madera Negro.jpg",
+    "images": [
+      "imagenes/Fotos Productos/FIX Madera Negro.jpg",
+      "imagenes/Fotos Nuevas/FIX ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "1710X1NM",
@@ -6346,7 +6380,7 @@
     "name": "GANCHO ESTIRA TEJIDO",
     "category": "ganchos",
     "brand": "Telé",
-    "description": "GANCHO ESTIRA TEJIDO. Consulte medidas y disponibilidad.",
+    "description": "Gancho Estira Tejido con tuerca y arandela",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/GANCHO P TEJIDO.webp",
@@ -6354,13 +6388,13 @@
       {
         "id": "07GANESTCOMP175",
         "medida": "1/4X175mm COMP. 100 U.",
-        "presentacion": "",
+        "presentacion": "100 UNID.",
         "descripcion": "GANCHO EST. TEJIDO 1/4X175mm COMP. 100 U."
       },
       {
         "id": "07GANESTCOMP200",
         "medida": "5/16X200mm COMP. 100 U.",
-        "presentacion": "",
+        "presentacion": "100 UNID.",
         "descripcion": "GANCHO EST. TEJIDO 5/16X200mm COMP. 100 U."
       }
     ]
@@ -6370,7 +6404,7 @@
     "name": "GANCHO J",
     "category": "ganchos",
     "brand": "Telé",
-    "description": "GANCHO J. Consulte medidas y disponibilidad.",
+    "description": "Gancho tipo baston para techo, incluye sus respectivas tuercas, arandelas y casquete de goma",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/GANCHO J.webp",
@@ -6378,19 +6412,19 @@
       {
         "id": "06GAN J1/450MM",
         "medida": "1/4X50mm COMPLETO 100 U.",
-        "presentacion": "",
+        "presentacion": "100 UNID.",
         "descripcion": "GANCHO J 1/4X50mm COMPLETO 100 U."
       },
       {
         "id": "06GANJ1/460MM",
         "medida": "1/4X60mm COMPLETO 100 U.",
-        "presentacion": "",
+        "presentacion": "100 UNID.",
         "descripcion": "GANCHO J 1/4X60mm COMPLETO 100 U."
       },
       {
         "id": "06GANJ1/470MM",
         "medida": "1/4X70mm COMPLETO 100 U.",
-        "presentacion": "",
+        "presentacion": "100 UNID.",
         "descripcion": "GANCHO J 1/4X70mm COMPLETO 100 U."
       }
     ]
@@ -6400,10 +6434,14 @@
     "name": "HELIX",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "HELIX. Consulte medidas y disponibilidad.",
+    "description": "Linea especial para vinculacion de vigas y postes de madera semiduros. Incluye cabeza fresada para instalacion al raz, punta calada para facil penetracion en la madera y una helice fresadora para uso pesado en maderas de mayor espesor",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/HELIX.jpg",
+    "image": "imagenes/Fotos Nuevas/HELIX.png",
+    "images": [
+      "imagenes/Fotos Nuevas/HELIX.png",
+      "imagenes/Fotos Nuevas/HELIX ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "026X100ZG",
@@ -6454,10 +6492,14 @@
     "name": "HEXAGONAL TIPO 1 (SIN ARADELA)",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "HEXAGONAL TIPO 1",
+    "description": "HEXAGONAL TIPO 1. Utilizado para techar chapa-perfil y fijaciones en metales en general",
     "features": "AUTOPERFORANTE CABEZA HEXAGONAL, VUELO CHICO, NO INCLUYE ARANDELA",
     "applications": "CHAPA + PERFIL, TECHAR, PARA ESPESORES DE 1 A 6 mm",
-    "image": "imagenes/Fotos Productos/Hexagonal Tipo 1.jpg",
+    "image": "imagenes/Fotos Nuevas/HEX T1.png",
+    "images": [
+      "imagenes/Fotos Nuevas/HEX T1.png",
+      "imagenes/Fotos Nuevas/HEX T1 ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "1001G10X1",
@@ -6640,10 +6682,14 @@
     "name": "HEXAGONAL TIPO 2 AGUJA CHAPA-MADERA CON ARANDELA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "HEXAGONAL TIPO 2 MADERA PUNTA AGUJA",
+    "description": "HEXAGONAL TIPO 2 MADERA PUNTA AGUJA. Chapa-Madera",
     "features": "CABEZA HEXAGONAL, ROSCA MADERA, PUNTA AGUJA",
     "applications": "TECHAR CHAPA + TIRANTE DE MADERA",
-    "image": "imagenes/Fotos Productos/Hexagonal Tipo 2 Madera-Aguja.jpg",
+    "image": "imagenes/Fotos Nuevas/HEX T2 MADERA AGUJA.png",
+    "images": [
+      "imagenes/Fotos Nuevas/HEX T2 MADERA AGUJA.png",
+      "imagenes/Fotos Nuevas/HEX T2 MADERA AGUJA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "1003G12X11/2",
@@ -6730,10 +6776,16 @@
     "name": "HEXAGONAL TIPO 2 CHAPA-PERFIL CON ARANDELA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "HEXAGONAL TIPO 2",
+    "description": "HEXAGONAL TIPO 2. Ideal para techar chapa - perfil. Incluye arandela de goma",
     "features": "CABEZA HEXAGONAL, INCLUYE ARANDELAS",
     "applications": "IDEAL PARA TECHAR CHAPA + PERFIL",
-    "image": "imagenes/Fotos Productos/Hexagonal Tipo 2.jpg",
+    "image": "imagenes/Fotos Nuevas/HEX T2.png",
+    "images": [
+      "imagenes/Fotos Nuevas/HEX T2.png",
+      "imagenes/Fotos Nuevas/HEX T2 MECHA MAX.png",
+      "imagenes/Fotos Nuevas/HEX T2 ESQUEMA.png",
+      "imagenes/Fotos Nuevas/HEX T2 MECHA MAX ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "1002E10X3/4",
@@ -6946,10 +6998,14 @@
     "name": "HEXAGONAL TIPO 2 MECHA CHAPA-MADERA CON ARANDELA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "HEXAGONAL TIPO 2 MADERA PUNTA MECHA",
+    "description": "HEXAGONAL TIPO 2 MADERA PUNTA MECHA. Chapa madera",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/HT2 MADERA MECHA.jpg",
+    "image": "imagenes/Fotos Nuevas/HEX T2 MADERA MECHA.png",
+    "images": [
+      "imagenes/Fotos Nuevas/HEX T2 MADERA MECHA.png",
+      "imagenes/Fotos Nuevas/HEX T2 MADERA MECHA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "1003G14X11/2",
@@ -6988,10 +7044,14 @@
     "name": "HEXAGONAL TIPO 2 PUNTA CALADA C/ARANDELA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "HEXAGONAL TIPO 2 P17 \"PUNTA CALADA\"",
+    "description": "HEXAGONAL TIPO 2 P17 \"PUNTA CALADA\" Chapa-Madera",
     "features": "AUTOPERFORANTE ROSCA MADERA, CABEZA HEXAGONAL, VUELO ANCHO, ARANDELA INCLUIDA",
     "applications": "IDEAL PARA TECHAR CHAPA CON TIRANTES DE MADERA, ROSCA P/MADERA Y PUNTA RANURADA",
-    "image": "imagenes/Fotos Productos/Hexagonal Tipo 2 Punta Calada P17_.jpg",
+    "image": "imagenes/Fotos Nuevas/HEX T2 CALADA P17.png",
+    "images": [
+      "imagenes/Fotos Nuevas/HEX T2 CALADA P17.png",
+      "imagenes/Fotos Nuevas/HEX T2 CALADA P17 ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "1005E14X1A",
@@ -7072,10 +7132,14 @@
     "name": "PARKER",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "TORNILLO PARKER",
+    "description": "TORNILLO PARKER. Rosca para metal, cabeza phillips",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Parker.jpg",
+    "image": "imagenes/Fotos Nuevas/PARKER.png",
+    "images": [
+      "imagenes/Fotos Nuevas/PARKER.png",
+      "imagenes/Fotos Nuevas/PARKER ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "1410X1ZE",
@@ -7327,7 +7391,11 @@
     "description": "TORNILLO PHIL LINEA ALUMINIO",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/PHIL ALUMINIO.jpg",
+    "image": "imagenes/Fotos Nuevas/PHIL ALUMINIO.png",
+    "images": [
+      "imagenes/Fotos Nuevas/PHIL ALUMINIO.png",
+      "imagenes/Fotos Nuevas/PHIL ALUMINIO ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "15029X11/2E",
@@ -7351,7 +7419,11 @@
     "description": "TORNILLO PHIL LINEA FRESADA",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/PHIL FRESADA.jpg",
+    "image": "imagenes/Fotos Nuevas/PHIL FRESADA.png",
+    "images": [
+      "imagenes/Fotos Nuevas/PHIL FRESADA.png",
+      "imagenes/Fotos Nuevas/PHIL FRESADA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "15048X11/4E",
@@ -7387,7 +7459,11 @@
     "description": "TORNILLO PHIL LINEA PAN-FRAMING",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/TEL PAN FRAMING.jpg",
+    "image": "imagenes/Fotos Nuevas/PHIL PANFRAMING.png",
+    "images": [
+      "imagenes/Fotos Nuevas/PHIL PANFRAMING.png",
+      "imagenes/Fotos Nuevas/PHIL PANFRAMING ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "15036X7/16E",
@@ -7426,10 +7502,14 @@
     "name": "PHIL MECHA",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "TORNILLO PHIL",
+    "description": "TORNILLO PHIL. Punta mecha, rosca metal. Ideal para carpinteria de aluminio, carteleria etc.",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Phillips mecha.jpg",
+    "image": "imagenes/Fotos Nuevas/PHIL MECHA.png",
+    "images": [
+      "imagenes/Fotos Nuevas/PHIL MECHA.png",
+      "imagenes/Fotos Nuevas/PHIL MECHA ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "150110X11/2M",
@@ -7576,7 +7656,7 @@
     "name": "PITON DEL 10 CON TOPE  CERRADO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 10 CON TOPE  CERRADO. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON CERRADO CON TOPE.webp",
@@ -7594,7 +7674,7 @@
     "name": "PITON DEL 10 CON TOPE ABIERTO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 10 CON TOPE ABIERTO. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ABIERTO CON TOPE.jpg",
@@ -7612,7 +7692,7 @@
     "name": "PITON DEL 10 CON TOPE ESCUADRA",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 10 CON TOPE ESCUADRA. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ESCUADRA CON TOPE.webp",
@@ -7630,7 +7710,7 @@
     "name": "PITON DEL 5 CON TOPE ABIERTO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 5 CON TOPE ABIERTO. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ABIERTO CON TOPE.jpg",
@@ -7648,7 +7728,7 @@
     "name": "PITON DEL 5 CON TOPE CERRADO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 5 CON TOPE CERRADO. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON CERRADO CON TOPE.webp",
@@ -7666,7 +7746,7 @@
     "name": "PITON DEL 5 CON TOPE ESCUADRA",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 5 CON TOPE ESCUADRA. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ESCUADRA CON TOPE.webp",
@@ -7684,7 +7764,7 @@
     "name": "PITON DEL 5 SIN TOPE ABIERTO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 5 SIN TOPE ABIERTO. Consulte medidas y disponibilidad.",
+    "description": "Piton sin tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ABIERTO SIN TOPE.webp",
@@ -7702,7 +7782,7 @@
     "name": "PITON DEL 5 SIN TOPE CERRADO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 5 SIN TOPE CERRADO. Consulte medidas y disponibilidad.",
+    "description": "Piton sin tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON CERRADO SIN TOPE.webp",
@@ -7720,7 +7800,7 @@
     "name": "PITON DEL 5 SIN TOPE ESCUADRA",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 5 SIN TOPE ESCUADRA. Consulte medidas y disponibilidad.",
+    "description": "Piton sin tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ESCUADRA SIN TOPE.webp",
@@ -7738,7 +7818,7 @@
     "name": "PITON DEL 6 CON TOPE ABIERTO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 6 CON TOPE ABIERTO. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ABIERTO CON TOPE.jpg",
@@ -7756,7 +7836,7 @@
     "name": "PITON DEL 6 CON TOPE CERRADO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 6 CON TOPE CERRADO. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON CERRADO CON TOPE.webp",
@@ -7774,7 +7854,7 @@
     "name": "PITON DEL 6 CON TOPE ESCUADRA",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 6 CON TOPE ESCUADRA. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ESCUADRA CON TOPE.webp",
@@ -7792,7 +7872,7 @@
     "name": "PITON DEL 6 SIN TOPE ABIERTO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 6 SIN TOPE ABIERTO. Consulte medidas y disponibilidad.",
+    "description": "Piton sin tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ABIERTO SIN TOPE.webp",
@@ -7810,7 +7890,7 @@
     "name": "PITON DEL 6 SIN TOPE CERRADO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 6 SIN TOPE CERRADO. Consulte medidas y disponibilidad.",
+    "description": "Piton sin tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON CERRADO SIN TOPE.webp",
@@ -7828,7 +7908,7 @@
     "name": "PITON DEL 6 SIN TOPE ESCUADRA",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 6 SIN TOPE ESCUADRA. Consulte medidas y disponibilidad.",
+    "description": "Piton sin tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ESCUADRA SIN TOPE.webp",
@@ -7846,7 +7926,7 @@
     "name": "PITON DEL 8 CON TOPE ABIERTO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 8 CON TOPE ABIERTO. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ABIERTO CON TOPE.jpg",
@@ -7864,7 +7944,7 @@
     "name": "PITON DEL 8 CON TOPE CERRADO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 8 CON TOPE CERRADO. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON CERRADO CON TOPE.webp",
@@ -7882,7 +7962,7 @@
     "name": "PITON DEL 8 SIN TOPE ABIERTO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 8 SIN TOPE ABIERTO. Consulte medidas y disponibilidad.",
+    "description": "Piton sin tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ABIERTO SIN TOPE.webp",
@@ -7900,7 +7980,7 @@
     "name": "PITON DEL 8 SIN TOPE CERRADO",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 8 SIN TOPE CERRADO. Consulte medidas y disponibilidad.",
+    "description": "Piton sin tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON CERRADO SIN TOPE.webp",
@@ -7918,7 +7998,7 @@
     "name": "PITON DEL 8 SIN TOPE ESCUADRA",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL 8 SIN TOPE ESCUADRA. Consulte medidas y disponibilidad.",
+    "description": "Piton sin tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ESCUADRA SIN TOPE.webp",
@@ -7936,7 +8016,7 @@
     "name": "PITON DEL CON TOPE ESCUADRA",
     "category": "pitones",
     "brand": "Telé",
-    "description": "PITON DEL CON TOPE ESCUADRA. Consulte medidas y disponibilidad.",
+    "description": "Piton con tope",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/PITON ESCUADRA SIN TOPE.webp",
@@ -7954,7 +8034,7 @@
     "name": "REMACHADORA PROFESIONAL",
     "category": "remaches-clavos",
     "brand": "Argenrap®",
-    "description": "REMACHADORA PROFESIONAL. Consulte medidas y disponibilidad.",
+    "description": "Remachadora manual",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/REMACHADORA.jpg",
@@ -7972,7 +8052,7 @@
     "name": "REMACHE CABEZA ANCHA",
     "category": "remaches-clavos",
     "brand": "Argenrap®",
-    "description": "REMACHE CABEZA ANCHA. Consulte medidas y disponibilidad.",
+    "description": "Remache Ala Ancha",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/REMACHE ALA ANCHA.webp",
@@ -8026,7 +8106,7 @@
     "name": "REMACHE CARROCERO",
     "category": "remaches-clavos",
     "brand": "Argenrap®",
-    "description": "REMACHE CARROCERO. Consulte medidas y disponibilidad.",
+    "description": "Remache carrocero",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/REMACHE CARROCERO.webp",
@@ -8074,7 +8154,7 @@
     "name": "REMACHE POP",
     "category": "remaches-clavos",
     "brand": "Argenrap®",
-    "description": "REMACHE POP. Consulte medidas y disponibilidad.",
+    "description": "Remache pop",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/REMACHE POP.webp",
@@ -8320,10 +8400,14 @@
     "name": "TARUGO Nº 10 CON TOPE",
     "category": "tarugos",
     "brand": "Telé",
-    "description": "TARUGO Nº 10 CON TOPE. Consulte medidas y disponibilidad.",
+    "description": "Tarugo para hormigon",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo con tope.jpg",
+    "image": "imagenes/Fotos Nuevas/TARUGO CON TOPE.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TARUGO CON TOPE.png",
+      "imagenes/Fotos Nuevas/TARUGO CON TOPE ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "16Nº10C/TE",
@@ -8344,10 +8428,14 @@
     "name": "TARUGO Nº 10 SIN TOPE",
     "category": "tarugos",
     "brand": "Telé",
-    "description": "TARUGO Nº 10 SIN TOPE. Consulte medidas y disponibilidad.",
+    "description": "Tarugo para hormigon",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo sin tope.jpg",
+    "image": "imagenes/Fotos Nuevas/TARUGO SIN TOPE.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TARUGO SIN TOPE.png",
+      "imagenes/Fotos Nuevas/TARUGO SIN TOPE ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "16Nº10S/TE",
@@ -8368,10 +8456,14 @@
     "name": "TARUGO Nº 12 SIN TOPE",
     "category": "tarugos",
     "brand": "Telé",
-    "description": "TARUGO Nº 12 SIN TOPE. Consulte medidas y disponibilidad.",
+    "description": "Tarugo para hormigon",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo sin tope.jpg",
+    "image": "imagenes/Fotos Nuevas/TARUGO SIN TOPE.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TARUGO SIN TOPE.png",
+      "imagenes/Fotos Nuevas/TARUGO SIN TOPE ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "16Nº12S/TE",
@@ -8392,10 +8484,14 @@
     "name": "TARUGO Nº 5 SIN TOPE",
     "category": "tarugos",
     "brand": "Telé",
-    "description": "TARUGO Nº 5 SIN TOPE. Consulte medidas y disponibilidad.",
+    "description": "Tarugo para hormigon",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo sin tope.jpg",
+    "image": "imagenes/Fotos Nuevas/TARUGO SIN TOPE.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TARUGO SIN TOPE.png",
+      "imagenes/Fotos Nuevas/TARUGO SIN TOPE ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "16Nº5E",
@@ -8416,10 +8512,14 @@
     "name": "TARUGO Nº 6 CON TOPE",
     "category": "tarugos",
     "brand": "Telé",
-    "description": "TARUGO Nº 6 CON TOPE. Consulte medidas y disponibilidad.",
+    "description": "Tarugo para hormigon",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo con tope.jpg",
+    "image": "imagenes/Fotos Nuevas/TARUGO CON TOPE.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TARUGO CON TOPE.png",
+      "imagenes/Fotos Nuevas/TARUGO CON TOPE ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "16Nº6C/TE",
@@ -8446,10 +8546,14 @@
     "name": "TARUGO Nº 6 SIN TOPE",
     "category": "tarugos",
     "brand": "Telé",
-    "description": "TARUGO Nº 6 SIN TOPE. Consulte medidas y disponibilidad.",
+    "description": "Tarugo para hormigon",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo sin tope.jpg",
+    "image": "imagenes/Fotos Nuevas/TARUGO SIN TOPE.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TARUGO SIN TOPE.png",
+      "imagenes/Fotos Nuevas/TARUGO SIN TOPE ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "16Nº6S/TPACK",
@@ -8476,10 +8580,14 @@
     "name": "TARUGO Nº 8 CON TOPE",
     "category": "tarugos",
     "brand": "Telé",
-    "description": "TARUGO Nº 8 CON TOPE. Consulte medidas y disponibilidad.",
+    "description": "Tarugo para hormigon",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo con tope.jpg",
+    "image": "imagenes/Fotos Nuevas/TARUGO CON TOPE.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TARUGO CON TOPE.png",
+      "imagenes/Fotos Nuevas/TARUGO CON TOPE ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "16Nº8C/TG",
@@ -8500,10 +8608,14 @@
     "name": "TARUGO Nº 8 SIN TOPE",
     "category": "tarugos",
     "brand": "Telé",
-    "description": "TARUGO Nº 8 SIN TOPE. Consulte medidas y disponibilidad.",
+    "description": "Tarugo para hormigon",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo sin tope.jpg",
+    "image": "imagenes/Fotos Nuevas/TARUGO SIN TOPE.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TARUGO SIN TOPE.png",
+      "imagenes/Fotos Nuevas/TARUGO SIN TOPE ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "16Nº8S/TG",
@@ -8530,10 +8642,14 @@
     "name": "TARUGO PARA LADRILLO HUECO Nº 10 CON TOPE",
     "category": "tarugos",
     "brand": "Telé",
-    "description": "TARUGO PARA LADRILLO HUECO Nº 10 CON TOPE. Consulte medidas y disponibilidad.",
+    "description": "Tarugo para ladrillo hueco",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo para ladrillo hueco con tope.jpg",
+    "image": "imagenes/Fotos Nuevas/TARUGO LADRILLO HUECO.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TARUGO LADRILLO HUECO.png",
+      "imagenes/Fotos Nuevas/TARUGO LADRILLO HUECO ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "16Nº10C/TLHPACK",
@@ -8560,10 +8676,14 @@
     "name": "TARUGO PARA LADRILLO HUECO Nº 6 CON TOPE",
     "category": "tarugos",
     "brand": "Telé",
-    "description": "TARUGO PARA LADRILLO HUECO Nº 6 CON TOPE. Consulte medidas y disponibilidad.",
+    "description": "Tarugo para ladrillo hueco",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo para ladrillo hueco con tope.jpg",
+    "image": "imagenes/Fotos Nuevas/TARUGO LADRILLO HUECO.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TARUGO LADRILLO HUECO.png",
+      "imagenes/Fotos Nuevas/TARUGO LADRILLO HUECO ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "16Nº6C/TLHE",
@@ -8590,10 +8710,14 @@
     "name": "TARUGO PARA LADRILLO HUECO Nº 8 CON TOPE",
     "category": "tarugos",
     "brand": "Telé",
-    "description": "TARUGO PARA LADRILLO HUECO Nº 8 CON TOPE. Consulte medidas y disponibilidad.",
+    "description": "Tarugo para hormigon",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tarugo para ladrillo hueco con tope.jpg",
+    "image": "imagenes/Fotos Nuevas/TARUGO LADRILLO HUECO.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TARUGO LADRILLO HUECO.png",
+      "imagenes/Fotos Nuevas/TARUGO LADRILLO HUECO ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "16Nº8C/TPACK",
@@ -8626,10 +8750,14 @@
     "name": "TIRAFONDO",
     "category": "tirafondos",
     "brand": "Telé",
-    "description": "TIRAFONDO",
+    "description": "Tirafondo cabeza hexagonal",
     "features": "CABEZA HEXAGONAL",
     "applications": "ENSAMBLES DE MADERA, FIJACIONES CON TARUGOS.",
-    "image": "imagenes/Fotos Productos/TIRAFONDO.webp",
+    "image": "imagenes/Fotos Nuevas/TIRAFONDO.png",
+    "images": [
+      "imagenes/Fotos Nuevas/TIRAFONDO.png",
+      "imagenes/Fotos Nuevas/TIRAFONDO ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "2301G1/4X1",
@@ -9286,7 +9414,7 @@
     "name": "TORNILLO CAB. TANQUE C/TUERCA",
     "category": "bulones",
     "brand": "Telé",
-    "description": "TORNILLO TANQUE",
+    "description": "Tornillo tanque con tuerca",
     "features": "INCLUYE TUERCAS, CABEZA TANQUE, ROSCA PARA METAL, PASO GRUESO.",
     "applications": "CARROCERIAS, CONSTRUCCIONES METALICAS, CARPINTERIA, FIJACIONES.",
     "image": "imagenes/Fotos Productos/TANQUE.jpg",
@@ -9448,10 +9576,14 @@
     "name": "TORNILLO CON ALAS",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "TORNILLO CON ALAS",
+    "description": "Tornillo con alas",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/Tornillo con Alas.jpg",
+    "image": "imagenes/Fotos Nuevas/ALAS.png",
+    "images": [
+      "imagenes/Fotos Nuevas/ALAS.png",
+      "imagenes/Fotos Nuevas/ALAS ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "1210X11/2M",
@@ -9562,7 +9694,7 @@
     "name": "TUERCA AUTOFRENANTE",
     "category": "tuercas",
     "brand": "Telé",
-    "description": "TUERCA AUTOFRENANTE. Consulte medidas y disponibilidad.",
+    "description": "Tuerca autofrenante nylon",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/Tuerca Autofrenante.jpg",
@@ -9706,7 +9838,7 @@
     "name": "TUERCA GRADO 2 ZINCADA",
     "category": "tuercas",
     "brand": "Telé",
-    "description": "TUERCA GRADO 2 ZINCADA. Consulte medidas y disponibilidad.",
+    "description": "Tuerca Grado 2 Zincado Azul",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/Tuerca Grado 2.jpg",
@@ -9796,7 +9928,7 @@
     "name": "TUERCA GRADO 5 DORADA",
     "category": "tuercas",
     "brand": "",
-    "description": "TUERCA GRADO 5 DORADA. Consulte medidas y disponibilidad.",
+    "description": "Tuerca Grado 5 Dorada",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/Tuerca Grado 5.jpg",
@@ -9880,7 +10012,7 @@
     "name": "TUERCA GRADO 8.8 DORADA",
     "category": "tuercas",
     "brand": "Telé",
-    "description": "TUERCA GRADO 8.8 DORADA. Consulte medidas y disponibilidad.",
+    "description": "Tuerca Grado 8 Dorada Rosca Milimetrica",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/TUERCA GRADO 8.webp",
@@ -9940,7 +10072,7 @@
     "name": "VARILLA NATURAL",
     "category": "varillas",
     "brand": "Telé",
-    "description": "VARILLA NATURAL. Consulte medidas y disponibilidad.",
+    "description": "Varilla Hierro Natural",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/VARILLA NATURAL.jpg",
@@ -10030,7 +10162,7 @@
     "name": "VARILLA ZINC.",
     "category": "varillas",
     "brand": "Telé",
-    "description": "VARILLA ZINC.. Consulte medidas y disponibilidad.",
+    "description": "Varilla Zincado Azul",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
     "image": "imagenes/Fotos Productos/VARILLA ZINC.jpg",
@@ -10192,10 +10324,14 @@
     "name": "WAFER",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "WAFER. Consulte medidas y disponibilidad.",
+    "description": "Tornillo tipo FIX para madera con cabeza wafer para terminaciones",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/WAFER.webp",
+    "image": "imagenes/Fotos Nuevas/WAFER.png",
+    "images": [
+      "imagenes/Fotos Nuevas/WAFER.png",
+      "imagenes/Fotos Nuevas/WAFER ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "1910X11/2E",
@@ -10336,10 +10472,15 @@
     "name": "WALL FIJACION HORMIGON",
     "category": "autoperforantes",
     "brand": "Telé",
-    "description": "TORNILLO PARA HORMIGON",
+    "description": "Tornillo para fijacion de hormigon. Cabeza Torx",
     "features": "Consulte características técnicas de este producto.",
     "applications": "Ideal para fijaciones generales y uso industrial según medida.",
-    "image": "imagenes/Fotos Productos/WALL TORX.webp",
+    "image": "imagenes/Fotos Nuevas/WALL B.png",
+    "images": [
+      "imagenes/Fotos Nuevas/WALL B.png",
+      "imagenes/Fotos Nuevas/WALL A.png",
+      "imagenes/Fotos Nuevas/WALL ESQUEMA.png"
+    ],
     "variants": [
       {
         "id": "26100MME",

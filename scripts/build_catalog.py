@@ -17,7 +17,7 @@ import json
 import os
 import unicodedata
 
-ARCHIVO = "Productos distrijam Actualziados.xlsx"
+ARCHIVO = "Archivo del proveedor Google (2).xlsx"
 HOJA = "Productos"
 
 # Columnas de la hoja "Productos" (1-based).
@@ -182,9 +182,98 @@ def corregir_presentacion(codigo, presentacion, descripcion):
     return presentacion, descripcion
 
 
+# Codigos mal cargados en la planilla que pisarian a otra variante
+# clave: (codigo de la planilla, medida), valor: codigo correcto
+CORRECCION_CODIGOS = {
+    ("09074MM", "5/32"): "09075/32",
+}
+
+# Fotos nuevas (renders de TEL) y su esquema tecnico, en imagenes/Fotos Nuevas.
+# Cada nombre de la columna "Imagen" arma la galeria de la ficha: la primera es la
+# foto principal. "nueva:X" es un archivo de imagenes/Fotos Nuevas (sin la extension);
+# cualquier otro texto se busca como siempre en imagenes/Fotos Productos.
+# Las variantes negras siguen con su foto de antes (el render nuevo es zinc) y
+# solo suman el esquema.
+GALERIAS = {
+    "Tornillo con Alas": ["nueva:ALAS", "nueva:ALAS ESQUEMA"],
+    "Bulon Cabeza Redonda Cuello Cuadrado": ["nueva:BULON CABEZ RED CCC"],
+    "CUT": ["nueva:CUT", "nueva:CUT ESQUEMA"],
+    "DECK": ["nueva:DECK MECHA"],
+    "DRY T1 AGUJA ZINC": ["nueva:DRY T1 AGUJA", "nueva:DRY T1 AGUJA ESQUEMA"],
+    "Drywall T1 Aguja Negro": ["Drywall T1 Aguja Negro", "nueva:DRY T1 AGUJA ESQUEMA"],
+    "DRY T1 MECHA ZINC": ["nueva:DRY T1 MECHA", "nueva:DRY T1 MECHA ESQUEMA"],
+    "DRY T1 MECHA NEGRO": ["DRY T1 MECHA NEGRO", "nueva:DRY T1 MECHA ESQUEMA"],
+    "DRY T2 AGUJA NEGRO": ["nueva:DRY T2 AGUJA", "nueva:DRY T2 AGUJA ESQUEMA"],
+    "DRY T2 MECHA ZINC": ["nueva:DRY T2 MECHA", "nueva:DRY T2 MECHA ESQUEMA"],
+    "DRY T2 MECHA NEGRO": ["DRY T2 MECHA NEGRO", "nueva:DRY T2 MECHA ESQUEMA"],
+    "DRY T3 AGUJA NEGRO": ["nueva:DRY T3 AGUJA", "nueva:DRY T3 AGUJA ESQUEMA"],
+    "DRY T3 MECHA ZINC": ["nueva:DRY T3 MECHA", "nueva:DRY T3 MECHA ESQUEMA"],
+    "DRY T3 MECHA NEGRO": ["DRY T3 MECHA NEGRO", "nueva:DRY T3 MECHA ESQUEMA"],
+    "DRY T4 AGUJA NEGRO": ["nueva:DRY T4 AGUJA", "nueva:DRY T4 AGUJA ESQUEMA"],
+    "DRY PCL AGUJA": ["nueva:DRY PCL AGUJA", "nueva:DRY PCL AGUJA ESQUEMA"],
+    "DRY PCL MECHA": ["nueva:DRY PCL MECHA", "nueva:DRY PCL MECHA ESQUEMA"],
+    "DRY FRESADA 4 PLACAS": ["nueva:FRESADA 4 PLACAS", "nueva:FRESADA 4 PLACAS ESQUEMA"],
+    "TEL Helix": ["nueva:HELIX", "nueva:HELIX ESQUEMA"],
+    "Hexagonal Tipo 1": ["nueva:HEX T1", "nueva:HEX T1 ESQUEMA"],
+    "Hexagonal Tipo 2": ["nueva:HEX T2", "nueva:HEX T2 ESQUEMA"],
+    "HT2 MAX": ["nueva:HEX T2 MECHA MAX", "nueva:HEX T2 MECHA MAX ESQUEMA"],
+    "Hexagonal Tipo 2 Punta Calada P17": ["nueva:HEX T2 CALADA P17", "nueva:HEX T2 CALADA P17 ESQUEMA"],
+    "Hexagonal Tipo 2 Madera-Aguja": ["nueva:HEX T2 MADERA AGUJA", "nueva:HEX T2 MADERA AGUJA ESQUEMA"],
+    "Hexagonal Tipo 2 Madera-Mecha": ["nueva:HEX T2 MADERA MECHA", "nueva:HEX T2 MADERA MECHA ESQUEMA"],
+    "PANFRAMING": ["nueva:PHIL PANFRAMING", "nueva:PHIL PANFRAMING ESQUEMA"],
+    "Parker": ["nueva:PARKER", "nueva:PARKER ESQUEMA"],
+    "Phillips mecha": ["nueva:PHIL MECHA", "nueva:PHIL MECHA ESQUEMA"],
+    "PHIL ALUMINIO": ["nueva:PHIL ALUMINIO", "nueva:PHIL ALUMINIO ESQUEMA"],
+    "PHIL FRESADA": ["nueva:PHIL FRESADA", "nueva:PHIL FRESADA ESQUEMA"],
+    "Tarugo con tope": ["nueva:TARUGO CON TOPE", "nueva:TARUGO CON TOPE ESQUEMA"],
+    "Tarugo sin tope": ["nueva:TARUGO SIN TOPE", "nueva:TARUGO SIN TOPE ESQUEMA"],
+    "Tarugo para ladrillo hueco con tope": ["nueva:TARUGO LADRILLO HUECO", "nueva:TARUGO LADRILLO HUECO ESQUEMA"],
+    "Tirafondo hexagonal": ["nueva:TIRAFONDO", "nueva:TIRAFONDO ESQUEMA"],
+    "WAFER": ["nueva:WAFER", "nueva:WAFER ESQUEMA"],
+    "WALL TORX": ["nueva:WALL B", "nueva:WALL A", "nueva:WALL ESQUEMA"],
+    # La planilla pone "CHIPBOARD" y "FIX Madera" a todo: dorado y negro se separan por producto (IMAGEN_FORZADA)
+    "CHIPBOARD DORADO": ["nueva:CHIP", "nueva:CHIP ESQUEMA"],
+    "CHIPBOARD NEGRO": ["CHIP NEGRO", "nueva:CHIP ESQUEMA"],
+    "FIX Madera Dorado": ["nueva:FIX", "nueva:FIX ESQUEMA"],
+    "FIX Madera Negro": ["FIX Madera Negro", "nueva:FIX ESQUEMA"],
+    "FIX Madera": ["nueva:FIX", "nueva:FIX ESQUEMA"],
+}
+CARPETA_NUEVAS = "imagenes/Fotos Nuevas"
+MAX_GALERIA = 4
+
+
+def resolver_galeria(nombres):
+    """Rutas de las fotos de un producto a partir de los nombres de la columna Imagen.
+    Devuelve (rutas, fuentes que no se encontraron)."""
+    claves = {_normalizar_clave(k): v for k, v in GALERIAS.items()}
+    rutas, faltan = [], []
+    for nombre in nombres:
+        fuentes = claves.get(_normalizar_clave(nombre))
+        if fuentes is None:
+            fuentes = [nombre]
+        for fuente in fuentes:
+            if fuente.startswith("nueva:"):
+                ruta = f"{CARPETA_NUEVAS}/{fuente[6:]}.png"
+                if not os.path.isfile(ruta):
+                    ruta = None
+            else:
+                ruta = resolver_imagen(fuente)
+            if ruta is None:
+                faltan.append(fuente)
+            elif ruta not in rutas:
+                rutas.append(ruta)
+    # Primero todas las fotos y al final los esquemas
+    rutas.sort(key=lambda r: r.endswith(" ESQUEMA.png"))
+    return rutas[:MAX_GALERIA], faltan
+
+
 # Productos que deben usar una imagen puntual aunque la planilla diga otra
 # (clave: id del producto, valor: nombre de la imagen como en la columna "Imagen")
 IMAGEN_FORZADA = {
+    "chipboard-madera-dorado": "CHIPBOARD DORADO",
+    "chipboard-madera-negro": "CHIPBOARD NEGRO",
+    "fix-madera-dorado": "FIX Madera Dorado",
+    "fix-madera-negro": "FIX Madera Negro",
     "tarugo-para-ladrillo-hueco-n-6-con-tope": "Tarugo para ladrillo hueco con tope",
     "tarugo-para-ladrillo-hueco-n-8-con-tope": "Tarugo para ladrillo hueco con tope",
 }
@@ -283,7 +372,7 @@ def run():
                 "features": "",
                 "applications": "",
                 "_variantes": {},
-                "_imagen": "",
+                "_imagenes": [],
             }
 
         p = productos[pid]
@@ -294,8 +383,10 @@ def run():
             if resuelta != "otros":
                 p["category"] = resuelta
 
-        if not p["_imagen"]:
-            p["_imagen"] = IMAGEN_FORZADA.get(pid) or texto(hoja.cell(r, COL_IMAGEN).value)
+        # Una ficha junta las fotos de todos sus renglones (p.ej. variantes zinc y negro)
+        nombre_imagen = IMAGEN_FORZADA.get(pid) or texto(hoja.cell(r, COL_IMAGEN).value)
+        if nombre_imagen and nombre_imagen not in p["_imagenes"]:
+            p["_imagenes"].append(nombre_imagen)
         if not p["description"]:
             p["description"] = texto(hoja.cell(r, COL_DESC_PAGINA).value)
         if not p["features"]:
@@ -304,6 +395,7 @@ def run():
             p["applications"] = texto(hoja.cell(r, COL_USOS).value)
 
         codigo = texto(hoja.cell(r, COL_CODIGO).value)
+        codigo = CORRECCION_CODIGOS.get((codigo, texto(hoja.cell(r, COL_MEDIDA).value)), codigo)
         vid = codigo or f"{pid}-var-{len(p['_variantes']) + 1}"
         medida = texto(hoja.cell(r, COL_MEDIDA).value) or "Estándar"
         presentacion = texto(hoja.cell(r, COL_PRESENTACION).value)
@@ -344,13 +436,17 @@ def run():
             p["image"] = f"imagenes/Imagenes y tornillos para catalogo 900px{n}.jpg"
 
         # La columna "Imagen" del Excel manda sobre el reparto automático
-        if p["_imagen"]:
-            ruta = resolver_imagen(p["_imagen"])
-            if ruta:
-                p["image"] = ruta
+        if p["_imagenes"]:
+            rutas, faltan = resolver_galeria(p["_imagenes"])
+            for f in faltan:
+                print(f"  AVISO: no existe el archivo '{f}' ({p['name']})")
+            if rutas:
+                p["image"] = rutas[0]
+                if len(rutas) > 1:
+                    p["images"] = rutas
             else:
-                print(f"  AVISO: no existe el archivo '{p['_imagen']}' ({p['name']}); queda la imagen por defecto")
-        del p["_imagen"]
+                print(f"  AVISO: {p['name']} queda con la imagen por defecto")
+        del p["_imagenes"]
 
         if not p["description"]:
             p["description"] = f"{p['name']}. Consulte medidas y disponibilidad."
