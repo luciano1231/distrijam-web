@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vista Previa Local — 2 Modelos Nuevos | Distrijam</title>
-  <link rel="icon" type="image/png" href="Logo/logo-distrijam.png" />
+  <link rel="icon" type="image/png" href="../Logo/logo-distrijam.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -78,6 +78,14 @@
       background: #D92D20;
       box-shadow: 0 2px 10px rgba(217,45,32,0.4);
     }
+    .model-btn[data-model="m3"].active {
+      background: #B42318;
+      box-shadow: 0 2px 10px rgba(180,35,24,0.4);
+    }
+    .model-btn[data-model="m4"].active, .model-btn[data-model="m5"].active {
+      background: #B42318;
+      box-shadow: 0 2px 10px rgba(180,35,24,0.4);
+    }
     .model-btn[data-model="split"].active {
       background: #059669;
       box-shadow: 0 2px 10px rgba(5,150,105,0.4);
@@ -148,7 +156,7 @@
   <div class="preview-bar">
     <div class="preview-brand">
       <span>DISTRIJAM</span>
-      <span class="preview-badge">2 Nuevos Modelos Visuales</span>
+      <span class="preview-badge">5 Nuevos Modelos Visuales</span>
     </div>
 
     <div class="preview-controls">
@@ -159,6 +167,18 @@
       <button class="model-btn" data-model="m2">
         <span class="dot" style="background:#FB7185;"></span>
         Modelo 2: Corporativo Inmersivo (Pizarra, Cristal & Pósters)
+      </button>
+      <button class="model-btn" data-model="m3">
+        <span class="dot" style="background:#F04438;"></span>
+        Modelo 3: Cine
+      </button>
+      <button class="model-btn" data-model="m4">
+        <span class="dot" style="background:#F5F5F0;"></span>
+        Modelo 4: Vitrina
+      </button>
+      <button class="model-btn" data-model="m5">
+        <span class="dot" style="background:#9BA1AB;"></span>
+        Modelo 5: Muro
       </button>
       <button class="model-btn" data-model="split">
         <span class="dot" style="background:#34D399;"></span>
@@ -212,16 +232,16 @@
           frame2.src = 'index-m2.html';
         } else {
           localStorage.setItem('distrijam_version', 'm1');
-          frame1.src = 'catalogo.html?ver=m1';
-          frame2.src = 'catalogo.html?ver=m2';
+          frame1.src = '../catalogo.html?ver=m1';
+          frame2.src = '../catalogo.html?ver=m2';
         }
         openDirect.href = 'index-m1.html';
       } else {
         col2.style.display = 'none';
         label1.style.display = 'none';
         localStorage.setItem('distrijam_version', currentModel);
-        const homeUrl = currentModel === 'm1' ? 'index-m1.html' : 'index-m2.html';
-        const targetUrl = currentView === 'home' ? homeUrl : 'catalogo.html';
+        const homeUrl = { m1: 'index-m1.html', m2: 'index-m2.html', m3: 'index-m3.html', m4: 'index-m4.html', m5: 'index-m5.html' }[currentModel];
+        const targetUrl = currentView === 'home' ? homeUrl : '../catalogo.html';
         frame1.src = targetUrl;
         openDirect.href = targetUrl;
       }

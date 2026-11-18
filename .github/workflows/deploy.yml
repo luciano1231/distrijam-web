@@ -26,7 +26,7 @@ jobs:
         pattern = re.compile(r'(\b(?:href|src)=")(?!https?:|//)([^"?#]+\.(?:css|js))(")')
         total = 0
 
-        for path in pathlib.Path('.').glob('*.html'):
+        for path in [*pathlib.Path('.').glob('*.html'), *pathlib.Path('modelos').glob('*.html')]:
             text = path.read_text(encoding='utf-8')
             new_text, n = pattern.subn(rf'\g<1>\g<2>?v={sha}\g<3>', text)
             if n:

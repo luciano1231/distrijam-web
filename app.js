@@ -344,9 +344,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ── Universal Version Switcher (V1 a V4) ──────────────
 const DISTRIJAM_VERSIONS = {
-  m1: { short: 'M1', name: 'Portal E-Commerce', home: 'index-m1.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M1: Portal Comercial B2B & Vitrina en Vivo' },
-  m2: { short: 'M2', name: 'Dark Inmersivo', home: 'index-m2.html', themeClass: 'theme-m2', accent: '#E11D48', title: 'Nuevo Modelo M2: Corporativo Inmersivo en Pizarra y Cristal' },
-  v1: { short: 'V1', name: 'Clásica',    home: 'index.html',  themeClass: null,       accent: '#C0392B', title: 'Versión 1: Clásica (oscura, roja)' },
+  m1: { short: 'M1', name: 'Portal E-Commerce', home: 'modelos/index-m1.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M1: Portal Comercial B2B & Vitrina en Vivo' },
+  m2: { short: 'M2', name: 'Dark Inmersivo', home: 'modelos/index-m2.html', themeClass: 'theme-m2', accent: '#E11D48', title: 'Nuevo Modelo M2: Corporativo Inmersivo en Pizarra y Cristal' },
+  m3: { short: 'M3', name: 'Cine', home: 'modelos/index-m3.html', themeClass: 'theme-m2', accent: '#D92D20', title: 'Nuevo Modelo M3: Cine (productos primero, fotos en movimiento)' },
+  m4: { short: 'M4', name: 'Vitrina', home: 'modelos/index-m4.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M4: Vitrina (claro, un producto protagonista por vez)' },
+  m5: { short: 'M5', name: 'Muro', home: 'modelos/index-m5.html', themeClass: 'theme-m2', accent: '#E5352A', title: 'Nuevo Modelo M5: Muro (muro de fotos y explorador de productos)' },
+  v1: { short: 'V1', name: 'Clásica',   home: 'index.html',  themeClass: null,       accent: '#C0392B', title: 'Versión 1: Clásica (oscura, roja)' },
   v2: { short: 'V2', name: 'B2B',        home: 'index2.html', themeClass: 'theme-v2', accent: '#1E3A8A', title: 'Versión 2: Corporativa B2B (pizarra y azul)' },
   v3: { short: 'V3', name: 'Industrial', home: 'index3.html', themeClass: 'theme-v3', accent: '#C2700A', title: 'Versión 3: Industrial clara (blanco y ámbar)' },
   v4: { short: 'V4', name: 'Tech',       home: 'index4.html', themeClass: 'theme-v4', accent: '#0F766E', title: 'Versión 4: Tech nocturna (carbón y turquesa)' },
@@ -369,7 +372,8 @@ function currentPageFile() {
 }
 
 function versionOfHomePage(file) {
-  const found = Object.entries(DISTRIJAM_VERSIONS).find(([, cfg]) => cfg.home === file);
+  // Los modelos nuevos viven en /modelos/: se compara sólo el nombre del archivo
+  const found = Object.entries(DISTRIJAM_VERSIONS).find(([, cfg]) => cfg.home.split('/').pop() === file);
   return found ? found[0] : null;
 }
 

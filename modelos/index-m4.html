@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <base href="../" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://distrijam.com.ar/" />
+  <title>Distrijam — Tornillos, bulones y fijaciones al por mayor | Corrientes</title>
+  <meta name="description"
+    content="Distrijam, distribuidora mayorista de autoperforantes, bulones, tuercas, arandelas y tarugos en Corrientes. Mirá el catálogo y pedí tu cotización por WhatsApp." />
+  <link rel="icon" type="image/png" href="Logo/logo-distrijam.png" />
+  <link rel="apple-touch-icon" href="Logo/logo-distrijam.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="modelos/styles-m4.css" />
+</head>
+
+<body class="m4">
+
+  <header class="m4-nav nav" id="nav">
+    <div class="m4-wrap m4-nav-inner">
+      <a href="modelos/index-m4.html" class="m4-logo" aria-label="Distrijam, inicio">
+        <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam" />
+      </a>
+      <nav class="m4-nav-links" aria-label="Navegación principal">
+        <a href="modelos/index-m4.html#lineas">Líneas</a>
+        <a href="modelos/index-m4.html#guia">Qué tornillo uso</a>
+        <a href="modelos/index-m4.html#productos">Productos</a>
+        <a href="modelos/index-m4.html#contacto">Contacto</a>
+      </nav>
+      <div class="m4-nav-actions">
+        <a href="catalogo.html" class="m4-btn m4-btn-soft">Catálogo</a>
+        <a href="https://wa.me/5493794007195?text=Hola%20Distrijam,%20quiero%20cotizar%20un%20pedido."
+          target="_blank" rel="noopener" class="m4-btn m4-btn-dark">Cotizar</a>
+        <button class="m4-burger" id="nav-hamburger" aria-label="Abrir menú"><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="m4-mobile" id="nav-mobile">
+    <a href="modelos/index-m4.html#lineas">Líneas</a>
+    <a href="modelos/index-m4.html#guia">Qué tornillo uso</a>
+    <a href="modelos/index-m4.html#productos">Productos</a>
+    <a href="modelos/index-m4.html#contacto">Contacto</a>
+    <a href="catalogo.html">Catálogo completo →</a>
+  </div>
+
+  <main>
+    <!-- ── HERO VITRINA: un producto protagonista por vez ── -->
+    <section class="m4-hero" aria-label="Productos destacados">
+      <!-- Fotos a pantalla completa que se mueven lento, una por producto -->
+      <div class="m4-reel" id="m4-reel" aria-hidden="true">
+        <figure class="m4-slide is-active" data-kb="1"><img src="imagenes/landing-precision-caliper.jpg" alt="" /></figure>
+        <figure class="m4-slide" data-kb="2"><img src="imagenes/foto1.jpg" alt="" /></figure>
+        <figure class="m4-slide" data-kb="3"><img src="imagenes/landing-titanium-bolts.jpg" alt="" /></figure>
+        <figure class="m4-slide" data-kb="4"><img src="imagenes/foto2.jpg" alt="" /></figure>
+        <figure class="m4-slide" data-kb="1"><img src="imagenes/foto3.jpg" alt="" /></figure>
+      </div>
+      <div class="m4-hero-shade" aria-hidden="true"></div>
+      <div class="m4-grain" aria-hidden="true"></div>
+
+      <div class="m4-wrap m4-hero-body">
+        <div class="m4-hero-copy" id="m4-copy" aria-live="polite">
+          <p class="m4-kicker"><span id="m4-h-num">01</span> — <span id="m4-h-use">Techos y chapa</span></p>
+          <h1 class="m4-hero-title" id="m4-h-name">Hexagonal tipo 2 con arandela</h1>
+          <p class="m4-hero-desc" id="m4-h-desc">Para techar chapa sobre perfil. Trae arandela de goma para que no entre agua.</p>
+          <p class="m4-hero-meta"><span class="m4-live"></span><b id="m4-h-count">—</b> medidas y presentaciones en stock</p>
+          <div class="m4-hero-ctas">
+            <a href="producto.html?id=hexagonal-tipo-2-chapa-perfil-con-arandela" class="m4-btn m4-btn-red m4-btn-lg" id="m4-h-link">Ver medidas</a>
+            <a href="catalogo.html" class="m4-btn m4-btn-glass m4-btn-lg">Todo el catálogo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="m4-wrap">
+        <div class="m4-thumbs" id="m4-thumbs" role="tablist" aria-label="Elegí un producto destacado"></div>
+      </div>
+    </section>
+
+    <!-- ── BUSCADOR ── -->
+    <section class="m4-finder" aria-label="Buscador">
+      <div class="m4-wrap">
+        <form class="m4-search m4-reveal" action="catalogo.html" method="GET" role="search">
+          <label for="hero-search-input">¿Qué medida buscás?</label>
+          <div class="m4-search-box">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7.5" /><path d="m20.5 20.5-4.2-4.2" /></svg>
+            <input type="text" id="hero-search-input" name="q" autocomplete="off" placeholder="Ej: tirafondo 1/4, drywall T2, tuerca autofrenante" />
+            <button type="submit" class="m4-btn m4-btn-red">Buscar</button>
+            <div class="search-suggestions" id="search-suggestions" role="listbox"></div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ── LÍNEAS EN BENTO ── -->
+    <section class="m4-section" id="lineas">
+      <div class="m4-wrap">
+        <div class="m4-head m4-reveal">
+          <p class="m4-kicker">Líneas</p>
+          <h2 class="m4-title">Todo lo que fija, en un solo proveedor</h2>
+        </div>
+        <div class="m4-bento" id="m4-bento"></div>
+      </div>
+    </section>
+
+    <!-- ── GUÍA CON SCROLL: qué tornillo para cada trabajo ── -->
+    <section class="m4-guide" id="guia">
+      <div class="m4-wrap m4-guide-grid">
+        <div class="m4-guide-sticky">
+          <div class="m4-guide-stage">
+            <div class="m4-guide-ring" aria-hidden="true"></div>
+            <img src="imagenes/Fotos Nuevas/HEX T2.png" alt="" class="is-on" data-step="0" />
+            <img src="imagenes/Fotos Nuevas/DRY T2 AGUJA.png" alt="" data-step="1" />
+            <img src="imagenes/Fotos Nuevas/FIX.png" alt="" data-step="2" />
+            <img src="imagenes/Fotos Nuevas/TARUGO CON TOPE.png" alt="" data-step="3" />
+            <img src="imagenes/Fotos Productos/BULON GRADO 8.jpg" alt="" data-step="4" />
+            <p class="m4-guide-count"><span id="m4-g-num">01</span> / 05</p>
+          </div>
+        </div>
+
+        <div class="m4-guide-steps">
+          <p class="m4-kicker">Qué tornillo uso</p>
+          <h2 class="m4-title">Cinco trabajos, cinco respuestas</h2>
+
+          <article class="m4-step is-on" data-step="0">
+            <h3>Techo de chapa</h3>
+            <p>Autoperforante hexagonal tipo 2 con arandela de goma. Perfora el perfil, rosca y sella en un solo paso.</p>
+            <ul><li>12 x 1"</li><li>14 x 2"</li><li>14 x 2-1/2"</li></ul>
+            <a href="catalogo.html?cat=autoperforantes">Ver autoperforantes →</a>
+          </article>
+          <article class="m4-step" data-step="1">
+            <h3>Placa de yeso</h3>
+            <p>Drywall tipo 2 punta aguja, cabeza trompeta. Entra en la placa sin romper el papel. Para perfiles, tipo 1.</p>
+            <ul><li>6 x 1"</li><li>6 x 1-5/8"</li><li>T1 8 x 9/16"</li></ul>
+            <a href="catalogo.html?cat=autoperforantes">Ver línea drywall →</a>
+          </article>
+          <article class="m4-step" data-step="2">
+            <h3>Madera y muebles</h3>
+            <p>Fix y chipboard: rosca gruesa, no raja la madera y se atornilla rápido con atornillador.</p>
+            <ul><li>3,5 x 30</li><li>4 x 40</li><li>5 x 60</li></ul>
+            <a href="catalogo.html?cat=autoperforantes">Ver tornillos para madera →</a>
+          </article>
+          <article class="m4-step" data-step="3">
+            <h3>Pared de ladrillo</h3>
+            <p>Tarugo de nylon con tope para ladrillo macizo y hormigón. Para ladrillo hueco, el tarugo especial que abre adentro.</p>
+            <ul><li>N° 6</li><li>N° 8</li><li>N° 10</li></ul>
+            <a href="catalogo.html?cat=tarugos">Ver tarugos →</a>
+          </article>
+          <article class="m4-step" data-step="4">
+            <h3>Estructura y maquinaria</h3>
+            <p>Bulón grado 8.8 con tuerca autofrenante y arandela grower. Aguanta carga y vibración sin aflojarse.</p>
+            <ul><li>M8 a M20</li><li>1/4" a 3/4"</li></ul>
+            <a href="catalogo.html?cat=bulones">Ver bulones →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PRODUCTOS ── -->
+    <section class="m4-section" id="productos">
+      <div class="m4-wrap">
+        <div class="m4-head m4-head-row m4-reveal">
+          <div>
+            <p class="m4-kicker">Productos</p>
+            <h2 class="m4-title">Los que más medidas tienen</h2>
+          </div>
+          <a href="catalogo.html" class="m4-btn m4-btn-line">Ver los <span id="m4-total">90</span> productos →</a>
+        </div>
+        <div class="m4-grid" id="m4-grid"></div>
+      </div>
+    </section>
+
+    <!-- ── CONTACTO ── -->
+    <section class="m4-contact" id="contacto">
+      <div class="m4-wrap m4-contact-grid">
+        <div class="m4-reveal">
+          <p class="m4-kicker m4-kicker-light">Desde 2003 en Corrientes</p>
+          <h2 class="m4-title">Pasanos tu lista y te cotizamos hoy</h2>
+          <p class="m4-contact-lead">Más de 1.100 ferreterías, corralones y constructoras ya nos compran. Entregamos en Corrientes, Chaco, Formosa, Misiones y Santa Fe.</p>
+          <div class="m4-hero-ctas">
+            <a href="https://wa.me/5493794007195?text=Hola%20Distrijam,%20quiero%20cotizar%20un%20pedido."
+              target="_blank" rel="noopener" class="m4-btn m4-btn-white m4-btn-lg">Cotizar por WhatsApp</a>
+            <a href="tel:+543794007195" class="m4-btn m4-btn-outline-white m4-btn-lg">0379 400-7195</a>
+          </div>
+        </div>
+        <div class="m4-contact-card m4-reveal">
+          <iframe
+            src="https://maps.google.com/maps?q=Iber%C3%A1%201740,%20Corrientes,%20Argentina&t=&z=16&ie=UTF8&iwloc=&output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa: Distrijam, Iberá 1740, Corrientes"></iframe>
+          <p><strong>Iberá 1740</strong>, W3400 Corrientes</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="m4-footer">
+    <div class="m4-wrap m4-footer-inner">
+      <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam" class="m4-footer-logo" />
+      <nav aria-label="Pie de página">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="modelos/index-m4.html#guia">Qué tornillo uso</a>
+        <a href="modelos/index-m4.html#contacto">Contacto</a>
+        <a href="https://wa.me/5493794007195" target="_blank" rel="noopener">WhatsApp</a>
+      </nav>
+      <p>© <span data-current-year>2026</span> Distrijam · <a href="admin.html">Administración</a></p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="modelos/m4.js"></script>
+</body>
+
+</html>
