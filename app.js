@@ -636,44 +636,55 @@ function initVersionSwitcher() {
 }
 
 // ── Firma "Desarrollado por LGNEX" al pie de cada página ──
+// Igual a la de lanochedelosmuseosctes.com.ar: pastilla color papel con el
+// logo en Michroma. Al pasar el mouse se levanta, se enciende el borde verde
+// del logo y le cruza un brillo.
 function initLgnexBadge() {
   const footers = document.querySelectorAll('footer');
   const footer = footers[footers.length - 1];
   if (!footer || document.getElementById('lgnex-badge')) return;
 
+  // Sólo las letras que se usan, para que las fuentes pesen casi nada
+  const fuentes = document.createElement('link');
+  fuentes.rel = 'stylesheet';
+  fuentes.href = 'https://fonts.googleapis.com/css2?family=Michroma&family=Jost:wght@600&display=swap&text='
+    + encodeURIComponent('LGNEXDesarrollado por');
+  document.head.appendChild(fuentes);
+
   const style = document.createElement('style');
   style.textContent = `
-    .lgnex-wrap{display:flex;justify-content:center;padding:18px 16px 6px;width:100%}
-    .lgnex-badge{display:inline-flex;align-items:center;gap:12px;padding:7px 16px 7px 7px;
-      background:#fdf7ee;border:1.5px solid #e8c79b;border-radius:14px;color:#1f2a33;
-      font:700 15px/1 'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;text-decoration:none;
-      box-shadow:0 1px 0 rgba(0,0,0,.04);
-      transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,border-color .3s ease}
-    .lgnex-badge:hover,.lgnex-badge:focus-visible{transform:translateY(-2px);
-      border-color:#d9ad72;box-shadow:0 10px 22px -12px rgba(31,42,51,.45)}
-    .lgnex-badge:focus-visible{outline:2px solid #d9ad72;outline-offset:3px}
-    .lgnex-logo{display:inline-flex;align-items:center;height:32px;padding:0 9px;border-radius:9px;
-      background:#0f1b22;border:1px solid #1f3a40;font:800 15px/1 'Inter',system-ui,sans-serif;
-      letter-spacing:.02em;transition:transform .35s cubic-bezier(.22,1,.36,1)}
-    .lgnex-logo b{color:#fff;font-weight:800}
-    .lgnex-logo i{font-style:normal;color:transparent;-webkit-text-stroke:1px #34d3b0;
-      transition:color .35s ease}
-    .lgnex-badge:hover .lgnex-logo{transform:scale(1.04)}
-    .lgnex-badge:hover .lgnex-logo i{color:#34d3b0}
-    @media (prefers-reduced-motion:reduce){.lgnex-badge,.lgnex-logo,.lgnex-logo i{transition:none}
-      .lgnex-badge:hover{transform:none}.lgnex-badge:hover .lgnex-logo{transform:none}}
+    .lgnex-wrap{display:flex;justify-content:center;padding:16px 16px 4px;width:100%}
+    .lgnex-badge{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 7px;border-radius:12px;
+      background:#FAF6EE;border:1px solid rgba(16,42,58,.18);color:#102A3A;
+      font:600 .78rem/1 'Jost',system-ui,-apple-system,sans-serif;letter-spacing:.01em;
+      text-transform:none;text-decoration:none;box-shadow:0 4px 14px rgba(16,42,58,.1);
+      transition:transform .3s cubic-bezier(.22,1,.36,1),border-color .25s ease,box-shadow .3s ease}
+    .lgnex-badge i{position:relative;overflow:hidden;font-style:normal;background:#0B1114;color:#fff;
+      font-family:'Michroma',sans-serif;font-size:.68rem;letter-spacing:.02em;line-height:1;
+      padding:7px 9px;border-radius:7px;border:1px solid rgba(44,229,195,.45);
+      transition:border-color .25s ease,box-shadow .3s ease}
+    .lgnex-badge i b{color:#2CE5C3;font-weight:400;transition:text-shadow .3s ease}
+    .lgnex-badge i::after{content:'';position:absolute;top:0;bottom:0;left:-60%;width:40%;
+      background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);
+      transform:skewX(-20deg);pointer-events:none}
+    .lgnex-badge:hover,.lgnex-badge:focus-visible{transform:translateY(-2px);border-color:#B99B60;
+      box-shadow:0 10px 24px rgba(16,42,58,.18)}
+    .lgnex-badge:hover i,.lgnex-badge:focus-visible i{border-color:#2CE5C3;box-shadow:0 0 12px rgba(44,229,195,.35)}
+    .lgnex-badge:hover i b,.lgnex-badge:focus-visible i b{text-shadow:0 0 8px rgba(44,229,195,.6)}
+    .lgnex-badge:hover i::after,.lgnex-badge:focus-visible i::after{animation:lgnex-brillo .7s ease}
+    .lgnex-badge:focus-visible{outline:2px solid #B99B60;outline-offset:3px}
+    .lgnex-badge:active{transform:translateY(0)}
+    @keyframes lgnex-brillo{to{left:130%}}
+    @media (prefers-reduced-motion:reduce){.lgnex-badge,.lgnex-badge i{transition:none}
+      .lgnex-badge:hover{transform:none}.lgnex-badge:hover i::after{animation:none}}
     @media print{.lgnex-wrap{display:none}}
   `;
   document.head.appendChild(style);
 
   const wrap = document.createElement('div');
   wrap.className = 'lgnex-wrap';
-  wrap.innerHTML = `
-    <a class="lgnex-badge" id="lgnex-badge" href="https://lgnex.com" target="_blank" rel="noopener"
-       aria-label="Desarrollado por LGNEX (abre en una pestaña nueva)">
-      <span class="lgnex-logo" aria-hidden="true"><b>LG</b><i>NEX</i></span>
-      <span>Desarrollado por LGNEX</span>
-    </a>`;
+  wrap.innerHTML = '<a class="lgnex-badge" id="lgnex-badge" href="https://lgnex.com/" target="_blank" rel="noopener">'
+    + '<i>LG<b>NEX</b></i> Desarrollado por LGNEX</a>';
   footer.appendChild(wrap);
 }
 
