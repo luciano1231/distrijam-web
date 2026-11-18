@@ -283,19 +283,20 @@ button { font: inherit; cursor: pointer; }
 @keyframes skel { from { background-position: 100% 0; } to { background-position: 0 0; } }
 
 /* ── Líneas (horizontal fijado) ── */
-.m3-lines { position: relative; background: var(--paper); color: var(--ink); }
-.m3-lines-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+.m3-lines { position: relative; background: var(--paper); color: var(--ink); padding: clamp(80px, 10vw, 130px) 0; }
+.m3-lines-sticky { display: flex; flex-direction: column; gap: 34px; }
 .m3-lines-head { display: flex; align-items: flex-end; gap: 30px; flex-wrap: wrap; }
 .m3-lines-head .m3-kicker { width: 100%; margin-bottom: -18px; color: var(--red); }
-.m3-lines-progress { flex: 1; min-width: 120px; height: 2px; background: rgba(0,0,0,.12); margin-bottom: 12px; }
-.m3-lines-progress span { display: block; height: 100%; background: var(--red); transform-origin: left; transform: scaleX(0); }
-.m3-lines-track { display: flex; gap: 20px; padding: 0 var(--pad); width: max-content; will-change: transform; }
+/* Grilla común: se baja normal, sin mover nada de costado */
+.m3-lines-track { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--pad); }
 .m3-line-panel {
-  position: relative; width: min(74vw, 520px); height: min(58vh, 520px); border-radius: 28px; overflow: hidden;
-  background: #fff; display: flex; flex-direction: column; justify-content: space-between; padding: 28px;
-  transition: transform .6s var(--ease), box-shadow .6s var(--ease);
+  position: relative; aspect-ratio: 4 / 5; border-radius: 24px; overflow: hidden;
+  background: #fff; display: flex; flex-direction: column; justify-content: space-between; padding: 22px;
+  opacity: 0; transform: translateY(26px);
+  transition: opacity .8s var(--ease), transform .6s var(--ease), box-shadow .6s var(--ease); transition-delay: var(--d, 0s);
 }
-.m3-line-panel:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -20px rgba(0,0,0,.25); }
+.m3-line-panel.is-in { opacity: 1; transform: none; }
+.m3-line-panel.is-in:hover { transform: translateY(-6px); transition-delay: 0s; box-shadow: 0 30px 60px -20px rgba(0,0,0,.25); }
 /* La foto va en la parte de arriba de la tarjeta: nunca queda debajo del nombre */
 .m3-line-panel img {
   position: absolute; left: 8%; right: 8%; top: 14%; width: 84%; height: 46%; object-fit: contain; mix-blend-mode: multiply;
@@ -303,7 +304,7 @@ button { font: inherit; cursor: pointer; }
 }
 .m3-line-panel:hover img { transform: scale(1.08) rotate(-4deg); }
 .m3-line-idx { font-family: var(--head); font-stretch: 70%; font-weight: 800; font-size: .95rem; color: var(--red); position: relative; }
-.m3-line-name { font-family: var(--head); font-stretch: 78%; font-weight: 850; font-size: clamp(1.7rem, 3.6vw, 3rem); line-height: .92; text-transform: uppercase; position: relative; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+.m3-line-name { font-family: var(--head); font-stretch: 78%; font-weight: 850; font-size: clamp(1.4rem, 2.1vw, 2rem); line-height: .92; text-transform: uppercase; position: relative; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
 .m3-line-count { position: relative; font-size: .9rem; color: #555; display: flex; align-items: center; gap: 10px; }
 .m3-line-count b { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 500; transition: background .3s; }
 .m3-line-panel:hover .m3-line-count b { background: var(--red); }
@@ -354,6 +355,7 @@ button { font: inherit; cursor: pointer; }
 /* ── Responsive ── */
 @media (max-width: 1080px) {
   .m3-grid { grid-template-columns: repeat(3, 1fr); }
+  .m3-lines-track { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 860px) {
   .m3-nav-links, .m3-nav-actions .m3-btn-ghost { display: none; }
@@ -364,13 +366,11 @@ button { font: inherit; cursor: pointer; }
   .m3-reel-ui { flex-direction: column; align-items: flex-start; margin-top: 36px; }
   .m3-reel-bar { width: 40px; }
   /* Sin fijar: carrusel horizontal con el dedo */
-  .m3-lines { height: auto !important; padding: 80px 0; }
-  .m3-lines-sticky { position: static; height: auto; }
-  .m3-lines-progress { display: none; }
-  .m3-lines-track { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; transform: none !important; padding-bottom: 10px; scrollbar-width: none; }
-  .m3-lines-track::-webkit-scrollbar { display: none; }
-  .m3-line-panel { flex: none; scroll-snap-align: center; width: 78vw; height: auto; aspect-ratio: 4 / 5; max-height: 440px; padding: 22px; }
-  .m3-line-name { font-size: clamp(1.6rem, 8.4vw, 2.3rem); }
+  .m3-lines-track { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .m3-line-panel { padding: 14px; border-radius: 18px; }
+  .m3-line-name { font-size: clamp(1.05rem, 5vw, 1.5rem); }
+  .m3-line-count { font-size: .78rem; }
+  .m3-line-count b { width: 30px; height: 30px; }
 }
 @media (max-width: 520px) {
   .m3-nav-actions .m3-btn-red { display: none; }

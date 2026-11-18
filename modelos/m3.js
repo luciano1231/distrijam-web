@@ -257,11 +257,9 @@
     render();
   }
 
-  // Paneles por línea que se desplazan de costado mientras se baja
+  // Paneles por línea en una grilla común (sin scroll horizontal)
   function buildLines(products, cats) {
-    const section = $('#lineas');
     const track = $('#m3-lines-track');
-    const bar = $('#m3-lines-bar');
 
     const by = {};
     products.forEach((p) => { (by[p.category] = by[p.category] || []).push(p); });
@@ -271,7 +269,7 @@
       const list = by[id];
       const hero = list.find((p) => p.image && p.image.includes('Fotos Nuevas')) || list.find((p) => p.image) || {};
       return `
-      <a class="m3-line-panel" href="catalogo.html?cat=${encodeURIComponent(id)}">
+      <a class="m3-line-panel" href="catalogo.html?cat=${encodeURIComponent(id)}" style="--d:${(n % 5) * 0.06}s">
         <span class="m3-line-idx">${String(n + 1).padStart(2, '0')} / ${String(ids.length).padStart(2, '0')}</span>
         ${hero.image ? `<img src="${src(hero.image)}" alt="" loading="lazy" decoding="async" />` : ''}
         <div>
@@ -281,37 +279,6 @@
       </a>`;
     }).join('');
 
-    const desktop = window.matchMedia('(min-width: 861px)');
-    let dist = 0;
-
-    function layout() {
-      if (!desktop.matches || reduced) {
-        section.style.height = '';
-        track.style.transform = '';
-        return;
-      }
-      dist = Math.max(0, track.scrollWidth - innerWidth);
-      section.style.height = `${innerHeight + dist}px`;
-      update();
-    }
-
-    function update() {
-      if (!desktop.matches || reduced) return;
-      const r = section.getBoundingClientRect();
-      const k = Math.min(1, Math.max(0, -r.top / (dist || 1)));
-      track.style.transform = `translate3d(${-k * dist}px,0,0)`;
-      bar.style.transform = `scaleX(${k})`;
-    }
-
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => { update(); ticking = false; });
-    }, { passive: true });
-    window.addEventListener('resize', layout);
-    desktop.addEventListener('change', layout);
-    track.querySelectorAll('img').forEach((img) => img.addEventListener('load', layout, { once: true }));
-    layout();
+    track.querySelectorAll('.m3-line-panel').forEach(watch);
   }
 })();
