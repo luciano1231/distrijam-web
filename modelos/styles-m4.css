@@ -285,7 +285,9 @@ button { font: inherit; cursor: pointer; }
   .m4-thumbs { gap: 6px; }
   .m4-bento { grid-template-columns: 1fr 1fr; }
   .m4-tile.is-big { grid-column: span 2; grid-row: span 1; }
-  .m4-tile h3 { font-size: 1.05rem; }
+  .m4-tile { padding: 16px; }
+  .m4-tile h3 { font-size: 1.02rem; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+  .m4-tile img, .m4-tile.is-wide img { width: 58%; height: 58%; right: -4%; bottom: -4%; }
   .m4-search-box button { padding: 0 14px; }
 }
 @media (prefers-reduced-motion: reduce) {

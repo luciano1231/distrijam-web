@@ -296,13 +296,14 @@ button { font: inherit; cursor: pointer; }
   transition: transform .6s var(--ease), box-shadow .6s var(--ease);
 }
 .m3-line-panel:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -20px rgba(0,0,0,.25); }
+/* La foto va en la parte de arriba de la tarjeta: nunca queda debajo del nombre */
 .m3-line-panel img {
-  position: absolute; right: -6%; bottom: -6%; width: 78%; height: 78%; object-fit: contain; mix-blend-mode: multiply;
+  position: absolute; left: 8%; right: 8%; top: 14%; width: 84%; height: 46%; object-fit: contain; mix-blend-mode: multiply;
   transition: transform 1.1s var(--ease);
 }
 .m3-line-panel:hover img { transform: scale(1.08) rotate(-4deg); }
 .m3-line-idx { font-family: var(--head); font-stretch: 70%; font-weight: 800; font-size: .95rem; color: var(--red); position: relative; }
-.m3-line-name { font-family: var(--head); font-stretch: 78%; font-weight: 850; font-size: clamp(2rem, 4vw, 3.2rem); line-height: .92; text-transform: uppercase; position: relative; max-width: 70%; }
+.m3-line-name { font-family: var(--head); font-stretch: 78%; font-weight: 850; font-size: clamp(1.7rem, 3.6vw, 3rem); line-height: .92; text-transform: uppercase; position: relative; max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
 .m3-line-count { position: relative; font-size: .9rem; color: #555; display: flex; align-items: center; gap: 10px; }
 .m3-line-count b { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 500; transition: background .3s; }
 .m3-line-panel:hover .m3-line-count b { background: var(--red); }
@@ -368,7 +369,8 @@ button { font: inherit; cursor: pointer; }
   .m3-lines-progress { display: none; }
   .m3-lines-track { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; transform: none !important; padding-bottom: 10px; scrollbar-width: none; }
   .m3-lines-track::-webkit-scrollbar { display: none; }
-  .m3-line-panel { flex: none; scroll-snap-align: center; height: 420px; }
+  .m3-line-panel { flex: none; scroll-snap-align: center; width: 78vw; height: auto; aspect-ratio: 4 / 5; max-height: 440px; padding: 22px; }
+  .m3-line-name { font-size: clamp(1.6rem, 8.4vw, 2.3rem); }
 }
 @media (max-width: 520px) {
   .m3-nav-actions .m3-btn-red { display: none; }
