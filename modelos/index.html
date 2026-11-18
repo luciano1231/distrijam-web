@@ -3,268 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vista Previa Local — 2 Modelos Nuevos | Distrijam</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Modelos de portada | Distrijam</title>
   <link rel="icon" type="image/png" href="../Logo/logo-distrijam.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #0B0F19;
-      color: #F8FAFC;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+    html, body { height: 100%; overflow: hidden; background: #0b0f19; }
+    /* El modelo ocupa toda la pantalla; el selector flota encima sin quitar lugar */
+    iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; }
+
+    .sel {
+      position: fixed; left: 50%; bottom: 10px; translate: -50% 0; z-index: 10;
+      display: flex; align-items: center; gap: 2px; padding: 3px;
+      font: 600 11px/1 system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: rgba(15, 17, 21, .55); border: 1px solid rgba(255, 255, 255, .12); border-radius: 999px;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      opacity: .35; transition: opacity .2s ease;
     }
-    .preview-bar {
-      background: #111827;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      z-index: 100;
+    .sel:hover, .sel:focus-within { opacity: 1; }
+    .sel button, .sel a {
+      height: 22px; min-width: 26px; padding: 0 7px; border: 0; border-radius: 999px;
+      background: transparent; color: rgba(255, 255, 255, .75); font: inherit; cursor: pointer;
+      display: grid; place-items: center; text-decoration: none;
     }
-    .preview-brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      font-size: 0.92rem;
-    }
-    .preview-badge {
-      background: rgba(56, 189, 248, 0.15);
-      color: #38BDF8;
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      padding: 3px 10px;
-      border-radius: 99px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    .preview-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #1F2937;
-      padding: 4px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .model-btn {
-      padding: 8px 16px;
-      border-radius: 7px;
-      border: none;
-      background: transparent;
-      color: #9CA3AF;
-      font-size: 0.82rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-    }
-    .model-btn:hover { color: #FFF; }
-    .model-btn.active {
-      background: #0284C7;
-      color: #FFF;
-      box-shadow: 0 2px 10px rgba(2,132,199,0.4);
-    }
-    .model-btn[data-model="m2"].active {
-      background: #D92D20;
-      box-shadow: 0 2px 10px rgba(217,45,32,0.4);
-    }
-    .model-btn[data-model="m3"].active {
-      background: #B42318;
-      box-shadow: 0 2px 10px rgba(180,35,24,0.4);
-    }
-    .model-btn[data-model="m4"].active, .model-btn[data-model="m5"].active {
-      background: #B42318;
-      box-shadow: 0 2px 10px rgba(180,35,24,0.4);
-    }
-    .model-btn[data-model="split"].active {
-      background: #059669;
-      box-shadow: 0 2px 10px rgba(5,150,105,0.4);
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-    .page-switch {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .page-btn {
-      padding: 7px 13px;
-      border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.05);
-      color: #E5E7EB;
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .page-btn:hover, .page-btn.active {
-      background: #F8FAFC;
-      color: #0F172A;
-    }
-    .viewport {
-      flex: 1;
-      display: flex;
-      width: 100%;
-      height: calc(100vh - 58px);
-    }
-    .frame-col {
-      flex: 1;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      border-right: 2px solid #1F2937;
-    }
-    .frame-col:last-child { border-right: none; }
-    .frame-label {
-      background: #1E293B;
-      color: #CBD5E1;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 6px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .frame-label a {
-      color: #38BDF8;
-      text-decoration: none;
-    }
-    iframe {
-      width: 100%;
-      flex: 1;
-      border: none;
-      background: #FFF;
-    }
+    .sel button:hover, .sel a:hover { color: #fff; background: rgba(255, 255, 255, .1); }
+    .sel button[aria-pressed="true"] { background: #fff; color: #111; }
+    .sel i { width: 1px; height: 12px; background: rgba(255, 255, 255, .18); margin: 0 3px; }
   </style>
 </head>
 <body>
-  <div class="preview-bar">
-    <div class="preview-brand">
-      <span>DISTRIJAM</span>
-      <span class="preview-badge">5 Nuevos Modelos Visuales</span>
-    </div>
+  <iframe id="frame" src="index-m3.html" title="Vista previa del modelo"></iframe>
 
-    <div class="preview-controls">
-      <button class="model-btn active" data-model="m1">
-        <span class="dot" style="background:#38BDF8;"></span>
-        Modelo 1: Portal E-Commerce B2B (Luminoso + Vitrina en Vivo)
-      </button>
-      <button class="model-btn" data-model="m2">
-        <span class="dot" style="background:#FB7185;"></span>
-        Modelo 2: Corporativo Inmersivo (Pizarra, Cristal & Pósters)
-      </button>
-      <button class="model-btn" data-model="m3">
-        <span class="dot" style="background:#F04438;"></span>
-        Modelo 3: Cine
-      </button>
-      <button class="model-btn" data-model="m4">
-        <span class="dot" style="background:#F5F5F0;"></span>
-        Modelo 4: Vitrina
-      </button>
-      <button class="model-btn" data-model="m5">
-        <span class="dot" style="background:#9BA1AB;"></span>
-        Modelo 5: Muro
-      </button>
-      <button class="model-btn" data-model="split">
-        <span class="dot" style="background:#34D399;"></span>
-        Comparar Lado a Lado
-      </button>
-    </div>
-
-    <div class="page-switch">
-      <button class="page-btn active" data-view="home">Vista Portada</button>
-      <button class="page-btn" data-view="catalogo">Vista Catálogo</button>
-      <a href="index-m1.html" id="open-direct" target="_blank" class="page-btn" style="border-color:#38BDF8; color:#38BDF8;">
-        Abrir Pantalla Completa ↗
-      </a>
-    </div>
-  </div>
-
-  <div class="viewport" id="viewport">
-    <div class="frame-col" id="col-1">
-      <div class="frame-label" id="label-1" style="display:none;">
-        <span>MODELO 1 · Blueprint CAD & Ingeniería Mecánica</span>
-        <a href="index-m1.html" target="_blank">Abrir en pestaña nueva ↗</a>
-      </div>
-      <iframe id="frame-1" src="index-m1.html" title="Vista Previa Modelo 1"></iframe>
-    </div>
-    <div class="frame-col" id="col-2" style="display:none;">
-      <div class="frame-label" id="label-2">
-        <span>MODELO 2 · Editorial Arquitectónico & Bento</span>
-        <a href="index-m2.html" target="_blank">Abrir en pestaña nueva ↗</a>
-      </div>
-      <iframe id="frame-2" src="index-m2.html" title="Vista Previa Modelo 2"></iframe>
-    </div>
-  </div>
+  <nav class="sel" aria-label="Elegir modelo">
+    <button type="button" data-m="m1" title="Modelo 1: Portal e-commerce">M1</button>
+    <button type="button" data-m="m2" title="Modelo 2: Dark inmersivo">M2</button>
+    <button type="button" data-m="m3" title="Modelo 3: Cine">M3</button>
+    <button type="button" data-m="m4" title="Modelo 4: Vitrina">M4</button>
+    <button type="button" data-m="m5" title="Modelo 5: Muro">M5</button>
+    <i></i>
+    <button type="button" id="view" title="Ver el catálogo con este modelo">Catálogo</button>
+    <a id="open" href="index-m3.html" target="_blank" rel="noopener" title="Abrir en pestaña nueva" aria-label="Abrir en pestaña nueva">↗</a>
+  </nav>
 
   <script>
-    let currentModel = 'm1';
-    let currentView = 'home';
+    const MODELOS = ['m1', 'm2', 'm3', 'm4', 'm5'];
+    const frame = document.getElementById('frame');
+    const viewBtn = document.getElementById('view');
+    const open = document.getElementById('open');
+    const btns = [...document.querySelectorAll('[data-m]')];
 
-    const col1 = document.getElementById('col-1');
-    const col2 = document.getElementById('col-2');
-    const label1 = document.getElementById('label-1');
-    const frame1 = document.getElementById('frame-1');
-    const frame2 = document.getElementById('frame-2');
-    const openDirect = document.getElementById('open-direct');
+    // El modelo elegido queda en la dirección (#m4) para compartirlo o recargar
+    let modelo = MODELOS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'm3';
+    let catalogo = false;
 
-    function updateFrames() {
-      if (currentModel === 'split') {
-        col2.style.display = 'flex';
-        label1.style.display = 'flex';
-        if (currentView === 'home') {
-          frame1.src = 'index-m1.html';
-          frame2.src = 'index-m2.html';
-        } else {
-          localStorage.setItem('distrijam_version', 'm1');
-          frame1.src = '../catalogo.html?ver=m1';
-          frame2.src = '../catalogo.html?ver=m2';
-        }
-        openDirect.href = 'index-m1.html';
-      } else {
-        col2.style.display = 'none';
-        label1.style.display = 'none';
-        localStorage.setItem('distrijam_version', currentModel);
-        const homeUrl = { m1: 'index-m1.html', m2: 'index-m2.html', m3: 'index-m3.html', m4: 'index-m4.html', m5: 'index-m5.html' }[currentModel];
-        const targetUrl = currentView === 'home' ? homeUrl : '../catalogo.html';
-        frame1.src = targetUrl;
-        openDirect.href = targetUrl;
-      }
+    function mostrar() {
+      localStorage.setItem('distrijam_version', modelo);
+      const url = catalogo ? `../catalogo.html?ver=${modelo}` : `index-${modelo}.html`;
+      if (!frame.src.endsWith(url.replace('../', ''))) frame.src = url;
+      open.href = url;
+      btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.m === modelo)));
+      viewBtn.textContent = catalogo ? 'Portada' : 'Catálogo';
+      viewBtn.title = catalogo ? 'Volver a la portada del modelo' : 'Ver el catálogo con este modelo';
+      history.replaceState(null, '', `#${modelo}`);
     }
 
-    document.querySelectorAll('.model-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentModel = btn.dataset.model;
-        updateFrames();
-      });
-    });
-
-    document.querySelectorAll('.page-btn[data-view]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.page-btn[data-view]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentView = btn.dataset.view;
-        updateFrames();
-      });
-    });
+    btns.forEach(b => b.addEventListener('click', () => { modelo = b.dataset.m; mostrar(); }));
+    viewBtn.addEventListener('click', () => { catalogo = !catalogo; mostrar(); });
+    mostrar();
   </script>
 </body>
 </html>
-
