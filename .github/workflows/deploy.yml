@@ -41,7 +41,59 @@ jobs:
     - name: Generar sitemap.xml
       run: python3 scripts/gen_sitemap.py
 
+    # El FTP de Ferozo a veces rechaza la conexión de datos ("ECONNREFUSED
+    # ...:50000") y al rato vuelve a andar: se reintenta solo hasta 3 veces.
     - name: Sync files
+      id: sync1
+      continue-on-error: true
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ./public_html/  # Ajustá esto según la carpeta de tu hosting
+        protocol: ftps
+        # Con los 30 s por defecto el hosting cortaba la conexión a mitad
+        # ("Timeout (control socket)", "Server sent FIN packet unexpectedly")
+        timeout: 120000
+        # Las pruebas no van al hosting (los tres primeros son los que excluye por defecto)
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          tests/**
+
+    - name: Esperar antes de reintentar
+      if: steps.sync1.outcome == 'failure'
+      run: sleep 60
+
+    - name: Sync files (reintento 1)
+      id: sync2
+      if: steps.sync1.outcome == 'failure'
+      continue-on-error: true
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ./public_html/  # Ajustá esto según la carpeta de tu hosting
+        protocol: ftps
+        # Con los 30 s por defecto el hosting cortaba la conexión a mitad
+        # ("Timeout (control socket)", "Server sent FIN packet unexpectedly")
+        timeout: 120000
+        # Las pruebas no van al hosting (los tres primeros son los que excluye por defecto)
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          tests/**
+
+    - name: Esperar antes del ultimo intento
+      if: steps.sync1.outcome == 'failure' && steps.sync2.outcome == 'failure'
+      run: sleep 120
+
+    - name: Sync files (reintento 2)
+      if: steps.sync1.outcome == 'failure' && steps.sync2.outcome == 'failure'
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_SERVER }}
