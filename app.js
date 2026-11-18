@@ -340,6 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroSearch();
   initBackToTop();
   initDynamicYear();
+  initLgnexBadge();
 });
 
 // ── Universal Version Switcher (V1 a V4) ──────────────
@@ -541,6 +542,48 @@ function initVersionSwitcher() {
   }
 
   applyDistrijamTheme(activeVer);
+}
+
+// ── Firma "Desarrollado por LGNEX" al pie de cada página ──
+function initLgnexBadge() {
+  const footers = document.querySelectorAll('footer');
+  const footer = footers[footers.length - 1];
+  if (!footer || document.getElementById('lgnex-badge')) return;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .lgnex-wrap{display:flex;justify-content:center;padding:18px 16px 6px;width:100%}
+    .lgnex-badge{display:inline-flex;align-items:center;gap:12px;padding:7px 16px 7px 7px;
+      background:#fdf7ee;border:1.5px solid #e8c79b;border-radius:14px;color:#1f2a33;
+      font:700 15px/1 'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;text-decoration:none;
+      box-shadow:0 1px 0 rgba(0,0,0,.04);
+      transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,border-color .3s ease}
+    .lgnex-badge:hover,.lgnex-badge:focus-visible{transform:translateY(-2px);
+      border-color:#d9ad72;box-shadow:0 10px 22px -12px rgba(31,42,51,.45)}
+    .lgnex-badge:focus-visible{outline:2px solid #d9ad72;outline-offset:3px}
+    .lgnex-logo{display:inline-flex;align-items:center;height:32px;padding:0 9px;border-radius:9px;
+      background:#0f1b22;border:1px solid #1f3a40;font:800 15px/1 'Inter',system-ui,sans-serif;
+      letter-spacing:.02em;transition:transform .35s cubic-bezier(.22,1,.36,1)}
+    .lgnex-logo b{color:#fff;font-weight:800}
+    .lgnex-logo i{font-style:normal;color:transparent;-webkit-text-stroke:1px #34d3b0;
+      transition:color .35s ease}
+    .lgnex-badge:hover .lgnex-logo{transform:scale(1.04)}
+    .lgnex-badge:hover .lgnex-logo i{color:#34d3b0}
+    @media (prefers-reduced-motion:reduce){.lgnex-badge,.lgnex-logo,.lgnex-logo i{transition:none}
+      .lgnex-badge:hover{transform:none}.lgnex-badge:hover .lgnex-logo{transform:none}}
+    @media print{.lgnex-wrap{display:none}}
+  `;
+  document.head.appendChild(style);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'lgnex-wrap';
+  wrap.innerHTML = `
+    <a class="lgnex-badge" id="lgnex-badge" href="https://lgnex.com" target="_blank" rel="noopener"
+       aria-label="Desarrollado por LGNEX (abre en una pestaña nueva)">
+      <span class="lgnex-logo" aria-hidden="true"><b>LG</b><i>NEX</i></span>
+      <span>Desarrollado por LGNEX</span>
+    </a>`;
+  footer.appendChild(wrap);
 }
 
 // ── Botón volver arriba ───────────────────────────────
