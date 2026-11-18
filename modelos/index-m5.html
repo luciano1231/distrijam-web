@@ -15,7 +15,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="modelos/styles-m5.css" />
 </head>
 
@@ -52,21 +52,30 @@
       <div class="m5-hero-shade" aria-hidden="true"></div>
 
       <div class="m5-wrap m5-hero-body">
-        <p class="m5-tag m5-in" style="--d:.1s"><span></span>Stock permanente · Corrientes desde 2003</p>
-        <h1 class="m5-hero-title">
-          <span class="m5-in" style="--d:.2s">Tornillería</span>
-          <span class="m5-in m5-outline" style="--d:.32s">al por mayor</span>
-        </h1>
-        <p class="m5-hero-lead m5-in" style="--d:.45s">Autoperforantes, bulones, tuercas, tarugos y más de 90 productos con cientos de medidas. Buscá lo que necesitás y te cotizamos por WhatsApp.</p>
+        <div class="m5-panel">
+          <p class="m5-tag m5-in" style="--d:.1s"><span></span>Stock permanente · Corrientes desde 2003</p>
+          <h1 class="m5-hero-title">
+            <span class="m5-in" style="--d:.2s">Todo lo que fija,</span>
+            <span class="m5-in" style="--d:.32s">en <em class="m5-mark">un solo pedido</em>.</span>
+          </h1>
+          <p class="m5-hero-lead m5-in" style="--d:.45s">Autoperforantes, bulones, tuercas y tarugos al por mayor. Más de 90 productos y cientos de medidas, con cotización por WhatsApp.</p>
 
-        <form class="m5-search m5-in" style="--d:.58s" action="catalogo.html" method="GET" role="search">
-          <label class="m5-sr" for="hero-search-input">Buscar productos</label>
-          <input type="text" id="hero-search-input" name="q" autocomplete="off" placeholder="Producto o medida…" />
-          <button type="submit" aria-label="Buscar">
+          <form class="m5-search m5-in" style="--d:.58s" action="catalogo.html" method="GET" role="search">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7.5" /><path d="m20.5 20.5-4.2-4.2" /></svg>
-          </button>
-          <div class="search-suggestions" id="search-suggestions" role="listbox"></div>
-        </form>
+            <label class="m5-sr" for="hero-search-input">Buscar productos</label>
+            <input type="text" id="hero-search-input" name="q" autocomplete="off" placeholder="Buscá un producto o una medida" />
+            <button type="submit" class="m5-btn m5-btn-red">Buscar</button>
+            <div class="search-suggestions" id="search-suggestions" role="listbox"></div>
+          </form>
+
+          <nav class="m5-quick m5-in" style="--d:.7s" aria-label="Líneas más buscadas">
+            <a href="catalogo.html?cat=autoperforantes">Autoperforantes</a>
+            <a href="catalogo.html?cat=bulones">Bulones</a>
+            <a href="catalogo.html?cat=tuercas">Tuercas</a>
+            <a href="catalogo.html?cat=tarugos">Tarugos</a>
+            <a href="catalogo.html?cat=arandelas">Arandelas</a>
+          </nav>
+        </div>
       </div>
 
       <a href="modelos/index-m5.html#explorar" class="m5-scroll" aria-label="Bajar a los productos"><span></span></a>

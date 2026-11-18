@@ -14,58 +14,37 @@
     : null;
   document.querySelectorAll('.m5-reveal').forEach((el) => (io ? io.observe(el) : el.classList.add('is-in')));
 
-  // ── Muro de fotos: cada tanto una baldosa cambia de foto ──
+  // ── Fondo: filas de fotos que corren en sentidos alternados ──
   (function wall() {
     const wallEl = $('#m5-wall');
     const photo = (n) => `imagenes/Imagenes y tornillos para catalogo 900px${n === 1 ? '' : n}.jpg`;
     const PHOTOS = Array.from({ length: 32 }, (_, k) => photo(k + 1));
     const PRODUCTS = ['HEX T2', 'DRY T1 AGUJA', 'BULON CABEZ RED CCC', 'TIRAFONDO', 'TARUGO CON TOPE', 'PARKER', 'HELIX', 'FIX', 'CHIP', 'DECK MECHA', 'PHIL MECHA', 'ALAS']
       .map((n) => `imagenes/Fotos Nuevas/${n}.png`);
-    const TILES = 24;
-    let pPhoto = 0;
-    let pProd = 0;
-    const nextFor = (isProd) => (isProd ? PRODUCTS[pProd++ % PRODUCTS.length] : PHOTOS[pPhoto++ % PHOTOS.length]);
+    const ROWS = window.matchMedia('(max-width: 860px)').matches ? 8 : 5;
+    const PER_ROW = 8;
+    const SPEEDS = [90, 110, 80, 100, 95, 105, 85, 115];
+    let pp = 0;
+    let pr = 0;
 
-    const tiles = [];
-    for (let k = 0; k < TILES; k++) {
-      const isProd = k % 5 === 2;
-      const t = document.createElement('div');
-      t.className = `m5-tile${isProd ? ' is-product' : ''}`;
-      const a = new Image();
-      a.alt = '';
-      a.decoding = 'async';
-      a.src = src(nextFor(isProd));
-      a.className = 'is-on';
-      const b = new Image();
-      b.alt = '';
-      b.decoding = 'async';
-      t.append(a, b);
-      wallEl.appendChild(t);
-      tiles.push({ el: t, imgs: [a, b], on: 0, isProd });
+    for (let r = 0; r < ROWS; r++) {
+      const tiles = [];
+      for (let k = 0; k < PER_ROW; k++) {
+        // Cada tanto una foto de producto sobre blanco, corrida en cada fila
+        const isProd = (k + r * 2) % 4 === 1;
+        const file = isProd ? PRODUCTS[pr++ % PRODUCTS.length] : PHOTOS[pp++ % PHOTOS.length];
+        tiles.push(`<div class="m5-tile${isProd ? ' is-product' : ''}"><img src="${src(file)}" alt="" decoding="async"${r > 1 ? ' loading="lazy"' : ''} /></div>`);
+      }
+      const row = document.createElement('div');
+      row.className = `m5-row${r % 2 ? ' is-back' : ''}`;
+      row.style.setProperty('--t', `${SPEEDS[r]}s`);
+      row.innerHTML = tiles.join('') + tiles.join(''); // doble para que el loop no se corte
+      wallEl.appendChild(row);
     }
 
     if (reduced) return;
 
-    function swap() {
-      const t = tiles[Math.floor(Math.random() * tiles.length)];
-      const off = t.imgs[1 - t.on];
-      off.onload = () => {
-        t.imgs[t.on].classList.remove('is-on');
-        off.classList.add('is-on');
-        t.on = 1 - t.on;
-        t.el.classList.remove('is-flash');
-        void t.el.offsetWidth;
-        t.el.classList.add('is-flash');
-      };
-      off.src = src(nextFor(t.isProd));
-    }
-    let timer = setInterval(swap, 1100);
-    document.addEventListener('visibilitychange', () => {
-      clearInterval(timer);
-      if (!document.hidden) timer = setInterval(swap, 1100);
-    });
-
-    // El muro se corre con el mouse y se acerca al bajar
+    // Se corre un poco con el mouse y se acerca al bajar
     if (window.matchMedia('(hover: hover)').matches) {
       window.addEventListener('pointermove', (e) => {
         if (window.scrollY > innerHeight) return;
@@ -75,7 +54,7 @@
     }
     window.addEventListener('scroll', () => {
       const k = Math.min(1, window.scrollY / innerHeight);
-      wallEl.style.setProperty('--ws', String(1 + k * 0.1));
+      wallEl.style.setProperty('--ws', String(1 + k * 0.12));
     }, { passive: true });
   })();
 
@@ -124,7 +103,7 @@
       $('#m5-p-img').src = src(p.image || 'Logo/logo-distrijam.png');
       $('#m5-p-img').alt = p.name;
       $('#m5-p-cat').textContent = cats[p.category] ? cats[p.category].label : p.category;
-      $('#m5-p-name').textContent = p.name;
+      $('#m5-p-name').textContent = p.name.toLowerCase();
       $('#m5-p-desc').textContent = p.description || '';
       const medidas = [...new Set((p.variants || []).map((v) => v.medida).filter(Boolean))];
       const MAX = 18;
