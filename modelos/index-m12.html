@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <base href="../" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#f5f4f0" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://distrijam.com.ar/" />
+  <title>Distrijam — Tornillos, bulones y fijaciones al por mayor | Corrientes</title>
+  <meta name="description"
+    content="Distrijam, distribuidora mayorista de autoperforantes, bulones, tuercas, arandelas y tarugos en Corrientes. Mirá el catálogo y pedí tu cotización por WhatsApp." />
+  <link rel="icon" type="image/png" href="Logo/logo-distrijam.png" />
+  <link rel="apple-touch-icon" href="Logo/logo-distrijam.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="modelos/styles-m5.css" />
+  <link rel="stylesheet" href="modelos/styles-m5-mobile.css" />
+</head>
+
+<body class="m5 mx m12">
+
+  <header class="m5-nav nav" id="nav">
+    <div class="m5-wrap m5-nav-inner">
+      <a href="modelos/index-m12.html" class="m5-logo" aria-label="Distrijam, inicio">
+        <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam" />
+      </a>
+      <nav class="m5-nav-links" aria-label="Navegación principal">
+        <a href="modelos/index-m12.html#explorar">Explorar productos</a>
+        <a href="modelos/index-m12.html#lineas">Líneas</a>
+        <a href="modelos/index-m12.html#contacto">Contacto</a>
+      </nav>
+      <div class="m5-nav-actions">
+        <a href="catalogo.html" class="m5-btn m5-btn-line">Catálogo</a>
+        <button class="m5-burger" id="nav-hamburger" aria-label="Abrir menú"><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="m5-mobile" id="nav-mobile">
+    <a href="modelos/index-m12.html#explorar">Explorar productos</a>
+    <a href="modelos/index-m12.html#lineas">Líneas</a>
+    <a href="modelos/index-m12.html#contacto">Contacto</a>
+    <a href="catalogo.html">Catálogo completo →</a>
+  </div>
+
+  <main>
+    <!-- ── HERO: muro de fotos que cambian ── -->
+    <section class="m5-hero" aria-label="Presentación">
+      <div class="m5-wall" id="m5-wall" aria-hidden="true"></div>
+      <div class="m5-hero-shade" aria-hidden="true"></div>
+
+      <div class="m5-hero-body">
+        <h1 class="m12-stack" aria-label="Tornillos, bulones y tarugos al por mayor">
+          <span style="--i:0" aria-hidden="true">Tornillos,</span>
+          <span style="--i:1" class="is-dark" aria-hidden="true">bulones,</span>
+          <span style="--i:2" aria-hidden="true">tarugos</span>
+          <span style="--i:3" class="is-red" aria-hidden="true">al por mayor.</span>
+        </h1>
+        <div class="m12-bottom">
+          <p class="m12-lead">Más de 90 productos y cientos de medidas para ferreterías, corralones y obras del NEA. Desde 2003 en Corrientes.</p>
+          <div style="display:grid;gap:8px">
+            <form class="m5-search" action="catalogo.html" method="GET" role="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7.5" /><path d="m20.5 20.5-4.2-4.2" /></svg>
+            <label class="m5-sr" for="hero-search-input">Buscar productos</label>
+            <input type="text" id="hero-search-input" name="q" autocomplete="off" placeholder="¿Qué medida buscás?" />
+            <button type="submit" class="m5-btn m5-btn-red">Buscar</button>
+            <div class="search-suggestions" id="search-suggestions" role="listbox"></div>
+          </form>
+            <div class="m12-ctas">
+              <a href="catalogo.html" class="m5-btn m5-btn-line">Ver catálogo</a>
+              <a href="https://wa.me/5493794007195?text=Hola%20Distrijam%2C%20quiero%20cotizar%20un%20pedido." target="_blank" rel="noopener" class="m5-btn m5-btn-red">Cotizar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="modelos/index-m12.html#explorar" class="m5-scroll" aria-label="Bajar a los productos"><span></span></a>
+    </section>
+
+    <!-- ── EXPLORADOR ── -->
+    <section class="m5-explore" id="explorar">
+      <div class="m5-wrap">
+        <div class="m5-head m5-reveal">
+          <p class="m5-kicker">Explorar</p>
+          <h2 class="m5-title">Elegí, mirá las medidas, cotizá</h2>
+        </div>
+
+        <div class="m5-tabs m5-reveal" id="m5-tabs" role="tablist" aria-label="Líneas"></div>
+
+        <div class="m5-explorer m5-reveal">
+          <ul class="m5-list" id="m5-list" aria-label="Productos de la línea"></ul>
+
+          <article class="m5-preview" id="m5-preview" aria-live="polite">
+            <div class="m5-preview-media"><img id="m5-p-img" src="Logo/logo-distrijam.png" alt="" /></div>
+            <div class="m5-preview-body">
+              <p class="m5-preview-cat" id="m5-p-cat"></p>
+              <h3 class="m5-preview-name" id="m5-p-name">Cargando productos…</h3>
+              <p class="m5-preview-desc" id="m5-p-desc"></p>
+              <div class="m5-sizes" id="m5-p-sizes"></div>
+              <div class="m5-preview-ctas">
+                <a class="m5-btn m5-btn-red" id="m5-p-wa" href="https://wa.me/5493794007195" target="_blank" rel="noopener">Cotizar este producto</a>
+                <a class="m5-btn m5-btn-line" id="m5-p-link" href="catalogo.html">Ver la ficha</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── LÍNEAS: tarjetas que se apilan ── -->
+    <section class="m5-stack" id="lineas" aria-label="Líneas de producto">
+      <div class="m5-wrap">
+        <div class="m5-head m5-reveal">
+          <p class="m5-kicker">Líneas</p>
+          <h2 class="m5-title">Cuatro líneas, un solo pedido</h2>
+        </div>
+
+        <div class="m5-cards" id="m5-cards">
+          <a class="m5-chapter" href="catalogo.html?cat=autoperforantes" data-cat="autoperforantes" style="--i:0">
+            <img class="m5-chapter-bg" src="imagenes/cat1.jpg" alt="" loading="lazy" />
+            <div class="m5-chapter-body">
+              <span class="m5-chapter-idx">01</span>
+              <h3>Autoperforantes</h3>
+              <p>Hexagonales, drywall, fix, chipboard y parker. Para chapa, perfil, madera y placa de yeso.</p>
+              <span class="m5-chapter-count"><b data-count-cat="autoperforantes">30</b> productos →</span>
+            </div>
+          </a>
+          <a class="m5-chapter" href="catalogo.html?cat=bulones" data-cat="bulones" style="--i:1">
+            <img class="m5-chapter-bg" src="imagenes/cat2.jpg" alt="" loading="lazy" />
+            <div class="m5-chapter-body">
+              <span class="m5-chapter-idx">02</span>
+              <h3>Bulones y tuercas</h3>
+              <p>Grado 2, 5 y 8.8, cabeza redonda con cuello cuadrado, tuercas autofrenantes y varillas roscadas.</p>
+              <span class="m5-chapter-count"><b data-count-cat="bulones,tuercas,varillas">12</b> productos →</span>
+            </div>
+          </a>
+          <a class="m5-chapter" href="catalogo.html?cat=arandelas" data-cat="arandelas" style="--i:2">
+            <img class="m5-chapter-bg" src="imagenes/cat3.jpg" alt="" loading="lazy" />
+            <div class="m5-chapter-body">
+              <span class="m5-chapter-idx">03</span>
+              <h3>Arandelas y remaches</h3>
+              <p>Planas, grower, biseladas, de neoprene y vulcanizadas. Remaches pop, carroceros y de ala ancha.</p>
+              <span class="m5-chapter-count"><b data-count-cat="arandelas,remaches-clavos">13</b> productos →</span>
+            </div>
+          </a>
+          <a class="m5-chapter" href="catalogo.html?cat=tarugos" data-cat="tarugos" style="--i:3">
+            <img class="m5-chapter-bg" src="imagenes/cat4.jpg" alt="" loading="lazy" />
+            <div class="m5-chapter-body">
+              <span class="m5-chapter-idx">04</span>
+              <h3>Tarugos, pitones y ganchos</h3>
+              <p>Tarugos con y sin tope, para ladrillo hueco, pitones abiertos, cerrados y escuadra, tirafondos y ganchos J.</p>
+              <span class="m5-chapter-count"><b data-count-cat="tarugos,pitones,ganchos,tirafondos">35</b> productos →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACTO ── -->
+    <section class="m5-contact" id="contacto">
+      <div class="m5-wrap">
+        <div class="m5-stats m5-reveal">
+          <div><strong>+1100</strong><span>clientes en el NEA</span></div>
+          <div><strong>5</strong><span>provincias con entrega</span></div>
+          <div><strong>4.8★</strong><span>en Google</span></div>
+          <div><strong>2003</strong><span>año en que empezamos</span></div>
+        </div>
+
+        <div class="m5-contact-grid">
+          <div class="m5-reveal">
+            <h2 class="m5-title m5-title-xl">¿Armamos tu pedido?</h2>
+            <p class="m5-hero-lead">Mandanos la lista por WhatsApp con medidas y cantidades. Te respondemos con precio y fecha de entrega.</p>
+            <div class="m5-preview-ctas">
+              <a href="https://wa.me/5493794007195?text=Hola%20Distrijam,%20quiero%20cotizar%20un%20pedido."
+                target="_blank" rel="noopener" class="m5-btn m5-btn-red m5-btn-lg">Escribir por WhatsApp</a>
+              <a href="tel:+543794007195" class="m5-btn m5-btn-line m5-btn-lg">0379 400-7195</a>
+            </div>
+          </div>
+          <div class="m5-map m5-reveal">
+            <iframe
+              src="https://maps.google.com/maps?q=Iber%C3%A1%201740,%20Corrientes,%20Argentina&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa: Distrijam, Iberá 1740, Corrientes"></iframe>
+            <p><strong>Iberá 1740</strong>, W3400 Corrientes</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="m5-footer">
+    <div class="m5-wrap m5-footer-inner">
+      <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam" class="m5-footer-logo" />
+      <nav aria-label="Pie de página">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="modelos/index-m12.html#explorar">Explorar</a>
+        <a href="modelos/index-m12.html#contacto">Contacto</a>
+        <a href="https://wa.me/5493794007195" target="_blank" rel="noopener">WhatsApp</a>
+      </nav>
+      <p>© <span data-current-year>2026</span> Distrijam · <a href="admin.html">Administración</a></p>
+    </div>
+  </footer>
+
+
+  <!-- Barra fija para celular -->
+  <nav class="mx-dock" aria-label="Accesos rápidos">
+    <a class="is-cat" href="catalogo.html">Catálogo</a>
+    <a class="is-wa" href="https://wa.me/5493794007195?text=Hola%20Distrijam%2C%20quiero%20cotizar%20un%20pedido." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg>Pedir por WhatsApp</a>
+  </nav>
+
+  <script src="app.js"></script>
+  <script src="modelos/m5.js"></script>
+  <script src="modelos/m5-mobile.js"></script>
+</body>
+
+</html>
