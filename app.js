@@ -426,23 +426,22 @@ function injectVersionPillStyles() {
   if (document.getElementById('dvp-styles')) return;
   const style = document.createElement('style');
   style.id = 'dvp-styles';
-  // Antes era una barra con las seis versiones arriba a la derecha, que
-  // tapaba el menú y obligaba a correr la navegación. Ahora es un botoncito
-  // translúcido abajo a la izquierda (encima de "volver arriba") que
-  // despliega la lista al tocarlo.
+  // Un puntito casi invisible en la esquina de abajo a la izquierda, por
+  // debajo de "volver arriba": no compite con la página y al tocarlo
+  // despliega la lista de versiones.
   style.textContent = `
-    .distrijam-version-pill{position:fixed;left:26px;bottom:76px;z-index:99999;
+    .distrijam-version-pill{position:fixed;left:4px;bottom:4px;z-index:99999;
       font-family:'Inter',-apple-system,sans-serif;user-select:none}
-    .distrijam-version-pill .dvp-toggle{width:32px;height:32px;border-radius:50%;padding:0;
-      border:1px solid rgba(255,255,255,.25);background:rgba(15,23,42,.55);color:#E2E8F0;
-      font-size:.62rem;font-weight:700;letter-spacing:.02em;cursor:pointer;font-family:inherit;
-      display:grid;place-items:center;opacity:.45;transition:opacity .2s ease,background .2s ease;
-      box-shadow:0 2px 8px rgba(0,0,0,.2)}
-    .distrijam-version-pill .dvp-toggle:hover,
-    .distrijam-version-pill .dvp-toggle:focus-visible,
-    .distrijam-version-pill.open .dvp-toggle{opacity:1;background:rgba(15,23,42,.92)}
-    .distrijam-version-pill .dvp-toggle:focus-visible{outline:2px solid #fff;outline-offset:2px}
-    .distrijam-version-pill .dvp-menu{position:absolute;left:0;bottom:40px;min-width:170px;
+    .distrijam-version-pill .dvp-toggle{position:relative;width:16px;height:16px;padding:0;border:0;
+      background:transparent;cursor:pointer;font-size:0;color:transparent;display:block}
+    .distrijam-version-pill .dvp-toggle::after{content:'';position:absolute;left:5px;top:5px;
+      width:6px;height:6px;border-radius:50%;background:#94A3B8;opacity:.18;
+      transition:opacity .2s ease,transform .2s ease}
+    .distrijam-version-pill .dvp-toggle:hover::after,
+    .distrijam-version-pill .dvp-toggle:focus-visible::after,
+    .distrijam-version-pill.open .dvp-toggle::after{opacity:.8;transform:scale(1.3)}
+    .distrijam-version-pill .dvp-toggle:focus-visible{outline:1px solid #94A3B8;outline-offset:0;border-radius:50%}
+    .distrijam-version-pill .dvp-menu{position:absolute;left:4px;bottom:22px;min-width:170px;
       background:rgba(15,23,42,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
       border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:5px;
       box-shadow:0 10px 28px rgba(0,0,0,.4);display:none;flex-direction:column;gap:2px}
@@ -457,9 +456,6 @@ function injectVersionPillStyles() {
     .distrijam-version-pill .dvp-btn.active{color:#fff;font-weight:700;background:rgba(255,255,255,.1)}
     .distrijam-version-pill .dvp-btn .dvp-short{color:#94A3B8;min-width:20px}
     .distrijam-version-pill .dvp-btn.active .dvp-short{color:#fff}
-    @media (max-width:640px){
-      .distrijam-version-pill{left:14px;bottom:72px}
-    }
     @media print{.distrijam-version-pill{display:none}}
   `;
   document.head.appendChild(style);
