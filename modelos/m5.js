@@ -58,6 +58,26 @@
     }, { passive: true });
   })();
 
+  // ── Buscador que va escribiendo ejemplos (M8) ──
+  (function typer() {
+    const input = document.querySelector('input[data-typer]');
+    if (!input || reduced) return;
+    const words = input.dataset.typer.split('|');
+    let w = 0;
+    let i = 0;
+    let del = false;
+    (function tick() {
+      if (document.activeElement === input || input.value) { setTimeout(tick, 600); return; }
+      const word = words[w];
+      i += del ? -1 : 1;
+      input.placeholder = `Probá: ${word.slice(0, i)}`;
+      let wait = del ? 35 : 80;
+      if (!del && i === word.length) { del = true; wait = 1600; }
+      else if (del && i === 0) { del = false; w = (w + 1) % words.length; wait = 300; }
+      setTimeout(tick, wait);
+    })();
+  })();
+
   // ── Tarjetas apiladas: la de abajo se achica cuando la tapa la siguiente ──
   (function stack() {
     const cards = [...document.querySelectorAll('.m5-chapter')];
