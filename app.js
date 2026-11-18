@@ -202,10 +202,99 @@ async function distrijamCategorias() {
   return todas;
 }
 
+// ── Agrupado del menú de productos ────────────────────
+// Sólo cambia cómo se muestra el menú: los datos (planilla, productos.json)
+// quedan igual. Los productos que difieren nada más en medida, punta, color o
+// tope (ej. "DRYWALL TIPO 1 AGUJA" y "DRYWALL TIPO 2 MECHA") se juntan en una
+// sola línea que abre el catálogo filtrado con todos ellos.
+const DISTRIJAM_PALABRAS_VARIANTE = new Set([
+  'n', 'no', 'nro', 'del', 'de', 'con', 'sin', 'tope', 'aguja', 'mecha', 'tipo',
+  'dorado', 'dorada', 'negro', 'negra', 'zincado', 'zincada', 'zinc', 'pulido', 'pulida',
+]);
+
+function distrijamSinTildes(str) {
+  return String(str).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+// Palabras del nombre que distinguen al producto (sin medidas ni variantes)
+function distrijamPalabrasFamilia(nombre) {
+  return String(nombre).split(/\s+/).filter(Boolean).filter(w => {
+    const k = distrijamSinTildes(w).replace(/[º°.,]/g, '');
+    return k && !/^\d/.test(k) && !DISTRIJAM_PALABRAS_VARIANTE.has(k);
+  });
+}
+
+function distrijamAgruparMenu(lista, catId) {
+  const grupos = new Map();
+  lista.forEach(p => {
+    const palabras = distrijamPalabrasFamilia(p.name);
+    const clave = distrijamSinTildes(palabras.join(' ')) || distrijamSinTildes(p.name);
+    if (!grupos.has(clave)) grupos.set(clave, { label: palabras.join(' ') || p.name, items: [] });
+    grupos.get(clave).items.push(p);
+  });
+
+  // El texto de búsqueda tiene que traer a todos los del grupo y a ninguno más
+  // de la línea, con la misma regla que usa el buscador del catálogo.
+  const coincide = (p, q) => p.name.toLowerCase().includes(q) || (p.description || '').toLowerCase().includes(q);
+  const busqueda = (items) => {
+    const otros = lista.filter(p => !items.includes(p));
+    const w = items[0].name.split(/\s+/).filter(Boolean);
+    const candidatos = [];
+    for (let largo = 1; largo <= 3; largo++) {
+      for (let i = 0; i + largo <= w.length; i++) candidatos.push(w.slice(i, i + largo).join(' ').toLowerCase());
+    }
+    return candidatos.find(q => q.length > 2 && items.every(p => coincide(p, q)) && !otros.some(p => coincide(p, q)));
+  };
+
+  // "DRYWALL" + tipos 1 a 4 => "DRYWALL TIPO 1 A 4"; "TARUGO" + Nº 5 a 12 => "TARUGO Nº 5 A 12"
+  const conRango = (g) => {
+    const marcas = ['tipo', 'nº', 'n°', 'del', 'grado'];
+    let marca = null;
+    const nums = [];
+    g.items.forEach(p => {
+      const w = p.name.split(/\s+/).filter(Boolean);
+      for (let i = 0; i < w.length - 1; i++) {
+        if (marcas.includes(distrijamSinTildes(w[i])) && /^\d+([.,]\d+)?$/.test(w[i + 1])) {
+          if (!marca) marca = w[i];
+          nums.push(w[i + 1]);
+          break;
+        }
+      }
+    });
+    if (!marca || !nums.length) return g.label;
+    const orden = [...new Set(nums)].sort((x, y) => parseFloat(x.replace(',', '.')) - parseFloat(y.replace(',', '.')));
+    const rango = orden.length > 1 ? `${orden[0]} A ${orden[orden.length - 1]}` : orden[0];
+    const yaEsta = distrijamSinTildes(g.label).split(' ').includes(distrijamSinTildes(marca));
+    return `${g.label} ${yaEsta ? '' : `${marca} `}${rango}`;
+  };
+
+  return [...grupos.values()].map(g => {
+    if (g.items.length > 1) {
+      g.label = conRango(g);
+      const q = busqueda(g.items);
+      g.href = `catalogo.html?cat=${encodeURIComponent(catId)}${q ? `&q=${encodeURIComponent(q)}` : ''}`;
+    }
+    return g;
+  });
+}
+
+function distrijamEstilosMenu() {
+  if (document.getElementById('dj-menu-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'dj-menu-styles';
+  style.textContent = `
+    .submenu-link .submenu-count{display:inline-block;margin-left:8px;min-width:20px;padding:1px 6px;
+      border:1px solid currentColor;border-radius:999px;font-size:.66rem;font-weight:700;line-height:1.4;
+      text-align:center;opacity:.75;vertical-align:1px}
+  `;
+  document.head.appendChild(style);
+}
+
 // ── Dynamic Dropdown Menu for Products ──────────────────
 async function initProductDropdown() {
   const dropdownContainer = document.getElementById('dropdown-productos');
   if (!dropdownContainer) return;
+  distrijamEstilosMenu();
 
   try {
     const [products, categorias] = await Promise.all([distrijamCatalogo(), distrijamCategorias()]);
@@ -221,8 +310,10 @@ async function initProductDropdown() {
           <li class="dropdown-item">
             <a href="catalogo.html?cat=${encodeURIComponent(catId)}" class="dropdown-link">${distrijamEsc(cat.label)}</a>
             <ul class="submenu">
-              ${porCategoria[catId].map(p => `
-                <li><a href="producto.html?id=${encodeURIComponent(p.id)}" class="submenu-link">${distrijamEsc(p.name)}</a></li>
+              ${distrijamAgruparMenu(porCategoria[catId], catId).map(g => g.items.length === 1 ? `
+                <li><a href="producto.html?id=${encodeURIComponent(g.items[0].id)}" class="submenu-link">${distrijamEsc(g.items[0].name)}</a></li>
+              ` : `
+                <li><a href="${g.href}" class="submenu-link" title="${distrijamEsc(g.items.map(p => p.name).join(' · '))}">${distrijamEsc(g.label)}<span class="submenu-count">${g.items.length}</span></a></li>
               `).join('')}
             </ul>
           </li>
