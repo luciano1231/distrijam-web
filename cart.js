@@ -1,11 +1,8 @@
 // ── Shared Cart State & Functions ─────────────────────────
 let cart = [];
-// Destino de los pedidos de cotización.
-//
-// A propósito apunta al celular de quien administra el sitio, no al de la
-// empresa: los pedidos se revisan ahí hasta que se decida pasarlos al dueño.
-// No revertir sin confirmarlo. Número de la empresa: 5493794007195
-const WA_NUMBER = '5493794675203';
+// Destino de los pedidos de cotización: el WhatsApp de Distrijam,
+// +54 9 3794 00-7195 (confirmado por el dueño el 19/11/2026).
+const WA_NUMBER = '5493794007195';
 
 function loadCart() {
   try {
