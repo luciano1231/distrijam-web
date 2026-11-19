@@ -296,7 +296,7 @@ function cotRenderEstadoPrecios() {
   const n = Object.keys(cotPrecios).length;
   if (n === 0) {
     el.className = 'cot-price-status cot-price-status--off';
-    el.innerHTML = `<strong>Sin lista de precios.</strong> Subí <code>precios.json</code> una vez.`;
+    el.innerHTML = `<strong>Sin lista de precios.</strong> Cargala con <strong>Actualizar lista de precios</strong>.`;
   } else {
     el.className = 'cot-price-status cot-price-status--on';
     el.innerHTML = `<strong>Precios cargados:</strong> ${n} artículos.`;
