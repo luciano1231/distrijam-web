@@ -186,10 +186,27 @@ if ($accion === 'precios') {
         }
         $datos = json_decode((string) file_get_contents($archivo), true);
         $precios = is_array($datos) && isset($datos['precios']) ? $datos['precios'] : [];
+
+        // Datos de la lista anterior, por si hay que deshacer la última actualización
+        $anterior = null;
+        $archivoAnt = carpeta() . '/precios.anterior.json';
+        if (is_file($archivoAnt)) {
+            $ant = json_decode((string) file_get_contents($archivoAnt), true);
+            if (is_array($ant) && isset($ant['precios']) && is_array($ant['precios'])) {
+                $anterior = [
+                    'actualizada' => isset($ant['actualizada']) ? $ant['actualizada'] : null,
+                    'archivo' => isset($ant['archivo']) ? $ant['archivo'] : null,
+                    'total' => count($ant['precios']),
+                ];
+            }
+        }
+
         salir(200, [
             'ok' => true,
+            'anterior' => $anterior,
             'precios' => $precios,
             'actualizada' => is_array($datos) && isset($datos['actualizada']) ? $datos['actualizada'] : null,
+            'archivo' => is_array($datos) && isset($datos['archivo']) ? $datos['archivo'] : null,
         ]);
     }
 
@@ -221,8 +238,20 @@ if ($accion === 'precios') {
             salir(500, ['error' => 'No se pudo preparar el almacenamiento.']);
         }
 
+        // Nombre de la planilla de la que salió la lista, para mostrarlo junto a la fecha
+        $origen = is_array($datos) && isset($datos['archivo']) && is_string($datos['archivo'])
+            ? mb_substr(preg_replace('/[^\p{L}\p{N} ._()\-]/u', '', $datos['archivo']), 0, 120)
+            : null;
+
+        // Antes de pisar la lista vigente se guarda una copia: permite deshacer la actualización
+        if (is_file($archivo)) {
+            @copy($archivo, $dir . '/precios.anterior.json');
+            @chmod($dir . '/precios.anterior.json', 0640);
+        }
+
         $guardado = @file_put_contents($archivo, json_encode([
             'actualizada' => date('c'),
+            'archivo' => $origen,
             'precios' => $limpios,
         ], JSON_UNESCAPED_UNICODE), LOCK_EX);
 
@@ -230,6 +259,95 @@ if ($accion === 'precios') {
             salir(500, ['error' => 'No se pudo guardar la lista.']);
         }
         @chmod($archivo, 0640);
+
+        salir(200, ['ok' => true, 'total' => count($limpios)]);
+    }
+}
+
+/* ─────────────── Deshacer la última actualización de precios ─────────────── */
+/* Intercambia la lista vigente con la anterior: si se vuelve a pedir, se
+   vuelve a la de antes (sirve como "rehacer"). */
+if ($accion === 'precios_restaurar' && $metodo === 'POST') {
+    exigirSesion();
+    $vigente = carpeta() . '/precios.json';
+    $anteriorArch = carpeta() . '/precios.anterior.json';
+    $temporal = carpeta() . '/precios.tmp.json';
+
+    if (!is_file($anteriorArch)) {
+        salir(404, ['error' => 'No hay una lista anterior para volver.']);
+    }
+    if (is_file($vigente) && !@rename($vigente, $temporal)) {
+        salir(500, ['error' => 'No se pudo volver a la lista anterior.']);
+    }
+    if (!@rename($anteriorArch, $vigente)) {
+        if (is_file($temporal)) {
+            @rename($temporal, $vigente);
+        }
+        salir(500, ['error' => 'No se pudo volver a la lista anterior.']);
+    }
+    if (is_file($temporal)) {
+        @rename($temporal, $anteriorArch);
+    }
+    salir(200, ['ok' => true]);
+}
+
+/* ─────────────── Códigos descartados ─────────────── */
+/* Códigos de la planilla que se decidió no publicar. Se recuerdan entre
+   actualizaciones para no volver a preguntar por ellos. Viven fuera de
+   public_html, igual que los precios. */
+if ($accion === 'descartados') {
+    exigirSesion();
+    $archivoDesc = carpeta() . '/descartados.json';
+
+    if ($metodo === 'GET') {
+        $lista = [];
+        if (is_file($archivoDesc)) {
+            $datos = json_decode((string) file_get_contents($archivoDesc), true);
+            if (is_array($datos) && isset($datos['descartados']) && is_array($datos['descartados'])) {
+                $lista = $datos['descartados'];
+            }
+        }
+        salir(200, ['ok' => true, 'descartados' => count($lista) ? $lista : new stdClass()]);
+    }
+
+    if ($metodo === 'POST') {
+        $cuerpo = file_get_contents('php://input', false, null, 0, MAX_PRECIOS + 1);
+        if ($cuerpo === false || strlen($cuerpo) > MAX_PRECIOS) {
+            salir(413, ['error' => 'La lista es demasiado grande.']);
+        }
+        $datos = json_decode($cuerpo, true);
+        if (!is_array($datos) || !isset($datos['descartados']) || !is_array($datos['descartados'])) {
+            salir(400, ['error' => 'La lista no tiene el formato esperado.']);
+        }
+        if (count($datos['descartados']) > 5000) {
+            salir(400, ['error' => 'Demasiados códigos descartados.']);
+        }
+
+        $limpios = [];
+        foreach ($datos['descartados'] as $codigo => $item) {
+            $codigo = (string) $codigo;
+            if ($codigo === '' || mb_strlen($codigo) > 60 || !is_array($item)) {
+                continue;
+            }
+            $limpios[$codigo] = [
+                'descripcion' => mb_substr(isset($item['descripcion']) ? (string) $item['descripcion'] : '', 0, 200),
+                'precio' => isset($item['precio']) && is_numeric($item['precio']) ? round((float) $item['precio'], 2) : 0,
+                'fecha' => isset($item['fecha']) ? mb_substr((string) $item['fecha'], 0, 40) : date('c'),
+            ];
+        }
+
+        $dir = carpeta();
+        if (!is_dir($dir) && !@mkdir($dir, 0750, true)) {
+            salir(500, ['error' => 'No se pudo preparar el almacenamiento.']);
+        }
+        $guardado = @file_put_contents($archivoDesc, json_encode([
+            'actualizada' => date('c'),
+            'descartados' => $limpios,
+        ], JSON_UNESCAPED_UNICODE), LOCK_EX);
+        if ($guardado === false) {
+            salir(500, ['error' => 'No se pudo guardar la lista de descartados.']);
+        }
+        @chmod($archivoDesc, 0640);
 
         salir(200, ['ok' => true, 'total' => count($limpios)]);
     }

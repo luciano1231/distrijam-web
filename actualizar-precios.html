@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Actualizar precios — Distrijam</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="actualizar-precios.css" />
+</head>
+<body>
+
+  <header class="ap-top">
+    <div class="ap-top-in">
+      <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam" class="ap-logo" />
+      <div class="ap-ultima" id="ap-ultima">
+        <span class="ap-ultima-lbl">Última actualización de precios</span>
+        <strong id="ap-ultima-fecha">—</strong>
+        <span class="ap-ultima-det" id="ap-ultima-det"></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="ap-modo" id="ap-modo" hidden></div>
+
+  <main class="ap-main">
+
+    <ol class="ap-pasos" id="ap-pasos" aria-label="Pasos">
+      <li data-p="subir" class="on"><b>1</b> Subir el archivo</li>
+      <li data-p="revisar"><b>2</b> Revisar</li>
+      <li data-p="listo"><b>3</b> Listo</li>
+    </ol>
+
+    <!-- Paso 1: subir el archivo -->
+    <section class="ap-paso" id="paso-subir">
+      <h1>Actualizar la lista de precios</h1>
+      <p class="ap-lead">Subí la planilla que te pasa el sistema (Excel o CSV). Se toman solo los <strong>códigos</strong> y los <strong>precios</strong>: nombres, fotos y descripciones del catálogo no se tocan. Antes de guardar vas a ver qué cambia y qué hay que revisar.</p>
+
+      <ol class="ap-como">
+        <li><b>Subí</b> el archivo que te pasa el sistema. No hace falta tocarlo ni acomodarlo.</li>
+        <li><b>Revisá</b> lo que te marquemos. Para cada cosa te decimos qué es y qué conviene hacer.</li>
+        <li><b>Guardá.</b> Hasta ese momento no se cambia nada, y si algo sale mal podés deshacerlo.</li>
+      </ol>
+
+      <div class="ap-deshacer" id="ap-deshacer" hidden>
+        <span id="ap-deshacer-t"></span>
+        <button class="ap-btn ap-btn--sm" id="ap-deshacer-btn" type="button">Volver a esa lista</button>
+      </div>
+      <p class="ap-aviso" id="ap-aviso-subir" hidden></p>
+
+      <label class="ap-drop" id="ap-drop" for="ap-file">
+        <input type="file" id="ap-file" accept=".xlsx,.csv,.txt" hidden />
+        <span class="ap-drop-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 17v-6"/><path d="m9.5 13.5 2.5-2.5 2.5 2.5"/></svg>
+        </span>
+        <span class="ap-drop-t">Arrastrá el archivo acá o <u>elegilo</u></span>
+        <span class="ap-drop-s">.xlsx o .csv · columnas de código (SKU) y precio (Lista 1)</span>
+      </label>
+      <p class="ap-error" id="ap-error" hidden></p>
+
+      <details class="ap-bloque ap-det ap-desc" id="bloque-descartados">
+        <summary><h2>Productos descartados <span class="ap-cuenta" id="ap-cuenta-descartados">0</span></h2></summary>
+        <p class="ap-nota">Códigos que viniste descartando porque no van en la página. Quedan registrados: en la próxima actualización aparecen ya como descartados y no vuelven a molestar. Para que vuelvan a revisarse, sacalos de la lista (todos o uno por uno).</p>
+        <div class="ap-bloque-head">
+          <input type="search" id="ap-desc-buscar" class="ap-input" placeholder="Buscar por código o nombre" />
+          <button class="ap-btn ap-btn--sm" id="ap-desc-todos" type="button">Sacar todos de la lista</button>
+        </div>
+        <div class="ap-tabla-wrap"><table class="ap-tabla" id="ap-tabla-descartados"></table></div>
+      </details>
+    </section>
+
+    <!-- Paso 2: revisar -->
+    <section class="ap-paso" id="paso-revisar" hidden>
+      <div class="ap-rev-head">
+        <div>
+          <p class="ap-archivo" id="ap-archivo"></p>
+          <h1>Revisá antes de guardar</h1>
+        </div>
+        <button class="ap-btn ap-btn--ghost" id="ap-cancelar" type="button">Cancelar actualización</button>
+      </div>
+
+      <div class="ap-ver" id="ap-veredicto"></div>
+      <div class="ap-cifras" id="ap-cifras"></div>
+      <p class="ap-aviso" id="ap-aviso" hidden></p>
+
+      <!-- Errores -->
+      <div class="ap-bloque" id="bloque-errores">
+        <div class="ap-bloque-head">
+          <h2>Para resolver <span class="ap-cuenta" id="ap-cuenta-err"></span></h2>
+          <div class="ap-bloque-acc">
+            <div class="ap-seg" role="tablist" id="ap-filtro-err">
+              <button type="button" data-f="pend" class="on">Pendientes</button>
+              <button type="button" data-f="res">Resueltos</button>
+              <button type="button" data-f="todos">Todos</button>
+            </div>
+            <button class="ap-btn ap-btn--sm" id="ap-sugeridas" type="button">Aplicar lo sugerido a los pendientes</button>
+          </div>
+        </div>
+        <div id="ap-errores"></div>
+      </div>
+
+      <!-- Cambios de precio -->
+      <details class="ap-bloque ap-det" id="bloque-cambios" open>
+        <summary><h2>Cambios de precio <span class="ap-cuenta" id="ap-cuenta-cam"></span></h2></summary>
+        <div class="ap-tabla-tools">
+          <input type="search" id="ap-buscar" class="ap-input" placeholder="Buscar por código o nombre" />
+        </div>
+        <div class="ap-tabla-wrap"><table class="ap-tabla" id="ap-tabla-cambios"></table></div>
+      </details>
+
+      <details class="ap-bloque ap-det" id="bloque-auto">
+        <summary><h2>Corregidos solos <span class="ap-cuenta" id="ap-cuenta-auto"></span></h2></summary>
+        <p class="ap-nota">Excel guardó estos códigos como número y les sacó el 0 de adelante. Se reconocieron igual.</p>
+        <div class="ap-tabla-wrap"><table class="ap-tabla" id="ap-tabla-auto"></table></div>
+      </details>
+
+      <details class="ap-bloque ap-det" id="bloque-nombres">
+        <summary><h2>Nombres con diferencias menores <span class="ap-cuenta" id="ap-cuenta-nom"></span></h2></summary>
+        <p class="ap-nota">Mismo código y el nombre se parece: abreviaturas, una aclaración de más. El precio se toma normal. El nombre que se ve en el catálogo no cambia.</p>
+        <div class="ap-tabla-wrap"><table class="ap-tabla" id="ap-tabla-nombres"></table></div>
+      </details>
+
+      <details class="ap-bloque ap-det" id="bloque-nuevos">
+        <summary><h2>En el archivo pero no en el catálogo <span class="ap-cuenta" id="ap-cuenta-nue"></span></h2></summary>
+        <p class="ap-nota">Códigos que vinieron en la planilla y la página no tiene. Mientras no hagas nada, <b>se ignoran</b>: no cambian ningún precio. Por cada uno podés <b>descartarlo</b>, <b>guardar su precio</b> para cuando lo publiques, o <b>vincularlo</b> a un código del catálogo que cambió de nombre.</p>
+        <div class="ap-bloque-head">
+          <div class="ap-seg" id="ap-filtro-nue">
+            <button type="button" data-f="pend" class="on">Sin decidir</button>
+            <button type="button" data-f="desc">Descartados</button>
+            <button type="button" data-f="guar">Guardados</button>
+            <button type="button" data-f="todos">Todos</button>
+          </div>
+          <div class="ap-bloque-acc">
+            <button class="ap-btn ap-btn--sm" id="ap-nue-pruebas" type="button">Descartar pruebas y sin precio</button>
+            <button class="ap-btn ap-btn--sm" id="ap-nue-cajas" type="button">Descartar cajas FN</button>
+            <button class="ap-btn ap-btn--sm" id="ap-nue-descartar" type="button">Descartar todos los pendientes</button>
+            <button class="ap-btn ap-btn--sm" id="ap-nue-guardar" type="button">Guardar el precio de todos los pendientes</button>
+            <button class="ap-btn ap-btn--sm ap-btn--ghost" id="ap-nue-csv" type="button">Bajar lista (CSV)</button>
+          </div>
+        </div>
+        <div class="ap-tabla-wrap"><table class="ap-tabla" id="ap-tabla-nuevos"></table></div>
+      </details>
+
+      <div class="ap-barra" id="ap-barra">
+        <p class="ap-barra-t" id="ap-barra-t"></p>
+        <div class="ap-barra-acc">
+          <button class="ap-btn ap-btn--ghost" id="ap-cancelar-2" type="button">Cancelar</button>
+          <button class="ap-btn" id="ap-aplicar-parcial" type="button" hidden title="Guarda ya los precios sin problemas. Lo que falta resolver queda con el precio de antes y seguís después.">Guardar solo lo seguro</button>
+          <button class="ap-btn ap-btn--pri" id="ap-aplicar" type="button" disabled>Guardar precios nuevos</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Paso 3: listo -->
+    <section class="ap-paso" id="paso-listo" hidden>
+      <div class="ap-listo">
+        <span class="ap-listo-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </span>
+        <h1>Precios actualizados</h1>
+        <p id="ap-listo-t"></p>
+        <div class="ap-listo-acc">
+          <button class="ap-btn" id="ap-descargar" type="button">Descargar precios.json</button>
+          <button class="ap-btn" id="ap-deshacer-2" type="button" hidden>Me equivoqué: deshacer</button>
+          <button class="ap-btn ap-btn--pri" id="ap-otra" type="button">Listo</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Confirmaciones -->
+  <dialog class="ap-dialog" id="ap-dialog">
+    <form method="dialog">
+      <h3 id="ap-dialog-t"></h3>
+      <p id="ap-dialog-p"></p>
+      <div class="ap-dialog-acc">
+        <button value="no" class="ap-btn ap-btn--ghost" id="ap-dialog-no">Volver</button>
+        <button value="si" class="ap-btn ap-btn--pri" id="ap-dialog-si">Confirmar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="actualizar-precios.js"></script>
+</body>
+</html>
