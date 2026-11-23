@@ -4276,7 +4276,7 @@
   {
     "id": "clavo-liso-punta-paris",
     "name": "CLAVO LISO PUNTA PARIS",
-    "category": "remaches-clavos",
+    "category": "clavos",
     "brand": "",
     "description": "Clavo de hierro liso punta paris",
     "features": "Consulte características técnicas de este producto.",
@@ -4312,7 +4312,7 @@
   {
     "id": "clavo-torcionado",
     "name": "CLAVO TORCIONADO",
-    "category": "remaches-clavos",
+    "category": "clavos",
     "brand": "",
     "description": "Clavo de hierro torcionado",
     "features": "Consulte características técnicas de este producto.",
@@ -8032,7 +8032,7 @@
   {
     "id": "remachadora-profesional",
     "name": "REMACHADORA PROFESIONAL",
-    "category": "remaches-clavos",
+    "category": "remaches",
     "brand": "Argenrap®",
     "description": "Remachadora manual",
     "features": "Consulte características técnicas de este producto.",
@@ -8050,7 +8050,7 @@
   {
     "id": "remache-cabeza-ancha",
     "name": "REMACHE CABEZA ANCHA",
-    "category": "remaches-clavos",
+    "category": "remaches",
     "brand": "Argenrap®",
     "description": "Remache Ala Ancha",
     "features": "Consulte características técnicas de este producto.",
@@ -8104,7 +8104,7 @@
   {
     "id": "remache-carrocero",
     "name": "REMACHE CARROCERO",
-    "category": "remaches-clavos",
+    "category": "remaches",
     "brand": "Argenrap®",
     "description": "Remache carrocero",
     "features": "Consulte características técnicas de este producto.",
@@ -8152,7 +8152,7 @@
   {
     "id": "remache-pop",
     "name": "REMACHE POP",
-    "category": "remaches-clavos",
+    "category": "remaches",
     "brand": "Argenrap®",
     "description": "Remache pop",
     "features": "Consulte características técnicas de este producto.",

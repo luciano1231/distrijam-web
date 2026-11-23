@@ -116,16 +116,17 @@ document.querySelectorAll('.nav-link[data-page]').forEach(link => {
 // productos propios, cambios sobre los del proveedor y categorías nuevas.
 // Todas las páginas lo leen por acá para ver lo mismo.
 const DISTRIJAM_CATEGORIAS = {
-  arandelas:         'Arandelas',
-  autoperforantes:   'Autoperforantes',
-  bulones:           'Bulones',
-  ganchos:           'Ganchos',
-  pitones:           'Pitones',
-  'remaches-clavos': 'Remaches y Clavos',
-  tarugos:           'Tarugos',
-  tirafondos:        'Tirafondos',
-  tuercas:           'Tuercas',
-  varillas:          'Varillas Roscadas',
+  arandelas:       'Arandelas',
+  autoperforantes: 'Autoperforantes',
+  bulones:         'Bulones',
+  clavos:          'Clavos',
+  ganchos:         'Ganchos',
+  pitones:         'Pitones',
+  remaches:        'Remaches',
+  tarugos:         'Tarugos',
+  tirafondos:      'Tirafondos',
+  tuercas:         'Tuercas',
+  varillas:        'Varillas Roscadas',
 };
 
 function distrijamEsc(str) {

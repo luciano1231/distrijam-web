@@ -41,9 +41,12 @@ CATEGORIAS = {
     "arandelas":        "arandelas",
     "autoperforantes":  "autoperforantes",
     "bulones":          "bulones",
+    "clavo":            "clavos",
+    "clavos":           "clavos",
     "ganchos":          "ganchos",
     "pitones":          "pitones",
-    "remaches y clavos": "remaches-clavos",
+    "remache":          "remaches",
+    "remaches":         "remaches",
     "tarugo":           "tarugos",
     "tarugos":          "tarugos",
     "tirafondo":        "tirafondos",
@@ -316,7 +319,8 @@ def id_categoria(valor, nombre_producto):
         return 'autoperforantes'
     if 'GANCHO' in p: return 'ganchos'
     if 'PITON' in p: return 'pitones'
-    if 'CLAVO' in p or 'REMACHE' in p: return 'remaches-clavos'
+    if 'CLAVO' in p: return 'clavos'
+    if 'REMACHE' in p: return 'remaches'
     if 'TUERCA' in p or 'TCA' in p: return 'tuercas'
     if 'VARILLA' in p: return 'varillas'
     if 'ARANDELA' in p: return 'arandelas'
