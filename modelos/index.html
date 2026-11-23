@@ -69,11 +69,19 @@
     let modelo = MODELOS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'm3';
     let catalogo = false;
 
+    // Sello para evitar que el navegador o Cloudflare sirvan una versión en caché dentro del iframe
+    const V = Date.now().toString(36);
+
     function mostrar() {
       localStorage.setItem('distrijam_version', modelo);
-      const url = catalogo ? `../catalogo.html?ver=${modelo}` : `index-${modelo}.html`;
-      if (!frame.src.endsWith(url.replace('../', ''))) frame.src = url;
-      open.href = url;
+      const base = catalogo ? `../catalogo.html?ver=${modelo}` : `index-${modelo}.html`;
+      const sep = base.includes('?') ? '&' : '?';
+      const url = `${base}${sep}_v=${V}`;
+      if (frame.dataset.loaded !== base) {
+        frame.src = url;
+        frame.dataset.loaded = base;
+      }
+      open.href = base;
       btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.m === modelo)));
       viewBtn.textContent = catalogo ? 'Portada' : 'Catálogo';
       viewBtn.title = catalogo ? 'Volver a la portada del modelo' : 'Ver el catálogo con este modelo';
