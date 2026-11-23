@@ -1,4 +1,4 @@
-/* ======================================================
+﻿/* ======================================================
    DISTRIJAM — styles-m2.css
    MODELO 2 · "CORPORATIVO INDUSTRIAL INMERSIVO (DARK LUXURY)"
    Estética en pizarra nocturna (#0D1017), cristal esmerilado,
@@ -93,7 +93,7 @@ ul { list-style: none; }
 }
 
 .m2-logo img {
-  height: 40px;
+  height: 50px;
   width: auto;
   filter: brightness(0) invert(1);
 }
@@ -277,7 +277,7 @@ ul { list-style: none; }
 .m2-burger {
   display: none;
   width: 42px;
-  height: 42px;
+  height: 50px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--m2-border);

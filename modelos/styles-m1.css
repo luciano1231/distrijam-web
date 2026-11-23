@@ -1,4 +1,4 @@
-/* ======================================================
+﻿/* ======================================================
    DISTRIJAM — styles-m1.css
    MODELO 1 · "PORTAL COMERCIAL B2B & VITRINA EN VIVO"
    Diseño limpio, luminoso y moderno estilo e-commerce
@@ -152,7 +152,7 @@ ul { list-style: none; }
 }
 
 .m1-logo img {
-  height: 42px;
+  height: 50px;
   width: auto;
 }
 
@@ -453,7 +453,7 @@ ul { list-style: none; }
 .m1-burger {
   display: none;
   width: 42px;
-  height: 42px;
+  height: 50px;
   border-radius: 10px;
   border: 1px solid var(--m1-border);
   background: var(--m1-white);
@@ -670,7 +670,7 @@ ul { list-style: none; }
 
 .m1-fam-icon {
   width: 40px;
-  height: 40px;
+  height: 50px;
   border-radius: 10px;
   background: var(--m1-red-light);
   color: var(--m1-red);

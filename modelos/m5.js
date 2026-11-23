@@ -14,8 +14,9 @@
     : null;
   document.querySelectorAll('.m5-reveal').forEach((el) => (io ? io.observe(el) : el.classList.add('is-in')));
 
-  // ── Fondo: filas de fotos que corren en sentidos alternados ──
+  // ── Fondo: desactivado el muro de fotos para dejar fondo limpio y sutil ──
   (function wall() {
+    return;
     const wallEl = $('#m5-wall');
     const photo = (n) => `imagenes/Imagenes y tornillos para catalogo 900px${n === 1 ? '' : n}.jpg`;
     const PHOTOS = Array.from({ length: 32 }, (_, k) => photo(k + 1));

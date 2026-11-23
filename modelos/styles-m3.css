@@ -62,7 +62,7 @@ button { font: inherit; cursor: pointer; }
 
 /* ── Nav ── */
 .m3-nav {
-  position: fixed; inset: 0 0 auto 0; z-index: 50; height: 72px;
+  position: fixed; inset: 0 0 auto 0; z-index: 50; height: 80px;
   display: flex; align-items: center;
   transition: background .4s, backdrop-filter .4s, border-color .4s;
   border-bottom: 1px solid transparent;
@@ -73,7 +73,7 @@ button { font: inherit; cursor: pointer; }
   border-bottom-color: var(--line);
 }
 .m3-nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.m3-logo img { height: 34px; width: auto; filter: brightness(0) invert(1); }
+.m3-logo img { height: 48px; width: auto; filter: brightness(0) invert(1); }
 .m3-nav-links { display: flex; gap: 30px; }
 .m3-nav-links a { font-size: .9rem; color: rgba(255,255,255,.78); position: relative; padding: 6px 0; }
 .m3-nav-links a::after {

@@ -25,7 +25,7 @@
   display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(24px, 4vw, 60px); align-items: center;
   transform: rotate(2deg);
 }
-.m6-title { font-family: var(--head); font-weight: 800; font-size: clamp(3rem, 8.4vw, 7.6rem); line-height: .9; letter-spacing: -.06em; }
+.m6-title { font-family: var(--head); font-weight: 800; font-size: clamp(2.6rem, 6.8vw, 6.2rem); line-height: .96; letter-spacing: -.03em; }
 .m6-title span { display: block; }
 .m6-title em { font-style: normal; color: var(--red); }
 .m6-side { display: grid; gap: 16px; }
@@ -46,7 +46,6 @@
    M7 · HOJA: una hoja de papel a la izquierda, fotos a la derecha
    ───────────────────────────────────────────── */
 .m7 .m5-hero { align-items: stretch; }
-.m7 .m5-hero-shade { background: linear-gradient(0deg, var(--bg) 0%, rgba(245,244,240,0) 18%); }
 .m7 .m5-scroll { display: none; }
 .m7 .m5-hero-body { padding: 0; display: block; max-width: none; margin: 0; }
 .m7-sheet {
@@ -61,7 +60,7 @@
   content: ''; position: absolute; top: 0; bottom: 0; right: -12px; width: 12px;
   background: radial-gradient(circle at 0 10px, var(--bg) 6px, transparent 6.5px) 0 0 / 12px 20px repeat-y;
 }
-.m7-title { font-family: var(--head); font-weight: 800; font-size: clamp(2.6rem, 4.6vw, 4.4rem); line-height: .95; letter-spacing: -.05em; }
+.m7-title { font-family: var(--head); font-weight: 800; font-size: clamp(2.4rem, 4.2vw, 4rem); line-height: 1.02; letter-spacing: -.028em; }
 .m7-title span { color: var(--red); }
 .m7-lead { color: var(--muted); }
 .m7-index { list-style: none; border-top: 1px solid var(--line); counter-reset: idx; }
@@ -81,7 +80,7 @@
    M8 · BUSCADOR: la búsqueda es la protagonista
    ───────────────────────────────────────────── */
 .m8 .m5-hero-body { flex-direction: column; align-items: center; text-align: center; gap: 26px; }
-.m8-q { font-family: var(--head); font-weight: 800; font-size: clamp(2.4rem, 6vw, 5.2rem); line-height: .98; letter-spacing: -.05em; text-shadow: 0 2px 30px rgba(245,244,240,.9); }
+.m8-q { font-family: var(--head); font-weight: 800; font-size: clamp(2.2rem, 5vw, 4.4rem); line-height: 1.05; letter-spacing: -.028em; text-shadow: 0 2px 30px rgba(245,244,240,.9); }
 .m8-q span { color: var(--red); }
 .m8-card {
   position: relative; width: min(100%, 860px); background: #fff; border-radius: 30px; padding: 14px;
