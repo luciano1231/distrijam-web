@@ -95,6 +95,95 @@
   color: white;
 }
 
+/* ── Subcategory Filters (Autoperforantes TEL) ── */
+.subfilter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.subfilter-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: var(--bg-card-2);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.subfilter-tab:hover {
+  border-color: var(--red);
+  color: var(--white);
+}
+
+.subfilter-tab.active {
+  background: var(--red);
+  border-color: var(--red);
+  color: #ffffff;
+}
+
+.subfilter-tab .tab-count {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.08);
+  color: inherit;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+.subfilter-tab.active .tab-count {
+  background: rgba(255, 255, 255, 0.24);
+  color: #ffffff;
+}
+
+/* ── Catalog Group Section Header ── */
+.catalog-group-header {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  margin-top: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--red);
+  border-radius: var(--radius);
+}
+
+.catalog-group-header:first-child {
+  margin-top: 0;
+}
+
+.catalog-group-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.catalog-group-count {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
 /* ── Main Layout ── */
 .catalog-main {
   display: grid;

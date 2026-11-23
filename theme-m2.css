@@ -119,6 +119,17 @@ body.theme-m2 .btn-select-variant {
   border-radius: 99px !important;
 }
 
+body.theme-m2 .btn-secondary {
+  color: #F8FAFC !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+body.theme-m2 .btn-secondary:hover {
+  border-color: #FB7185 !important;
+  color: #FB7185 !important;
+}
+
 body.theme-m2 .cart-sidebar {
   background: #111622 !important;
   border-left: 1px solid rgba(255, 255, 255, 0.09) !important;

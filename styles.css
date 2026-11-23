@@ -522,9 +522,19 @@ ul {
 .btn-secondary {
   background: transparent;
   color: #ffffff;
-  /* Texto claro para que se lea en el fondo oscuro */
+  color: var(--text);
   border: 1px solid rgba(255, 255, 255, 0.4);
-  /* Borde claro semitransparente */
+  border: 1px solid var(--border);
+}
+
+.hero .btn-secondary {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.hero .btn-secondary:hover {
+  border-color: var(--red);
+  color: var(--red);
 }
 
 /* Opcional: Que el borde se ponga rojo cuando le pasás el mouse */

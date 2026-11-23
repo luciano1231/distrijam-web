@@ -203,6 +203,31 @@ async function distrijamCategorias() {
 }
 
 // ── Agrupado del menú de productos ────────────────────
+// Para Autoperforantes se usa la clasificación oficial por línea TEL
+// en el mismo orden del catálogo de fábrica.
+const DISTRIJAM_AUTOPERFORANTES_GRUPOS = [
+  { id: 'tel-dry',        label: 'TEL-DRY',        test: s => /\bdry/.test(s) },
+  { id: 'tel-hex-tipo-1', label: 'TEL-HEX TIPO 1', test: s => /\bhex/.test(s) && /\b(tipo\s*1|t1)\b/.test(s) },
+  { id: 'tel-hex-tipo-2', label: 'TEL-HEX TIPO 2', test: s => /\bhex/.test(s) && !/\b(tipo\s*1|t1)\b/.test(s) },
+  { id: 'tel-alas',       label: 'TEL ALAS',       test: s => /\balas\b/.test(s) },
+  { id: 'tel-phil',       label: 'TEL-PHIL',       test: s => /\b(phil|pan[\s-]*framing)\b/.test(s) },
+  { id: 'tel-fix',        label: 'TEL FIX',        test: s => /\bfix\b/.test(s) && !/\btx\b/.test(s) },
+  { id: 'tel-fix-tx',     label: 'TEL FIX TX',     test: s => /\bfix\b/.test(s) && /\btx\b/.test(s) },
+  { id: 'tel-chipboard',  label: 'TEL CHIPBOARD',  test: s => /\bchipboard\b/.test(s) },
+  { id: 'tel-helix',      label: 'TEL HELIX',      test: s => /\bhelix\b/.test(s) },
+  { id: 'tel-wafer',      label: 'TEL WAFER',      test: s => /\bwafer\b/.test(s) },
+  { id: 'tel-deck',       label: 'TEL DECK',       test: s => /\bdeck\b/.test(s) },
+  { id: 'tel-cut',        label: 'TEL CUT',        test: s => /\bcut\b/.test(s) },
+  { id: 'tel-parker',     label: 'TEL PARKER',     test: s => /\bparker\b/.test(s) },
+  { id: 'tel-wall',       label: 'TEL WALL',       test: s => /\bwall\b/.test(s) },
+];
+
+function distrijamGrupoAutoperforante(producto) {
+  if (!producto || producto.category !== 'autoperforantes') return null;
+  const s = distrijamSinTildes(producto.name || '');
+  return DISTRIJAM_AUTOPERFORANTES_GRUPOS.find(g => g.test(s)) || null;
+}
+
 // Sólo cambia cómo se muestra el menú: los datos (planilla, productos.json)
 // quedan igual. Los productos que difieren nada más en medida, punta, color o
 // tope (ej. "DRYWALL TIPO 1 AGUJA" y "DRYWALL TIPO 2 MECHA") se juntan en una
@@ -225,6 +250,30 @@ function distrijamPalabrasFamilia(nombre) {
 }
 
 function distrijamAgruparMenu(lista, catId) {
+  if (catId === 'autoperforantes') {
+    const porGrupo = new Map();
+    DISTRIJAM_AUTOPERFORANTES_GRUPOS.forEach(g => porGrupo.set(g.id, { id: g.id, label: g.label, items: [] }));
+    const otros = [];
+
+    lista.forEach(p => {
+      const g = distrijamGrupoAutoperforante(p);
+      if (g && porGrupo.has(g.id)) porGrupo.get(g.id).items.push(p);
+      else otros.push(p);
+    });
+
+    const resultado = [...porGrupo.values()]
+      .filter(g => g.items.length > 0)
+      .map(g => ({
+        ...g,
+        href: `catalogo.html?cat=autoperforantes&sub=${encodeURIComponent(g.id)}`,
+      }));
+
+    otros.forEach(p => {
+      resultado.push({ label: p.name, items: [p], href: `producto.html?id=${encodeURIComponent(p.id)}` });
+    });
+    return resultado;
+  }
+
   const grupos = new Map();
   lista.forEach(p => {
     const palabras = distrijamPalabrasFamilia(p.name);
@@ -310,10 +359,10 @@ async function initProductDropdown() {
           <li class="dropdown-item">
             <a href="catalogo.html?cat=${encodeURIComponent(catId)}" class="dropdown-link">${distrijamEsc(cat.label)}</a>
             <ul class="submenu">
-              ${distrijamAgruparMenu(porCategoria[catId], catId).map(g => g.items.length === 1 ? `
+              ${distrijamAgruparMenu(porCategoria[catId], catId).map(g => (!g.href && g.items.length === 1) ? `
                 <li><a href="producto.html?id=${encodeURIComponent(g.items[0].id)}" class="submenu-link">${distrijamEsc(g.items[0].name)}</a></li>
               ` : `
-                <li><a href="${g.href}" class="submenu-link" title="${distrijamEsc(g.items.map(p => p.name).join(' · '))}">${distrijamEsc(g.label)}<span class="submenu-count">${g.items.length}</span></a></li>
+                <li><a href="${g.href}" class="submenu-link" title="${distrijamEsc(g.items.map(p => p.name).join(' · '))}">${distrijamEsc(g.label)}${g.items.length > 1 ? `<span class="submenu-count">${g.items.length}</span>` : ''}</a></li>
               `).join('')}
             </ul>
           </li>

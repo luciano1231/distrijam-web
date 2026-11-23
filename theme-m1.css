@@ -125,6 +125,17 @@ body.theme-m1 .btn-select-variant:hover {
   background: #D92D20 !important;
 }
 
+body.theme-m1 .btn-secondary {
+  color: #0F172A !important;
+  border: 1px solid #CBD5E1 !important;
+  background: #FFFFFF !important;
+}
+
+body.theme-m1 .btn-secondary:hover {
+  border-color: #D92D20 !important;
+  color: #D92D20 !important;
+}
+
 body.theme-m1 .cart-sidebar {
   background: #FFFFFF !important;
   border-left: 1px solid #E2E8F0 !important;

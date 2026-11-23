@@ -69,3 +69,13 @@ body.theme-g2 .product-card:hover {
   border-color: #1D4ED8 !important;
   box-shadow: 0 12px 30px rgba(29, 78, 216, 0.15) !important;
 }
+
+body.theme-g2 .btn-secondary {
+  color: #0F172A !important;
+  border: 1px solid #CBD5E1 !important;
+}
+
+body.theme-g2 .btn-secondary:hover {
+  border-color: #1D4ED8 !important;
+  color: #1D4ED8 !important;
+}

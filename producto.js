@@ -133,7 +133,12 @@ function renderProduct(p, categorias = {}) {
     this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23f5f5f5"/><g fill="none" stroke="%23ccc" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(144 144) scale(4.66667)"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></g></svg>';
   };
 
-  const nombreCategoria = (categorias[p.category] && categorias[p.category].label) || p.category;
+  const grupoAuto = (p.category === 'autoperforantes' && typeof distrijamGrupoAutoperforante === 'function')
+    ? distrijamGrupoAutoperforante(p)
+    : null;
+  const nombreCategoria = grupoAuto
+    ? `${(categorias[p.category] && categorias[p.category].label) || 'Autoperforantes'} · ${grupoAuto.label}`
+    : ((categorias[p.category] && categorias[p.category].label) || p.category);
   
   document.getElementById('prod-category').textContent = nombreCategoria;
   document.getElementById('prod-title').textContent = p.name;
