@@ -3,6 +3,7 @@
    ====================================================== */
 
 let currentProduct = null;
+let prodDisponibilidad = { activa: false, mapa: {} };
 
 async function loadProductData() {
   const params = new URLSearchParams(window.location.search);
@@ -14,7 +15,12 @@ async function loadProductData() {
   }
 
   try {
-    const [products, categorias] = await Promise.all([distrijamCatalogo(), distrijamCategorias()]);
+    const [products, categorias, disp] = await Promise.all([
+      distrijamCatalogo(),
+      distrijamCategorias(),
+      typeof distrijamDisponibilidad === 'function' ? distrijamDisponibilidad() : Promise.resolve({ activa: false, mapa: {} }),
+    ]);
+    prodDisponibilidad = disp || { activa: false, mapa: {} };
     
     currentProduct = products.find(p => p.id === productId);
     
@@ -202,6 +208,17 @@ function renderProduct(p, categorias = {}) {
     ).join('');
 
     // Mostrar las presentaciones de la medida elegida
+    const renderDispVariante = (vid) => {
+      if (!prodDisponibilidad || !prodDisponibilidad.activa || !vid) return;
+      const ok = prodDisponibilidad.mapa[vid] === 'disponible';
+      const badge = document.createElement('div');
+      badge.style.marginTop = '8px';
+      badge.innerHTML = ok
+        ? '<span class="prod-stock-badge is-ok">En stock para despacho</span>'
+        : '<span class="prod-stock-badge is-ask">A pedido · Consultar plazo</span>';
+      presEl.appendChild(badge);
+    };
+
     selectEl.addEventListener('change', () => {
       const vs = grupos.get(medidas[selectEl.value]) || [];
       if (vs.length > 1) {
@@ -211,9 +228,16 @@ function renderProduct(p, categorias = {}) {
             ${vs.map(v => `<option value="${distrijamEsc(v.id)}">${distrijamEsc(v.presentacion)}</option>`).join('')}
           </select>`;
         presSelectEl = presEl.querySelector('select');
+        renderDispVariante(presSelectEl.value);
+        presSelectEl.addEventListener('change', () => {
+          const old = presEl.querySelector('.prod-stock-badge')?.parentElement;
+          if (old) old.remove();
+          renderDispVariante(presSelectEl.value);
+        });
       } else {
         presEl.innerHTML = vs[0] ? `<strong>Presentación:</strong> ${distrijamEsc(vs[0].presentacion)}` : '';
         presSelectEl = null;
+        if (vs[0]) renderDispVariante(vs[0].id);
       }
     });
 

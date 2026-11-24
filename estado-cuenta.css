@@ -1,0 +1,207 @@
+/* ======================================================
+   DISTRIJAM — estado-cuenta.css
+   Portal Público Seguro de Estado de Cuenta y Comprobantes
+   ====================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #F4F5F7;
+  color: #0F172A;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ec-num { font-variant-numeric: tabular-nums; }
+
+.ec-top {
+  background: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 14px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.ec-top-in {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ec-brand img { height: 34px; width: auto; display: block; }
+
+.ec-top-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.ec-main {
+  max-width: 1080px;
+  margin: 24px auto 56px;
+  padding: 0 20px;
+}
+
+.ec-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 22px 24px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+  margin-bottom: 18px;
+}
+
+.ec-cli-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ec-cli-head h1 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.015em;
+}
+
+.ec-cli-meta {
+  font-size: 0.85rem;
+  color: #475569;
+  margin-top: 4px;
+}
+
+.ec-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.ec-kpi {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.ec-kpi-lbl { font-size: 0.76rem; font-weight: 600; color: #64748B; margin-bottom: 4px; }
+.ec-kpi-val { font-size: 1.45rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.ec-kpi--saldo .ec-kpi-val { color: #C0392B; }
+.ec-kpi--ok .ec-kpi-val { color: #15803D; }
+
+.ec-banco {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  background: #F8FAFC;
+  border: 1px solid #CBD5E1;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: 0.85rem;
+}
+
+.ec-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: #E2E8F0;
+  border-radius: 9px;
+  margin-bottom: 16px;
+}
+
+.ec-tabs button {
+  border: none;
+  background: transparent;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+}
+
+.ec-tabs button.active {
+  background: #FFFFFF;
+  color: #0F172A;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+}
+
+.ec-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+}
+
+.ec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+.ec-table th {
+  text-align: left;
+  font-size: 0.71rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748B;
+  background: #F8FAFC;
+  padding: 10px 12px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.ec-table th.num, .ec-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.ec-table td { padding: 11px 12px; border-bottom: 1px solid #F1F5F9; }
+.ec-table tbody tr:last-child td { border-bottom: none; }
+
+.ec-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 7px;
+  border: 1px solid #CBD5E1;
+  background: #FFFFFF;
+  color: #0F172A;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ec-btn:hover { background: #F8FAFC; }
+.ec-btn--sm { height: 30px; padding: 0 10px; font-size: 0.76rem; }
+.ec-btn--wa { background: #157A39; border-color: #157A39; color: #FFFFFF; }
+.ec-btn--wa:hover { background: #11632E; }
+
+.ec-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #E2E8F0;
+  color: #334155;
+}
+
+@media (max-width: 720px) {
+  .ec-kpis { grid-template-columns: 1fr; }
+  .ec-card { padding: 18px 16px; }
+}
+
+@media print {
+  body.cot-printing .ec-top,
+  body.cot-printing .ec-main { display: none !important; }
+  body.cot-printing .cot-print { display: block !important; }
+}

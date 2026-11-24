@@ -221,13 +221,19 @@ function buildOrderPayload() {
 // solo. Sirve cuando el pedido se arma en la misma máquina que administra
 // el sitio (pruebas locales, o el propio mostrador). Si el cliente pide
 // desde su celular, el pedido igual viaja en el código del mensaje.
+const CART_SCOPE = (() => {
+  const p = (window.location.pathname || '').split('/').filter(Boolean);
+  return (p.length >= 2 && p[0] !== 'modelos') ? ('_' + p[0]) : '';
+})();
+
 function depositarPedido(payload) {
   try {
-    const bandeja = JSON.parse(localStorage.getItem('distrijam_pedidos_inbox') || '[]');
+    const k = 'distrijam_pedidos_inbox' + CART_SCOPE;
+    const bandeja = JSON.parse(localStorage.getItem(k) || '[]');
     if (!bandeja.some(p => p.r === payload.r)) {
       bandeja.push(payload);
       // No se acumulan pedidos viejos indefinidamente
-      localStorage.setItem('distrijam_pedidos_inbox', JSON.stringify(bandeja.slice(-50)));
+      localStorage.setItem(k, JSON.stringify(bandeja.slice(-50)));
     }
   } catch (e) {
     console.warn('No se pudo guardar el pedido en la bandeja local:', e);

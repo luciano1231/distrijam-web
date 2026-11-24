@@ -25,15 +25,22 @@ async function estadoSesion() {
   }
 }
 
-async function login(password) {
+async function login(password, usuario = '') {
   try {
+    const payload = usuario ? { usuario, clave: password } : { clave: password };
     const res = await fetch('api.php?a=entrar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ clave: password })
+      body: JSON.stringify(payload)
     });
     const data = await res.json().catch(() => ({}));
-    return { ok: res.ok && data.ok === true, error: data.error || 'No se pudo entrar.' };
+    return {
+      ok: res.ok && data.ok === true,
+      error: data.error || 'No se pudo entrar.',
+      usuario: data.usuario || 'admin',
+      nombre: data.nombre || 'Administrador',
+      rol: data.rol || 'admin'
+    };
   } catch (e) {
     return { ok: false, error: 'No hay conexión con el servidor.' };
   }
@@ -622,12 +629,22 @@ document.addEventListener('DOMContentLoaded', () => {
   estadoSesion().then(estado => {
     if (estado.logueado) {
       showDashboard();
-      document.dispatchEvent(new CustomEvent('distrijam:sesion-lista'));
+      document.dispatchEvent(new CustomEvent('distrijam:sesion-lista', { detail: estado }));
     } else {
       showLogin();
       if (estado.sinServidor) {
-        errEl.textContent = 'No hay conexión con el servidor.';
+        errEl.innerHTML = 'No hay conexión con el servidor PHP. <button type="button" id="erp-modo-local-btn" class="erp-btn erp-btn--sm" style="margin-left:8px;">Entrar en modo local</button>';
         errEl.style.display = 'block';
+        const btnLocal = document.getElementById('erp-modo-local-btn');
+        if (btnLocal) {
+          btnLocal.addEventListener('click', () => {
+            errEl.style.display = 'none';
+            showDashboard();
+            document.dispatchEvent(new CustomEvent('distrijam:sesion-lista', {
+              detail: { logueado: true, modoLocal: true, usuario: 'admin', nombre: 'Administrador (Local)', rol: 'admin' }
+            }));
+          });
+        }
       } else if (!estado.instalado) {
         errEl.textContent = 'El panel todavía no está configurado en el servidor.';
         errEl.style.display = 'block';
@@ -638,18 +655,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // Login
   document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const campoUser = document.getElementById('login-username');
     const campo = document.getElementById('login-password');
     const boton = e.target.querySelector('button[type=submit]');
     if (boton) { boton.disabled = true; boton.textContent = 'Entrando…'; }
 
-    const r = await login(campo.value);
+    const r = await login(campo.value, campoUser ? campoUser.value.trim() : '');
 
     if (boton) { boton.disabled = false; boton.textContent = 'Ingresar →'; }
 
     if (r.ok) {
       errEl.style.display = 'none';
       showDashboard();
-      document.dispatchEvent(new CustomEvent('distrijam:sesion-lista'));
+      document.dispatchEvent(new CustomEvent('distrijam:sesion-lista', { detail: r }));
     } else {
       errEl.textContent = r.error;
       errEl.style.display = 'block';

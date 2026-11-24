@@ -16,13 +16,19 @@ let products = [];
 let activeFilter = 'all';
 let activeSubFilter = 'all';
 let searchQuery = '';
+let disponibilidad = { activa: false, mapa: {} };
 
 // ── Load products ─────────────────────────────────────
 async function loadProducts() {
   try {
-    const [lista, cats] = await Promise.all([distrijamCatalogo(), distrijamCategorias()]);
+    const [lista, cats, disp] = await Promise.all([
+      distrijamCatalogo(),
+      distrijamCategorias(),
+      typeof distrijamDisponibilidad === 'function' ? distrijamDisponibilidad() : Promise.resolve({ activa: false, mapa: {} }),
+    ]);
     products = lista;
     categorias = { all: { label: 'Todos' }, ...cats };
+    disponibilidad = disp || { activa: false, mapa: {} };
   } catch (error) {
     console.error("Error al cargar los productos:", error);
     products = [];
@@ -178,6 +184,13 @@ function renderProductCard(p) {
     ? distrijamGrupoAutoperforante(p)
     : null;
   const catLabel = autoGroup ? autoGroup.label : (allCategories[p.category]?.label || p.category);
+  let dispHtml = '';
+  if (disponibilidad && disponibilidad.activa) {
+    const hay = (p.variants || []).some(v => disponibilidad.mapa[v.id] === 'disponible');
+    dispHtml = hay
+      ? '<span class="prod-stock-badge is-ok">Disponible</span>'
+      : '<span class="prod-stock-badge is-ask">Consultar entrega</span>';
+  }
 
   return `
     <a href="producto.html?id=${encodeURIComponent(p.id)}" class="product-card ${inCart ? 'added' : ''}" style="text-decoration:none; color:inherit; display:flex; flex-direction:column;">
@@ -189,6 +202,7 @@ function renderProductCard(p) {
       <div class="product-body" style="flex:1;">
         <div class="product-name">${distrijamEsc(p.name)}</div>
         <div class="product-desc">${distrijamEsc(p.description)}</div>
+        ${dispHtml}
       </div>
       <div class="product-footer">
         <span class="btn-add-cart btn-select-variant" style="width:100%; display:block; text-align:center;">

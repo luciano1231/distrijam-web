@@ -11,14 +11,19 @@
  * los primeros minutos tras publicarse, y el despliegue renueva la ventana.
  *
  * Para cambiar la contraseña: editar este archivo (alcanza con esta línea)
- * y desplegar; la ventana se reabre. Último cambio: 2026-10-14.
+ * y desplegar; la ventana se reabre. Último cambio: 2026-11-23.
  */
 
 const CARPETA_DATOS = '/datos_distrijam';
 const MINUTOS_VENTANA = 30;
 const MIN_LARGO = 8;
 
-$dir = dirname(__DIR__) . CARPETA_DATOS;
+if (basename(dirname(__DIR__)) === 'public_html') {
+    $sub = preg_replace('/[^a-zA-Z0-9_-]/', '', basename(__DIR__));
+    $dir = dirname(__DIR__, 2) . CARPETA_DATOS . '_' . ($sub !== '' ? $sub : 'sub');
+} else {
+    $dir = dirname(__DIR__) . CARPETA_DATOS;
+}
 $archivoHash = $dir . '/clave_admin.txt';
 
 $subido = @filemtime(__FILE__);

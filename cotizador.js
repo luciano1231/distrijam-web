@@ -9,8 +9,12 @@
      del administrador y queda en este navegador. El cliente nunca la ve.
    ====================================================== */
 
-const COT_PRECIOS_KEY = 'distrijam_precios';
-const COT_PEDIDOS_KEY = 'distrijam_pedidos';
+const COT_SCOPE = (() => {
+  const p = (window.location.pathname || '').split('/').filter(Boolean);
+  return (p.length >= 2 && p[0] !== 'modelos') ? ('_' + p[0]) : '';
+})();
+const COT_PRECIOS_KEY = 'distrijam_precios' + COT_SCOPE;
+const COT_PEDIDOS_KEY = 'distrijam_pedidos' + COT_SCOPE;
 
 const EMPRESA = {
   nombre: 'DISTRIJAM S.A.',
@@ -533,6 +537,7 @@ function cotCambiarEstado(ref, estado) {
   if (!p) return;
   cotRegistrarEstado(p, estado);
   cotGuardarPedidos(lista);
+  cotSyncPedidoServidor(p);
   // El remito abierto es otra copia: si no se le pasa el historial, al
   // guardarlo después pisaría el cambio recién anotado.
   if (cotPedidoAbierto && cotPedidoAbierto.ref === ref) {
@@ -622,6 +627,11 @@ function cotRenderLista() {
 function cotEliminar(ref) {
   if (!confirm(`¿Eliminar el pedido ${ref}? Esta acción no se puede deshacer.`)) return;
   cotGuardarPedidos(cotLeerPedidos().filter(p => p.ref !== ref));
+  fetch('api.php?a=pedido_borrar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ref })
+  }).catch(() => {});
   cotRenderLista();
   showToast(`Pedido ${ref} eliminado`, 'info');
 }
@@ -708,12 +718,17 @@ function cotRenderDetalle() {
     }
   }
 
-  document.getElementById('cot-modal-items').innerHTML = p.items.map((it, i) => `
+  document.getElementById('cot-modal-items').innerHTML = p.items.map((it, i) => {
+    const stk = (window.Erp && typeof window.Erp.getStock === 'function') ? window.Erp.getStock(it.variantId) : null;
+    const stkHtml = stk !== null
+      ? `<span class="erp-badge ${stk >= it.qty ? 'erp-badge--ok' : (stk > 0 ? 'erp-badge--warn' : 'erp-badge--danger')}" style="margin-left:6px;">Stock: ${stk}</span>`
+      : '';
+    return `
     <tr${it.sinPrecio && !it.precio ? ' class="cot-row-warn"' : ''}>
       <td class="cot-td-cod">${escapeHtml(it.variantId)}</td>
       <td>
         <div class="cot-item-name">${escapeHtml(it.nombre)}</div>
-        <div class="cot-item-meta">${escapeHtml(it.medida)}${it.presentacion ? ' · ' + escapeHtml(it.presentacion) : ''}</div>
+        <div class="cot-item-meta">${escapeHtml(it.medida)}${it.presentacion ? ' · ' + escapeHtml(it.presentacion) : ''}${stkHtml}</div>
       </td>
       <td class="cot-td-num">
         <input type="number" min="1" step="1" value="${it.qty}" data-i="${i}" class="cot-input cot-qty" />
@@ -722,8 +737,8 @@ function cotRenderDetalle() {
         <input type="number" min="0" step="0.01" value="${it.precio || ''}" placeholder="0.00" data-i="${i}" class="cot-input cot-precio" />
       </td>
       <td class="cot-td-num cot-linea" data-line="${i}">${money(it.precio * it.qty)}</td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
 
   cotRenderHistorial();
   document.getElementById('cot-desc-input').value = p.descuento || 0;
@@ -804,6 +819,15 @@ function cotActualizar() {
   cotRenderTotales(cotTotales(p));
 }
 
+function cotSyncPedidoServidor(p) {
+  if (!p || !p.ref) return;
+  fetch('api.php?a=pedido_guardar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(p)
+  }).catch(() => {});
+}
+
 function cotGuardarAbierto(estado) {
   const p = cotPedidoAbierto;
   if (!p) return;
@@ -812,6 +836,7 @@ function cotGuardarAbierto(estado) {
   const idx = lista.findIndex(x => x.ref === p.ref);
   if (idx >= 0) lista[idx] = p; else lista.push(p);
   cotGuardarPedidos(lista);
+  cotSyncPedidoServidor(p);
   cotRenderLista();
 }
 
@@ -1019,11 +1044,33 @@ async function cotTraerDelServidor(avisar) {
 
     const pedidos = cotLeerPedidos();
     const conocidos = new Set(pedidos.map(p => p.ref));
+    const estadosServ = (data.estados && typeof data.estados === 'object') ? data.estados : {};
     let nuevos = 0;
 
     (data.pedidos || []).forEach(payload => {
-      if (!payload || !Array.isArray(payload.i) || conocidos.has(payload.r)) return;
-      pedidos.push(cotDesdePayload(payload));
+      if (!payload || !Array.isArray(payload.i)) return;
+      const srvEst = estadosServ[payload.r];
+      if (conocidos.has(payload.r)) {
+        if (srvEst && srvEst.estado) {
+          const local = pedidos.find(x => x.ref === payload.r);
+          if (local && !local.ventaId && srvEst.ventaId) {
+            local.estado = srvEst.estado;
+            local.ventaId = srvEst.ventaId;
+            local.ventaNumero = srvEst.ventaNumero;
+            nuevos++;
+          }
+        }
+        return;
+      }
+      const p = cotDesdePayload(payload);
+      if (srvEst) {
+        if (srvEst.estado) p.estado = srvEst.estado;
+        if (Array.isArray(srvEst.historial)) p.historial = srvEst.historial;
+        if (typeof srvEst.descuento === 'number') p.descuento = srvEst.descuento;
+        if (srvEst.ventaId) p.ventaId = srvEst.ventaId;
+        if (srvEst.ventaNumero) p.ventaNumero = srvEst.ventaNumero;
+      }
+      pedidos.push(p);
       conocidos.add(payload.r);
       nuevos++;
     });
@@ -1067,7 +1114,7 @@ async function cotCargarPreciosDelServidor() {
 function cotRecogerBandeja() {
   let bandeja;
   try {
-    bandeja = JSON.parse(localStorage.getItem('distrijam_pedidos_inbox') || '[]');
+    bandeja = JSON.parse(localStorage.getItem('distrijam_pedidos_inbox' + COT_SCOPE) || '[]');
   } catch (e) {
     return 0;
   }
@@ -1196,6 +1243,20 @@ async function initCotizador() {
 
   const imprimir = document.getElementById('cot-print-btn');
   if (imprimir) imprimir.addEventListener('click', cotImprimir);
+
+  const btnVenta = document.getElementById('cot-confirmar-venta');
+  if (btnVenta) {
+    btnVenta.addEventListener('click', () => {
+      if (!cotPedidoAbierto) return;
+      const pedidoSnapshot = JSON.parse(JSON.stringify(cotPedidoAbierto));
+      const cliDatos = cotDatosCliente(cotPedidoAbierto);
+      cotGuardarAbierto();
+      cotCerrar();
+      if (window.Erp && typeof window.Erp.confirmarPedidoComoVenta === 'function') {
+        window.Erp.confirmarPedidoComoVenta(pedidoSnapshot, cliDatos);
+      }
+    });
+  }
 }
 
 // El panel avisa cuando hay sesión: recién ahí el servidor entrega

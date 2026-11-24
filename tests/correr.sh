@@ -25,6 +25,8 @@ R=0
 node "$DIR/api.test.js" "http://127.0.0.1:$PUERTO/" "$TMP/datos_distrijam" || R=1
 rm -rf "$TMP/datos_distrijam/catalogo.json" "$TMP/datos_distrijam/imagenes_catalogo"
 node "$DIR/abm.test.js" "$TMP/public_html" "http://127.0.0.1:$PUERTO/" || R=1
+rm -rf "$TMP/datos_distrijam"/*.json "$TMP/datos_distrijam/imagenes_catalogo" "$TMP/datos_distrijam/comprobantes_archivos"
+node "$DIR/erp.test.js" "http://127.0.0.1:$PUERTO/" || R=1
 
 AVISOS=$(grep -c "PHP \(Warning\|Notice\|Fatal\|Deprecated\)" "$TMP/servidor.log")
 echo "Avisos de PHP: $AVISOS"

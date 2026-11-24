@@ -1,0 +1,1361 @@
+/* ======================================================
+   DISTRIJAM — erp.css
+   Estación de Trabajo Industrial B2B (Operate Mode)
+   ====================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --erp-bg: #F4F5F7;
+  --erp-surface: #FFFFFF;
+  --erp-surface-2: #F8FAFC;
+  --erp-sidebar: #111318;
+  --erp-sidebar-hover: #1B1F27;
+  --erp-sidebar-border: #232833;
+  --erp-border: #E2E8F0;
+  --erp-border-strong: #CBD5E1;
+  --erp-ink: #0F172A;
+  --erp-ink-dim: #334155;
+  --erp-ink-muted: #525E6E;
+  --erp-accent: #B92B1E;
+  --erp-accent-hover: #9E2318;
+  --erp-accent-soft: rgba(185, 43, 30, 0.1);
+  --erp-ok: #157A39;
+  --erp-ok-soft: rgba(21, 122, 57, 0.11);
+  --erp-warn: #A14A07;
+  --erp-warn-soft: rgba(217, 119, 6, 0.12);
+  --erp-info: #1D4ED8;
+  --erp-info-soft: rgba(37, 99, 235, 0.11);
+  --erp-danger: #B91C1C;
+  --erp-danger-soft: rgba(220, 38, 38, 0.1);
+  --erp-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --erp-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --erp-shadow-lg: 0 14px 34px rgba(15, 23, 42, 0.16);
+  --erp-radius: 8px;
+  --erp-radius-lg: 12px;
+}
+
+body.admin-body {
+  --text: #0F172A;
+  --text-dim: #334155;
+  --text-muted: #525E6E;
+  --red: #B92B1E;
+  --red-light: #9E2318;
+  --white: #0F172A;
+  background: var(--erp-bg);
+  color: var(--erp-ink);
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  caret-color: var(--erp-accent);
+}
+
+body.admin-body .btn-primary {
+  background: var(--erp-accent);
+  color: #FFFFFF;
+}
+body.admin-body .btn-primary:hover {
+  background: var(--erp-accent-hover);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.16);
+}
+body.admin-body .login-error {
+  color: #991B1B;
+  background: #FEF2F2;
+  border-color: #FECACA;
+}
+body.admin-body .cot-wa-btn {
+  background: #157A39;
+  color: #FFFFFF;
+}
+body.admin-body .cot-wa-btn:hover {
+  background: #11632E;
+  color: #FFFFFF;
+}
+
+body.admin-body ::selection {
+  background: rgba(192, 57, 43, 0.16);
+  color: var(--erp-ink);
+}
+
+.erp-num,
+.tabular,
+td.cot-td-num,
+.cot-card-total,
+.cot-res-row strong,
+.admin-stat-value {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Login ── */
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(192, 57, 43, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(15, 23, 42, 0.06) 0%, transparent 50%),
+    var(--erp-bg);
+}
+
+.login-card {
+  background: var(--erp-surface);
+  border: 1px solid var(--erp-border);
+  border-radius: var(--erp-radius-lg);
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--erp-shadow-lg);
+  text-align: left;
+}
+
+.login-sub {
+  text-align: center;
+  color: var(--erp-ink-dim);
+  font-size: 0.875rem;
+  margin-bottom: 24px;
+}
+
+/* ── Shell principal ── */
+.admin-dashboard {
+  padding-top: 0;
+}
+
+.erp-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.erp-sidebar {
+  width: 248px;
+  flex-shrink: 0;
+  background: var(--erp-sidebar);
+  color: #E2E8F0;
+  border-right: 1px solid var(--erp-sidebar-border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 900;
+}
+
+.erp-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 18px 18px 16px;
+  border-bottom: 1px solid var(--erp-sidebar-border);
+}
+
+.erp-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  background: #FFFFFF;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+
+.erp-brand-logo img {
+  height: 26px;
+  width: auto;
+}
+
+.erp-brand-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #E2E8F0;
+}
+
+.erp-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.erp-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 7px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #CBD5E1;
+  font-size: 0.855rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.erp-nav-item svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.82;
+}
+
+.erp-nav-item:hover {
+  background: var(--erp-sidebar-hover);
+  color: #FFFFFF;
+}
+
+.erp-nav-item.active {
+  background: var(--erp-accent);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(192, 57, 43, 0.35);
+}
+
+.erp-nav-item.active svg {
+  opacity: 1;
+}
+
+.erp-nav-item:focus-visible {
+  outline: 2px solid #F87171;
+  outline-offset: -2px;
+}
+
+.erp-nav-badge {
+  margin-left: auto;
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.12);
+  color: #F8FAFC;
+  font-variant-numeric: tabular-nums;
+}
+
+.erp-nav-item.active .erp-nav-badge {
+  background: rgba(255, 255, 255, 0.24);
+  color: #FFFFFF;
+}
+
+.erp-nav-sep {
+  height: 1px;
+  background: var(--erp-sidebar-border);
+  margin: 8px 6px;
+}
+
+.erp-sidebar-foot {
+  padding: 12px 12px 14px;
+  border-top: 1px solid var(--erp-sidebar-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.erp-user-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.78rem;
+}
+
+.erp-user-pill strong {
+  color: #FFFFFF;
+  display: block;
+  font-size: 0.8rem;
+}
+
+.erp-user-pill span {
+  color: #94A3B8;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.erp-foot-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.erp-foot-btn {
+  padding: 7px 9px;
+  border-radius: 6px;
+  border: 1px solid var(--erp-sidebar-border);
+  background: transparent;
+  color: #CBD5E1;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.erp-foot-btn:hover {
+  background: var(--erp-sidebar-hover);
+  color: #FFFFFF;
+  border-color: #334155;
+}
+
+.erp-foot-btn--danger:hover {
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #FCA5A5;
+}
+
+/* ── Main area & Topbar ── */
+.erp-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.erp-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 800;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--erp-border);
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.erp-menu-toggle {
+  display: none;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--erp-ink);
+  align-items: center;
+  justify-content: center;
+}
+
+.erp-topbar-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--erp-ink);
+  letter-spacing: -0.015em;
+  margin-right: auto;
+}
+
+.erp-omnibar {
+  position: relative;
+  width: 300px;
+  max-width: 100%;
+}
+
+.erp-omnibar input {
+  width: 100%;
+  height: 38px;
+  padding: 0 54px 0 34px;
+  border-radius: 8px;
+  border: 1px solid var(--erp-border);
+  background: var(--erp-surface-2);
+  color: var(--erp-ink);
+  font-size: 0.85rem;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.erp-omnibar input:focus {
+  background: var(--erp-surface);
+  border-color: var(--erp-accent);
+  box-shadow: 0 0 0 3px var(--erp-accent-soft);
+}
+
+.erp-omnibar-ico {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  color: var(--erp-ink-muted);
+  pointer-events: none;
+}
+
+.erp-omnibar-kbd {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--erp-ink-muted);
+  border: 1px solid var(--erp-border);
+  background: var(--erp-surface);
+  border-radius: 4px;
+  padding: 1px 6px;
+  pointer-events: none;
+}
+
+.erp-omni-results {
+  position: fixed;
+  z-index: 9500;
+  width: 420px;
+  max-width: calc(100vw - 24px);
+  max-height: 440px;
+  overflow-y: auto;
+  background: var(--erp-surface);
+  border: 1px solid var(--erp-border);
+  border-radius: 10px;
+  box-shadow: var(--erp-shadow-lg);
+  padding: 6px;
+}
+
+.erp-omni-group {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--erp-ink-muted);
+  padding: 8px 10px 4px;
+}
+
+.erp-omni-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--erp-ink);
+  text-align: left;
+  font-size: 0.84rem;
+}
+
+.erp-omni-item:hover {
+  background: var(--erp-surface-2);
+}
+
+.erp-omni-item small {
+  color: var(--erp-ink-muted);
+  font-size: 0.75rem;
+}
+
+.erp-topbar-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.erp-topbar-badges .cot-price-status {
+  padding: 6px 11px;
+  font-size: 0.76rem;
+}
+
+.erp-views {
+  padding: 24px 28px 48px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.erp-view {
+  display: none;
+}
+
+.erp-view.active {
+  display: block;
+}
+
+/* ── Shared UI primitives ── */
+.erp-panel {
+  background: var(--erp-surface);
+  border: 1px solid var(--erp-border);
+  border-radius: var(--erp-radius-lg);
+  padding: 22px 24px;
+  box-shadow: var(--erp-shadow-sm);
+  margin-bottom: 20px;
+}
+
+.erp-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.erp-panel-head h2,
+.erp-panel-head h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--erp-ink);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.erp-panel-sub {
+  font-size: 0.82rem;
+  color: var(--erp-ink-muted);
+  margin-top: 2px;
+}
+
+.erp-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.erp-kpi {
+  background: var(--erp-surface);
+  border: 1px solid var(--erp-border);
+  border-radius: var(--erp-radius-lg);
+  padding: 18px 20px;
+  box-shadow: var(--erp-shadow-sm);
+}
+
+.erp-kpi-lbl {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--erp-ink-muted);
+  margin-bottom: 6px;
+}
+
+.erp-kpi-val {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--erp-ink);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.erp-kpi-meta {
+  font-size: 0.75rem;
+  color: var(--erp-ink-dim);
+  margin-top: 4px;
+}
+
+.erp-kpi--accent .erp-kpi-val { color: var(--erp-accent); }
+.erp-kpi--ok .erp-kpi-val { color: var(--erp-ok); }
+.erp-kpi--warn .erp-kpi-val { color: var(--erp-warn); }
+
+.erp-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.erp-grid-split {
+  display: grid;
+  grid-template-columns: 420px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+/* Segmented tabs */
+.erp-seg {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 9px;
+  background: #E9EDF2;
+  border: 1px solid var(--erp-border);
+  margin-bottom: 18px;
+}
+
+.erp-seg button {
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: transparent;
+  color: var(--erp-ink-dim);
+  transition: background 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.erp-seg button.active {
+  background: var(--erp-surface);
+  color: var(--erp-ink);
+  box-shadow: var(--erp-shadow-sm);
+}
+
+/* Buttons override & ERP controls */
+.erp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 7px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid var(--erp-border);
+  background: var(--erp-surface);
+  color: var(--erp-ink);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.erp-btn:hover {
+  border-color: var(--erp-border-strong);
+  background: var(--erp-surface-2);
+}
+
+.erp-btn:focus-visible {
+  outline: 2px solid var(--erp-accent);
+  outline-offset: 2px;
+}
+
+.erp-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.erp-btn--pri {
+  background: var(--erp-accent);
+  border-color: var(--erp-accent);
+  color: #FFFFFF;
+}
+
+.erp-btn--pri:hover {
+  background: var(--erp-accent-hover);
+  border-color: var(--erp-accent-hover);
+  color: #FFFFFF;
+}
+
+.erp-btn--sm {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 0.76rem;
+}
+
+.erp-btn--danger {
+  color: var(--erp-danger);
+}
+
+.erp-btn--danger:hover {
+  border-color: var(--erp-danger);
+  background: var(--erp-danger-soft);
+}
+
+.erp-btn--wa {
+  background: #157A39;
+  border-color: #157A39;
+  color: #FFFFFF;
+}
+
+.erp-btn--wa:hover {
+  background: #11632E;
+  border-color: #11632E;
+  color: #FFFFFF;
+}
+
+/* Toolbar & inputs */
+.erp-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.erp-input,
+.erp-select,
+.erp-textarea {
+  height: 36px;
+  padding: 0 11px;
+  border-radius: 7px;
+  border: 1px solid var(--erp-border);
+  background: var(--erp-surface);
+  color: var(--erp-ink);
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.erp-textarea {
+  height: auto;
+  min-height: 74px;
+  padding: 8px 11px;
+  resize: vertical;
+  width: 100%;
+}
+
+.erp-input:focus,
+.erp-select:focus,
+.erp-textarea:focus {
+  border-color: var(--erp-accent);
+  box-shadow: 0 0 0 3px var(--erp-accent-soft);
+  outline: none;
+}
+
+.erp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.erp-field label {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--erp-ink-dim);
+}
+
+.erp-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.erp-field-row-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* Tables */
+.erp-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--erp-border);
+  border-radius: var(--erp-radius);
+  background: var(--erp-surface);
+}
+
+.erp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+}
+
+.erp-table th {
+  text-align: left;
+  font-size: 0.71rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--erp-ink-muted);
+  background: var(--erp-surface-2);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--erp-border);
+  white-space: nowrap;
+}
+
+.erp-table th.num,
+.erp-table td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.erp-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #F1F5F9;
+  color: var(--erp-ink);
+  vertical-align: middle;
+}
+
+.erp-table tbody tr:hover {
+  background: #F8FAFC;
+}
+
+.erp-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.erp-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Badges */
+.erp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.71rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.erp-badge--ok { background: var(--erp-ok-soft); color: var(--erp-ok); }
+.erp-badge--warn { background: var(--erp-warn-soft); color: var(--erp-warn); }
+.erp-badge--info { background: var(--erp-info-soft); color: var(--erp-info); }
+.erp-badge--danger { background: var(--erp-danger-soft); color: var(--erp-danger); }
+.erp-badge--neutral { background: #E2E8F0; color: #334155; }
+
+/* Empty state */
+.erp-empty {
+  text-align: center;
+  padding: 36px 20px;
+  border: 1px dashed var(--erp-border-strong);
+  border-radius: var(--erp-radius);
+  color: var(--erp-ink-muted);
+  background: var(--erp-surface-2);
+}
+
+.erp-empty strong {
+  display: block;
+  color: var(--erp-ink);
+  margin-bottom: 4px;
+}
+
+/* ── Kanban de Tareas ── */
+.erp-kanban {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.erp-kanban-col {
+  background: #EBEEF3;
+  border: 1px solid var(--erp-border);
+  border-radius: 10px;
+  padding: 12px;
+  min-height: 260px;
+}
+
+.erp-kanban-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--erp-ink);
+  margin-bottom: 10px;
+  padding: 0 2px;
+}
+
+.erp-task-card {
+  background: var(--erp-surface);
+  border: 1px solid var(--erp-border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: var(--erp-shadow-sm);
+}
+
+.erp-task-title {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--erp-ink);
+  margin: 6px 0 4px;
+}
+
+.erp-task-desc {
+  font-size: 0.77rem;
+  color: var(--erp-ink-dim);
+  margin-bottom: 8px;
+}
+
+.erp-task-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #F1F5F9;
+}
+
+/* ── Etiquetas: Previsualización e Impresión ── */
+.etq-preview-stage {
+  background: #E2E8F0;
+  border: 1px solid var(--erp-border-strong);
+  border-radius: var(--erp-radius-lg);
+  padding: 20px;
+  max-height: 760px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.etq-card {
+  background: #FFFFFF;
+  color: #000000;
+  border: 1.5px solid #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.etq-card--termica {
+  width: 96mm;
+  min-height: 142mm;
+  padding: 4mm;
+  page-break-after: always;
+  break-after: page;
+}
+
+.etq-card--termica:last-child {
+  page-break-after: auto;
+  break-after: auto;
+}
+
+.etq-a4-sheet {
+  display: grid;
+  gap: 6mm;
+  width: 196mm;
+  page-break-after: always;
+  break-after: page;
+}
+
+.etq-a4-sheet:last-child {
+  page-break-after: auto;
+  break-after: auto;
+}
+
+.etq-a4-4 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.etq-a4-2 {
+  grid-template-columns: 1fr;
+}
+
+.etq-a4-1 {
+  grid-template-columns: 1fr;
+}
+
+.etq-card--a4 {
+  padding: 4mm;
+  border: 1.5px solid #000000;
+  outline: 1px dashed #94A3B8;
+  outline-offset: 2px;
+}
+
+.etq-a4-4 .etq-card--a4 { min-height: 132mm; }
+.etq-a4-2 .etq-card--a4 { min-height: 132mm; }
+.etq-a4-1 .etq-card--a4 { min-height: 270mm; }
+
+.etq-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  border-bottom: 1.5px solid #000;
+  padding-bottom: 5px;
+}
+
+.etq-logo {
+  height: 22px;
+  width: auto;
+  margin-bottom: 2px;
+}
+
+.etq-remitente {
+  font-size: 8.5px;
+  color: #222;
+}
+
+.etq-fecha {
+  font-size: 9.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.etq-lbl {
+  display: block;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.etq-dest {
+  padding: 6px 0;
+  border-bottom: 1.5px solid #000;
+}
+
+.etq-cli-nombre {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 2px 0 3px;
+}
+
+.etq-cli-dir {
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+
+.etq-loc-bar {
+  background: #000000;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 4px 7px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.etq-cli-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 9.5px;
+  color: #111;
+}
+
+.etq-log-row {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1.5px solid #000;
+}
+
+.etq-transporte strong,
+.etq-doc strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  margin-top: 1px;
+}
+
+.etq-doc small {
+  display: block;
+  font-size: 9.5px;
+}
+
+.etq-bulto-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #000;
+}
+
+.etq-bulto-lbl {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.etq-bulto-num {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.etq-bulto-num span {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.etq-flags {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  text-align: right;
+}
+
+.etq-fragil {
+  background: #000000;
+  color: #FFFFFF;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 3px 7px;
+  letter-spacing: 0.05em;
+}
+
+.etq-peso,
+.etq-nota {
+  font-size: 9.5px;
+  font-weight: 700;
+}
+
+.etq-contenido {
+  font-size: 9.5px;
+  padding: 5px 0;
+  border-bottom: 1px solid #CCC;
+}
+
+.etq-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 6px;
+}
+
+.etq-bar-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.etq-bar-txt {
+  font-family: "Courier New", monospace;
+  font-size: 8.5px;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.etq-qr-wrap {
+  flex-shrink: 0;
+}
+
+/* Print extras for Recibo & Remito & Factura */
+.pq-recibo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.pq-sec-h {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 6px;
+}
+
+.pq-cae-box {
+  margin-top: 8px;
+  padding: 6px 9px;
+  border: 1px solid #000;
+  display: inline-block;
+  font-size: 9.5px;
+}
+
+.pq-remito-recibo {
+  border: 1px solid #000;
+  padding: 10px 12px;
+  font-size: 9.5px;
+  min-width: 320px;
+}
+
+.pq-remito-campos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.pq-firma-box {
+  margin-top: 38px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pq-firma-linea {
+  width: 220px;
+  border-top: 1px solid #000;
+  padding-top: 4px;
+  text-align: center;
+  font-size: 9.5px;
+}
+
+/* ── Modales ERP ── */
+.erp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  background: rgba(15, 23, 42, 0.58);
+  backdrop-filter: blur(3px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 30px 16px;
+  overflow-y: auto;
+}
+
+.erp-modal-overlay.open {
+  display: flex;
+}
+
+.erp-modal {
+  background: var(--erp-surface);
+  border: 1px solid var(--erp-border);
+  border-radius: var(--erp-radius-lg);
+  width: 100%;
+  max-width: 820px;
+  box-shadow: var(--erp-shadow-lg);
+  overflow: hidden;
+}
+
+.erp-modal--wide {
+  max-width: 1020px;
+}
+
+.erp-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--erp-border);
+  background: var(--erp-surface-2);
+}
+
+.erp-modal-head h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--erp-ink);
+}
+
+.erp-modal-body {
+  padding: 20px 22px;
+}
+
+.erp-modal-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 14px 22px;
+  border-top: 1px solid var(--erp-border);
+  background: var(--erp-surface-2);
+}
+
+/* ── Integración de Productos/Catálogo existente dentro del ERP ── */
+#view-productos .admin-content {
+  padding: 0;
+  max-width: none;
+  grid-template-columns: 390px minmax(0, 1fr);
+  gap: 20px;
+}
+
+#view-productos .admin-form-card {
+  position: static;
+  box-shadow: var(--erp-shadow-sm);
+}
+
+#view-productos .admin-list-card {
+  box-shadow: var(--erp-shadow-sm);
+}
+
+#view-ventas .cot-section,
+#view-clientes .cot-section {
+  box-shadow: var(--erp-shadow-sm);
+  margin-bottom: 20px;
+}
+
+/* ── Sugerencias autocomplete ── */
+.erp-ac-wrap {
+  position: relative;
+}
+
+.erp-ac-list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 4px;
+  z-index: 10200;
+  background: var(--erp-surface);
+  border: 1px solid var(--erp-border);
+  border-radius: 8px;
+  box-shadow: var(--erp-shadow-lg);
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.erp-ac-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  background: transparent;
+  text-align: left;
+  font-size: 0.82rem;
+  color: var(--erp-ink);
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.erp-ac-opt:hover {
+  background: var(--erp-surface-2);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1180px) {
+  .erp-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .erp-kanban { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .erp-grid-split { grid-template-columns: 1fr; }
+  #view-productos .admin-content { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 920px) {
+  .erp-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+  }
+  .erp-sidebar.open {
+    transform: translateX(0);
+  }
+  .erp-menu-toggle {
+    display: inline-flex;
+  }
+  .erp-topbar {
+    padding: 10px 16px;
+  }
+  .erp-views {
+    padding: 16px;
+  }
+  .erp-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .erp-kpi-grid { grid-template-columns: 1fr; }
+  .erp-kanban { grid-template-columns: 1fr; }
+  .erp-field-row,
+  .erp-field-row-3 { grid-template-columns: 1fr; }
+  .erp-omnibar { width: 100%; order: 5; }
+}
+
+@media print {
+  body.cot-printing .erp-modal-overlay,
+  body.cot-printing .erp-sidebar,
+  body.cot-printing .erp-topbar {
+    display: none !important;
+  }
+  body.cot-printing .etq-card--a4 {
+    outline: none;
+  }
+}

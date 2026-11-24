@@ -155,6 +155,8 @@ function distrijamCatalogoCrudo(recargar = false) {
         productos: Array.isArray(extra && extra.productos) ? extra.productos : [],
         cambios: (extra && extra.cambios && typeof extra.cambios === 'object') ? extra.cambios : {},
         categorias: Array.isArray(extra && extra.categorias) ? extra.categorias : [],
+        mostrarDisponibilidad: Boolean(extra && extra.mostrarDisponibilidad),
+        disponibilidad: (extra && extra.disponibilidad && typeof extra.disponibilidad === 'object') ? extra.disponibilidad : {},
       },
     }));
     _distrijamCrudo.catch(() => { _distrijamCrudo = null; });
@@ -201,6 +203,15 @@ async function distrijamCategorias() {
     if (!todas[c.id]) todas[c.id] = { label: c.label, image: c.image };
   });
   return todas;
+}
+
+// Estado de disponibilidad público (solo cuando está habilitado desde el panel)
+async function distrijamDisponibilidad() {
+  const { extra } = await distrijamCatalogoCrudo();
+  return {
+    activa: Boolean(extra && extra.mostrarDisponibilidad),
+    mapa: (extra && extra.disponibilidad) ? extra.disponibilidad : {},
+  };
 }
 
 // ── Agrupado del menú de productos ────────────────────

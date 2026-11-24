@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estado de Cuenta y Comprobantes — Distrijam S.A.</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="Logo/logo-distrijam.png" />
+  <link rel="stylesheet" href="cotizador.css" />
+  <link rel="stylesheet" href="estado-cuenta.css" />
+</head>
+<body>
+  <header class="ec-top">
+    <div class="ec-top-in">
+      <a href="index.html" class="ec-brand">
+        <img src="Logo/LogoDistrijamCompleto.png" alt="Distrijam S.A." />
+      </a>
+      <div class="ec-top-actions">
+        <button type="button" class="ec-btn" id="ec-print-resumen" style="display:none;">Imprimir / Guardar PDF</button>
+        <a class="ec-btn ec-btn--wa" id="ec-wa-pago" href="#" target="_blank" rel="noopener" style="display:none;">Informar pago por WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="ec-main" id="ec-root">
+    <div class="ec-card" style="text-align:center; padding:48px 24px;">
+      <p style="color:#475569;">Cargando tu estado de cuenta...</p>
+    </div>
+  </main>
+
+  <div class="cot-print" id="cot-print"></div>
+
+  <script src="erp-print.js"></script>
+  <script src="estado-cuenta.js"></script>
+</body>
+</html>

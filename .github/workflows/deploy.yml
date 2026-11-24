@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Rama principal
+      - prueba
   workflow_dispatch:   # Permite lanzar el despliegue a mano desde la pestaña Actions
 
 jobs:
@@ -41,6 +42,20 @@ jobs:
     - name: Generar sitemap.xml
       run: python3 scripts/gen_sitemap.py
 
+    - name: Definir carpeta de destino según la rama
+      id: target
+      run: |
+        if [ "${{ github.ref_name }}" = "main" ]; then
+          echo "dir=./public_html/" >> "$GITHUB_OUTPUT"
+        else
+          echo "dir=./public_html/${{ github.ref_name }}/" >> "$GITHUB_OUTPUT"
+          cat > .htaccess <<'HT'
+        <IfModule mod_headers.c>
+          Header set X-Robots-Tag "noindex, nofollow"
+        </IfModule>
+        HT
+        fi
+
     # El FTP de Ferozo a veces rechaza la conexión de datos ("ECONNREFUSED
     # ...:50000") y al rato vuelve a andar: se reintenta solo hasta 3 veces.
     - name: Sync files
@@ -51,17 +66,20 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ./public_html/  # Ajustá esto según la carpeta de tu hosting
+        server-dir: ${{ steps.target.outputs.dir }}  # Ajustá esto según la carpeta de tu hosting
         protocol: ftps
         # Con los 30 s por defecto el hosting cortaba la conexión a mitad
         # ("Timeout (control socket)", "Server sent FIN packet unexpectedly")
         timeout: 120000
-        # Las pruebas no van al hosting (los tres primeros son los que excluye por defecto)
+        # Las pruebas y docs internas no van al hosting (los tres primeros son los que excluye por defecto)
         exclude: |
           **/.git*
           **/.git*/**
           **/node_modules/**
           tests/**
+          PRODUCT.md
+          DESIGN.md
+          .impeccable/**
 
     - name: Esperar antes de reintentar
       if: steps.sync1.outcome == 'failure'
@@ -76,17 +94,20 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ./public_html/  # Ajustá esto según la carpeta de tu hosting
+        server-dir: ${{ steps.target.outputs.dir }}  # Ajustá esto según la carpeta de tu hosting
         protocol: ftps
         # Con los 30 s por defecto el hosting cortaba la conexión a mitad
         # ("Timeout (control socket)", "Server sent FIN packet unexpectedly")
         timeout: 120000
-        # Las pruebas no van al hosting (los tres primeros son los que excluye por defecto)
+        # Las pruebas y docs internas no van al hosting (los tres primeros son los que excluye por defecto)
         exclude: |
           **/.git*
           **/.git*/**
           **/node_modules/**
           tests/**
+          PRODUCT.md
+          DESIGN.md
+          .impeccable/**
 
     - name: Esperar antes del ultimo intento
       if: steps.sync1.outcome == 'failure' && steps.sync2.outcome == 'failure'
@@ -99,17 +120,20 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ./public_html/  # Ajustá esto según la carpeta de tu hosting
+        server-dir: ${{ steps.target.outputs.dir }}  # Ajustá esto según la carpeta de tu hosting
         protocol: ftps
         # Con los 30 s por defecto el hosting cortaba la conexión a mitad
         # ("Timeout (control socket)", "Server sent FIN packet unexpectedly")
         timeout: 120000
-        # Las pruebas no van al hosting (los tres primeros son los que excluye por defecto)
+        # Las pruebas y docs internas no van al hosting (los tres primeros son los que excluye por defecto)
         exclude: |
           **/.git*
           **/.git*/**
           **/node_modules/**
           tests/**
+          PRODUCT.md
+          DESIGN.md
+          .impeccable/**
 
     # No hace falta purgar la caché: el sello ?v=<hash> de arriba hace que cada
     # despliegue tenga URLs nuevas para CSS y JS. El Cloudflare del dominio es el

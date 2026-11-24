@@ -22,6 +22,10 @@ const MAX_ITEMS = 300;
 const MAX_TEXTO = 400;
 
 function carpeta() {
+    if (basename(dirname(__DIR__)) === 'public_html') {
+        $sub = preg_replace('/[^a-zA-Z0-9_-]/', '', basename(__DIR__));
+        return dirname(__DIR__, 2) . CARPETA_DATOS . '_' . ($sub !== '' ? $sub : 'sub');
+    }
     return dirname(__DIR__) . CARPETA_DATOS;
 }
 

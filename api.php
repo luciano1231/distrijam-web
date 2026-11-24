@@ -19,8 +19,63 @@ const CARPETA_DATOS = '/datos_distrijam';
 const MAX_PRECIOS = 3145728; // 3 MB
 const MAX_IMAGEN = 2097152;  // 2 MB por foto
 
+function subcarpetaPublicHtml() {
+    if (basename(dirname(__DIR__)) === 'public_html') {
+        $sub = preg_replace('/[^a-zA-Z0-9_-]/', '', basename(__DIR__));
+        return $sub !== '' ? $sub : 'sub';
+    }
+    return '';
+}
+
+function inicializarEntornoPrueba($origen, $destino) {
+    if (!is_dir($destino)) {
+        @mkdir($destino, 0750, true);
+    }
+    $marca = $destino . '/.inicializado';
+    if (is_file($marca)) {
+        return;
+    }
+    if (is_dir($origen)) {
+        foreach (['clave_admin.txt', 'precios.json', 'precios.anterior.json', 'catalogo.json', 'clientes.json', 'descartados.json'] as $f) {
+            if (is_file($origen . '/' . $f) && !is_file($destino . '/' . $f)) {
+                @copy($origen . '/' . $f, $destino . '/' . $f);
+                @chmod($destino . '/' . $f, $f === 'clave_admin.txt' ? 0600 : 0640);
+            }
+        }
+        $imgOrig = $origen . '/imagenes_catalogo';
+        $imgDest = $destino . '/imagenes_catalogo';
+        if (is_dir($imgOrig)) {
+            if (!is_dir($imgDest)) {
+                @mkdir($imgDest, 0750, true);
+            }
+            foreach (glob($imgOrig . '/*') ?: [] as $ruta) {
+                if (is_file($ruta)) {
+                    $dest = $imgDest . '/' . basename($ruta);
+                    if (!is_file($dest)) {
+                        @copy($ruta, $dest);
+                        @chmod($dest, 0640);
+                    }
+                }
+            }
+        }
+    }
+    @file_put_contents($marca, date('c'));
+}
+
 function carpeta() {
-    return dirname(__DIR__) . CARPETA_DATOS;
+    static $resuelta = null;
+    if ($resuelta !== null) {
+        return $resuelta;
+    }
+    $sub = subcarpetaPublicHtml();
+    if ($sub !== '') {
+        $raiz = dirname(__DIR__, 2);
+        $resuelta = $raiz . CARPETA_DATOS . '_' . $sub;
+        inicializarEntornoPrueba($raiz . CARPETA_DATOS, $resuelta);
+        return $resuelta;
+    }
+    $resuelta = dirname(__DIR__) . CARPETA_DATOS;
+    return $resuelta;
 }
 
 function salir($codigo, $datos) {
@@ -31,6 +86,8 @@ function salir($codigo, $datos) {
 
 $accion = isset($_GET['a']) ? (string) $_GET['a'] : '';
 $metodo = $_SERVER['REQUEST_METHOD'];
+
+require_once __DIR__ . '/api_erp.php';
 
 /* ─────────────── Catálogo: lectura pública ─────────────── */
 /* Lo que se carga desde el panel (productos propios, cambios sobre los del
@@ -72,7 +129,18 @@ function catalogoParaEnviar($cat) {
 }
 
 if ($accion === 'catalogo' && $metodo === 'GET') {
-    salir(200, ['ok' => true] + catalogoParaEnviar(leerCatalogo()));
+    $resp = ['ok' => true] + catalogoParaEnviar(leerCatalogo());
+    $disp = erpDisponibilidadPublica();
+    if (!empty($disp['mostrarDisponibilidad'])) {
+        $resp['mostrarDisponibilidad'] = true;
+        $resp['disponibilidad'] = $disp['disponibilidad'];
+    }
+    salir(200, $resp);
+}
+
+/* Portal público de estado de cuenta con token único */
+if ($accion === 'estado_cuenta_publico' && $metodo === 'GET') {
+    erpServirEstadoCuentaPublico($_GET['t'] ?? '');
 }
 
 /* Fotos subidas desde el panel */
@@ -90,6 +158,10 @@ if ($accion === 'img' && $metodo === 'GET') {
     exit;
 }
 
+$subSesion = subcarpetaPublicHtml();
+if ($subSesion !== '') {
+    session_name('DJSESS_' . strtoupper($subSesion));
+}
 session_start();
 
 function hashGuardado() {
@@ -113,10 +185,14 @@ function exigirSesion() {
 
 /* ─────────────── Estado de la sesión ─────────────── */
 if ($accion === 'estado') {
+    $u = estaLogueado() ? erpUsuarioActual() : ['usuario' => null, 'nombre' => null, 'rol' => null];
     salir(200, [
         'ok' => true,
         'logueado' => estaLogueado(),
         'instalado' => hashGuardado() !== null,
+        'usuario' => $u['usuario'],
+        'nombre' => $u['nombre'],
+        'rol' => $u['rol'],
     ]);
 }
 
@@ -128,16 +204,41 @@ if ($accion === 'entrar' && $metodo === 'POST') {
     }
 
     $cuerpo = json_decode(file_get_contents('php://input'), true);
+    $usuarioIn = is_array($cuerpo) && isset($cuerpo['usuario']) ? mb_strtolower(trim((string) $cuerpo['usuario'])) : '';
     $clave = is_array($cuerpo) && isset($cuerpo['clave']) ? (string) $cuerpo['clave'] : '';
 
-    if (!password_verify($clave, $hash)) {
+    $autenticado = null;
+    if ($usuarioIn === '' || $usuarioIn === 'admin') {
+        if (password_verify($clave, $hash)) {
+            $autenticado = ['usuario' => 'admin', 'nombre' => 'Administrador', 'rol' => 'admin'];
+        }
+    } else {
+        $usuarios = erpLeerJson('usuarios.json', []);
+        foreach ($usuarios as $u) {
+            if (mb_strtolower((string) ($u['usuario'] ?? '')) === $usuarioIn
+                && !empty($u['activo'])
+                && password_verify($clave, (string) ($u['hash'] ?? ''))) {
+                $autenticado = [
+                    'usuario' => (string) $u['usuario'],
+                    'nombre' => (string) ($u['nombre'] ?? $u['usuario']),
+                    'rol' => (string) ($u['rol'] ?? 'ventas'),
+                ];
+                break;
+            }
+        }
+    }
+
+    if ($autenticado === null) {
         usleep(600000); // Encarece probar contraseñas
-        salir(403, ['error' => 'Contraseña incorrecta.']);
+        salir(403, ['error' => 'Usuario o contraseña incorrecta.']);
     }
 
     session_regenerate_id(true);
     $_SESSION['distrijam_admin'] = true;
-    salir(200, ['ok' => true]);
+    $_SESSION['distrijam_usuario'] = $autenticado['usuario'];
+    $_SESSION['distrijam_nombre'] = $autenticado['nombre'];
+    $_SESSION['distrijam_rol'] = $autenticado['rol'];
+    salir(200, ['ok' => true] + $autenticado);
 }
 
 /* ─────────────── Salir ─────────────── */
@@ -149,7 +250,7 @@ if ($accion === 'salir') {
 
 /* ─────────────── Pedidos ─────────────── */
 if ($accion === 'pedidos' && $metodo === 'GET') {
-    exigirSesion();
+    erpExigirRol(['admin', 'ventas']);
 
     $archivos = glob(carpeta() . '/pedido_*.json');
     if ($archivos === false) {
@@ -172,12 +273,17 @@ if ($accion === 'pedidos' && $metodo === 'GET') {
         return $b['f'] - $a['f'];
     });
 
-    salir(200, ['ok' => true, 'total' => count($pedidos), 'pedidos' => $pedidos]);
+    $estados = erpLeerJson('pedidos_estado.json', []);
+    salir(200, ['ok' => true, 'total' => count($pedidos), 'pedidos' => $pedidos, 'estados' => (object) $estados]);
 }
 
 /* ─────────────── Lista de precios ─────────────── */
 if ($accion === 'precios') {
-    exigirSesion();
+    if ($metodo === 'GET') {
+        erpExigirRol(['admin', 'ventas']);
+    } else {
+        erpExigirRol(['admin']);
+    }
     $archivo = carpeta() . '/precios.json';
 
     if ($metodo === 'GET') {
@@ -268,7 +374,7 @@ if ($accion === 'precios') {
 /* Intercambia la lista vigente con la anterior: si se vuelve a pedir, se
    vuelve a la de antes (sirve como "rehacer"). */
 if ($accion === 'precios_restaurar' && $metodo === 'POST') {
-    exigirSesion();
+    erpExigirRol(['admin']);
     $vigente = carpeta() . '/precios.json';
     $anteriorArch = carpeta() . '/precios.anterior.json';
     $temporal = carpeta() . '/precios.tmp.json';
@@ -296,7 +402,7 @@ if ($accion === 'precios_restaurar' && $metodo === 'POST') {
    actualizaciones para no volver a preguntar por ellos. Viven fuera de
    public_html, igual que los precios. */
 if ($accion === 'descartados') {
-    exigirSesion();
+    erpExigirRol(['admin']);
     $archivoDesc = carpeta() . '/descartados.json';
 
     if ($metodo === 'GET') {
@@ -388,7 +494,11 @@ function guardarClientes($clientes) {
 }
 
 if ($accion === 'clientes') {
-    exigirSesion();
+    if ($metodo === 'GET') {
+        erpExigirRol(['admin', 'ventas', 'deposito']);
+    } else {
+        erpExigirRol(['admin', 'ventas']);
+    }
 
     if ($metodo === 'GET') {
         salir(200, ['ok' => true, 'clientes' => leerClientes()]);
@@ -407,7 +517,8 @@ if ($accion === 'clientes') {
 
         $clientes = leerClientes();
         $campos = ['nombre', 'codigo', 'cuit', 'condicion', 'direccion',
-                   'localidad', 'provincia', 'telefono', 'vendedor'];
+                   'localidad', 'provincia', 'telefono', 'vendedor',
+                   'email', 'cp', 'direccionEntrega', 'transporte', 'notas'];
         $guardados = 0;
 
         foreach ($entrantes as $entrante) {
@@ -423,11 +534,38 @@ if ($accion === 'clientes') {
             if ($clave === '') {
                 continue;
             }
-            $limpio = [];
+            $anterior = isset($clientes[$clave]) && is_array($clientes[$clave]) ? $clientes[$clave] : [];
+            $limpio = $anterior;
             foreach ($campos as $campo) {
-                $valor = isset($entrante[$campo]) ? (string) $entrante[$campo] : '';
-                $limpio[$campo] = mb_substr(trim($valor), 0, 160);
+                if (array_key_exists($campo, $entrante)) {
+                    $valor = (string) $entrante[$campo];
+                    $limpio[$campo] = mb_substr(trim($valor), 0, $campo === 'notas' ? 500 : 160);
+                } elseif (!isset($limpio[$campo])) {
+                    $limpio[$campo] = '';
+                }
             }
+            if (array_key_exists('descuentoHabitual', $entrante)) {
+                $limpio['descuentoHabitual'] = erpNum($entrante['descuentoHabitual'], 0, 100);
+            } elseif (!isset($limpio['descuentoHabitual'])) {
+                $limpio['descuentoHabitual'] = 0;
+            }
+            if (array_key_exists('limiteCredito', $entrante)) {
+                $limpio['limiteCredito'] = erpNum($entrante['limiteCredito'], 0);
+            } elseif (!isset($limpio['limiteCredito'])) {
+                $limpio['limiteCredito'] = 0;
+            }
+            if (array_key_exists('plazoDias', $entrante)) {
+                $limpio['plazoDias'] = max(0, (int) $entrante['plazoDias']);
+            } elseif (!isset($limpio['plazoDias'])) {
+                $limpio['plazoDias'] = 30;
+            }
+            if (empty($limpio['shareToken']) || !preg_match('/^[a-f0-9]{32}$/', (string) $limpio['shareToken'])) {
+                $limpio['shareToken'] = bin2hex(random_bytes(16));
+            }
+            if (empty($limpio['creado'])) {
+                $limpio['creado'] = date('c');
+            }
+            $limpio['modificado'] = date('c');
             $clientes[$clave] = $limpio;
             $guardados++;
         }
@@ -438,7 +576,7 @@ if ($accion === 'clientes') {
         if (!guardarClientes($clientes)) {
             salir(500, ['error' => 'No se pudo guardar.']);
         }
-        salir(200, ['ok' => true, 'guardados' => $guardados, 'total' => count($clientes)]);
+        salir(200, ['ok' => true, 'guardados' => $guardados, 'total' => count($clientes), 'clientes' => $clientes]);
     }
 }
 
@@ -446,7 +584,7 @@ if ($accion === 'clientes') {
 /* Correlativo propio, como el del sistema viejo. Se pide una sola vez por
    remito: si ya tiene número, se devuelve el mismo. */
 if ($accion === 'numero' && $metodo === 'POST') {
-    exigirSesion();
+    erpExigirRol(['admin', 'ventas']);
 
     $cuerpo = json_decode(file_get_contents('php://input'), true);
     $ref = isset($cuerpo['ref']) ? (string) $cuerpo['ref'] : '';
@@ -934,4 +1072,4 @@ if ($accion === 'catalogo_categoria_borrar' && $metodo === 'POST') {
     salir(200, ['ok' => true]);
 }
 
-salir(404, ['error' => 'Acción desconocida.']);
+erpDespachar($accion, $metodo);
