@@ -42,99 +42,182 @@ jobs:
     - name: Generar sitemap.xml
       run: python3 scripts/gen_sitemap.py
 
-    - name: Definir carpeta de destino según la rama
-      id: target
+    # ══════════ Rama main -> Producción (./public_html/) ══════════
+    - name: Sync files (main)
+      id: sync1
+      if: github.ref_name == 'main'
+      continue-on-error: true
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ./public_html/
+        protocol: ftps
+        timeout: 120000
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          tests/**
+          PRODUCT.md
+          DESIGN.md
+          .impeccable/**
+
+    - name: Esperar antes de reintentar (main)
+      if: github.ref_name == 'main' && steps.sync1.outcome == 'failure'
+      run: sleep 60
+
+    - name: Sync files reintento 1 (main)
+      id: sync2
+      if: github.ref_name == 'main' && steps.sync1.outcome == 'failure'
+      continue-on-error: true
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ./public_html/
+        protocol: ftps
+        timeout: 120000
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          tests/**
+          PRODUCT.md
+          DESIGN.md
+          .impeccable/**
+
+    - name: Esperar antes del ultimo intento (main)
+      if: github.ref_name == 'main' && steps.sync1.outcome == 'failure' && steps.sync2.outcome == 'failure'
+      run: sleep 120
+
+    - name: Sync files reintento 2 (main)
+      if: github.ref_name == 'main' && steps.sync1.outcome == 'failure' && steps.sync2.outcome == 'failure'
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ./public_html/
+        protocol: ftps
+        timeout: 120000
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          tests/**
+          PRODUCT.md
+          DESIGN.md
+          .impeccable/**
+
+    # ══════════ Rama de prueba -> Subcarpeta aislada por lotes cortos ══════════
+    - name: Preparar .htaccess para entorno de prueba
+      if: github.ref_name != 'main'
       run: |
-        if [ "${{ github.ref_name }}" = "main" ]; then
-          echo "dir=./public_html/" >> "$GITHUB_OUTPUT"
-        else
-          echo "dir=./public_html/${{ github.ref_name }}/" >> "$GITHUB_OUTPUT"
-          cat > .htaccess <<'HT'
+        cat > .htaccess <<'HT'
         <IfModule mod_headers.c>
           Header set X-Robots-Tag "noindex, nofollow"
         </IfModule>
+        <IfModule mod_rewrite.c>
+          RewriteEngine On
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteRule ^imagenes/(.*)$ /imagenes/$1 [L]
+        </IfModule>
         HT
-        fi
 
-    # El FTP de Ferozo a veces rechaza la conexión de datos ("ECONNREFUSED
-    # ...:50000") y al rato vuelve a andar: se reintenta solo hasta 3 veces.
-    - name: Sync files
-      id: sync1
+    - name: Lote 1 - Núcleo web, ERP, API y productos.json
+      id: core1
+      if: github.ref_name != 'main'
       continue-on-error: true
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ${{ steps.target.outputs.dir }}  # Ajustá esto según la carpeta de tu hosting
+        server-dir: ./public_html/${{ github.ref_name }}/
+        state-name: .ftp-deploy-sync-state-core.json
         protocol: ftps
-        # Con los 30 s por defecto el hosting cortaba la conexión a mitad
-        # ("Timeout (control socket)", "Server sent FIN packet unexpectedly")
         timeout: 120000
-        # Las pruebas y docs internas no van al hosting (los tres primeros son los que excluye por defecto)
         exclude: |
           **/.git*
           **/.git*/**
           **/node_modules/**
           tests/**
+          scripts/**
+          imagenes/**
           PRODUCT.md
           DESIGN.md
           .impeccable/**
 
-    - name: Esperar antes de reintentar
-      if: steps.sync1.outcome == 'failure'
-      run: sleep 60
+    - name: Esperar si reintenta Lote 1
+      if: github.ref_name != 'main' && steps.core1.outcome == 'failure'
+      run: sleep 30
 
-    - name: Sync files (reintento 1)
-      id: sync2
-      if: steps.sync1.outcome == 'failure'
+    - name: Lote 1 reintento - Núcleo web, ERP, API y productos.json
+      if: github.ref_name != 'main' && steps.core1.outcome == 'failure'
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ./public_html/${{ github.ref_name }}/
+        state-name: .ftp-deploy-sync-state-core.json
+        protocol: ftps
+        timeout: 120000
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          tests/**
+          scripts/**
+          imagenes/**
+          PRODUCT.md
+          DESIGN.md
+          .impeccable/**
+
+    - name: Lote 2 - Imágenes nivel raíz
+      if: github.ref_name != 'main'
       continue-on-error: true
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ${{ steps.target.outputs.dir }}  # Ajustá esto según la carpeta de tu hosting
+        local-dir: ./imagenes/
+        server-dir: ./public_html/${{ github.ref_name }}/imagenes/
+        state-name: .ftp-deploy-sync-state-img-root.json
         protocol: ftps
-        # Con los 30 s por defecto el hosting cortaba la conexión a mitad
-        # ("Timeout (control socket)", "Server sent FIN packet unexpectedly")
         timeout: 120000
-        # Las pruebas y docs internas no van al hosting (los tres primeros son los que excluye por defecto)
         exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
-          tests/**
-          PRODUCT.md
-          DESIGN.md
-          .impeccable/**
+          Fotos Nuevas/**
+          Fotos Productos/**
 
-    - name: Esperar antes del ultimo intento
-      if: steps.sync1.outcome == 'failure' && steps.sync2.outcome == 'failure'
-      run: sleep 120
-
-    - name: Sync files (reintento 2)
-      if: steps.sync1.outcome == 'failure' && steps.sync2.outcome == 'failure'
+    - name: Lote 3 - Imágenes Fotos Nuevas
+      if: github.ref_name != 'main'
+      continue-on-error: true
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ${{ steps.target.outputs.dir }}  # Ajustá esto según la carpeta de tu hosting
+        local-dir: ./imagenes/Fotos Nuevas/
+        server-dir: ./public_html/${{ github.ref_name }}/imagenes/Fotos Nuevas/
+        state-name: .ftp-deploy-sync-state-img-nuevas.json
         protocol: ftps
-        # Con los 30 s por defecto el hosting cortaba la conexión a mitad
-        # ("Timeout (control socket)", "Server sent FIN packet unexpectedly")
         timeout: 120000
-        # Las pruebas y docs internas no van al hosting (los tres primeros son los que excluye por defecto)
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
-          tests/**
-          PRODUCT.md
-          DESIGN.md
-          .impeccable/**
 
-    # No hace falta purgar la caché: el sello ?v=<hash> de arriba hace que cada
-    # despliegue tenga URLs nuevas para CSS y JS. El Cloudflare del dominio es el
-    # del hosting (Ferozo), no una cuenta propia.
+    - name: Lote 4 - Imágenes Fotos Productos
+      if: github.ref_name != 'main'
+      continue-on-error: true
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./imagenes/Fotos Productos/
+        server-dir: ./public_html/${{ github.ref_name }}/imagenes/Fotos Productos/
+        state-name: .ftp-deploy-sync-state-img-prod.json
+        protocol: ftps
+        timeout: 120000
