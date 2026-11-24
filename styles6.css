@@ -7,22 +7,22 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
-/* ── TOKENS ────────────────────────────────────────── */
+/* ── TOKENS (Paleta G2 Nordic) ─────────────────────── */
 :root {
   --v6-white: #FFFFFF;
-  --v6-mist: #F5F6F8;
-  --v6-mist-deep: #EBEDF1;
-  --v6-line: #E1E4E9;
-  --v6-line-soft: #EFF1F4;
+  --v6-mist: #F8FAFC;
+  --v6-mist-deep: #F1F5F9;
+  --v6-line: #E2E8F0;
+  --v6-line-soft: #F1F5F9;
 
-  --v6-ink: #1A1D21;
-  --v6-ink-soft: #565D66;
-  --v6-muted: #8A929C;
+  --v6-ink: #0F172A;
+  --v6-ink-soft: #475569;
+  --v6-muted: #64748B;
 
-  --v6-red: #C0392B;          /* Rojo de la marca */
-  --v6-red-bright: #E74C3C;
-  --v6-red-soft: #FCEDEB;
-  --v6-wa: #128C4A;
+  --v6-red: #1D4ED8;          /* Azul Cobalto G2 Nordic */
+  --v6-red-bright: #2563EB;
+  --v6-red-soft: #EFF6FF;
+  --v6-wa: #16A34A;
 
   --v6-display: 'Manrope', 'Inter', sans-serif;
   --v6-body: 'Inter', sans-serif;
@@ -70,7 +70,7 @@ ul { list-style: none; }
   transition: all .22s var(--v6-ease); white-space: nowrap; line-height: 1;
 }
 .v6-btn-primary { background: var(--v6-red); color: #fff; }
-.v6-btn-primary:hover { background: var(--v6-red-bright); transform: translateY(-2px); box-shadow: 0 12px 26px rgba(192,57,43,.26); }
+.v6-btn-primary:hover { background: var(--v6-red-bright); transform: translateY(-2px); box-shadow: 0 12px 26px rgba(29,78,216,.26); }
 .v6-btn-line { background: #fff; color: var(--v6-ink); border-color: var(--v6-line); }
 .v6-btn-line:hover { border-color: var(--v6-ink); background: var(--v6-mist); }
 .v6-btn-ink { background: var(--v6-ink); color: #fff; }
@@ -242,7 +242,7 @@ ul { list-style: none; }
   box-shadow: 0 4px 16px rgba(26,29,33,.06);
   transition: border-color .22s ease, box-shadow .22s ease;
 }
-.v6-search:focus-within { border-color: var(--v6-red); box-shadow: 0 0 0 4px rgba(192,57,43,.11); }
+.v6-search:focus-within { border-color: var(--v6-red); box-shadow: 0 0 0 4px rgba(29,78,216,.11); }
 .v6-search-icon { color: var(--v6-muted); flex-shrink: 0; display: flex; }
 .v6-search input {
   flex: 1; background: transparent; border: none; outline: none; min-width: 0;
@@ -447,7 +447,7 @@ ul { list-style: none; }
 }
 .v6-cta-inner::before {
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse 46% 60% at 86% 20%, rgba(231,76,60,.3) 0%, transparent 62%);
+  background: radial-gradient(ellipse 46% 60% at 86% 20%, rgba(29,78,216,.32) 0%, transparent 62%);
 }
 .v6-cta-title {
   position: relative; z-index: 1;

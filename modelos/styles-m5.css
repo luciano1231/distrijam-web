@@ -6,15 +6,15 @@
    ====================================================== */
 
 :root {
-  --bg: #f5f4f0;
-  --bg-2: #ffffff;
-  --bg-3: #ecebe6;
-  --text: #14161a;
-  --muted: #5d636d;
-  --line: rgba(20, 22, 26, .1);
-  --red: #d92d20;
-  --red-2: #e5352a;
-  --steel: #3b4048;
+  --bg: #F8FAFC;
+  --bg-2: #FFFFFF;
+  --bg-3: #F1F5F9;
+  --text: #0F172A;
+  --muted: #475569;
+  --line: #E2E8F0;
+  --red: #1D4ED8;
+  --red-2: #2563EB;
+  --steel: #334155;
   --head: 'Inter', system-ui, -apple-system, sans-serif;
   --body: 'Inter', system-ui, -apple-system, sans-serif;
   --ease: cubic-bezier(.22, 1, .36, 1);
@@ -47,7 +47,7 @@ button { font: inherit; cursor: pointer; color: inherit; }
 
 /* ── Nav ── */
 .m5-nav { position: fixed; inset: 0 0 auto; z-index: 50; height: 82px; display: flex; align-items: center; transition: background .35s, border-color .35s; border-bottom: 1px solid transparent; }
-.m5-nav.scrolled { background: rgba(245,244,240,.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--line); }
+.m5-nav.scrolled { background: rgba(248,250,252,.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--line); }
 .m5-nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .m5-logo img { height: 52px; width: auto; }
 .m5-nav-links { display: flex; gap: 32px; }
@@ -73,9 +73,9 @@ button { font: inherit; cursor: pointer; color: inherit; }
 .m5-hero {
   position: relative; min-height: 100svh; display: flex; align-items: center; overflow: hidden; isolation: isolate;
   background:
-    radial-gradient(circle at 18% 22%, rgba(217, 45, 32, .055) 0%, transparent 48%),
-    radial-gradient(circle at 82% 78%, rgba(20, 22, 26, .045) 0%, transparent 52%),
-    linear-gradient(180deg, #faf9f6 0%, #f2f0ea 55%, #f5f4f0 100%);
+    radial-gradient(circle at 18% 22%, rgba(29, 78, 216, .06) 0%, transparent 48%),
+    radial-gradient(circle at 82% 78%, rgba(14, 165, 233, .05) 0%, transparent 52%),
+    linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 55%, #F1F5F9 100%);
 }
 .m5-wall {
   display: none !important;
@@ -99,13 +99,13 @@ button { font: inherit; cursor: pointer; color: inherit; }
   box-shadow: 0 40px 80px -30px rgba(20,22,26,.35);
 }
 .m5-tag { display: inline-flex; align-items: center; gap: 10px; font-size: .76rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--steel); margin-bottom: 20px; }
-.m5-tag span { width: 8px; height: 8px; background: var(--red); border-radius: 50%; box-shadow: 0 0 0 4px rgba(229,53,42,.2); }
+.m5-tag span { width: 8px; height: 8px; background: var(--red); border-radius: 50%; box-shadow: 0 0 0 4px rgba(29,78,216,.2); }
 .m5-hero-title { font-family: var(--head); font-weight: 800; font-size: clamp(2.4rem, 5.4vw, 4.6rem); line-height: 1.04; letter-spacing: -.028em; margin-bottom: 20px; text-wrap: balance; }
 .m5-hero-title span { display: block; }
 .m5-mark { font-style: normal; color: inherit; position: relative; white-space: nowrap; z-index: 0; }
 .m5-mark::after {
   content: ''; position: absolute; left: -.06em; right: -.06em; bottom: .08em; height: .3em; z-index: -1;
-  background: var(--red); opacity: .9; border-radius: .08em; transform: scaleX(0); transform-origin: left;
+  background: rgba(14, 165, 233, 0.35); opacity: .95; border-radius: .08em; transform: scaleX(0); transform-origin: left;
   animation: m5-mark .9s var(--ease) 1.05s forwards;
 }
 @keyframes m5-mark { to { transform: scaleX(1); } }

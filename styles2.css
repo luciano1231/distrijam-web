@@ -22,18 +22,18 @@
   --white: #FFFFFF;
   --pure-dark: #070B12;
 
-  /* Acentos sutiles y técnicos */
-  --primary: #1E3A8A;           /* Azul técnico industrial profundo */
-  --primary-hover: #172554;
+  /* Acentos sutiles y técnicos (Paleta G2 Nordic) */
+  --primary: #1D4ED8;           /* Azul cobalto nórdico */
+  --primary-hover: #1E40AF;
   --primary-light: #EFF6FF;
   --primary-border: #BFDBFE;
 
-  --accent-amber: #D97706;      /* Ocre / Ámbar industrial discreto */
-  --accent-amber-light: #FEF3C7;
-  --accent-amber-border: #FDE68A;
+  --accent-amber: #0EA5E9;      /* Cian industrial nórdico */
+  --accent-amber-light: #F0F9FF;
+  --accent-amber-border: #BAE6FD;
 
-  --wa-green: #15803D;          /* Verde WhatsApp sobrio */
-  --wa-green-hover: #166534;
+  --wa-green: #16A34A;          /* Verde WhatsApp G2 Nordic */
+  --wa-green-hover: #15803D;
   --wa-bg: #DCFCE7;
 
   /* Fondos y superficies */
@@ -163,9 +163,9 @@ ul {
 }
 
 .version-badge {
-  background: rgba(217, 119, 6, 0.2);
-  color: #FBBF24;
-  border: 1px solid rgba(217, 119, 6, 0.4);
+  background: rgba(14, 165, 233, 0.2);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.4);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -431,7 +431,7 @@ ul {
 }
 
 .btn-nav-catalog {
-  background-color: var(--slate-900);
+  background-color: var(--primary);
   color: #FFFFFF;
   font-size: 0.85rem;
   font-weight: 600;
@@ -444,7 +444,7 @@ ul {
 }
 
 .btn-nav-catalog:hover {
-  background-color: var(--slate-800);
+  background-color: var(--primary-hover);
   color: #FFFFFF;
 }
 
@@ -577,8 +577,8 @@ ul {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(30, 58, 138, 0.08);
-  border: 1px solid rgba(30, 58, 138, 0.2);
+  background: #EFF6FF;
+  border: 1px solid rgba(29, 78, 216, 0.2);
   color: var(--primary);
   font-size: 0.75rem;
   font-weight: 700;
@@ -591,7 +591,7 @@ ul {
 
 
 .hero-badge-tag svg {
-  color: #D97706;
+  color: #0EA5E9;
 }
 
 
@@ -680,7 +680,7 @@ ul {
 }
 
 .hero-search-btn {
-  background-color: var(--slate-900);
+  background-color: var(--primary);
   color: #FFFFFF;
   font-size: 0.88rem;
   font-weight: 600;
@@ -690,7 +690,7 @@ ul {
 }
 
 .hero-search-btn:hover {
-  background-color: var(--primary);
+  background-color: var(--primary-hover);
 }
 
 /* Sugerencias en tiempo real del buscador */
@@ -757,8 +757,8 @@ ul {
 }
 
 .btn-corporate-primary {
-  background-color: #FFFFFF;
-  color: var(--slate-900);
+  background-color: var(--primary);
+  color: #FFFFFF;
   font-weight: 700;
   font-size: 0.92rem;
   padding: 12px 24px;
@@ -770,7 +770,8 @@ ul {
 }
 
 .btn-corporate-primary:hover {
-  background-color: var(--slate-100);
+  background-color: var(--primary-hover);
+  color: #FFFFFF;
   transform: translateY(-1px);
 }
 
@@ -918,7 +919,7 @@ ul {
   font-family: var(--font-mono);
   font-size: 1.3rem;
   font-weight: 700;
-  color: #FBBF24;
+  color: #38BDF8;
 }
 
 .spec-stat-lbl {

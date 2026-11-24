@@ -1,4 +1,4 @@
-﻿/* ======================================================
+/* ======================================================
    DISTRIJAM — styles-m2.css
    MODELO 2 · "CORPORATIVO INDUSTRIAL INMERSIVO (DARK LUXURY)"
    Estética en pizarra nocturna (#0D1017), cristal esmerilado,
@@ -8,22 +8,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  --m2-bg: #0B0E14;
-  --m2-bg-2: #111622;
-  --m2-card: #161C2A;
-  --m2-card-hover: #1D2538;
+  --m2-bg: #0F172A;
+  --m2-bg-2: #1E293B;
+  --m2-card: #1E293B;
+  --m2-card-hover: #334155;
 
-  --m2-ruby: #E11D48;
-  --m2-ruby-light: #FB7185;
-  --m2-amber: #F59E0B;
-  --m2-wa: #10B981;
+  --m2-ruby: #1D4ED8;
+  --m2-ruby-light: #38BDF8;
+  --m2-amber: #0EA5E9;
+  --m2-wa: #16A34A;
 
   --m2-white: #F8FAFC;
   --m2-text: #CBD5E1;
-  --m2-muted: #64748B;
+  --m2-muted: #94A3B8;
 
-  --m2-border: rgba(255, 255, 255, 0.09);
-  --m2-border-glow: rgba(225, 29, 72, 0.45);
+  --m2-border: rgba(226, 232, 240, 0.12);
+  --m2-border-glow: rgba(29, 78, 216, 0.55);
 
   --m2-font-head: 'Sora', sans-serif;
   --m2-font-body: 'Inter', sans-serif;
@@ -72,7 +72,7 @@ ul { list-style: none; }
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgba(11, 14, 20, 0.78);
+  background: rgba(15, 23, 42, 0.82);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--m2-border);
@@ -80,7 +80,7 @@ ul { list-style: none; }
 }
 
 .m2-header.scrolled {
-  background: rgba(11, 14, 20, 0.95);
+  background: rgba(15, 23, 42, 0.96);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
 }
 
@@ -176,7 +176,7 @@ ul { list-style: none; }
 }
 
 .dropdown-link:hover {
-  background: rgba(225, 29, 72, 0.18);
+  background: rgba(29, 78, 216, 0.22);
   color: #FFFFFF;
 }
 
@@ -214,7 +214,7 @@ ul { list-style: none; }
 }
 
 .submenu-link:hover {
-  background: rgba(225, 29, 72, 0.18);
+  background: rgba(29, 78, 216, 0.22);
   color: #FFFFFF;
 }
 
@@ -236,14 +236,14 @@ ul { list-style: none; }
 }
 
 .m2-btn-ruby {
-  background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
+  background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%);
   color: #FFFFFF;
-  box-shadow: 0 8px 24px rgba(225, 29, 72, 0.35);
+  box-shadow: 0 8px 24px rgba(29, 78, 216, 0.35);
 }
 
 .m2-btn-ruby:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(225, 29, 72, 0.5);
+  box-shadow: 0 12px 30px rgba(29, 78, 216, 0.5);
 }
 
 .m2-btn-glass {
@@ -345,8 +345,8 @@ ul { list-style: none; }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 35%, rgba(225, 29, 72, 0.18) 0%, transparent 55%),
-    linear-gradient(180deg, rgba(11, 14, 20, 0.7) 0%, rgba(11, 14, 20, 0.85) 65%, #0B0E14 100%);
+    radial-gradient(circle at 50% 35%, rgba(29, 78, 216, 0.24) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.72) 0%, rgba(15, 23, 42, 0.88) 65%, #0F172A 100%);
 }
 
 .m2-hero-center {
@@ -363,13 +363,13 @@ ul { list-style: none; }
   gap: 10px;
   padding: 7px 18px;
   border-radius: 99px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(29, 78, 216, 0.2);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #FDE68A;
+  color: #93C5FD;
   margin-bottom: 24px;
 }
 
@@ -383,7 +383,7 @@ ul { list-style: none; }
 }
 
 .m2-hero-title span {
-  background: linear-gradient(90deg, #FB7185 0%, #F59E0B 100%);
+  background: linear-gradient(90deg, #38BDF8 0%, #60A5FA 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -417,7 +417,7 @@ ul { list-style: none; }
 
 .m2-spotlight-form:focus-within {
   border-color: var(--m2-ruby);
-  box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.2), 0 20px 50px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.25), 0 20px 50px rgba(0, 0, 0, 0.6);
 }
 
 .m2-spotlight-form svg {
@@ -454,7 +454,7 @@ ul { list-style: none; }
 }
 
 .m2-spotlight-btn:hover {
-  background: #BE123C;
+  background: #1E40AF;
 }
 
 .search-suggestions {
@@ -497,8 +497,8 @@ ul { list-style: none; }
   font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
-  background: rgba(225, 29, 72, 0.2);
-  color: #FB7185;
+  background: rgba(29, 78, 216, 0.25);
+  color: #93C5FD;
   padding: 3px 10px;
   border-radius: 99px;
 }
@@ -626,7 +626,7 @@ ul { list-style: none; }
 .m2-poster:hover {
   transform: translateY(-8px);
   border-color: var(--m2-border-glow);
-  box-shadow: 0 24px 48px rgba(225, 29, 72, 0.2);
+  box-shadow: 0 24px 48px rgba(29, 78, 216, 0.22);
 }
 
 .m2-poster-bg {
@@ -656,9 +656,9 @@ ul { list-style: none; }
 
 .m2-poster-tag {
   align-self: flex-start;
-  background: rgba(225, 29, 72, 0.25);
-  border: 1px solid rgba(251, 113, 133, 0.4);
-  color: #FECDD3;
+  background: rgba(29, 78, 216, 0.28);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #BAE6FD;
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
