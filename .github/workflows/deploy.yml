@@ -112,7 +112,7 @@ jobs:
           DESIGN.md
           .impeccable/**
 
-    # ══════════ Rama de prueba -> Subcarpeta aislada por lotes cortos ══════════
+    # ══════════ Rama de prueba -> Subcarpeta aislada con despliegue FTPS resiliente ══════════
     - name: Preparar .htaccess para entorno de prueba
       if: github.ref_name != 'main'
       run: |
@@ -127,97 +127,219 @@ jobs:
         </IfModule>
         HT
 
-    - name: Lote 1 - Núcleo web, ERP, API y productos.json
-      id: core1
+    - name: Desplegar archivos a entorno de prueba (FTPS resiliente)
       if: github.ref_name != 'main'
-      continue-on-error: true
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ./public_html/${{ github.ref_name }}/
-        state-name: .ftp-deploy-sync-state-core.json
-        protocol: ftps
-        timeout: 120000
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
-          tests/**
-          scripts/**
-          imagenes/**
-          PRODUCT.md
-          DESIGN.md
-          .impeccable/**
+      env:
+        FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        BRANCH_NAME: ${{ github.ref_name }}
+      run: |
+        mkdir -p /tmp/ftp-deployer
+        npm --prefix /tmp/ftp-deployer install --no-audit --no-fund basic-ftp
 
-    - name: Esperar si reintenta Lote 1
-      if: github.ref_name != 'main' && steps.core1.outcome == 'failure'
-      run: sleep 30
+        cat > /tmp/ftp-deployer/deploy.mjs <<'MJS'
+        import fs from 'node:fs';
+        import path from 'node:path';
+        import { execFileSync } from 'node:child_process';
+        import * as ftp from 'basic-ftp';
 
-    - name: Lote 1 reintento - Núcleo web, ERP, API y productos.json
-      if: github.ref_name != 'main' && steps.core1.outcome == 'failure'
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ./public_html/${{ github.ref_name }}/
-        state-name: .ftp-deploy-sync-state-core.json
-        protocol: ftps
-        timeout: 120000
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
-          tests/**
-          scripts/**
-          imagenes/**
-          PRODUCT.md
-          DESIGN.md
-          .impeccable/**
+        const rawServer = (process.env.FTP_SERVER || '').trim();
+        const host = rawServer.replace(/^ftps?:\/\//i, '').replace(/\/+$/, '');
+        const user = process.env.FTP_USERNAME || '';
+        const password = process.env.FTP_PASSWORD || '';
+        const branchName = (process.env.BRANCH_NAME || 'prueba').trim();
 
-    - name: Lote 2 - Imágenes nivel raíz
-      if: github.ref_name != 'main'
-      continue-on-error: true
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./imagenes/
-        server-dir: ./public_html/${{ github.ref_name }}/imagenes/
-        state-name: .ftp-deploy-sync-state-img-root.json
-        protocol: ftps
-        timeout: 120000
-        exclude: |
-          Fotos Nuevas/**
-          Fotos Productos/**
+        if (!host || !user || !password) {
+          console.error('Faltan credenciales FTP en variables de entorno.');
+          process.exit(1);
+        }
 
-    - name: Lote 3 - Imágenes Fotos Nuevas
-      if: github.ref_name != 'main'
-      continue-on-error: true
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./imagenes/Fotos Nuevas/
-        server-dir: ./public_html/${{ github.ref_name }}/imagenes/Fotos Nuevas/
-        state-name: .ftp-deploy-sync-state-img-nuevas.json
-        protocol: ftps
-        timeout: 120000
+        const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-    - name: Lote 4 - Imágenes Fotos Productos
-      if: github.ref_name != 'main'
-      continue-on-error: true
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./imagenes/Fotos Productos/
-        server-dir: ./public_html/${{ github.ref_name }}/imagenes/Fotos Productos/
-        state-name: .ftp-deploy-sync-state-img-prod.json
-        protocol: ftps
-        timeout: 120000
+        function walkDir(dir) {
+          if (!fs.existsSync(dir)) return [];
+          const out = [];
+          for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+            const rel = path.posix.join(dir, entry.name);
+            if (entry.isDirectory()) {
+              out.push(...walkDir(rel));
+            } else if (entry.isFile()) {
+              out.push(rel);
+            }
+          }
+          return out.sort();
+        }
+
+        function buildFileList() {
+          const seen = new Set();
+          const ordered = [];
+          const addFile = (rel) => {
+            const norm = rel.replace(/\\/g, '/').replace(/^\.\//, '');
+            if (!seen.has(norm) && fs.existsSync(norm) && fs.statSync(norm).isFile()) {
+              seen.add(norm);
+              ordered.push(norm);
+            }
+          };
+
+          // Prioridad 1: núcleo web, ERP, API, estilos y productos.json
+          const priority1 = [
+            '.htaccess',
+            'productos.json',
+            'pedidos.php',
+            'producto.html',
+            'producto.css',
+            'producto.js',
+            'styles.css',
+            'filtros-rail.css',
+            'api.php',
+            'api_erp.php',
+            'instalar.php',
+            'admin.html',
+            'admin.css',
+            'admin.js',
+            'erp.css',
+            'erp.js',
+            'erp-print.js',
+            'cotizador.css',
+            'cotizador.js',
+            'catalogo.html',
+            'catalogo.css',
+            'catalogo.js',
+            'app.js',
+            'cart.js',
+            'index.html',
+            'estado-cuenta.html',
+            'estado-cuenta.css',
+            'estado-cuenta.js',
+            'actualizar-precios.html',
+            'actualizar-precios.css',
+            'actualizar-precios.js',
+          ];
+          priority1.forEach(addFile);
+
+          // Prioridad 2: resto de raíz (.html, .css, .js, robots.txt, sitemap.xml), Logo/ y modelos/
+          const rootExcluded = new Set(['test.js', 'PRODUCT.md', 'DESIGN.md']);
+          const rootEntries = fs.readdirSync('.', { withFileTypes: true })
+            .filter((e) => e.isFile())
+            .map((e) => e.name)
+            .filter((name) => {
+              if (rootExcluded.has(name)) return false;
+              if (name === 'robots.txt' || name === 'sitemap.xml') return true;
+              return /\.(html|css|js)$/i.test(name);
+            })
+            .sort();
+          rootEntries.forEach(addFile);
+          walkDir('Logo').forEach(addFile);
+          walkDir('modelos').forEach(addFile);
+
+          // Prioridad 3: diferencial de imágenes respecto a origin/main
+          try {
+            execFileSync('git', ['fetch', '--no-tags', '--depth=1', 'origin', 'main'], {
+              stdio: 'ignore',
+            });
+            const diffOut = execFileSync(
+              'git',
+              ['diff', '--name-only', '--diff-filter=ACMR', 'origin/main', 'HEAD', '--', 'imagenes/'],
+              { encoding: 'utf8' }
+            );
+            diffOut
+              .split(/\r?\n/)
+              .map((s) => s.trim())
+              .filter(Boolean)
+              .forEach(addFile);
+          } catch (err) {
+            console.log('Sin diferencial de imagenes contra origin/main (usando rewrite a /imagenes/).');
+          }
+
+          return ordered;
+        }
+
+        async function connectClient() {
+          const client = new ftp.Client(30000);
+          await client.access({
+            host,
+            user,
+            password,
+            secure: true,
+            secureOptions: { rejectUnauthorized: false },
+          });
+          const rootPwd = await client.pwd();
+          return { client, rootPwd };
+        }
+
+        async function ensureRemoteDir(client, targetDir) {
+          try {
+            await client.cd(targetDir);
+          } catch {
+            await client.ensureDir(targetDir);
+          }
+        }
+
+        const files = buildFileList();
+        console.log(`Total de archivos a desplegar en /public_html/${branchName}/: ${files.length}`);
+
+        let session = null;
+        let filesInSession = 0;
+        const failedFiles = [];
+        const backoffs = [3000, 6000, 12000];
+
+        for (let i = 0; i < files.length; i++) {
+          const relPath = files[i];
+          if (session && filesInSession >= 15) {
+            try {
+              session.client.close();
+            } catch {}
+            session = null;
+            filesInSession = 0;
+            await sleep(1500);
+          }
+
+          const subdir = path.posix.dirname(relPath);
+          const fileName = path.posix.basename(relPath);
+          let uploaded = false;
+
+          for (let attempt = 1; attempt <= 4; attempt++) {
+            try {
+              if (!session) {
+                session = await connectClient();
+                filesInSession = 0;
+              }
+              const remoteBase = path.posix.resolve(session.rootPwd || '/', 'public_html', branchName);
+              const targetDir = subdir === '.' ? remoteBase : path.posix.join(remoteBase, subdir);
+              await ensureRemoteDir(session.client, targetDir);
+              await session.client.uploadFrom(relPath, fileName);
+              console.log(`[${i + 1}/${files.length}] OK ${relPath}`);
+              filesInSession++;
+              uploaded = true;
+              break;
+            } catch (err) {
+              console.warn(`[${i + 1}/${files.length}] Intento ${attempt}/4 fallido para ${relPath}: ${err.message}`);
+              try {
+                if (session) session.client.close();
+              } catch {}
+              session = null;
+              filesInSession = 0;
+              if (attempt < 4) {
+                await sleep(backoffs[attempt - 1]);
+              }
+            }
+          }
+
+          if (!uploaded) {
+            failedFiles.push(relPath);
+          }
+        }
+
+        try {
+          if (session) session.client.close();
+        } catch {}
+
+        if (failedFiles.length > 0) {
+          console.error(`Fallaron ${failedFiles.length} archivos:`, failedFiles);
+          process.exit(1);
+        }
+        console.log('Despliegue FTPS completado con éxito.');
+        MJS
+
+        node /tmp/ftp-deployer/deploy.mjs
