@@ -81,8 +81,8 @@
 
 .filter-tab .tab-count {
   display: inline-block;
-  background: rgba(192, 57, 43, 0.2);
-  color: var(--red-light);
+  background: rgba(29, 78, 216, 0.14);
+  color: var(--red);
   font-size: 0.7rem;
   font-weight: 700;
   padding: 1px 7px;
@@ -274,13 +274,13 @@
 
 .product-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(192, 57, 43, 0.35);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  border-color: rgba(29, 78, 216, 0.35);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
 }
 
 .product-card.added {
   border-color: var(--gold);
-  box-shadow: 0 0 0 2px rgba(200, 151, 58, 0.2);
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.25);
 }
 
 .product-img-wrap {
@@ -686,7 +686,7 @@
 
 .btn-quote:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(192, 57, 43, 0.4);
+  box-shadow: 0 8px 24px rgba(29, 78, 216, 0.35);
 }
 
 .btn-quote:disabled {
@@ -849,7 +849,7 @@
   border-radius: 50%;
   border: none;
   font-size: 1.4rem;
-  box-shadow: 0 8px 24px rgba(192, 57, 43, 0.5);
+  box-shadow: 0 8px 24px rgba(29, 78, 216, 0.45);
   display: none;
   align-items: center;
   justify-content: center;

@@ -35,7 +35,7 @@
   position: absolute; z-index: 2; top: -26px; right: clamp(20px, 8vw, 120px);
   background: var(--red); color: #fff; font-weight: 700; font-size: .8rem; letter-spacing: .04em;
   padding: 10px 16px; border-radius: 999px; transform: rotate(6deg);
-  box-shadow: 0 12px 24px -10px rgba(217,45,32,.7); animation: m6-bob 3.4s ease-in-out infinite;
+  box-shadow: 0 12px 24px -10px rgba(29,78,216,.7); animation: m6-bob 3.4s ease-in-out infinite;
 }
 @keyframes m6-bob { 50% { transform: rotate(3deg) translateY(-5px); } }
 .m6-links { display: flex; gap: 18px; flex-wrap: wrap; font-size: .86rem; font-weight: 600; }

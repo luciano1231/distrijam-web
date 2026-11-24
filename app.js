@@ -495,30 +495,22 @@ document.addEventListener('DOMContentLoaded', () => {
   initLgnexBadge();
 });
 
-// ── Universal Version Switcher (V1 a V4) ──────────────
+// ── Universal Version Switcher (Paleta G2 Nordic) ─────
 const DISTRIJAM_VERSIONS = {
-  m1: { short: 'M1', name: 'Portal E-Commerce', home: 'modelos/index-m1.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M1: Portal Comercial B2B & Vitrina en Vivo' },
-  m2: { short: 'M2', name: 'Dark Inmersivo', home: 'modelos/index-m2.html', themeClass: 'theme-m2', accent: '#E11D48', title: 'Nuevo Modelo M2: Corporativo Inmersivo en Pizarra y Cristal' },
-  m3: { short: 'M3', name: 'Cine', home: 'modelos/index-m3.html', themeClass: 'theme-m2', accent: '#D92D20', title: 'Nuevo Modelo M3: Cine (productos primero, fotos en movimiento)' },
-  m4: { short: 'M4', name: 'Vitrina', home: 'modelos/index-m4.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M4: Vitrina (claro, un producto protagonista por vez)' },
-  m5: { short: 'M5', name: 'Muro', home: 'modelos/index-m5.html', themeClass: 'theme-m1', accent: '#E5352A', title: 'Nuevo Modelo M5: Muro claro (filas de fotos y panel central)' },
-  m6: { short: 'M6', name: 'Banda', home: 'modelos/index-m6.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M6: Banda (franja blanca que cruza las fotos)' },
-  m7: { short: 'M7', name: 'Hoja', home: 'modelos/index-m7.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M7: Hoja (hoja lateral con índice de líneas)' },
-  m8: { short: 'M8', name: 'Buscador', home: 'modelos/index-m8.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M8: Buscador protagonista' },
-  m9: { short: 'M9', name: 'Historias', home: 'modelos/index-m9.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M9: Historias (pensado para celular)' },
-  m10: { short: 'M10', name: 'App', home: 'modelos/index-m10.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M10: App (pensado para celular)' },
-  m11: { short: 'M11', name: 'Pedido', home: 'modelos/index-m11.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M11: Pedido (pensado para celular)' },
-  m12: { short: 'M12', name: 'Apilado', home: 'modelos/index-m12.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M12: Apilado (pensado para celular)' },
-  m13: { short: 'M13', name: 'Mazo', home: 'modelos/index-m13.html', themeClass: 'theme-m1', accent: '#D92D20', title: 'Nuevo Modelo M13: Mazo (pensado para celular)' },
-  v1: { short: 'V1', name: 'Clásica',   home: 'index.html',  themeClass: null,       accent: '#C0392B', title: 'Versión 1: Clásica (oscura, roja)' },
-  v2: { short: 'V2', name: 'B2B',        home: 'index2.html', themeClass: 'theme-v2', accent: '#1E3A8A', title: 'Versión 2: Corporativa B2B (pizarra y azul)' },
-  v3: { short: 'V3', name: 'Industrial', home: 'index3.html', themeClass: 'theme-v3', accent: '#C2700A', title: 'Versión 3: Industrial clara (blanco y ámbar)' },
-  v4: { short: 'V4', name: 'Tech',       home: 'index4.html', themeClass: 'theme-v4', accent: '#0F766E', title: 'Versión 4: Tech nocturna (carbón y turquesa)' },
-  v5: { short: 'V5', name: 'Cercana',    home: 'index5.html', themeClass: 'theme-v5', accent: '#C2410C', title: 'Versión 5: Cercana (crema y terracota)' },
-  v6: { short: 'V6', name: 'Showroom',   home: 'index6.html', themeClass: 'theme-v6', accent: '#C0392B', title: 'Versión 6: Showroom (blanco y rojo de marca)' },
-  g1: { short: 'G1', name: 'Titanium',   home: 'index-g1.html', themeClass: 'theme-g1', accent: '#F59E0B', title: 'Modelo G1: Titanium Forge & Luxury Dark' },
-  g2: { short: 'G2', name: 'Nordic',     home: 'index-g2.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Modelo G2: Nordic Clean & Neo-Cobalt' },
-  g3: { short: 'G3', name: 'Apex',       home: 'index-g3.html', themeClass: 'theme-g3', accent: '#E11D48', title: 'Modelo G3: Apex Obsidian & Precision Crimson' }
+  m1: { short: 'M1', name: 'Portal E-Commerce', home: 'modelos/index-m1.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Modelo M1: Portal Comercial B2B & Vitrina en Vivo (Nordic)' },
+  m2: { short: 'M2', name: 'Dark Inmersivo', home: 'modelos/index-m2.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Modelo M2: Corporativo Inmersivo (Nordic)' },
+  m3: { short: 'M3', name: 'Cine', home: 'modelos/index-m3.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Modelo M3: Cine (productos primero, fotos en movimiento — Nordic)' },
+  m4: { short: 'M4', name: 'Vitrina', home: 'modelos/index-m4.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Modelo M4: Vitrina (claro, un producto protagonista por vez — Nordic)' },
+  m5: { short: 'M5', name: 'Muro', home: 'modelos/index-m5.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Modelo M5: Muro claro (filas de fotos y panel central — Nordic)' },
+  m6: { short: 'M6', name: 'Banda', home: 'modelos/index-m6.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Modelo M6: Banda (franja blanca que cruza las fotos — Nordic)' },
+  m7: { short: 'M7', name: 'Hoja', home: 'modelos/index-m7.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Modelo M7: Hoja (hoja lateral con índice de líneas — Nordic)' },
+  m8: { short: 'M8', name: 'Buscador', home: 'modelos/index-m8.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Modelo M8: Buscador protagonista (Nordic)' },
+  v1: { short: 'V1', name: 'Clásica',   home: 'index.html',  themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Versión 1: Principal (Paleta G2 Nordic)' },
+  v2: { short: 'V2', name: 'B2B',        home: 'index2.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Versión 2: Corporativa B2B (Paleta G2 Nordic)' },
+  v3: { short: 'V3', name: 'Industrial', home: 'index3.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Versión 3: Industrial (Paleta G2 Nordic)' },
+  v5: { short: 'V5', name: 'Cercana',    home: 'index5.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Versión 5: Cercana (Paleta G2 Nordic)' },
+  v6: { short: 'V6', name: 'Showroom',   home: 'index6.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Versión 6: Showroom (Paleta G2 Nordic)' },
+  g2: { short: 'G2', name: 'Nordic',     home: 'index-g2.html', themeClass: 'theme-g2', accent: '#1D4ED8', title: 'Modelo G2: Nordic Clean & Neo-Cobalt' }
 };
 
 const DISTRIJAM_ALL_THEME_CLASSES = Object.values(DISTRIJAM_VERSIONS)
@@ -613,7 +605,7 @@ function injectVersionPillStyles() {
     .distrijam-version-pill .dvp-btn:hover{color:#fff;background:rgba(255,255,255,.08)}
     .distrijam-version-pill .dvp-btn:focus-visible{outline:2px solid #fff;outline-offset:-2px}
     .distrijam-version-pill .dvp-btn::before{content:'';width:7px;height:7px;border-radius:50%;
-      background:var(--dvp-accent,#C0392B);flex-shrink:0}
+      background:var(--dvp-accent,#1D4ED8);flex-shrink:0}
     .distrijam-version-pill .dvp-btn.active{color:#fff;font-weight:700;background:rgba(255,255,255,.1)}
     .distrijam-version-pill .dvp-btn .dvp-short{color:#94A3B8;min-width:20px}
     .distrijam-version-pill .dvp-btn.active .dvp-short{color:#fff}

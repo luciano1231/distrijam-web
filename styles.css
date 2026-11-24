@@ -4,44 +4,50 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Design Tokens - MODO CLARO */
+/* Design Tokens - PALETA G2 NORDIC CLEAN & NEO-COBALT */
 :root {
-  --bg: #f4f6f8;
-  /* Gris muy claro para el fondo general */
-  --bg-2: #ffffff;
-  /* Blanco puro para barra de navegación y footer */
-  --bg-card: #ffffff;
-  /* Blanco puro para modales y tarjetas */
-  --bg-card-2: #f0f2f5;
-  /* Gris sutil para inputs y hover de tarjetas */
+  --bg: #F8FAFC;
+  --bg-2: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-card-2: #F1F5F9;
+  --surface: #FFFFFF;
 
-  --red: #c0392b;
-  --red-dark: #922b21;
-  --red-light: #e74c3c;
-  --gold: #c8973a;
-  --gold-light: #e0b050;
-  --steel: #7a8c9a;
+  --primary: #1D4ED8;
+  --primary-dark: #1E40AF;
+  --primary-light: #EFF6FF;
 
-  --text: #333333;
-  /* Texto principal (gris oscuro) */
-  --text-dim: #555555;
-  /* Texto secundario */
-  --text-muted: #777777;
-  /* Texto atenuado */
+  --red: #1D4ED8;
+  --red-dark: #1E40AF;
+  --red-light: #2563EB;
+  --gold: #0EA5E9;
+  --gold-light: #38BDF8;
+  --steel: #64748B;
 
-  --border: #e0e0e0;
-  /* Bordes más suaves */
-  --border-light: #eeeeee;
+  --text: #0F172A;
+  --text-dim: #475569;
+  --text-muted: #64748B;
 
-  /* ATENCIÓN: Esta variable la usabas para títulos. Ahora es oscura. */
-  --white: #111111;
+  --border: #E2E8F0;
+  --border-light: #F1F5F9;
 
-  /* NUEVA VARIABLE: Para textos que siempre deben ser blancos (botones) */
-  --white-real: #ffffff;
+  --white: #0F172A;
+  --white-real: #FFFFFF;
 
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  /* Sombras mucho más sutiles */
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 16px 36px rgba(15, 23, 42, 0.1);
+
+  --rail-bg: #FFFFFF;
+  --rail-bg-hover: #F8FAFC;
+  --rail-border: #E2E8F0;
+  --rail-border-hover: #1D4ED8;
+  --rail-text: #475569;
+  --rail-text-strong: #0F172A;
+  --rail-active-bg: #1D4ED8;
+  --rail-active-text: #FFFFFF;
+  --rail-count-bg: #F1F5F9;
+  --rail-count-text: #64748B;
+  --rail-active-count-bg: rgba(255, 255, 255, 0.25);
+  --rail-active-count-text: #FFFFFF;
 
   --font: 'Inter', sans-serif;
   --radius: 8px;
@@ -216,7 +222,7 @@ ul {
 .nav-cta:hover {
   background: var(--red-light);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(192, 57, 43, 0.4);
+  box-shadow: 0 4px 16px rgba(29, 78, 216, 0.35);
 }
 
 /* ======================================================
@@ -510,20 +516,18 @@ ul {
 
 .btn-primary {
   background: var(--red);
-  color: var(--white);
+  color: var(--white-real);
 }
 
 .btn-primary:hover {
   background: var(--red-light);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(192, 57, 43, 0.4);
+  box-shadow: 0 8px 24px rgba(29, 78, 216, 0.35);
 }
 
 .btn-secondary {
   background: transparent;
-  color: #ffffff;
   color: var(--text);
-  border: 1px solid rgba(255, 255, 255, 0.4);
   border: 1px solid var(--border);
 }
 
@@ -533,26 +537,25 @@ ul {
 }
 
 .hero .btn-secondary:hover {
-  border-color: var(--red);
-  color: var(--red);
+  border-color: var(--gold-light);
+  color: var(--gold-light);
 }
 
-/* Opcional: Que el borde se ponga rojo cuando le pasás el mouse */
 .btn-secondary:hover {
   border-color: var(--red);
-  /* O el código de tu color rojo, ej: #c0392b */
   color: var(--red);
 }
 
 .btn-gold {
   background: var(--gold);
-  color: #111;
+  color: #ffffff;
 }
 
 .btn-gold:hover {
   background: var(--gold-light);
+  color: #0F172A;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(200, 151, 58, 0.4);
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.35);
 }
 
 .btn-lg {
@@ -580,10 +583,10 @@ ul {
 .section-tag {
   display: inline-block;
   padding: 5px 14px;
-  background: rgba(192, 57, 43, 0.15);
-  border: 1px solid rgba(192, 57, 43, 0.3);
+  background: #EFF6FF;
+  border: 1px solid rgba(29, 78, 216, 0.25);
   border-radius: 100px;
-  color: var(--red-light);
+  color: var(--red);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -922,8 +925,8 @@ ul {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.8) 40%, rgba(10, 10, 10, 0.4) 100%);
-  /* Oscurece el fondo para que el texto resalte de forma premium */
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.94) 0%, rgba(15, 23, 42, 0.8) 45%, rgba(15, 23, 42, 0.35) 100%);
+  /* Oscurece el fondo en pizarra nórdica para que el texto resalte */
   z-index: -2;
 }
 

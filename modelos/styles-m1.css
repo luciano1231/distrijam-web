@@ -1,4 +1,4 @@
-﻿/* ======================================================
+/* ======================================================
    DISTRIJAM — styles-m1.css
    MODELO 1 · "PORTAL COMERCIAL B2B & VITRINA EN VIVO"
    Diseño limpio, luminoso y moderno estilo e-commerce
@@ -15,11 +15,11 @@
   --m1-navy: #0F172A;
   --m1-navy-2: #1E293B;
 
-  --m1-red: #D92D20;
-  --m1-red-hover: #B42318;
-  --m1-red-light: #FEF3F2;
+  --m1-red: #1D4ED8;
+  --m1-red-hover: #1E40AF;
+  --m1-red-light: #EFF6FF;
 
-  --m1-blue: #2563EB;
+  --m1-blue: #0EA5E9;
   --m1-wa: #16A34A;
 
   --m1-text: #0F172A;
@@ -104,7 +104,7 @@ ul { list-style: none; }
 }
 
 .m1-topbar-item svg {
-  color: #F87171;
+  color: #38BDF8;
   flex-shrink: 0;
 }
 
@@ -176,7 +176,7 @@ ul { list-style: none; }
 .m1-search-form:focus-within {
   background: var(--m1-white);
   border-color: var(--m1-red);
-  box-shadow: 0 0 0 4px rgba(217, 45, 32, 0.1);
+  box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.12);
 }
 
 .m1-search-form svg {
@@ -402,13 +402,13 @@ ul { list-style: none; }
 .m1-btn-primary {
   background: var(--m1-red);
   color: #FFFFFF;
-  box-shadow: 0 4px 14px rgba(217, 45, 32, 0.25);
+  box-shadow: 0 4px 14px rgba(29, 78, 216, 0.25);
 }
 
 .m1-btn-primary:hover {
   background: var(--m1-red-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(217, 45, 32, 0.35);
+  box-shadow: 0 8px 22px rgba(29, 78, 216, 0.35);
 }
 
 .m1-btn-wa {
@@ -492,7 +492,7 @@ ul { list-style: none; }
 }
 
 .m1-hero-banner {
-  background: linear-gradient(125deg, #0F172A 0%, #1E293B 55%, #2A1215 100%);
+  background: linear-gradient(125deg, #0F172A 0%, #1E293B 55%, #0F2942 100%);
   border-radius: var(--m1-r-lg);
   padding: 56px;
   color: #FFFFFF;
@@ -512,7 +512,7 @@ ul { list-style: none; }
   bottom: -100px;
   width: 420px;
   height: 420px;
-  background: radial-gradient(circle, rgba(217, 45, 32, 0.28) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(29, 78, 216, 0.28) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -521,9 +521,9 @@ ul { list-style: none; }
   align-items: center;
   gap: 8px;
   padding: 6px 14px;
-  background: rgba(217, 45, 32, 0.2);
-  border: 1px solid rgba(248, 113, 113, 0.35);
-  color: #FCA5A5;
+  background: rgba(29, 78, 216, 0.2);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #93C5FD;
   border-radius: 99px;
   font-size: 0.78rem;
   font-weight: 600;
@@ -540,7 +540,7 @@ ul { list-style: none; }
 }
 
 .m1-hero-title span {
-  background: linear-gradient(90deg, #F87171, #FBBF24);
+  background: linear-gradient(90deg, #38BDF8, #60A5FA);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -577,7 +577,7 @@ ul { list-style: none; }
 }
 
 .m1-trust-val span {
-  color: #F87171;
+  color: #38BDF8;
 }
 
 .m1-trust-lbl {
@@ -609,7 +609,7 @@ ul { list-style: none; }
 .m1-mini-card:hover {
   transform: translateY(-5px);
   background: rgba(255, 255, 255, 0.13);
-  border-color: rgba(248, 113, 113, 0.5);
+  border-color: rgba(56, 189, 248, 0.5);
 }
 
 .m1-mini-img {
@@ -778,7 +778,7 @@ ul { list-style: none; }
 .m1-prod-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--m1-shadow-lg);
-  border-color: rgba(217, 45, 32, 0.35);
+  border-color: rgba(29, 78, 216, 0.35);
 }
 
 .m1-prod-img {

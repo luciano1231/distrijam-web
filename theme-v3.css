@@ -1,271 +1,81 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&display=swap');
-
-/* ======================================================
+﻿/* ======================================================
    DISTRIJAM — theme-v3.css
-   VERSIÓN 3 · "INDUSTRIAL CLARO"
-   Repinta las páginas compartidas (catálogo, producto y
-   administración) en blanco con ámbar industrial.
+   MODELO G2 · NORDIC CLEAN & NEO-COBALT THEME OVERLAY
+   Para páginas compartidas: catálogo, producto y administración.
    ====================================================== */
 
 :root.theme-v3,
 body.theme-v3 {
-  --primary: #C2700A !important;
-  --primary-dark: #96560A !important;
-  --primary-light: #FEF3E2 !important;
+  --primary: #1D4ED8 !important;
+  --primary-dark: #1E40AF !important;
+  --primary-light: #EFF6FF !important;
 
-  --red: #16181D !important;          /* Acción primaria en tinta */
-  --red-dark: #000000 !important;
-  --red-light: #C2700A !important;    /* Hover en ámbar */
-  --gold: #C2700A !important;
-  --gold-light: #F59E0B !important;
-  --steel: #6B7483 !important;
+  --red: #1D4ED8 !important;
+  --red-dark: #1E40AF !important;
+  --red-light: #3B82F6 !important;
+  --gold: #0F172A !important;
+  --gold-light: #334155 !important;
+  --steel: #64748B !important;
 
   --bg: #FFFFFF !important;
-  --bg-2: #F7F7F5 !important;
+  --bg-2: #F8FAFC !important;
   --bg-card: #FFFFFF !important;
-  --bg-card-2: #F2F2F0 !important;
+  --bg-card-2: #F1F5F9 !important;
 
-  --text: #16181D !important;
-  --text-dim: #555C66 !important;
-  --text-muted: #868D97 !important;
+  --text: #0F172A !important;
+  --text-dim: #475569 !important;
+  --text-muted: #64748B !important;
 
-  --border: #E2E5EA !important;
-  --border-light: #EFF1F4 !important;
+  --border: #E2E8F0 !important;
+  --border-light: #F1F5F9 !important;
 
-  --white: #16181D !important;
+  --white: #0F172A !important;
   --white-real: #FFFFFF !important;
 
-  --shadow: 0 2px 8px rgba(22, 24, 29, 0.05) !important;
-  --shadow-lg: 0 16px 40px rgba(22, 24, 29, 0.1) !important;
+  --shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+  --shadow-lg: 0 16px 36px rgba(15, 23, 42, 0.1) !important;
 
-  --radius: 4px !important;
-  --radius-lg: 8px !important;
-
-  /* Colores del riel de categorías (filtros-rail.css) */
   --rail-bg: #FFFFFF;
-  --rail-bg-hover: #F2F2F0;
-  --rail-border: #E2E5EA;
-  --rail-border-hover: #C9CFD7;
-  --rail-text: #555C66;
-  --rail-text-strong: #16181D;
-  --rail-active-bg: #16181D;
+  --rail-bg-hover: #F8FAFC;
+  --rail-border: #E2E8F0;
+  --rail-border-hover: #1D4ED8;
+  --rail-text: #475569;
+  --rail-text-strong: #0F172A;
+  --rail-active-bg: #1D4ED8;
   --rail-active-text: #FFFFFF;
-  --rail-count-bg: #F2F2F0;
-  --rail-count-text: #6B7483;
-  --rail-active-count-bg: rgba(245, 158, 11, 0.92);
-  --rail-active-count-text: #16181D;
+  --rail-count-bg: #F1F5F9;
+  --rail-count-text: #64748B;
+  --rail-active-count-bg: rgba(255, 255, 255, 0.25);
+  --rail-active-count-text: #FFFFFF;
 }
 
 body.theme-v3 {
   background: #FFFFFF !important;
-  color: #16181D !important;
+  color: #0F172A !important;
 }
 
-body.theme-v3 ::selection { background: #C2700A; color: #fff; }
-
-/* ── NAVEGACIÓN ────────────────────────────────────── */
 body.theme-v3 .nav {
-  background: rgba(255, 255, 255, 0.93) !important;
-  border-bottom: 1px solid #E2E5EA !important;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid #E2E8F0 !important;
 }
-body.theme-v3 .nav.scrolled {
-  background: rgba(255, 255, 255, 0.98) !important;
-  box-shadow: 0 6px 22px rgba(22, 24, 29, 0.08) !important;
-}
-body.theme-v3 .nav-link:hover { background: #F2F2F0 !important; color: #16181D !important; }
-body.theme-v3 .nav-link.active { color: #C2700A !important; }
-body.theme-v3 .nav-cta {
-  background: #F59E0B !important;
-  color: #16181D !important;
-  font-weight: 700 !important;
-}
-body.theme-v3 .nav-cta:hover { background: #FBBF24 !important; }
-body.theme-v3 .nav-mobile { background: #FFFFFF !important; border-color: #E2E5EA !important; }
-
-/* Menú desplegable de productos */
-body.theme-v3 .dropdown-menu,
-body.theme-v3 .submenu {
-  background: #FFFFFF !important;
-  border: 1px solid #E2E5EA !important;
-  box-shadow: 0 22px 50px rgba(22, 24, 29, 0.14) !important;
-}
-body.theme-v3 .dropdown-link,
-body.theme-v3 .submenu-link { color: #555C66 !important; }
-body.theme-v3 .dropdown-link:hover,
-body.theme-v3 .submenu-link:hover { background: #F2F2F0 !important; color: #C2700A !important; }
-
-/* ── BOTONES ───────────────────────────────────────── */
-body.theme-v3 .btn-primary,
-body.theme-v3 .btn-add-cart,
-body.theme-v3 .btn-select-variant {
-  background: #16181D !important;
-  color: #FFFFFF !important;
-  font-weight: 600 !important;
-  border-radius: 4px !important;
-}
-body.theme-v3 .btn-primary:hover,
-body.theme-v3 .btn-add-cart:hover,
-body.theme-v3 .btn-select-variant:hover {
-  background: #C2700A !important;
-  color: #FFFFFF !important;
-}
-body.theme-v3 .btn-secondary { color: #16181D !important; border-color: #E2E5EA !important; }
-body.theme-v3 .btn-secondary:hover { border-color: #C2700A !important; color: #C2700A !important; }
-body.theme-v3 .btn-gold { background: #F59E0B !important; color: #16181D !important; }
-
-/* ── CATÁLOGO ──────────────────────────────────────── */
-body.theme-v3.catalog-page {
-  background: #FFFFFF !important;
-  background-image: none !important;
-}
-
-body.theme-v3 .catalog-header {
-  background: #F7F7F5 !important;
-  border-bottom: 1px solid #E2E5EA !important;
-}
-body.theme-v3 .catalog-header h1 {
-  color: #16181D !important;
-  font-family: 'Barlow Condensed', 'Inter', sans-serif !important;
-  font-weight: 800 !important;
-  text-transform: uppercase !important;
-  letter-spacing: -0.01em !important;
-}
-body.theme-v3 .catalog-header h1 span { color: #C2700A !important; }
-body.theme-v3 .catalog-header-sub { color: #555C66 !important; }
-
-body.theme-v3 .catalog-search input {
-  background: #FFFFFF !important;
-  border: 1px solid #E2E5EA !important;
-  color: #16181D !important;
-  border-radius: 4px !important;
-}
-body.theme-v3 .catalog-search input:focus { border-color: #C2700A !important; }
-body.theme-v3 .catalog-search input::placeholder { color: #868D97 !important; }
-body.theme-v3 .catalog-count { color: #555C66 !important; }
-body.theme-v3 .catalog-count strong { color: #16181D !important; }
 
 body.theme-v3 .product-card {
   background: #FFFFFF !important;
-  border: 1px solid #E2E5EA !important;
-  border-radius: 8px !important;
-  box-shadow: none !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
 }
+
 body.theme-v3 .product-card:hover {
-  border-color: #F59E0B !important;
-  box-shadow: 0 16px 34px rgba(22, 24, 29, 0.1) !important;
-  transform: translateY(-4px) !important;
+  border-color: #1D4ED8 !important;
+  box-shadow: 0 12px 30px rgba(29, 78, 216, 0.15) !important;
 }
-body.theme-v3 .product-name {
-  color: #16181D !important;
-  font-family: 'Barlow Condensed', 'Inter', sans-serif !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  font-size: 1.1rem !important;
-}
-body.theme-v3 .product-desc { color: #555C66 !important; }
-body.theme-v3 .product-cat-badge {
-  background: #FEF3E2 !important;
-  color: #96560A !important;
-  border: 1px solid #F8D9A8 !important;
-  font-weight: 600 !important;
-}
-body.theme-v3 .btn-quick-view { border-color: #E2E5EA !important; color: #555C66 !important; }
-body.theme-v3 .btn-quick-view:hover { border-color: #C2700A !important; color: #C2700A !important; }
 
-/* ── CARRITO ───────────────────────────────────────── */
-body.theme-v3 .cart-sidebar { background: #FFFFFF !important; border-left: 1px solid #E2E5EA !important; }
-/* Sin barra oscura: una regla fina evita el texto oscuro sobre fondo oscuro */
-body.theme-v3 .cart-header {
-  background: transparent !important;
-  border-bottom: 1px solid #E2E5EA !important;
-  padding-bottom: 14px !important;
+body.theme-v3 .btn-secondary {
+  color: #0F172A !important;
+  border: 1px solid #CBD5E1 !important;
 }
-body.theme-v3 .cart-title {
-  color: #16181D !important;
-  font-family: 'Barlow Condensed', 'Inter', sans-serif !important;
-  text-transform: uppercase !important;
-  font-size: 1.15rem !important;
-}
-body.theme-v3 .cart-badge { background: #F59E0B !important; color: #16181D !important; }
-body.theme-v3 .cart-item { border-color: #EFF1F4 !important; }
-body.theme-v3 .cart-item-name { color: #16181D !important; }
-body.theme-v3 .cart-clear-btn { color: #868D97 !important; }
-body.theme-v3 .cart-clear-btn:hover { color: #DC2626 !important; }
-body.theme-v3 .cart-fab { background: #16181D !important; color: #FFFFFF !important; box-shadow: 0 8px 24px rgba(22, 24, 29, 0.28) !important; }
-body.theme-v3 .btn-quote { background: #15803D !important; color: #FFFFFF !important; border-radius: 4px !important; font-weight: 700 !important; }
-body.theme-v3 .btn-quote:hover { background: #166534 !important; }
 
-/* Modal de cotización */
-body.theme-v3 .modal-content,
-body.theme-v3 .quote-modal { background: #FFFFFF !important; border: 1px solid #E2E5EA !important; }
-body.theme-v3 .form-input,
-body.theme-v3 .form-textarea,
-body.theme-v3 select {
-  background: #FFFFFF !important;
-  border: 1px solid #E2E5EA !important;
-  color: #16181D !important;
-}
-body.theme-v3 .form-input:focus,
-body.theme-v3 .form-textarea:focus { border-color: #C2700A !important; }
-body.theme-v3 .form-label { color: #555C66 !important; }
-
-/* ── PÁGINA DE PRODUCTO ────────────────────────────── */
-body.theme-v3 .single-product-layout {
-  background: #FFFFFF !important;
-  border: 1px solid #E2E5EA !important;
-  border-radius: 8px !important;
-  box-shadow: 0 2px 12px rgba(22, 24, 29, 0.05) !important;
-}
-body.theme-v3 .prod-category-badge {
-  background: #FEF3E2 !important;
-  color: #96560A !important;
-  border: 1px solid #F8D9A8 !important;
-}
-body.theme-v3 .thumb-img { border-color: #E2E5EA !important; }
-body.theme-v3 .thumb-img.active { border-color: #C2700A !important; }
-body.theme-v3 .variant-table th { background: #F2F2F0 !important; color: #16181D !important; }
-body.theme-v3 .variant-table td { border-color: #EFF1F4 !important; color: #555C66 !important; }
-body.theme-v3 .variant-table tr:hover td { background: #F7F7F5 !important; }
-body.theme-v3 .btn-wa-quote,
-body.theme-v3 .btn-add-cart-detail {
-  background: #15803D !important;
-  color: #FFFFFF !important;
-  border-radius: 4px !important;
-  font-weight: 700 !important;
-}
-body.theme-v3 .btn-wa-quote:hover,
-body.theme-v3 .btn-add-cart-detail:hover { background: #166534 !important; }
-
-/* ── ADMINISTRACIÓN ────────────────────────────────── */
-body.theme-v3.admin-body { background: #F7F7F5 !important; }
-body.theme-v3 .admin-header-bar { background: #16181D !important; color: #FFFFFF !important; border-bottom: none !important; }
-body.theme-v3 .admin-card-title::before { background: #F59E0B !important; }
-body.theme-v3 .admin-form-card,
-body.theme-v3 .admin-table-card,
-body.theme-v3 .login-card {
-  background: #FFFFFF !important;
-  border: 1px solid #E2E5EA !important;
-  box-shadow: 0 2px 12px rgba(22, 24, 29, 0.05) !important;
-}
-body.theme-v3 .admin-table th { background: #F2F2F0 !important; color: #16181D !important; }
-body.theme-v3 .admin-table td { border-color: #EFF1F4 !important; }
-
-/* ── FOOTER ────────────────────────────────────────── */
-body.theme-v3 .footer { background: #16181D !important; border-top: none !important; }
-body.theme-v3 .footer p,
-body.theme-v3 .footer span,
-body.theme-v3 .footer a { color: rgba(255, 255, 255, 0.6) !important; }
-body.theme-v3 .footer-col h4 { color: #FBBF24 !important; }
-body.theme-v3 .footer a:hover { color: #FFFFFF !important; }
-/* El logo es negro sobre transparente: se invierte para el footer oscuro */
-body.theme-v3 .footer .nav-logo-img { filter: brightness(0) invert(1); }
-
-/* ── TOASTS ────────────────────────────────────────── */
-body.theme-v3 .toast {
-  background: #FFFFFF !important;
-  border: 1px solid #E2E5EA !important;
-  border-left: 3px solid #C2700A !important;
-  color: #16181D !important;
+body.theme-v3 .btn-secondary:hover {
+  border-color: #1D4ED8 !important;
+  color: #1D4ED8 !important;
 }

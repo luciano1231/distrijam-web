@@ -4,17 +4,17 @@
    ====================================================== */
 
 :root {
-  --ink: #0d0e10;
-  --ink-2: #16181b;
-  --ink-3: #202328;
-  --paper: #f1f0ec;
-  --paper-2: #e6e4de;
-  --line: rgba(255, 255, 255, .12);
-  --text: #f4f3ef;
-  --muted: #a3a6ad;
-  --red: #d92d20;
-  --red-2: #f04438;
-  --wa: #1fa855;
+  --ink: #0F172A;
+  --ink-2: #1E293B;
+  --ink-3: #334155;
+  --paper: #F8FAFC;
+  --paper-2: #F1F5F9;
+  --line: rgba(226, 232, 240, .14);
+  --text: #F8FAFC;
+  --muted: #94A3B8;
+  --red: #1D4ED8;
+  --red-2: #38BDF8;
+  --wa: #16A34A;
   --head: 'Archivo', 'Arial Narrow', sans-serif;
   --body: 'Inter', system-ui, sans-serif;
   --ease: cubic-bezier(.22, 1, .36, 1);
@@ -251,7 +251,7 @@ button { font: inherit; cursor: pointer; }
 .m3-card-media { position: relative; aspect-ratio: 1; background: var(--paper); overflow: hidden; }
 .m3-card-media::after {
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
-  background: radial-gradient(240px circle at var(--mx) var(--my), rgba(217,45,32,.14), transparent 70%);
+  background: radial-gradient(240px circle at var(--mx) var(--my), rgba(29,78,216,.14), transparent 70%);
 }
 .m3-card:hover .m3-card-media::after { opacity: 1; }
 .m3-card-media img {
