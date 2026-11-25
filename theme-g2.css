@@ -79,3 +79,13 @@ body.theme-g2 .btn-secondary:hover {
   border-color: #1D4ED8 !important;
   color: #1D4ED8 !important;
 }
+
+body.theme-g2 .hero .btn-secondary {
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+body.theme-g2 .hero .btn-secondary:hover {
+  border-color: #38BDF8 !important;
+  color: #FFFFFF !important;
+}

@@ -532,13 +532,16 @@ ul {
 }
 
 .hero .btn-secondary {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px);
 }
 
 .hero .btn-secondary:hover {
-  border-color: var(--gold-light);
-  color: var(--gold-light);
+  border-color: var(--gold-light) !important;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .btn-secondary:hover {
